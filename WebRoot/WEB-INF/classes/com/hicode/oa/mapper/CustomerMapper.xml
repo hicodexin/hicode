@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hicode.oa.dao.CustomerDAO">
+	
+	<sql id="all_column">
+		 er_id, au_id,sub_id,period,if_renewal,t_id,first_time,if_done,phone
+	</sql>
+	
+	<select id="getCustomerByID" parameterType="java.lang.Integer" resultType="Customer">
+		select <include refid="all_column"></include> from customer where er_id = #{er_id};
+	</select>
+	
+	<select id="getCustomerAll" parameterType="java.util.Map" resultType="Customer">
+	
+		select <include refid="all_column"></include> from customer limit #{start},#{count};
+	
+	</select>
+	
+</mapper>
+
+

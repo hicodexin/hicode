@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hicode.oa.dao.TeacherDAO">
+
+	<sql id="all_column">
+		t_id,t_name,t_sex,if_Onthejob,time_creatDate,time_endDate,title,title_updatetime
+	</sql>
+	
+	<!-- 添加讲师  -->
+	<insert id="do_insert" parameterType="Teacher">
+		insert into teacher (<include refid="all_column"></include>)
+		values (#{t_id},#{t_name},#{t_sex},#{if_Onthejob},
+		#{time_creatDate},#{time_endDate},#{title},#{title_updatetime});
+		
+	</insert>
+	
+	<!-- 查询ByID -->
+	<select id="getTeacherByID" parameterType="java.lang.String" resultType="Teacher">
+		select <include refid="all_column"></include> from teacher 
+		where t_id = #{t_id}
+	</select>
+	
+	<!-- 查询全部信息 -->
+	<select id="getTeacherAll" parameterType="java.util.Map" resultType="Teacher">
+		select <include refid="all_column"></include> from teacher 
+		 LIMIT #{start},#{count};
+	</select>
+	
+	
+<!-- 	
+	<update id="do_update">
+		t_id=#{t_id},
+		t_name=#{t_name},
+		t_sex=#{t_sex},
+		if_Onthejob=#{if_Onthejob},
+		time_creatDate=#{time_creatDate},
+		time_endDate=#{time_endDate},
+		title=#{title},
+		title_updatetime=#{title_updatetime};
+	</update>
+		 -->
+   
+</mapper>

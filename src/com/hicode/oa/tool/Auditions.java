@@ -1,0 +1,113 @@
+package com.hicode.oa.tool;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * 试听课记录
+ * @author xinpeixiang
+ * @date 2018-10-19
+ */
+public class Auditions implements Serializable {
+
+	private static final long serialVersionUID = 545474735451L;
+
+	private Integer au_id;
+	/**
+	 * 试听时间
+	 */
+	private Date st_time;
+	/**
+	 * 学生姓名
+	 */
+	private String st_name;
+	/**
+	 * 学生性别（1：男；0：女）
+	 */
+	private Integer st_sex;
+	/**
+	 * 学校/年级
+	 */
+	private String st_class;
+	/**
+	 * 试听课授课老师
+	 */
+	private String t_id;
+	/**
+	 * 顾问id
+	 */
+	private String adv_id;
+	/**
+	 * 备注
+	 */
+	private String remarks;
+
+	public Integer getAu_id() {
+		return au_id;
+	}
+
+	public void setAu_id(Integer au_id) {
+		this.au_id = au_id;
+	}
+
+	public Date getSt_time() {
+		return st_time;
+	}
+
+	public void setSt_time(Date st_time) {
+		this.st_time = st_time;
+	}
+
+	public String getSt_name() {
+		return st_name;
+	}
+
+	public void setSt_name(String st_name) {
+		this.st_name = st_name;
+	}
+
+	public Integer getSt_sex() {
+		return st_sex;
+	}
+
+	public void setSt_sex(Integer st_sex) {
+		this.st_sex = st_sex;
+	}
+
+	public String getSt_class() {
+		return st_class;
+	}
+
+	public void setSt_class(String st_class) {
+		this.st_class = st_class;
+	}
+
+	public String getT_id() {
+		return t_id;
+	}
+
+	public void setT_id(String t_id) {
+		this.t_id = t_id;
+	}
+
+	public String getAdv_id() {
+		return adv_id;
+	}
+
+	public void setAdv_id(String adv_id) {
+		this.adv_id = adv_id;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+}
