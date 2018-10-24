@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hicode.oa.dao.SubjectDAO">
+	
+	
+	<sql id="all_column">
+		 sub_id, sub_name
+	</sql>
+	
+	<select id="getSubjectByID" parameterType="java.lang.String" resultType="Subject">
+		select <include refid="all_column"></include> from subject where sub_id = #{sub_id};
+	</select>
+	
+	<select id="getSubjectAll" parameterType="java.util.Map" resultType="Subject">
+	
+		select <include refid="all_column"></include> from subject limit #{start},#{count};
+	
+	</select>
+	
+</mapper>
+
+

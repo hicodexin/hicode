@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Teacher.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+	<style type="text/css">
+		*{
+			margin: 0px;
+			padding: 0px;
+		}
+		.dv_top{
+			height: 50px;
+			background-color: #336699;
+		}
+	
+	</style>
+	<script type="text/javascript" src="/hicode/sysjs/jquery.min.js"></script>
+  </head>
+  
+  <body>
+  	<div class="dv_top"></div>
+    <hr>
+    <button id="bt_1">okkk</button>
+  </body>
+  <script type="text/javascript">
+  	$().ready(function(){
+  		alert("okk");
+  		
+  		var start = 0;
+  		var count = 2;
+  		$("#bt_1").click(function(){
+  			
+  			$.post("/hicode/teacher/showTeacherByInfo.spc",{"start":start,"count":count},function(a){
+  				alert("m");
+  				
+  				if(a){
+  					console.log(a);
+  				}
+  				
+  			
+  			
+  			
+  			},"json");
+  		
+  		
+  		});
+  	
+  	});
+  </script>
+</html>
