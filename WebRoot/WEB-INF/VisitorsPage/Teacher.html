@@ -13,42 +13,217 @@
 			margin: 0px;
 			padding: 0px;
 		}
-		.dv_top{
-			height: 50px;
-			background-color: #336699;
-		}
-	
 	</style>
+	<link type="text/css" rel="stylesheet"  href="/hicode/syscss/teacher_page.css" />
+	<link type="text/css" rel="stylesheet"  href="/hicode/syscss/for_date.css" />
 	<script type="text/javascript" src="/hicode/sysjs/jquery.min.js"></script>
+	<script type="text/javascript" src="/hicode/sysjs/forfunctions.js"></script>
+	<script type="text/javascript" src="/hicode/sysjs/jeDate.js"></script>
   </head>
   
   <body>
+  		<!-- 隐藏  -->
+  	  	<div id="dv_update">
+  		<div class="dv_title">讲师信息修改</div>
+  		<div class="dv_upmain">
+  			<ul class="up_ul">
+	  			<li>
+	  				<b>序号 : </b>
+	  				<input type="text" id="tea_list" value="1354634" readonly="readonly"/>
+	  			</li>
+	  			<li>
+	  				<b>教师姓名 : </b>
+	  				<input type="text" id="userName"/>
+	  			</li>
+	  			<li>
+	  				<b>教师性别 : </b>
+	  				<label for="sex_b">
+	  					<img src="/hicode/sysimg/face_boy.jpg" />
+	  					<input type="radio" id="sex_b" name="t_sex"  value="1"/>
+	  				</label>
+	  				<label for="sex_g">
+	  					<img src="/hicode/sysimg/face_girl.jpg" />
+	  					<input type="radio" id="sex_g" name="t_sex" value="0" />
+	  				</label>
+	  			</li>
+	  			<li>
+	  				<b>是否在职 : </b>
+	  				<label for="job_b">
+	  					<img src="/hicode/sysimg/face_smile.jpg" />
+	  					<input type="radio" id="job_b" name="if_Onthejob"  value="1"/>
+	  				</label>
+	  				<label for="job_g">
+	  					<img src="/hicode/sysimg/face_grieved.jpg" />
+	  					<input type="radio" id="job_g" name="if_Onthejob" value="0" />
+	  				</label>
+	  			</li>
+	  			<li>
+	  				<b>入职时间 : </b>
+	  				<input id="time_creatDate" type="text" readonly>
+	  			</li>
+	  			<li>
+	  				<b>离职时间 : </b>
+	  				<input class="datainp" id="time_endDate" type="text" placeholder="请选择"  readonly>
+	  			</li>
+	  			<li>
+	  				<b>当前职称 : </b>
+	  				<select id="update_sel">
+	  					<option>讲师助教</option>
+	  					<option>初级讲师</option>
+	  					<option>中级讲师</option>
+	  					<option>高级讲师</option>
+	  					<option>教学总监</option>
+	  				</select>
+	  			</li>
+	  			<li>
+	  				<b>晋级时间 : </b>
+	  				<input class="datainp" id="title_updatetime" type="text" placeholder="请选择"  readonly>
+	  			</li>
+	  		</ul>
+  		</div>
+  		<div id="dv_upbottom">
+  			<button id="up_sub">提交</button>
+			<button id="up_res">返回</button>
+  		</div>
+  	</div>
   	<div class="dv_top"></div>
     <hr>
+    <div class="dv_title">讲师信息详情</div>
     <button id="bt_1">okkk</button>
+    <div id="dv_table">
+	    <table id="tea_tbl"  cellspacing="0">
+	    	<thead> 
+	    		<tr>
+	    			<th>序号</th>
+	    			<th>教师姓名</th>
+	    			<th>教师性别</th>
+	    			<th>是否在职</th>
+	    			<th>入职时间</th>
+	    			<th>离职时间</th>
+	    			<th>当前职称</th>
+	    			<th>晋级时间</th>
+	    			<th>操作</th>
+	    			<th>标记</th>
+	    		</tr>
+	    	</thead>
+	    	<tbody>
+	    	</tbody>
+	    </table>
+    </div>
+    <div id="dv_page">
+		<button id="bt_first">首页</button>
+		<a href="#">1</a>
+		<a href="#">2</a>
+		<a href="#">3</a>
+		<a href="#">4</a>
+		<button id="bt_end">尾页</button>
+	</div>
   </body>
   <script type="text/javascript">
   	$().ready(function(){
-  		alert("okk");
-  		
   		var start = 0;
   		var count = 2;
-  		$("#bt_1").click(function(){
+  		$("#dv_update").hide();
+		$.post("/hicode/teacher/showTeacherByInfo.spc",{"start":start,"count":count},function(a){
+			console.log(a.teacher);
+			if(a){
+				for(var i=0;i<a.teacher.length;i++){
+					var tr = document.createElement("tr");
+					var str = "<td>"+(i+1)+"</td>";
+						str += "<td>"+a.teacher[i].t_name+"</td>";
+						if(a.teacher[i].t_sex == 1){
+							str += "<td><img src='/hicode/sysimg/face_boy.jpg'/> </td>";
+						}else{
+							str += "<td><img src='/hicode/sysimg/face_girl.jpg'/></td>";
+						}
+						if(a.teacher[i].if_Onthejob == 1){
+							str += "<td> <img src='/hicode/sysimg/face_smile.jpg' /> </td>";
+						}else{
+							str += "<td> <img src='/hicode/sysimg/face_grieved.jpg' /> </td>";
+						}
+						
+						var creatDate = timestampToTime(a.teacher[i].time_creatDate);
+						
+						str += "<td>"+creatDate+"</td>";
+						if(a.teacher[i].time_endDate){
+							var endDate = timestampToTime(a.teacher[i].time_endDate);
+							str += "<td>"+endDate+"</td>";
+						}else{
+							str += "<td>   </td>";
+						}
+						str += "<td>"+a.teacher[i].title+"</td>";
+						
+						var updatetime = timestampToTime(a.teacher[i].title_updatetime);
+						str += "<td>"+updatetime+"</td>";
+						var btid = a.teacher[i].t_id;
+						str += "<td><button id = '"+btid+"' name='"+(i+1)+"'>修改</button></td>";
+						str += "<td><input type='checkbox' value='"+a.teacher[i].t_id+"' /></td>";
+					$(tr).append(str);
+					$("#tea_tbl").append(tr);
+					//修改功能
+					(function(){
+						var tname = a.teacher[i].t_name;
+						var tsex = a.teacher[i].t_sex;
+						var onthejob = a.teacher[i].if_Onthejob;
+						var st_date = timestampToTime(a.teacher[i].time_creatDate);
+						var ed_date = a.teacher[i].time_endDate;
+							ed_date = ed_date==''|| ed_date==null?'':timestampToTime(ed_date);	
+						var tit = a.teacher[i].title;
+						var uptime = a.teacher[i].title_updatetime;
+							uptime = uptime==''|| uptime==null?'':timestampToTime(uptime);	
+						$("#"+btid).click(function(){
+							$("#dv_update").hide().show(300);
+							$("#tea_list").val($(this).attr("name"));
+							$("#userName").val(tname);
+							if(tsex == 1){
+								$("#sex_b").attr("checked","checked");
+							}else{
+								$("#sex_g").attr("checked","checked");
+							}
+							if(onthejob == 1){
+								$("#job_b").attr("checked","checked");
+							}else{
+								$("#job_g").attr("checked","checked");
+							}
+							$("#time_creatDate").val(st_date);
+							$("#time_endDate").val(ed_date);
+							
+							switch(tit){
+								case "讲师助教": $("#update_sel :eq(0)").attr("selected","selected"); break;
+								case "初级讲师": $("#update_sel :eq(1)").attr("selected","selected"); break;
+								case "中级讲师": $("#update_sel :eq(2)").attr("selected","selected"); break;
+								case "高级讲师": $("#update_sel :eq(3)").attr("selected","selected"); break;
+								case "教学总监": $("#update_sel :eq(4)").attr("selected","selected"); break;
+							}
+							$("#title_updatetime").val(uptime);
+							
+						});
+					})();
+					
+				}
+			}
+		
+		},"json");
   			
-  			$.post("/hicode/teacher/showTeacherByInfo.spc",{"start":start,"count":count},function(a){
-  				alert("m");
-  				
-  				if(a){
-  					console.log(a);
-  				}
-  				
-  			
-  			
-  			
-  			},"json");
+  		// 日历插件
+		jeDate({
+			dateCell:"#time_endDate",
+			isinitVal:true,
+			isTime:true, //isClear:false,
+			minDate:"1014-09-19 00:00:00"
+		}) ;
+		jeDate({
+			dateCell:"#title_updatetime",
+			format:"YYYY-MM-DD",
+			isinitVal:true,
+			isTime:false, //isClear:false,
+			minDate:"1014-09-19 00:00:00"
+		}) ;
   		
+  		$("#up_res").click(function(){
+ 			$("#dv_update").show().hide(300);
+ 		});
   		
-  		});
   	
   	});
   </script>

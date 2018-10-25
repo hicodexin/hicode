@@ -1,0 +1,253 @@
+.dv_top {
+	height: 50px;
+	background-color: #336699;
+}
+
+.dv_title {
+	height: 90px;
+	color: #336699;
+	font-family: "楷体";
+	font-size: 40px;
+	font-weight: 700;
+	text-align: center;
+	line-height: 90px;
+}
+
+#dv_table {
+	height: 650px;
+}
+
+#tea_tbl {
+	margin: auto;
+	width: 70%;
+}
+
+#tea_tbl thead tr th {
+	height: 80px;
+	background-color: #336699;
+	color: #fff;
+	font-family: "楷体";
+	font-size: 23px;
+}
+
+#tea_tbl tbody tr {
+	text-align: center;
+	font-size: 18px;
+}
+
+#tea_tbl tbody tr:hover {
+	background-color: #d0d0d0;
+	color: #336699;
+	cursor: pointer;
+}
+
+#tea_tbl tbody tr td {
+	border-bottom: solid 1px #336699;
+	height: 70px;
+}
+
+#tea_tbl tbody tr td button {
+	border: 0px;
+	background-color: #336699;
+	color: #fff;
+	display: inline-block;
+	margin: auto;
+	width: 50px;
+	height: 30px;
+	border-radius: 6px;
+	outline-style: none;
+}
+
+#tea_tbl tbody tr td button:hover {
+	color: #336699;
+	font-weight: 600;
+	background-color: #fff;
+	cursor: pointer;
+	border: solid 1px #336699;
+}
+
+#tea_tbl tbody tr td input {
+	display: inline-block;
+	float: left;
+	width: 25px;
+	height: 25px;
+	margin-left: 30%;
+}
+
+#tea_tbl tbody tr td img {
+	width: 60px;
+	border-radius: 50%;
+}
+
+#dv_page {
+	width: 70%;
+	margin: auto;
+	border-top: solid 1px #336699;
+	height: 70px;
+	/*background-color: orange;*/
+	padding: 20px;
+}
+
+#dv_page button {
+	border: 0px;
+	background-color: #336699;
+	color: #fff;
+	display: inline-block;
+	margin: auto;
+	width: 70px;
+	height: 40px;
+	border-radius: 6px;
+	outline-style: none;
+}
+
+#dv_page button:hover {
+	color: #336699;
+	font-weight: 600;
+	background-color: #fff;
+	cursor: pointer;
+	border: solid 1px #336699;
+}
+
+#bt_first {
+	float: left;
+	margin-left: 10%;
+}
+
+#bt_end {
+	float: right;
+	margin-right: 20%;
+}
+
+#dv_page a {
+	display: inline-block;
+	background-color: #D0D0D0;
+	border: solid 1px #336699;
+	width: 30px;
+	height: 30px;
+	margin-top: 5px;
+	line-height: 30px;
+	text-align: center;
+	margin-left: 10px;
+	text-decoration: none;
+	border-radius: 6px;
+}
+
+#dv_page a:hover {
+	background-color: #336699;
+	color: #fff;
+}
+
+/*
+	关于隐藏模块
+*/
+#dv_update {
+	width: 500px;
+	height: 750px;
+	background-color: #CCCCCC;
+	border-radius: 6px;
+	position: absolute;
+	top: 100px;
+	left: 10px;
+	box-shadow: 10px 10px 5px #336699;
+}
+
+.up_ul {
+	list-style: none;
+}
+
+.dv_upmain {
+	margin: auto;
+	/*background-color: #336699;*/
+	width: 85%;
+}
+
+.up_ul li {
+	margin: 5px;
+	/*background-color: #ff3355;*/
+	height: 50px;
+}
+
+.up_ul b {
+	display: inline-block;
+	width: 120px;
+	/*background-color: red;*/
+	height: 100%;
+	text-align: right;
+	line-height: 50px;
+	font-family: "楷体";
+	font-size: 20px;
+}
+
+.up_ul input[type="text"] {
+	width: 240px;
+	height: 35px;
+	outline-style: none;
+	border: solid 1px #336699;
+	border-radius: 6px;
+	color: #336699;
+	font-weight: 600;
+	font-size: 18px;
+	padding-left: 5px;
+	font-family: "楷体";
+}
+
+.up_ul img {
+	width: 30px;
+	border-radius: 50%;
+}
+
+.up_ul input[type="radio"] {
+	width: 20px;
+	height: 20px;
+}
+
+.up_ul label {
+	margin-left: 40px;
+}
+
+.up_ul select {
+	width: 247px;
+	height: 35px;
+	outline-style: none;
+	border: solid 1px #336699;
+	border-radius: 6px;
+	color: #336699;
+	font-weight: 600;
+	font-size: 18px;
+	padding-left: 5px;
+	font-family: "楷体";
+}
+
+#dv_upbottom {
+	width: 80%;
+	margin: auto;
+	border-top: solid 1px #336699;
+	margin-top: 30px;
+	padding: 20px;
+}
+
+#dv_upbottom button {
+	border: 0px;
+	background-color: #336699;
+	color: #fff;
+	width: 70px;
+	height: 40px;
+	border-radius: 6px;
+	outline-style: none;
+}
+
+#up_sub {
+	margin-left: 25%;
+}
+
+#up_res {
+	margin-left: 10%;
+}
+
+#dv_upbottom button:hover {
+	color: #336699;
+	font-weight: 600;
+	background-color: #fff;
+	cursor: pointer;
+	border: solid 1px #336699;
+}

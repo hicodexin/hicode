@@ -41,7 +41,7 @@ public class TeacherController {
 		String start = request.getParameter("start");
 		String count = request.getParameter("count");
 		
-		List<Teacher> teacher = teacherService.getTeacherAll(1, 3);
+		List<Teacher> teacher = teacherService.getTeacherAll(0, 10);
 		
 		for (Teacher t : teacher) {
 			System.out.println(t.getT_id()+" : "+t.getT_name());
