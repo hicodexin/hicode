@@ -13,6 +13,28 @@
 	line-height: 90px;
 }
 
+#bt_1 {
+	width: 90px;
+	height: 40px;
+	background-color: #fff;
+	color: #336699;
+	outline-style: none;
+	position: absolute;
+	top: 90px;
+	left: 75%;
+	border: solid 1px #336699;
+	border-radius: 6px;
+	font-weight: 600;
+	font-size: 18px;
+	font-family: "楷体";
+}
+
+#bt_1:HOVER {
+	background-color: #336699;
+	color: #fff;
+	cursor: pointer;
+}
+
 #dv_table {
 	height: 650px;
 }
@@ -149,6 +171,7 @@
 	top: 100px;
 	left: 10px;
 	box-shadow: 10px 10px 5px #336699;
+	z-index: 9;
 }
 
 .up_ul {
