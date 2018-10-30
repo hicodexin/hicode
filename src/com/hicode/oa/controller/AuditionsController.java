@@ -32,7 +32,7 @@ public class AuditionsController {
 	
 	@RequestMapping("/to_login")
 	public String login(){
-		System.out.println("--------------------");
+		System.out.println("-------auditions-------------");
 		return "/WEB-INF/VisitorsPage/Auditions.html";
 	}
 	
@@ -64,16 +64,9 @@ public class AuditionsController {
 			obj.put("adv_name", adv1.getAdviser().getAdv_name());
 			obj.put("beizhu", adv1.getRemarks());
 			
-			System.out.println(adv1.getAu_id()+" : "+adv1.getSt_name()
-								+" : "+adv1.getTeacher().getT_name()
-								+" : "+adv1.getAdviser().getAdv_name() );
-			
-			
 			objs.add(obj);
-			
 		}
 		
-		System.out.println(objs.size());
 		JSONObject obj_arr = new JSONObject();
 		obj_arr.put("list_advs", objs);
 		return obj_arr.toString();

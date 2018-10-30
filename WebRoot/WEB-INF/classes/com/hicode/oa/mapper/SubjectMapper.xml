@@ -4,7 +4,7 @@
 	
 	
 	<sql id="all_column">
-		 sub_id, sub_name
+		 sub_id, sub_name,if_downline
 	</sql>
 	
 	<select id="getSubjectByID" parameterType="java.lang.String" resultType="Subject">

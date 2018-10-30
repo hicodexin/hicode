@@ -3,18 +3,26 @@
 <mapper namespace="com.hicode.oa.dao.CustomerDAO">
 	
 	<sql id="all_column">
-		 er_id, au_id,sub_id,period,if_renewal,t_id,first_time,if_done,phone
+		 er_id, au_id,sub_id,period,if_renewal,t_id,first_time,if_done,phone,if_refund,remarks
 	</sql>
 	
-	<select id="getCustomerByID" parameterType="java.lang.Integer" resultType="Customer">
+	<select id="getCustomerByID" parameterType="java.lang.Integer" resultMap="getCustomer_oop">
 		select <include refid="all_column"></include> from customer where er_id = #{er_id};
 	</select>
 	
-	<select id="getCustomerAll" parameterType="java.util.Map" resultType="Customer">
+	<select id="getCustomerAll" parameterType="java.util.Map" resultMap="getCustomer_oop">
 	
 		select <include refid="all_column"></include> from customer limit #{start},#{count};
 	
 	</select>
+	<resultMap id="getCustomer_oop" type="Customer">
+		<association property="auditions" column="au_id" select="com.hicode.oa.dao.AuditionsDAO.getAudNameByID">
+		</association>
+		<association property="subject" column="sub_id" select="com.hicode.oa.dao.SubjectDAO.getSubjectByID">
+		</association>
+		<association property="teacher" column="t_id" select="com.hicode.oa.dao.TeacherDAO.getTeacherByID">
+		</association> 
+	</resultMap>
 	
 </mapper>
 

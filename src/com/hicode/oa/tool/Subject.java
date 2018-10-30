@@ -3,7 +3,7 @@ package com.hicode.oa.tool;
 import java.io.Serializable;
 
 /**
- * �γ���
+ * 课程科目
  * 
  * @author xinpeixiang
  * @date 2018-10-19
@@ -14,6 +14,10 @@ public class Subject implements Serializable {
 
 	private String sub_id;
 	private String sub_name;
+	/**
+	 * 是否下线(0:未下线；1:已下线)
+	 */
+	private Integer if_downline;
 
 	public String getSub_id() {
 		return sub_id;
@@ -31,8 +35,13 @@ public class Subject implements Serializable {
 		this.sub_name = sub_name;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public Integer getIf_downline() {
+		return if_downline;
 	}
+
+	public void setIf_downline(Integer if_downline) {
+		this.if_downline = if_downline;
+	}
+
 
 }

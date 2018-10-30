@@ -163,6 +163,7 @@
 						if(a.teacher[i].time_endDate){
 							var endDate = timestampToTime(a.teacher[i].time_endDate);
 							str += "<td>"+endDate+"</td>";
+							$(tr).css("color","#b0b0b0");
 						}else{
 							str += "<td>   </td>";
 						}

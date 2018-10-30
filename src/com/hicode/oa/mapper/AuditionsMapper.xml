@@ -13,6 +13,11 @@
 		select <include refid="all_column"></include> from auditions where au_id = #{au_id};
 	</select>
 	
+	<!-- 获取学生姓名 -->
+	<select id="getAudNameByID" parameterType="java.lang.Integer" resultType="Auditions">
+		select st_name from auditions where au_id = #{au_id};
+	</select>
+	
 	<select id="getAuditionsAll" parameterType="java.util.Map"  resultMap="getAuditions_oop">
 	
 		select <include refid="all_column"></include> from auditions limit #{start},#{count};
