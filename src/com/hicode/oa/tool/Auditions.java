@@ -2,6 +2,7 @@ package com.hicode.oa.tool;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 试听课记录
@@ -32,11 +33,11 @@ public class Auditions implements Serializable {
 	/**
 	 * 试听课授课老师
 	 */
-	private String t_id;
+	private Teacher teacher;
 	/**
 	 * 顾问id
 	 */
-	private String adv_id;
+	private Adviser adviser;
 	/**
 	 * 备注
 	 */
@@ -82,22 +83,6 @@ public class Auditions implements Serializable {
 		this.st_class = st_class;
 	}
 
-	public String getT_id() {
-		return t_id;
-	}
-
-	public void setT_id(String t_id) {
-		this.t_id = t_id;
-	}
-
-	public String getAdv_id() {
-		return adv_id;
-	}
-
-	public void setAdv_id(String adv_id) {
-		this.adv_id = adv_id;
-	}
-
 	public String getRemarks() {
 		return remarks;
 	}
@@ -106,8 +91,22 @@ public class Auditions implements Serializable {
 		this.remarks = remarks;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public Teacher getTeacher() {
+		return teacher;
 	}
+
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+	}
+
+	public Adviser getAdviser() {
+		return adviser;
+	}
+
+	public void setAdviser(Adviser adviser) {
+		this.adviser = adviser;
+	}
+
+
 
 }

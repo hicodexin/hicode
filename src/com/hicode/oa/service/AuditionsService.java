@@ -14,8 +14,12 @@ public interface AuditionsService {
 	
 	public Auditions getAuditionsByID(Integer au_id);
 	
-	
-	public List<Auditions> getAuditionsAll(Integer start, Integer count);
-	
+	/**
+	 * 获取试听课详情
+	 * @param start 开始
+	 * @param count 长度
+	 * @return
+	 */
+	public List<Auditions> getAuditionsByInfo(Integer start, Integer count);
 	
 }

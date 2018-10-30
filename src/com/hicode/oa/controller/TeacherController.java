@@ -40,13 +40,16 @@ public class TeacherController {
 		
 		String start = request.getParameter("start");
 		String count = request.getParameter("count");
-		
-		List<Teacher> teacher = teacherService.getTeacherAll(0, 10);
-		
-		for (Teacher t : teacher) {
-			System.out.println(t.getT_id()+" : "+t.getT_name());
+		int s = 0;
+		int e = 10;
+		if(start != null){
+			s = Integer.valueOf(start);
 		}
-		System.out.println("--------------------");
+		if(count != null){
+			e = Integer.valueOf(count);
+		}
+		
+		List<Teacher> teacher = teacherService.getTeacherAll(s, e);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("teacher", teacher);

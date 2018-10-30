@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * ½ÌÊ¦Àà
+ * ï¿½ï¿½Ê¦ï¿½ï¿½
  * @author xinpeixiang 
  * @date 2018-10-19
  */
@@ -14,27 +14,27 @@ public class Teacher  implements Serializable{
 	private String t_id;
 	private String t_name;
 	/**
-	 * ½ÌÊ¦ĞÔ±ğ£¨1£ºÄĞ£»0£ºÅ®£©
+	 * æ•™å¸ˆæ€§åˆ«ï¼ˆ1ï¼šç”·ï¼›0ï¼šå¥³ï¼‰
 	 */
 	private Integer t_sex;
 	/**
-	 * ÊÇ·ñÔÚÖ°£¨1£ºÔÚÖ°£»0£º²»ÔÚÖ°£©
+	 * æ˜¯å¦åœ¨èŒï¼ˆ1ï¼šåœ¨èŒï¼›0ï¼šä¸åœ¨èŒï¼‰
 	 */
 	private Integer if_Onthejob;
 	/**
-	 * ÈëÖ°Ê±¼ä
+	 * å…¥èŒæ—¶é—´
 	 */
 	private Date time_creatDate;
 	/**
-	 * ÀëÖ°Ê±¼ä
+	 * ç¦»èŒæ—¶é—´
 	 */
 	private Date time_endDate;
 	/**
-	 * µ±Ç°Ö°Îñ/Ö°³Æ
+	 * å½“å‰èŒåŠ¡/èŒç§°
 	 */
 	private String title;
 	/**
-	 * ½ú¼¶Ê±¼ä
+	 * æ™‹çº§æ—¶é—´
 	 */
 	private Date title_updatetime;
 	

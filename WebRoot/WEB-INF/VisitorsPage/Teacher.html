@@ -136,7 +136,7 @@
   		$("#hidd_mask").css("height",bd_hig+"px");
   	
   		var start = 0;
-  		var count = 2;
+  		var count = 10;
   		$("#dv_update").hide();
   		$("#hidd_mask").hide();
 		$.post("/hicode/teacher/showTeacherByInfo.spc",{"start":start,"count":count},function(a){
@@ -221,6 +221,11 @@
 					
 				}
 			}
+			var hei = $("#tea_tbl").css("height");
+			hei = hei.substr(0,hei.length-2 );
+ 			if(hei>650){
+ 				$("#dv_table").css("height","800px");
+ 			}
 		
 		},"json");
   			

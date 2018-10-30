@@ -21,7 +21,7 @@ public class AuditionsServiceImpl implements AuditionsService{
 	}
 
 	@Override
-	public List<Auditions> getAuditionsAll(Integer start, Integer count) {
+	public List<Auditions> getAuditionsByInfo(Integer start, Integer count) {
 		// TODO Auto-generated method stub
 		return auditionsDAO.getAuditionsAll(start, count);
 	}

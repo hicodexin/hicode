@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * ¹ËÎÊ
+ * é¡¾é—®è¯¦æƒ…
  * 
  * @author xinpeixiang
  * @date 2018-10-19
@@ -16,19 +16,19 @@ public class Adviser implements Serializable{
 	private String adv_id;
 	private String adv_name;
 	/**
-	 * ¹ËÎÊĞÔ±ğ£¨1£ºÄĞ£»0£ºÅ®£©
+	 * é¡¾é—®æ€§åˆ«ï¼ˆ1ï¼šç”·ï¼›0ï¼šå¥³ï¼‰
 	 */
 	private Integer adv_sex;
 	/**
-	 * ÊÇ·ñÔÚÖ°£¨1£ºÔÚÖ°£»0£º²»ÔÚÖ°£©
+	 * æ˜¯å¦åœ¨èŒï¼ˆ1ï¼šåœ¨èŒï¼›0ï¼šä¸åœ¨èŒï¼‰
 	 */
 	private Integer if_Onthejob;
 	/**
-	 * ÈëÖ°Ê±¼ä
+	 * å…¥èŒæ—¶é—´
 	 */
 	private Date time_creatDate;
 	/**
-	 * ÀëÖ°Ê±¼ä
+	 * ç¦»èŒæ—¶é—´
 	 */
 	private Date time_endDate;
 

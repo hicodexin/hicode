@@ -9,15 +9,25 @@
 		 
 	</sql>
 	
-	<select id="getAuditionsByID" parameterType="java.lang.Integer" resultType="Auditions">
+	<select id="getAuditionsByID" parameterType="java.lang.Integer" resultMap="getAuditions_oop">
 		select <include refid="all_column"></include> from auditions where au_id = #{au_id};
 	</select>
 	
-	<select id="getAuditionsAll" parameterType="java.util.Map" resultType="Auditions">
+	<select id="getAuditionsAll" parameterType="java.util.Map"  resultMap="getAuditions_oop">
 	
 		select <include refid="all_column"></include> from auditions limit #{start},#{count};
 	
 	</select>
+	
+	<!-- 多对一处理 -->
+	<resultMap id="getAuditions_oop" type="Auditions">
+		<!-- 一的一方 -->
+		 <association property="teacher" column="t_id" select="com.hicode.oa.dao.TeacherDAO.getTeacherByID">
+	   	 </association>
+	   	 <!-- 一的一方 -->
+	   	 <association property="adviser" column="adv_id" select="com.hicode.oa.dao.AdviserDAO.getAdviserByID">
+	   	 </association>
+	</resultMap>
 	
 </mapper>
 
