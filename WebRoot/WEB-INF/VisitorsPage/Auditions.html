@@ -6,6 +6,20 @@
 <meta name="keywords" content="keyword1,keyword2,keyword3">
 <meta name="description" content="this is my page">
 <meta charset="UTF-8">
+<style type="text/css">
+		*{
+			margin: 0px;
+			padding: 0px;
+		}
+		#hidd_mask{
+			background-color: #D0D0D0;
+			opacity: 0.5;
+			width:100%;
+			position: absolute;
+			z-index: 6;
+		}
+		
+	</style>
 
 <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
 <link type="text/css" rel="stylesheet"
@@ -21,44 +35,83 @@
 	<!-- 隐藏  -->
 	<div id="hidd_mask"></div>
 	<div id="dv_update">
-		<div class="dv_title" id="dv_title">修改讲师信息</div>
+	<form action="#" method="post">
+		<div class="dv_title" id="dv_title">添加学生信息</div>
 		<div class="dv_upmain">
 			<ul class="up_ul">
-				<li><b>序号 : </b> <input type="text" id="tea_list" value=""
-					disabled="disabled" /></li>
-				<li><b>教师姓名 : </b> <input type="text" id="userName" /></li>
-				<li><b>教师性别 : </b> <label for="sex_b"> <img
-						src="/hicode/sysimg/face_boy.jpg" /> <input type="radio"
-						id="sex_b" name="t_sex" value="1" />
-				</label> <label for="sex_g"> <img src="/hicode/sysimg/face_girl.jpg" />
+				<li>
+					<b>序号 : </b> 
+					<input type="text" id="tea_list" value="" disabled="disabled" />
+				</li>
+				<li>
+					<b>试听时间 : </b> 
+					<input id="time_creatDate" type="text" readonly="readonly">
+				</li>
+				<li>
+					<b>学生姓名 : </b> 
+					<input type="text" id="userName" />
+				</li>
+				<li>
+					<b>学生性别 : </b> 
+					<label for="sex_b"> 
+						<img src="/hicode/sysimg/face_boy.jpg" /> 
+						<input type="radio" id="sex_b" name="t_sex" checked="checked" value="1" />
+					</label> 
+					<label for="sex_g"> 
+						<img src="/hicode/sysimg/face_girl.jpg" />
 						<input type="radio" id="sex_g" name="t_sex" value="0" />
-				</label></li>
-				<li><b>是否在职 : </b> <label for="job_b"> <img
-						src="/hicode/sysimg/face_smile.jpg" /> <input type="radio"
-						id="job_b" name="if_Onthejob" value="1" />
-				</label> <label for="job_g"> <img
-						src="/hicode/sysimg/face_grieved.jpg" /> <input type="radio"
-						id="job_g" name="if_Onthejob" value="0" />
-				</label></li>
-				<li><b>入职时间 : </b> <input id="time_creatDate" type="text"
-					disabled="disabled"></li>
-				<li><b>离职时间 : </b> <input class="datainp" id="time_endDate"
-					type="text" placeholder="请选择"></li>
-				<li><b>当前职称 : </b> <select id="update_sel">
-						<option>讲师助教</option>
-						<option>初级讲师</option>
-						<option>中级讲师</option>
-						<option>高级讲师</option>
-						<option>教学总监</option>
-				</select></li>
-				<li><b>晋级时间 : </b> <input class="datainp" id="title_updatetime"
-					type="text" placeholder="请选择" readonly></li>
+					</label>
+				</li>
+				<li>
+					<b>学校/年级 : </b> 
+					<select id="update_selclass">
+							<option>学前班</option>
+							<option>一年级</option>
+							<option>二年级</option>
+							<option>三年级</option>
+							<option>四年级</option>
+							<option>五年级</option>
+							<option>六年级</option>
+							<option>初一</option>
+							<option>初二</option>
+							<option>初三</option>
+							<option>高一</option>
+							<option>高二</option>
+							<option>高三</option>
+					</select>
+				</li>
+				<li>
+					<b>授课老师: </b> 
+					<select id="update_selteas">
+							<option value="t_1001">辛</option>
+							<option value="t_1002">梁</option>
+							<option value="t_1003">张</option>
+							<option value="t_1004">王</option>
+							<option value="t_1005">相</option>
+					</select>
+				</li>
+				<li>
+					<b>服务顾问: </b> 
+					<select id="update_seladvs">
+							<option value="adv_1001">辛</option>
+							<option value="adv_1002">梁</option>
+							<option value="adv_1003">张</option>
+							<option value="adv_1004">王</option>
+							<option value="adv_1005">相</option>
+					</select>
+				</li>
+				<li>
+					<b>备注: </b> 
+					<input type="text" id="remarks"></textarea>
+				</li>
+				
 			</ul>
 		</div>
 		<div id="dv_upbottom">
-			<button id="up_sub">提交</button>
+			<button id="up_sub" type="button">提交</button>
 			<button id="up_res">返回</button>
 		</div>
+	</form>
 	</div>
 
 	<div class="dv_top"></div>
@@ -99,6 +152,10 @@
 
 		var start = 0;
 		var count = 10;
+		var bd_hig = document.documentElement.clientHeight;
+  		$("#hidd_mask").css("height",bd_hig+"px");
+  		$("#dv_update").hide();
+  		$("#hidd_mask").hide();
 		
 		$.post("/hicode/auditions/showAuditionsByInfo.spc", {
 			"start" : start,
@@ -148,28 +205,78 @@
 		// 日历插件
 		jeDate({
 			dateCell : "#time_creatDate",
-			format : "YYYY-MM-DD",
+			/* format : "YYYY-MM-DD", */
 			isinitVal : true,
-			isTime : false, //isClear:false,
+			isTime : true, // isClear:true,
 			minDate : "1014-09-19 00:00:00"
 		}) ;
-		jeDate({
-			dateCell : "#time_endDate",
-			isinitVal : true,
-			isTime : false, //isClear:false,
-			minDate : "1014-09-19 00:00:00"
-		}) ;
-		jeDate({
-			dateCell : "#title_updatetime",
-			format : "YYYY-MM-DD",
-			isinitVal : true,
-			isTime : false, //isClear:false,
-			minDate : "1014-09-19 00:00:00"
-		}) ;
+		
 		// 点击返回消失
   		$("#up_res").click(function(){
   			$("#hidd_mask").hide().hide(300);
  			$("#dv_update").show().hide(300);
+ 		});
+ 		
+ 		//点击添加按钮
+ 		$("#bt_1").click(function(){
+ 			$("#hidd_mask").hide().show(300);
+ 			$("#dv_update").hide().show(300);
+ 			var len = $("#tea_tbl tbody tr").length;   
+			$("#tea_list").val(len+1);
+			$("#userName").val("");
+			$("#time_creatDate").val("");
+ 		});
+ 		
+ 		$("#time_creatDate").blur(function(){
+ 			if($(this).val().length < 1){
+ 				console.log("00000");
+ 				$(this).css("borderColor","#f00");
+ 				
+ 			}else{
+ 				console.log("00000");
+ 				$(this).css("borderColor","#336699");
+ 			}
+ 			
+ 		});
+ 		/* 添加学员信息，提交按钮  */
+ 		$("#up_sub").click(function(){
+ 			if($("#time_creatDate").val().length < 10){
+ 				$("#time_creatDate").css("borderColor","#f00");
+ 				return;
+ 			}else{
+ 				$("#time_creatDate").css("borderColor","#336699");
+ 			}
+ 			if($("#userName").val().length<2){
+ 				$("#userName").css("borderColor","#f00");
+ 				return;
+ 			}else{
+ 				$("#userName").css("borderColor","#336699");
+ 			}
+ 			
+ 			var data = {
+ 						"time_creatDate":$("#time_creatDate").val(),
+			 			"userName":$("#userName").val(),
+			 			"t_sex":$("[name='t_sex']").val(),
+			 			"update_selclass":$("#update_selclass").val(),
+			 			"update_selteas":$("#update_selteas").val(),
+			 			"update_seladvs":$("#update_seladvs").val(),
+			 			"remarks":$("#remarks").val()
+			 			
+ 			};
+ 			console.log(data);
+ 			
+ 		 	$.post("/hicode/auditions/do_insertAuditions.spc",data,function(e){
+ 				console.log(e);
+ 				if(e.list_advs == 'ok'){
+ 					alert("添加成功");
+ 				}else{
+ 					alert("添加失败,请联系管理员。。。。");
+ 				}
+ 				$("#hidd_mask").hide().hide(300);
+ 				$("#dv_update").show().hide(300);
+ 			
+ 			},"json");
+ 			
  		});
  		
 	});

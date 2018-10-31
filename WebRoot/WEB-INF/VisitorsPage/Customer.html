@@ -21,29 +21,39 @@
 	<!-- 隐藏  -->
 	<div id="hidd_mask"></div>
 	<div id="dv_update">
-		<div class="dv_title" id="dv_title">修改讲师信息</div>
+		<div class="dv_title" id="dv_title">添加学生信息</div>
 		<div class="dv_upmain">
 			<ul class="up_ul">
-				<li><b>序号 : </b> <input type="text" id="tea_list" value=""
-					disabled="disabled" /></li>
-				<li><b>教师姓名 : </b> <input type="text" id="userName" /></li>
-				<li><b>教师性别 : </b> <label for="sex_b"> <img
-						src="/hicode/sysimg/face_boy.jpg" /> <input type="radio"
-						id="sex_b" name="t_sex" value="1" />
-				</label> <label for="sex_g"> <img src="/hicode/sysimg/face_girl.jpg" />
+				<li><b>序号 : </b> <input type="text" id="tea_list" value=""disabled="disabled" /></li>
+				<li><b>学生姓名 : </b> <input type="text" id="userName" /></li>
+				<li>
+					<b>学生性别 : </b> 
+					<label for="sex_b"> 
+						<img src="/hicode/sysimg/face_boy.jpg" /> 
+						<input type="radio" id="sex_b" name="t_sex" value="1" />
+					</label> 
+					<label for="sex_g"> 
+						<img src="/hicode/sysimg/face_girl.jpg" />
 						<input type="radio" id="sex_g" name="t_sex" value="0" />
-				</label></li>
-				<li><b>是否在职 : </b> <label for="job_b"> <img
-						src="/hicode/sysimg/face_smile.jpg" /> <input type="radio"
-						id="job_b" name="if_Onthejob" value="1" />
-				</label> <label for="job_g"> <img
-						src="/hicode/sysimg/face_grieved.jpg" /> <input type="radio"
-						id="job_g" name="if_Onthejob" value="0" />
-				</label></li>
-				<li><b>入职时间 : </b> <input id="time_creatDate" type="text"
-					disabled="disabled"></li>
-				<li><b>离职时间 : </b> <input class="datainp" id="time_endDate"
-					type="text" placeholder="请选择"></li>
+					</label>
+				</li>
+				<li>
+					<b>是否在职 : </b> 
+					<label for="job_b"> 
+						<img src="/hicode/sysimg/face_smile.jpg" /> 
+						<input type="radio" id="job_b" name="if_Onthejob" value="1" />
+					</label> 
+					<label for="job_g"> 
+						<img src="/hicode/sysimg/face_grieved.jpg" /> 
+						<input type="radio" id="job_g" name="if_Onthejob" value="0" />
+					</label>
+				</li>
+				<li><b>入职时间 : </b> 
+				<input id="time_creatDate" type="text" disabled="disabled"></li>
+				<li>
+					<b>离职时间 : </b> 
+					<input class="datainp" id="time_endDate" type="text" placeholder="请选择">
+				</li>
 				<li><b>当前职称 : </b> <select id="update_sel">
 						<option>讲师助教</option>
 						<option>初级讲师</option>
@@ -63,7 +73,7 @@
 
 	<div class="dv_top"></div>
 	<hr>
-	<div class="dv_title">试听课信息详情</div>
+	<div class="dv_title">报名信息详情</div>
 	<button id="bt_1">添加</button>
 	<div id="dv_table">
 		<table id="tea_tbl" cellspacing="0">

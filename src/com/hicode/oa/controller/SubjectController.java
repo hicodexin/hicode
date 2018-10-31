@@ -24,7 +24,7 @@ public class SubjectController {
 	
 	@RequestMapping("/to_login")
 	public String login(){
-		System.out.println("-------auditions-------------");
+		System.out.println("-------subject-------------");
 		return "/WEB-INF/VisitorsPage/Subject.html";
 	}
 	

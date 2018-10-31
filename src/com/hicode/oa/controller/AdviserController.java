@@ -30,7 +30,7 @@ public class AdviserController {
 	
 	@RequestMapping("/to_login")
 	public String login(){
-		System.out.println("--------------------");
+		System.out.println("----------to_login----------");
 		return "/WEB-INF/VisitorsPage/Adviser.html";
 	}
 	

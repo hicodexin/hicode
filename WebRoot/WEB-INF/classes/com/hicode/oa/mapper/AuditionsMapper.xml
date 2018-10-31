@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hicode.oa.dao.AuditionsDAO">
-	
+	<!-- 多对一处理 -->
+	<resultMap id="getAuditions_oop" type="Auditions">
+		<!-- 一的一方 -->
+		 <association property="teacher" column="t_id" select="com.hicode.oa.dao.TeacherDAO.getTeacherByID">
+	   	 </association>
+	   	 <!-- 一的一方 -->
+	   	 <association property="adviser" column="adv_id" select="com.hicode.oa.dao.AdviserDAO.getAdviserByID">
+	   	 </association>
+	</resultMap>
 	
 	<sql id="all_column">
 		 au_id, st_time,st_name,st_sex,st_class,t_id,adv_id,remarks
-		 
-		 
 	</sql>
 	
 	<select id="getAuditionsByID" parameterType="java.lang.Integer" resultMap="getAuditions_oop">
@@ -19,20 +25,15 @@
 	</select>
 	
 	<select id="getAuditionsAll" parameterType="java.util.Map"  resultMap="getAuditions_oop">
-	
 		select <include refid="all_column"></include> from auditions limit #{start},#{count};
-	
 	</select>
 	
-	<!-- 多对一处理 -->
-	<resultMap id="getAuditions_oop" type="Auditions">
-		<!-- 一的一方 -->
-		 <association property="teacher" column="t_id" select="com.hicode.oa.dao.TeacherDAO.getTeacherByID">
-	   	 </association>
-	   	 <!-- 一的一方 -->
-	   	 <association property="adviser" column="adv_id" select="com.hicode.oa.dao.AdviserDAO.getAdviserByID">
-	   	 </association>
-	</resultMap>
+	<insert id="do_insertAuditions" parameterType="Auditions" keyProperty="au_id">
+		insert into auditions (st_time,st_name,st_sex,st_class,t_id,adv_id,remarks)
+		values(#{st_time},#{st_name},#{st_sex},#{st_class},#{teacher.t_id},#{adviser.adv_id},#{remarks});
+	
+	</insert>
+	
 	
 </mapper>
 

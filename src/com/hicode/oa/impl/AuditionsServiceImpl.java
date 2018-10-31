@@ -26,4 +26,10 @@ public class AuditionsServiceImpl implements AuditionsService{
 		return auditionsDAO.getAuditionsAll(start, count);
 	}
 
+	@Override
+	public Integer do_insertAuditions(Auditions auditions) {
+		// TODO Auto-generated method stub
+		return auditionsDAO.do_insertAuditions(auditions);
+	}
+
 }

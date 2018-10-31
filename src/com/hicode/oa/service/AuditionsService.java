@@ -22,4 +22,12 @@ public interface AuditionsService {
 	 */
 	public List<Auditions> getAuditionsByInfo(Integer start, Integer count);
 	
+	/**
+	 * 添加试听学员
+	 * @param auditions
+	 * @return
+	 */
+	public Integer do_insertAuditions(Auditions auditions);
+
+	
 }

@@ -30,6 +30,12 @@ public class AuditionsDAO extends SysDAO {
 		map.put("count", count);
 		return selectList(nameSpace+"getAuditionsAll", map);
 	}
+	
+	public Integer do_insertAuditions(Auditions auditions) {
+		
+		return insert(nameSpace+"do_insertAuditions", auditions);
+		
+	}
 
 	
 }
