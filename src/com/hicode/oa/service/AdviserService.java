@@ -22,4 +22,10 @@ public interface AdviserService {
 	 */
 	public List<Adviser> getAdvNameAndID();
 	
+	/**
+	 * 获取数量
+	 * @return
+	 */
+	public Integer getAdvisersForCount();
+	
 }

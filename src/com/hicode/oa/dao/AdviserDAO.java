@@ -41,7 +41,9 @@ public class AdviserDAO extends SysDAO{
 		return selectList(nameSpace+"getAdvNameAndID");
 	}
 
-	
+	public Integer getAdvisersForCount(){
+		return selectOne(nameSpace+"getAdvisersForCount");
+	}
 	
 	
 	

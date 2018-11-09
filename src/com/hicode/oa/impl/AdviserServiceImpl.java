@@ -39,4 +39,10 @@ public class AdviserServiceImpl implements AdviserService{
 		return adviserDAO.getAdvNameAndID();
 	}
 
+	@Override
+	public Integer getAdvisersForCount() {
+		// TODO Auto-generated method stub
+		return adviserDAO.getAdvisersForCount();
+	}
+
 }

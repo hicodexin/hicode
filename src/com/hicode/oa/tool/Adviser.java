@@ -19,6 +19,12 @@ public class Adviser implements Serializable{
 	 * 顾问性别（1：男；0：女）
 	 */
 	private Integer adv_sex;
+	
+	/**
+	 * 当前职务
+	 */
+	private String title;
+	
 	/**
 	 * 是否在职（1：在职；0：不在职）
 	 */
@@ -31,6 +37,11 @@ public class Adviser implements Serializable{
 	 * 离职时间
 	 */
 	private Date time_endDate;
+	
+	/**
+	 * 晋级时间
+	 */
+	private Date title_updatetime;
 
 	public String getAdv_id() {
 		return adv_id;
@@ -54,6 +65,14 @@ public class Adviser implements Serializable{
 
 	public void setAdv_sex(Integer adv_sex) {
 		this.adv_sex = adv_sex;
+	}
+	
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public Integer getIf_Onthejob() {
@@ -80,4 +99,13 @@ public class Adviser implements Serializable{
 		this.time_endDate = time_endDate;
 	}
 
+	public Date getTitle_updatetime() {
+		return title_updatetime;
+	}
+
+	public void setTitle_updatetime(Date title_updatetime) {
+		this.title_updatetime = title_updatetime;
+	}
+	
+	
 }

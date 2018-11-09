@@ -9,39 +9,54 @@
     
     <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
 	<style type="text/css">
+		*{
+			margin: 0px;
+			padding: 0px;
+		}
 		a{
 			text-decoration:none;
 			display: inline-block;
-			width: 90px;
-			height: 40px;
+			width: 200px;
+			height: 300px;
 			background-color: #336699;
 			color:#fff;
 			text-align: center;
-			line-height: 40px;
+			line-height: 300px;
 			margin: 20px;
 			border-radius:6px; 
+			float: left;
+			font-size: 25px;
 			
 		}
 		a:HOVER {
 			background-color: orange;
 		}
-	
+		#dv_show{
+			width: 80%;
+			margin: auto;
+		}
 	</style>
+	<link type="text/css" rel="stylesheet" href="/hicode/syscss/teacher_page.css" />
   </head>
   
   <body bgColor="#ff6666">
-    This is my HTML page. <br>
-    <a href="teacher/showTeacher.spc">yyyyyf</a>
+  <!--   <a href="teacher/showTeacher.spc">yyyyyf</a> -->
+  	<div class="dv_top"></div>
+	<hr>
+	<div class="dv_title">欢迎来到HICODE管理后台</div>
     <br>
-    <a href="subject/to_login.spc">课程类别</a>
-    <br />
-    <a href="/hicode/teacher/to_login.spc">展示老师</a>
-    <br>
-    <a href="/hicode/adviser/to_login.spc">顾问展示</a>
-    <br />
-    <a href="/hicode/auditions/to_login.spc">试听课展示</a>
-    <br>
-    <a href="/hicode/customer/to_login.spc">报名学员</a>
-    <br />
+   	<div id="dv_show">
+   		 <a href="subject/to_login.spc">课程类别</a>
+    
+	    <a href="/hicode/teacher/to_login.spc">展示老师</a>
+	   
+	    <a href="/hicode/adviser/to_login.spc">顾问展示</a>
+	  
+	    <a href="/hicode/auditions/to_login.spc">试听课展示</a>
+	    
+	    <a href="/hicode/customer/to_login.spc">报名学员</a>
+	    
+   		<a href="#">新功能</a>
+   	</div>
   </body>
 </html>

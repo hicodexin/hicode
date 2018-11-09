@@ -19,18 +19,27 @@
     <!-- 隐藏  -->
 	<div id="hidd_mask"></div>
 	<div id="dv_update">
-		<div class="dv_title" id="dv_title">修改讲师信息</div>
+		<div class="dv_title" id="dv_title">市场人员信息</div>
 		<div class="dv_upmain">
 			<ul class="up_ul">
 				<li><b>序号 : </b> <input type="text" id="tea_list" value=""
 					disabled="disabled" /></li>
-				<li><b>教师姓名 : </b> <input type="text" id="userName" /></li>
-				<li><b>教师性别 : </b> <label for="sex_b"> <img
+				<li><b>顾问姓名 : </b> <input type="text" id="userName" /></li>
+				<li><b>顾问性别 : </b> <label for="sex_b"> <img
 						src="/hicode/sysimg/face_boy.jpg" /> <input type="radio"
 						id="sex_b" name="t_sex" value="1" />
 				</label> <label for="sex_g"> <img src="/hicode/sysimg/face_girl.jpg" />
 						<input type="radio" id="sex_g" name="t_sex" value="0" />
 				</label></li>
+				<li><b>当前职务 : </b> <select id="update_sel">
+						<option>课程顾问</option>
+						<option>地推专员</option>
+						<option>TML专员</option>
+						<option>地推主管</option>
+						<option>TMK主管</option>
+						<option>顾问主管</option>
+						<option>市场总监</option>
+				</select></li>
 				<li><b>是否在职 : </b> <label for="job_b"> <img
 						src="/hicode/sysimg/face_smile.jpg" /> <input type="radio"
 						id="job_b" name="if_Onthejob" value="1" />
@@ -42,13 +51,7 @@
 					disabled="disabled"></li>
 				<li><b>离职时间 : </b> <input class="datainp" id="time_endDate"
 					type="text" placeholder="请选择"></li>
-				<li><b>当前职称 : </b> <select id="update_sel">
-						<option>讲师助教</option>
-						<option>初级讲师</option>
-						<option>中级讲师</option>
-						<option>高级讲师</option>
-						<option>教学总监</option>
-				</select></li>
+				
 				<li><b>晋级时间 : </b> <input class="datainp" id="title_updatetime"
 					type="text" placeholder="请选择" readonly></li>
 			</ul>
@@ -70,75 +73,54 @@
 					<th>序号</th>
 					<th>顾问姓名</th>
 					<th>顾问性别</th>
+					<th>当前职务</th>
 					<th>是否在职</th>
 					<th>入职时间</th>
 					<th>离职时间</th>
+					<th>晋级时间</th>
 					<th>操作</th>
 					<th>标记</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody id="tbl_body">
 			</tbody>
 		</table>
 	</div>
 	<div id="dv_page">
-		<button id="bt_first">首页</button>
-		<div id="dv_but">
-			<button href="#">1</button> 
-			<button href="#">2</button> 
-			<button href="#">3</button> 
-			<button href="#">4</button>
-		</div>
+		<button id="bt_first" mypage="1">首页</button>
+		<div id="dv_but"></div>
 		<button id="bt_end">尾页</button>
 	</div>
   </body>
  <script type="text/javascript">
 	$().ready(function() {
 
-		var start = 0;
-		var count = 10;
+		var bd_hig = document.documentElement.clientHeight;
+  		$("#hidd_mask").css("height",bd_hig+"px");
+  		$("#dv_update").hide();
+  		$("#hidd_mask").hide();
 		
-		$.post("/hicode/adviser/showAdviserByInfo.spc", {
-			"start" : start,
-			"count" : count
-		}, function(a) {
+		$.post("/hicode/adviser/showAdviserByInfo.spc", { "page" : 1 }, function(a) {
 			console.log(a.list_advs);
 			if (a) {
-				for (var i = 0; i < a.list_advs.length; i++) {
-					var tr = document.createElement("tr");
-					var str = "<td>" + (i + 1) + "</td>";
-						str += "<td>"+a.list_advs[i].name+"</td>";
-						
-						if(a.list_advs[i].sex == 1){
-							str += "<td><img src='/hicode/sysimg/face_boy.jpg'/> </td>";
-						}else{
-							str += "<td><img src='/hicode/sysimg/face_girl.jpg'/></td>";
+				creat_tb(a.list_advs,"#tbl_body");
+				/* 添加页码 */
+				if(a.all_num){
+					for(var k=0;k<a.all_num;k++){
+						var btn = document.createElement("button");
+						$(btn).html(k+1);
+						$(btn).attr("mypage",(k+1));
+						if(k==0){
+							$(btn).css({"backgroundColor":"#336699","color":"#fff"});
 						}
+						$(btn).click(function(){
+							change_page(this);
+						});
 						
-						if(a.list_advs[i].onthejob == 1){
-							str += "<td> <img src='/hicode/sysimg/face_smile.jpg' /> </td>";
-						}else{
-							str += "<td> <img src='/hicode/sysimg/face_grieved.jpg' /> </td>";
-						}
-						
-						var creatDate = timestampToTime(a.list_advs[i].opentime.time);
-						
-						str += "<td>"+creatDate+"</td>";
-						if(a.list_advs[i].endtime){
-							var endDate = timestampToTime(a.list_advs[i].endtime.time);
-							str += "<td>"+endDate+"</td>";
-							$(tr).css("color","#b0b0b0");
-						}else{
-							str += "<td>   </td>";
-						}
-					
-						var btid = a.list_advs[i].id;
-						str += "<td><button id = '"+btid+"' name='"+(i+1)+"'>修改</button></td>";
-						str += "<td><input type='checkbox' value='"+btid+"' /></td>";
-					$(tr).append(str);
-					$("#tea_tbl").append(tr);
-
-				} 
+						$("#dv_but").append(btn);
+					}
+					$("#bt_end").attr("mypage",a.all_num);
+				}
 				
 			}
 			var hei = $("#tea_tbl").css("height");
@@ -148,7 +130,98 @@
  			}
 		}, "json");
 
-		// 日历插件
+		// 点击返回消失
+  		$("#up_res").click(function(){
+  			$("#hidd_mask").hide().hide(300);
+ 			$("#dv_update").show().hide(300);
+ 		});
+ 		
+ 		//第一页
+ 		$("#bt_first").click(function(){
+ 			change_page(this);
+ 			$("#dv_but button:eq(0)").css({"backgroundColor":"#336699","color":"#fff"});
+ 		});
+ 		
+ 		//最后一页
+ 		$("#bt_end").click(function(){
+ 			change_page(this);
+ 			$("#dv_but button:eq(-1)").css({"backgroundColor":"#336699","color":"#fff"});
+ 		});
+ 		
+ 		//点击添加按钮
+ 		$("#bt_1").click(function(){
+ 			$("#hidd_mask").hide().show(300);
+ 			$("#dv_update").hide().show(300);
+ 			var len = $("#tea_tbl tbody tr").length;   
+			$("#tea_list").val(len+1);
+			$("#userName").val("");
+			$("#time_creatDate").val("");
+			
+			$.post("/hicode/teacher/showTeacher.spc",function(c){
+				console.log(c);
+				if(c.length > 0){
+					for(var i=0;i<c.length;i++){
+						var str = "<option value="+c[i].tid+">"+c[i].name+"</option>";
+						$("#update_selteas").append(str);
+					}
+				}
+			
+			},"json");
+			
+			$.post("/hicode/adviser/showAdviser.spc",function(f){
+				console.log(f);
+				if(f.length > 0){
+					for(var i=0;i<f.length;i++){
+						var str = "<option value="+f[i].id+">"+f[i].name+"</option>";
+						$("#update_seladvs").append(str);
+					}
+				}
+			
+			},"json");
+			
+ 		});
+ 		
+ 		/* 添加学员信息，提交按钮  */
+ 		$("#up_sub").click(function(){
+ 			if($("#time_creatDate").val().length < 10){
+ 				$("#time_creatDate").css("borderColor","#f00");
+ 				return;
+ 			}else{
+ 				$("#time_creatDate").css("borderColor","#336699");
+ 			}
+ 			if($("#userName").val().length<2){
+ 				$("#userName").css("borderColor","#f00");
+ 				return;
+ 			}else{
+ 				$("#userName").css("borderColor","#336699");
+ 			}
+ 			
+ 			var data = {
+ 						"time_creatDate":$("#time_creatDate").val(),
+			 			"userName":$("#userName").val(),
+			 			"t_sex":$("[name='t_sex']").val(),
+			 			"update_selclass":$("#update_selclass").val(),
+			 			"update_selteas":$("#update_selteas").val(),
+			 			"update_seladvs":$("#update_seladvs").val(),
+			 			"remarks":$("#remarks").val()
+ 			};
+ 			
+ 		 	$.post("/hicode/adviser/do_insertAdviser.spc",data,function(e){
+ 				$("#hidd_mask").hide().hide(300);
+ 				$("#dv_update").show().hide(300);
+ 				if(e.list_advs == 'ok'){
+ 					alert("添加成功");
+ 				}else{
+ 					alert("添加失败,请联系管理员。。。。");
+ 				}
+ 			
+ 			},"json");
+ 			
+ 		});
+ 		
+ 		
+ 		
+ 		// 日历插件
 		jeDate({
 			dateCell : "#time_creatDate",
 			format : "YYYY-MM-DD",
@@ -169,11 +242,66 @@
 			isTime : false, //isClear:false,
 			minDate : "1014-09-19 00:00:00"
 		}) ;
-		// 点击返回消失
-  		$("#up_res").click(function(){
-  			$("#hidd_mask").hide().hide(300);
- 			$("#dv_update").show().hide(300);
- 		});
+ 		
+ 		function change_page(this_dom){
+			$("#dv_but button").css({"backgroundColor":"#fff","color":"#336699"});
+			$(this_dom).css({"backgroundColor":"#336699","color":"#fff"});
+			
+			$.post("/hicode/adviser/showAdviserByInfo.spc",{"page":$(this_dom).attr("mypage")},function(a_s){
+				$("#tbl_body").html(' ');
+				
+				var js_arry = eval('(' + a_s + ')');
+				
+				creat_tb(js_arry.list_advs,"#tbl_body");
+			});
+		}
+		
+		/* back_all: 待便利的值 */
+ 		function creat_tb(back_all,p_dom){
+ 			for (var i = 0; i < back_all.length; i++) {
+				var tr = document.createElement("tr");
+				var str = "<td>" + (i + 1) + "</td>";
+					str += "<td>"+back_all[i].name+"</td>";
+					
+					if(back_all[i].sex == 1){
+						str += "<td><img src='/hicode/sysimg/face_boy.jpg'/> </td>";
+					}else{
+						str += "<td><img src='/hicode/sysimg/face_girl.jpg'/></td>";
+					}
+					str += "<td>"+back_all[i].title+"</td>";
+					
+					if(back_all[i].onthejob == 1){
+						str += "<td> <img src='/hicode/sysimg/face_smile.jpg' /> </td>";
+					}else{
+						str += "<td> <img src='/hicode/sysimg/face_grieved.jpg' /> </td>";
+					}
+					
+					var creatDate = timestampToTime(back_all[i].opentime.time);
+					str += "<td>"+creatDate+"</td>";
+					
+					if(back_all[i].endtime){
+						var endDate = timestampToTime(back_all[i].endtime.time);
+						str += "<td>"+endDate+"</td>";
+						$(tr).css("color","#b0b0b0");
+					}else{
+						str += "<td>   </td>";
+					}
+					
+					if(back_all[i].title_updatetime){
+						var updatetime = timestampToTime(back_all[i].title_updatetime.time);
+						str += "<td>"+updatetime+"</td>";
+					}else{
+						str += "<td>   </td>";
+					}
+				
+					var btid = back_all[i].id;
+					str += "<td><button id = '"+btid+"' name='"+(i+1)+"'>修改</button></td>";
+					str += "<td><input type='checkbox' value='"+btid+"' /></td>";
+				$(tr).append(str);
+				$(p_dom).append(tr);
+			
+			}
+ 		}
  		
 	});
 </script>

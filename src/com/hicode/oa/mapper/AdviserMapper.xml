@@ -4,7 +4,7 @@
 	
 	
 	<sql id="all_column">
-		 adv_id, adv_name,adv_sex,if_onthejob,time_creatDate,time_endDate
+		 adv_id, adv_name,adv_sex,title,if_onthejob,time_creatDate,time_endDate,title_updatetime
 	</sql>
 	
 	<select id="getAdviserByID" parameterType="java.lang.String" resultType="Adviser">
@@ -17,6 +17,10 @@
 	
 	<select id="getAdvNameAndID"  resultType="Adviser">
 		select adv_id, adv_name from adviser order by adv_id;
+	</select>
+	
+	<select id="getAdvisersForCount" resultType="java.lang.Integer">
+		select count(1) from adviser;
 	</select>
 </mapper>
 
