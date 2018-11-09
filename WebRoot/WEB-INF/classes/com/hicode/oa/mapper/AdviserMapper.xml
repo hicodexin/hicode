@@ -22,6 +22,21 @@
 	<select id="getAdvisersForCount" resultType="java.lang.Integer">
 		select count(1) from adviser;
 	</select>
+	
+	<insert id="do_insertAdvisers" parameterType="Adviser">
+		insert into adviser (adv_id, adv_name,adv_sex,title,if_onthejob,time_creatDate,time_endDate,title_updatetime)
+		values(#{adv_id},#{adv_name},#{adv_sex},#{title},#{if_Onthejob},#{time_creatDate},#{time_endDate},#{title_updatetime});
+	</insert>
+	
+	<!-- 获取最后一个市场人员的ID -->
+	<select id="getLastAdvisersID" resultType="java.lang.String">
+		select adv_id from adviser order by adv_id desc limit 0,1;
+	</select>
+	
+	
+	
+	
+	
 </mapper>
 
 

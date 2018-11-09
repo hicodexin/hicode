@@ -95,6 +95,7 @@
 		<div id="dv_upbottom">
 			<button id="up_sub" type="button">提交</button>
 			<button id="up_res">返回</button>
+			
 		</div>
 	</form>
 	</div>
@@ -137,35 +138,8 @@
   		$("#hidd_mask").css("height",bd_hig+"px");
   		$("#dv_update").hide();
   		$("#hidd_mask").hide();
-		
-		$.post("/hicode/auditions/showAuditionsByInfo.spc", { "page" : 1 }, function(a) {
-			console.log(a.list_advs);
-			if (a) {
-				creat_tb(a.list_advs,"#tbl_body");
-				/* 添加页码 */
-				if(a.all_num){
-					for(var k=0;k<a.all_num;k++){
-						var btn = document.createElement("button");
-						$(btn).html(k+1);
-						$(btn).attr("mypage",(k+1));
-						if(k==0){
-							$(btn).css({"backgroundColor":"#336699","color":"#fff"});
-						}
-						$(btn).click(function(){
-							change_page(this);
-						});
-						
-						$("#dv_but").append(btn);
-					}
-					$("#bt_end").attr("mypage",a.all_num);
-				}
-			}
-			var hei = $("#tea_tbl").css("height");
-			hei = hei.substr(0,hei.length-2 );
- 			if(hei>650){
- 				$("#dv_table").css("height","800px");
- 			}
-		}, "json");
+  		
+  		start_post();
 
 		// 日历插件
 		jeDate({
@@ -245,6 +219,8 @@
  				$("#dv_update").show().hide(300);
  				if(e.list_advs == 'ok'){
  					alert("添加成功");
+ 					$("#tbl_body").children("tr").remove();
+ 					start_post();
  				}else{
  					alert("添加失败,请联系管理员。。。。");
  				}
@@ -264,7 +240,39 @@
  			change_page(this);
  			$("#dv_but button:eq(-1)").css({"backgroundColor":"#336699","color":"#fff"});
  		});
- 		
+ 		/* 初始化数据 */
+ 		function start_post(){
+			$.post("/hicode/auditions/showAuditionsByInfo.spc", { "page" : 1 }, function(a) {
+				console.log(a.list_advs);
+				if (a) {
+					creat_tb(a.list_advs,"#tbl_body");
+					/* 添加页码 */
+					if(a.all_num){
+						for(var k=0;k<a.all_num;k++){
+							var btn = document.createElement("button");
+							$(btn).html(k+1);
+							$(btn).attr("mypage",(k+1));
+							if(k==0){
+								$(btn).css({"backgroundColor":"#336699","color":"#fff"});
+							}
+							$(btn).click(function(){
+								change_page(this);
+							});
+							
+							$("#dv_but").append(btn);
+						}
+						$("#bt_end").attr("mypage",a.all_num);
+					}
+				}
+				var hei = $("#tea_tbl").css("height");
+				hei = hei.substr(0,hei.length-2 );
+	 			if(hei>650){
+	 				$("#dv_table").css("height","800px");
+	 			}
+			}, "json");
+		
+		}
+ 		/*切换页面*/
  		function change_page(this_dom){
 			$("#dv_but button").css({"backgroundColor":"#fff","color":"#336699"});
 			$(this_dom).css({"backgroundColor":"#336699","color":"#fff"});
@@ -304,14 +312,13 @@
 						}
 					
 						var btid = back_all[i].id;
-						str += "<td><button id = '"+btid+"' name='"+(i+1)+"'>修改</button></td>";
+						str += "<td><button id = '"+btid+"' name='"+(i+1)+"' onclick=alert('权限不足，请联系管理员')>修改</button></td>";
 						str += "<td><input type='checkbox' value='"+btid+"' /></td>";
 					$(tr).append(str);
 					$(p_dom).append(tr);
 
 				}
  		}
- 		
  		
 	});
 </script>

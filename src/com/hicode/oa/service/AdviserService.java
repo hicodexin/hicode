@@ -7,7 +7,7 @@ import com.hicode.oa.tool.Adviser;
 
 /**
  * 顾问接口
- * @author Administrator
+ * @author xinpeixiang
  *
  */
 public interface AdviserService {
@@ -27,5 +27,13 @@ public interface AdviserService {
 	 * @return
 	 */
 	public Integer getAdvisersForCount();
+	
+	/**
+	 * 添加市场人员
+	 * @param adviser
+	 * @return
+	 * @author xinpeixiang 2018-11-9
+	 */
+	public Integer do_insertAdvisers(Adviser adviser);
 	
 }

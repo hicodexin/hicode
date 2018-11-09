@@ -1,5 +1,8 @@
 package com.hicode.oa.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +37,11 @@ public class AdviserController {
 		return "/WEB-INF/VisitorsPage/Adviser.html";
 	}
 	
+	/**
+	 * 分页展示市场人员信息
+	 * @param request
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/showAdviserByInfo")
 	public String showAdviserByInfo(HttpServletRequest request){
@@ -85,12 +93,53 @@ public class AdviserController {
 		return obj_arr.toString();
 	}
 	
+	/**
+	 * 添加市场人员
+	 * @param request
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("/do_insertAdviser")
 	public String do_insertAdviser(HttpServletRequest request){
+		String adv_name = request.getParameter("userName");
+		String adv_sex = request.getParameter("sex");
+		String title = request.getParameter("title");
+		String if_Onthejob = request.getParameter("if_Onthejob");
+		String time_creatDate = request.getParameter("time_creatDate");
+		String time_endDate = request.getParameter("time_endDate");
+		String title_updatetime = request.getParameter("title_updatetime");
 		
+		Adviser adviser = new Adviser();
+		adviser.setAdv_name(adv_name);
+		adviser.setAdv_sex(Integer.valueOf(adv_sex));
+		adviser.setTitle(title);
+		adviser.setIf_Onthejob(Integer.valueOf(if_Onthejob));
 		
-		return "";
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+		Date d;
+		try {
+			d = sf.parse(time_creatDate);
+			adviser.setTime_creatDate(d);
+			if(time_endDate != null && time_endDate != ""){
+				d = sf.parse(time_endDate);
+				adviser.setTime_endDate(d);
+			}
+			if(title_updatetime != null && title_updatetime != ""){
+				d = sf.parse(title_updatetime);
+				adviser.setTitle_updatetime(d);
+			}
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Integer count =adviserService.do_insertAdvisers(adviser);
+		JSONObject obj_arr = new JSONObject();
+		if(count>0){
+			obj_arr.put("list_advs", "ok");
+		}
+		
+		return obj_arr.toString();
 	}
 	
 	/**

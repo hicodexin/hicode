@@ -45,6 +45,24 @@ public class AdviserDAO extends SysDAO{
 		return selectOne(nameSpace+"getAdvisersForCount");
 	}
 	
+	public Integer do_insertAdvisers(Adviser adviser){
+		
+		return insert(nameSpace+"do_insertAdvisers", adviser);
+	}
+	/**
+	 * 获取最后一个市场人员的ID 
+	 * @return
+	 */
+	public String getLastAdvisersID(){
+		return selectOne(nameSpace+"getLastAdvisersID");
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

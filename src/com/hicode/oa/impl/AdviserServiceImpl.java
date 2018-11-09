@@ -45,4 +45,15 @@ public class AdviserServiceImpl implements AdviserService{
 		return adviserDAO.getAdvisersForCount();
 	}
 
+	@Override
+	public Integer do_insertAdvisers(Adviser adviser) {
+		String id = adviserDAO.getLastAdvisersID();
+		Integer int_id = Integer.valueOf(id.substring(4, id.length()));
+		adviser.setAdv_id(id.substring(0, 4)+(int_id+1));
+		
+		
+		
+		return adviserDAO.do_insertAdvisers(adviser);
+	}
+
 }
