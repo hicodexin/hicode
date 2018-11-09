@@ -110,7 +110,7 @@
 	padding: 20px;
 }
 
-#dv_page button {
+#dv_page>button {
 	border: 0px;
 	background-color: #336699;
 	color: #fff;
@@ -122,7 +122,7 @@
 	outline-style: none;
 }
 
-#dv_page button:hover {
+#dv_page>button:hover {
 	color: #336699;
 	font-weight: 600;
 	background-color: #fff;
@@ -139,24 +139,30 @@
 	float: right;
 	margin-right: 20%;
 }
+#dv_but{
+	float: left;
+	width: 75%;
+}
 
-#dv_page a {
+#dv_but button {
 	display: inline-block;
+	outline-style:none;
 	background-color: #D0D0D0;
 	border: solid 1px #336699;
-	width: 30px;
-	height: 30px;
-	margin-top: 5px;
-	line-height: 30px;
+	width: 35px;
+	height: 35px;
+	margin-top: 3px;
+	line-height: 35px;
 	text-align: center;
 	margin-left: 10px;
 	text-decoration: none;
 	border-radius: 6px;
 }
 
-#dv_page a:hover {
+#dv_page button:hover {
 	background-color: #336699;
 	color: #fff;
+	cursor: pointer;
 }
 
 /*

@@ -12,11 +12,12 @@
 	</select>
 	
 	<select id="getAdviserAll" parameterType="java.util.Map" resultType="Adviser">
-	
 		select <include refid="all_column"></include> from adviser limit #{start},#{count};
-	
 	</select>
 	
+	<select id="getAdvNameAndID"  resultType="Adviser">
+		select adv_id, adv_name from adviser order by adv_id;
+	</select>
 </mapper>
 
 

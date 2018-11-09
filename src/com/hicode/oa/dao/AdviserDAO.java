@@ -36,7 +36,10 @@ public class AdviserDAO extends SysDAO{
 		return selectList(nameSpace+"getAdviserAll", map);
 	}
 	
-	
+	public List<Adviser> getAdvNameAndID() {
+		// TODO Auto-generated method stub
+		return selectList(nameSpace+"getAdvNameAndID");
+	}
 
 	
 	

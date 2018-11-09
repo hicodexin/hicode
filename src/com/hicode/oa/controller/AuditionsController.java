@@ -44,17 +44,30 @@ public class AuditionsController {
 	@ResponseBody
 	@RequestMapping(value="/showAuditionsByInfo")
 	public String showAuditionsByInfo(HttpServletRequest request){
-		String start = request.getParameter("start");
-		String count = request.getParameter("count");
-		Integer s = 0;
-		Integer e = 10;
-		if(start != null){
-			s = Integer.valueOf(start);
+		
+		//页码
+		String page = request.getParameter("page");
+		
+		//开始数字
+		Integer start = 0;
+		//每页显示条数
+		Integer num = 10;
+		
+		if(page != null){
+			start = (Integer.valueOf(page)-1)*10;
 		}
-		if(count != null){
-			e = Integer.valueOf(count);
+		
+		Integer all_num = null;
+		if(page.equals("1")){
+			all_num = auditionsService.getAuditionsForCount();
+			
+			if(all_num != null){
+				all_num = (all_num%10==0)?(all_num/10):(all_num/10+1);
+			}
+			
 		}
-		List<Auditions> advs = auditionsService.getAuditionsByInfo(s, e);
+		
+		List<Auditions> advs = auditionsService.getAuditionsByInfo(start, num);
 		
 		JSONArray objs = new JSONArray();
 		
@@ -74,6 +87,11 @@ public class AuditionsController {
 		
 		JSONObject obj_arr = new JSONObject();
 		obj_arr.put("list_advs", objs);
+		
+		if(page.equals("1")){
+			obj_arr.put("all_num", all_num);
+		}
+		
 		return obj_arr.toString();
 	}
 	

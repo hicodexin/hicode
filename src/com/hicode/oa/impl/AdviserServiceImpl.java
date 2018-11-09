@@ -33,4 +33,10 @@ public class AdviserServiceImpl implements AdviserService{
 		return adviserDAO.getAdviserAll(start,count);
 	}
 
+	@Override
+	public List<Adviser> getAdvNameAndID() {
+		// TODO Auto-generated method stub
+		return adviserDAO.getAdvNameAndID();
+	}
+
 }

@@ -15,6 +15,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.hicode.oa.service.TeacherService;
 import com.hicode.oa.tool.Teacher;
 
+import net.sf.json.JSONArray;
+
 
 /**
  * 讲师管理应用控制层
@@ -34,6 +36,11 @@ public class TeacherController {
 		return "/WEB-INF/VisitorsPage/Teacher.html";
 	}
 	
+	/**
+	 * 分页展示讲师信息
+	 * @param request
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value ="/showTeacherByInfo")
 	public String showTeacherByInfo(HttpServletRequest request){
@@ -58,16 +65,27 @@ public class TeacherController {
 		return obj.toString();
 	}
 	
-
+	/**
+	 * 获取讲师的ID与name
+	 * @return
+	 */
+	@ResponseBody
 	@RequestMapping("/showTeacher")
 	public String showTeacher_(){
 		
-		List<Teacher> teacher = teacherService.getTeacherAll(1, 3);
-		
+		List<Teacher> teacher = teacherService.getTeacherAll(0, 20);
+		JSONArray jsry = new JSONArray();
 		for (Teacher t : teacher) {
-			System.out.println(t.getT_id()+" : "+t.getT_name());
+			//确保该讲师在职
+			if(t.getTime_endDate() != null){
+				continue;
+			}
+			net.sf.json.JSONObject obj = new net.sf.json.JSONObject();
+			obj.put("tid", t.getT_id());
+			obj.put("name", t.getT_name());
+			jsry.add(obj);
 		}
-		System.out.println("--------------------");
-		return "/welcome.html";
+		
+		return jsry.toString();
 	}
 }

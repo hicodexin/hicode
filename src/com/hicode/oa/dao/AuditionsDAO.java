@@ -36,6 +36,10 @@ public class AuditionsDAO extends SysDAO {
 		return insert(nameSpace+"do_insertAuditions", auditions);
 		
 	}
+	
+	public Integer getAuditionsForCount(){
+		return selectOne(nameSpace+"getAuditionsForCount");
+	}
 
 	
 }

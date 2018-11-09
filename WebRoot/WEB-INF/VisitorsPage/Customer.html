@@ -100,10 +100,12 @@
 	</div>
 	<div id="dv_page">
 		<button id="bt_first">首页</button>
-		<a href="#">1</a> 
-		<a href="#">2</a> 
-		<a href="#">3</a> 
-		<a href="#">4</a>
+		<div id="dv_but">
+			<button href="#">1</button> 
+			<button href="#">2</button> 
+			<button href="#">3</button> 
+			<button href="#">4</button>
+		</div>
 		<button id="bt_end">尾页</button>
 	</div>
 </body>
@@ -135,7 +137,7 @@
 						
 						str += "<td>"+a.list_advs[i].tea_name+"</td>";
 						
-						var firsttime = timestampToTime(a.list_advs[i].firsttime.time);
+						var firsttime = timestampToTime_hms(a.list_advs[i].firsttime.time);
 						
 						str += "<td>"+firsttime+"</td>";
 						

@@ -31,5 +31,10 @@ public class AuditionsServiceImpl implements AuditionsService{
 		// TODO Auto-generated method stub
 		return auditionsDAO.do_insertAuditions(auditions);
 	}
-
+	
+	@Override
+	public Integer getAuditionsForCount(){
+		
+		return auditionsDAO.getAuditionsForCount();
+	}
 }

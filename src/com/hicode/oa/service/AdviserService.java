@@ -16,4 +16,10 @@ public interface AdviserService {
 	
 	public List<Adviser> getAdviserAll(Integer start,Integer count);
 	
+	/**
+	 * 获取所有顾问的ID与name
+	 * @return
+	 */
+	public List<Adviser> getAdvNameAndID();
+	
 }

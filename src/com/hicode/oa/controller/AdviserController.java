@@ -68,19 +68,29 @@ public class AdviserController {
 		return obj_arr.toString();
 	}
 	
+	/**
+	 * 展示顾问
+	 * @return
+	 */
+	@ResponseBody
 	@RequestMapping("/showAdviser")
 	public String showAdviser(){
-		System.out.println("==========ok============");
-		Adviser adv = adviserService.getAdviserByID("adv_1001");
-		System.out.println(adv.getAdv_id()+" : "+adv.getAdv_name() );
 		
-		List<Adviser> advs = adviserService.getAdviserAll(0, 4);
-		System.out.println("==========ok1============");
+		List<Adviser> advs = adviserService.getAdvNameAndID();
+		JSONArray jsay = new JSONArray();
+		
 		for (Adviser adv1 : advs) {
-			System.out.println(adv1.getAdv_id()+" : "+adv1.getAdv_name() );
+			if(adv1.getTime_endDate() != null){
+				continue;
+			}
+			JSONObject obj = new JSONObject();
+			obj.put("id", adv1.getAdv_id());
+			obj.put("name", adv1.getAdv_name() );
+			
+			jsay.add(obj);
 		}
 		
-		return "/welcome.html";
+		return jsay.toString();
 	}
 	
 	

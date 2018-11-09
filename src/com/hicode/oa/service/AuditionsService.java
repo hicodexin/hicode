@@ -28,6 +28,11 @@ public interface AuditionsService {
 	 * @return
 	 */
 	public Integer do_insertAuditions(Auditions auditions);
-
+	
+	/**
+	 * 获取数量
+	 * @return
+	 */
+	public Integer getAuditionsForCount();
 	
 }
