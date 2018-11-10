@@ -132,15 +132,13 @@
 </body>
 <script type="text/javascript">
 	$().ready(function() {
-
-		
+	
 		var bd_hig = document.documentElement.clientHeight;
   		$("#hidd_mask").css("height",bd_hig+"px");
   		$("#dv_update").hide();
   		$("#hidd_mask").hide();
-  		
   		start_post();
-
+  		
 		// 日历插件
 		jeDate({
 			dateCell : "#time_creatDate",
@@ -197,7 +195,7 @@
  			}else{
  				$("#time_creatDate").css("borderColor","#336699");
  			}
- 			if($("#userName").val().length<2){
+ 			if($("#userName").val().trim().length<2){
  				$("#userName").css("borderColor","#f00");
  				return;
  			}else{
@@ -206,8 +204,8 @@
  			
  			var data = {
  						"time_creatDate":$("#time_creatDate").val(),
-			 			"userName":$("#userName").val(),
-			 			"t_sex":$("[name='t_sex']").val(),
+			 			"userName":$("#userName").val().trim(),
+			 			"t_sex":$('input:radio[name="t_sex"]:checked').val(),
 			 			"update_selclass":$("#update_selclass").val(),
 			 			"update_selteas":$("#update_selteas").val(),
 			 			"update_seladvs":$("#update_seladvs").val(),

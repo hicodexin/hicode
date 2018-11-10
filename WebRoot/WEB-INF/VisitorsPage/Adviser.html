@@ -7,6 +7,12 @@
     <meta name="description" content="this is my page">
     <meta name="content-type" content="text/html; charset=UTF-8">
     
+    <style type="text/css">
+		*{
+			margin: 0px;
+			padding: 0px;
+		}
+	</style>
     <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
 	<link type="text/css" rel="stylesheet"  href="/hicode/syscss/teacher_page.css" />
 	<link type="text/css" rel="stylesheet"  href="/hicode/syscss/for_date.css" />
@@ -160,7 +166,7 @@
  		
  		/* 添加学员信息，提交按钮  */
  		$("#up_sub").click(function(){
- 			if($("#userName").val().length<2){
+ 			if($("#userName").val().trim().length<2){
  				$("#userName").css("borderColor","#f00");
  				return;
  			}else{
@@ -175,16 +181,14 @@
  			}
  			
  			var data = {
- 						"time_creatDate":$("#time_creatDate").val(),
-			 			"userName":$("#userName").val(),
-			 			"sex":$("[name='t_sex']").val(),
+			 			"userName":$("#userName").val().trim(),
+			 			"sex":$('input:radio[name="t_sex"]:checked').val(),
 			 			"title":$("#update_sel").val(),
-			 			"if_Onthejob":$("[name='if_Onthejob']").val(),
+			 			"if_Onthejob":$('input:radio[name="if_Onthejob"]:checked').val(),
 			 			"time_creatDate":$("#time_creatDate").val(),
 			 			"time_endDate":$("#time_endDate").val(),
 			 			"title_updatetime":$("#title_updatetime").val()
  			};
- 			console.log(data);
  		 	$.post("/hicode/adviser/do_insertAdviser.spc",data,function(e){
  				$("#hidd_mask").hide().hide(300);
  				$("#dv_update").show().hide(300);

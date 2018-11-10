@@ -26,6 +26,26 @@
 		 LIMIT #{start},#{count};
 	</select>
 	
+	<!-- 查询讲师信息总条数 -->
+	<select id="getTeacherForCount" resultType="java.lang.Integer">
+		select count(1) from teacher;
+	</select>
+	
+	<!-- 获取最后一个讲师的ID -->
+	<select id="getLastTeacherID" resultType="java.lang.String">
+		select t_id from teacher order by t_id desc limit 0,1;
+	</select>
+	
+	
+	
+	<!-- 添加讲师信息 -->
+	<insert id="do_insertTeacher" parameterType="Teacher" >
+		insert into teacher (t_id,t_name,t_sex,if_Onthejob,time_creatDate,time_endDate,title,title_updatetime)
+		values(#{t_id},#{t_name},#{t_sex},#{if_Onthejob},#{time_creatDate},#{time_endDate},#{title},#{title_updatetime});
+	
+	</insert>
+	
+	
 	
 <!-- 	
 	<update id="do_update">

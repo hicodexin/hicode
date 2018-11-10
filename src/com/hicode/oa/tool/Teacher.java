@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * ��ʦ��
+ * 讲师
  * @author xinpeixiang 
  * @date 2018-10-19
  */
@@ -87,6 +87,12 @@ public class Teacher  implements Serializable{
 	public void setTitle_updatetime(Date title_updatetime) {
 		this.title_updatetime = title_updatetime;
 	}
+	@Override
+	public String toString() {
+		return "Teacher [t_id=" + t_id + ", t_name=" + t_name + ", t_sex=" + t_sex + ", if_Onthejob=" + if_Onthejob
+				+ ", time_creatDate=" + time_creatDate + ", time_endDate=" + time_endDate + ", title=" + title
+				+ ", title_updatetime=" + title_updatetime + "]";
+	}
 	
-
+	
 }

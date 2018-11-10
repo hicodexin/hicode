@@ -53,6 +53,21 @@ public class TeacherServiceImpl implements TeacherService {
 		return false;
 	}
 
+	@Override
+	public Integer getTeacherForCount() {
+		// TODO Auto-generated method stub
+		return teacherDAO.getTeacherForCount();
+	}
+
+	@Override
+	public Integer do_insertTeacher(Teacher teacher) {
+		// TODO Auto-generated method stub
+		String id = teacherDAO.getLastTeacherID();
+		Integer int_id = Integer.valueOf(id.substring(2, id.length()));
+		teacher.setT_id(id.substring(0, 2)+(int_id+1));
+		return teacherDAO.do_insertTeacher(teacher);
+	}
+
 
 
 

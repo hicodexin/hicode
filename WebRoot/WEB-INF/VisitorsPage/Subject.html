@@ -36,33 +36,19 @@
 			<ul class="up_ul">
 				<li><b>序号 : </b> <input type="text" id="tea_list" value=""
 					disabled="disabled" /></li>
-				<li><b>教师姓名 : </b> <input type="text" id="userName" /></li>
-				<li><b>教师性别 : </b> <label for="sex_b"> <img
-						src="/hicode/sysimg/face_boy.jpg" /> <input type="radio"
-						id="sex_b" name="t_sex" value="1" />
-				</label> <label for="sex_g"> <img src="/hicode/sysimg/face_girl.jpg" />
-						<input type="radio" id="sex_g" name="t_sex" value="0" />
-				</label></li>
-				<li><b>是否在职 : </b> <label for="job_b"> <img
-						src="/hicode/sysimg/face_smile.jpg" /> <input type="radio"
-						id="job_b" name="if_Onthejob" value="1" />
-				</label> <label for="job_g"> <img
-						src="/hicode/sysimg/face_grieved.jpg" /> <input type="radio"
-						id="job_g" name="if_Onthejob" value="0" />
-				</label></li>
-				<li><b>入职时间 : </b> <input id="time_creatDate" type="text"
-					disabled="disabled"></li>
-				<li><b>离职时间 : </b> <input class="datainp" id="time_endDate"
-					type="text" placeholder="请选择"></li>
-				<li><b>当前职称 : </b> <select id="update_sel">
-						<option>讲师助教</option>
-						<option>初级讲师</option>
-						<option>中级讲师</option>
-						<option>高级讲师</option>
-						<option>教学总监</option>
-				</select></li>
-				<li><b>晋级时间 : </b> <input class="datainp" id="title_updatetime"
-					type="text" placeholder="请选择" readonly></li>
+				<li><b>科目名称 : </b> <input type="text" id="userName" /></li>
+				<li>
+					<b>是否在线 : </b> 
+					<label for="job_b"> 
+						<img src="/hicode/sysimg/face_smile.jpg" /> 
+						<input type="radio" id="job_b" name="if_Onthejob" value="0" checked="checked"/>
+					</label> 
+					<label for="job_g"> 
+						<img src="/hicode/sysimg/face_grieved.jpg" /> 
+						<input type="radio" id="job_g" name="if_Onthejob" value="1" />
+					</label>
+				</li>
+				
 			</ul>
 		</div>
 		<div id="dv_upbottom">
@@ -81,70 +67,167 @@
 				<tr>
 					<th>序号</th>
 					<th>科目名称</th>
-					<th>是否下线</th>
+					<th>是否上线</th>
 					<th>操作</th>
 					<th>标记</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody id="tbl_body">
 			</tbody>
 		</table>
 	</div>
 	<div id="dv_page">
-		<button id="bt_first">首页</button>
-		<div id="dv_but">
-			<button href="#">1</button> 
-			<button href="#">2</button> 
-			<button href="#">3</button> 
-			<button href="#">4</button>
-		</div>
+		<button id="bt_first" mypage="1">首页</button>
+		<div id="dv_but"></div>
 		<button id="bt_end">尾页</button>
 	</div>
 </body>
 <script type="text/javascript">
 	$().ready(function() {
-
-		var start = 0;
-		var count = 10;
+		var bd_hig = document.documentElement.clientHeight;
+  		$("#hidd_mask").css("height",bd_hig+"px");
+  		$("#dv_update").hide();
+  		$("#hidd_mask").hide();
+  		start_post();
+  		
+  		//点击添加按钮
+ 		$("#bt_1").click(function(){
+ 			$("#hidd_mask").hide().show(300);
+ 			$("#dv_update").hide().show(300);
+ 			var len = $("#tea_tbl tbody tr").length;   
+			$("#tea_list").val(len+1);
+			$("#userName").val("");
+ 		});
+  		
+  		//第一页
+ 		$("#bt_first").click(function(){
+ 			change_page(this);
+ 			$("#dv_but button:eq(0)").css({"backgroundColor":"#336699","color":"#fff"});
+ 		});
+ 		
+ 		//最后一页
+ 		$("#bt_end").click(function(){
+ 			change_page(this);
+ 			$("#dv_but button:eq(-1)").css({"backgroundColor":"#336699","color":"#fff"});
+ 		});
 		
-		$.post("/hicode/subject/showSubjectByInfo.spc", {
-			"start" : start,
-			"count" : count
-		}, function(a) {
-			console.log(a.list_advs);
-			if (a) {
-				for (var i = 0; i < a.list_advs.length; i++) {
-					var tr = document.createElement("tr");
-					var str = "<td>" + (i + 1) + "</td>";
-						str += "<td>"+a.list_advs[i].name+"</td>";
-						
-						if(a.list_advs[i].xiaxian == 0){
-							str += "<td> <img src='/hicode/sysimg/face_smile.jpg' /> </td>";
-						}else{
-							str += "<td> <img src='/hicode/sysimg/face_grieved.jpg' /> </td>";
-						}
-						
-						var btid = a.list_advs[i].id;
-						str += "<td><button id = '"+btid+"' name='"+(i+1)+"'>修改</button></td>";
-						str += "<td><input type='checkbox' value='"+btid+"' /></td>";
-					$(tr).append(str);
-					$("#tea_tbl").append(tr);
-
-				} 
-				
-			}
-			var hei = $("#tea_tbl").css("height");
-			hei = hei.substr(0,hei.length-2 );
- 			if(hei>650){
- 				$("#dv_table").css("height","800px");
- 			}
-		}, "json");
-
 		// 点击返回消失
   		$("#up_res").click(function(){
   			$("#hidd_mask").hide().hide(300);
  			$("#dv_update").show().hide(300);
  		});
  		
+ 		/* 添加学员信息，提交按钮  */
+ 		$("#up_sub").click(function(){
+ 			if($("#userName").val().trim().length<2){
+ 				$("#userName").css("borderColor","#f00");
+ 				return;
+ 			}else{
+ 				$("#userName").css("borderColor","#336699");
+ 			}
+ 			
+ 			var data = {
+			 			"userName":$("#userName").val().trim(),
+			 			"if_Onthejob":$('input:radio[name="if_Onthejob"]:checked').val()
+ 			};
+ 		 	$.post("/hicode/subject/do_insertSubject.spc",data,function(e){
+ 				$("#hidd_mask").hide().hide(300);
+ 				$("#dv_update").show().hide(300);
+ 				if(e.list_advs == 'ok'){
+ 					alert("添加成功");
+ 					$("#tbl_body").children("tr").remove();
+ 					start_post();
+ 				}else{
+ 					alert("添加失败,请联系管理员。。。。");
+ 				}
+ 			
+ 			},"json");
+ 			
+ 		});
+ 		
+ 		/* 切换页码 */
+ 		function change_page(this_dom){
+			$("#dv_but button").css({"backgroundColor":"#fff","color":"#336699"});
+			$(this_dom).css({"backgroundColor":"#336699","color":"#fff"});
+			
+			$.post("/hicode/subject/showSubjectByInfo.spc",{"page":$(this_dom).attr("mypage")},function(a_s){
+				$("#tbl_body").html(' ');
+				
+				var js_arry = eval('(' + a_s + ')');
+				
+				creat_tb(js_arry.list_advs,"#tbl_body");
+			});
+		}
+ 		
+ 		/* 初始化数据 */
+		function start_post(){
+	  		$.post("/hicode/subject/showSubjectByInfo.spc",{ "page" : 1 }, function(a) {
+				if (a) {
+					creat_tb(a.list_advs,"#tbl_body");
+					/* 添加页码 */
+					if(a.all_num){
+						for(var k=0;k<a.all_num;k++){
+							var btn = document.createElement("button");
+							$(btn).html(k+1);
+							$(btn).attr("mypage",(k+1));
+							if(k==0){
+								$(btn).css({"backgroundColor":"#336699","color":"#fff"});
+							}
+							$(btn).click(function(){
+								change_page(this);
+							});
+							
+							$("#dv_but").append(btn);
+						}
+						$("#bt_end").attr("mypage",a.all_num);
+					}
+					
+				}
+				var hei = $("#tea_tbl").css("height");
+				hei = hei.substr(0,hei.length-2 );
+	 			if(hei>650){
+	 				$("#dv_table").css("height","800px");
+	 			}
+			}, "json");
+	  		
+  		}
+ 		
+ 		
+ 		/* back_all: 待便利的值 */
+ 		function creat_tb(back_all,p_dom){
+ 			for (var i = 0; i < back_all.length; i++) {
+				var tr = document.createElement("tr");
+				var str = "<td>" + (i + 1) + "</td>";
+					str += "<td>"+back_all[i].name+"</td>";
+					
+					if(back_all[i].xiaxian == 0){
+						str += "<td> <img src='/hicode/sysimg/face_smile.jpg' /> </td>";
+					}else{
+						str += "<td> <img src='/hicode/sysimg/face_grieved.jpg' /> </td>";
+					}
+					
+					var btid = back_all[i].id;
+					str += "<td><button id = '"+btid+"' name='"+(i+1)+"'>修改</button></td>";
+					str += "<td><input type='checkbox' value='"+btid+"' /></td>";
+				$(tr).append(str);
+				$(p_dom).append(tr);
+			} 
+ 		}
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
 	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </script>

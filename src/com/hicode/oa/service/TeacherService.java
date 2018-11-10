@@ -2,6 +2,7 @@ package com.hicode.oa.service;
 
 import java.util.List;
 
+import com.hicode.oa.tool.Adviser;
 import com.hicode.oa.tool.Teacher;
 
 /**
@@ -25,8 +26,20 @@ public interface TeacherService extends DAO<Teacher>{
 	 * @return 
 	 */
 	public List<Teacher> getTeacherAll(Integer start,Integer count);
+
+	/**
+	 * 查询讲师列表的条数
+	 * @return
+	 */
+	public Integer getTeacherForCount();
 	
-	
+	/**
+	 * 添加讲师
+	 * @param teacher
+	 * @return
+	 * @author xinpeixiang 2018-11-10
+	 */
+	public Integer do_insertTeacher(Teacher teacher);
 	
 	
 	

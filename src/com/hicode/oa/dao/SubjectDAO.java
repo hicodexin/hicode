@@ -32,7 +32,19 @@ public class SubjectDAO  extends SysDAO{
 		return this.selectList(nameSpace+"getSubjectAll", map);
 	}
 	
+	public Integer getSubjectForCount() {
+		return selectOne(nameSpace+"getSubjectForCount");
+	}
+
+	public Integer do_insertSubject(Subject subject) {
+		// TODO Auto-generated method stub
+		return insert(nameSpace+"do_insertSubject", subject);
+	}
 	
+	public String getLastSubjectID() {
+		// TODO Auto-generated method stub
+		return selectOne(nameSpace+"getLastSubjectID");
+	}
 	
 
 }

@@ -106,6 +106,6 @@ public class Adviser implements Serializable{
 	public void setTitle_updatetime(Date title_updatetime) {
 		this.title_updatetime = title_updatetime;
 	}
-	
+
 	
 }

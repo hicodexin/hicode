@@ -18,8 +18,6 @@ public class SysDAO extends SqlSessionTemplate{
 	@Autowired
 	public SysDAO(SqlSessionFactory sqlSessionFactory) {
 		super(sqlSessionFactory);
-		System.out.println(sqlSessionFactory+"=======");
-		
 	}
 
 

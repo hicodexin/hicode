@@ -139,16 +139,6 @@ public class AuditionsController {
 	
 	@RequestMapping(value="/showAuditions")
 	public String showAuditions(){
-		System.out.println("==========ok============");
-		Auditions adv = auditionsService.getAuditionsByID(new Integer(2));
-		System.out.println(adv.getAu_id()+" : "+adv.getSt_name() );
-		System.out.println(adv.getTeacher().getT_name()+" : "+adv.getAdviser().getAdv_name() );
-		List<Auditions> advs = auditionsService.getAuditionsByInfo(0, 30);
-		System.out.println("==========ok1============");
-		for (Auditions adv1 : advs) {
-			System.out.println(adv1.getAu_id()+" : "+adv1.getSt_name());
-		}
-		
 		return "/welcome.html";
 	}
 	

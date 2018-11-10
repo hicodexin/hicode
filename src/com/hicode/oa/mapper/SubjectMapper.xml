@@ -12,10 +12,22 @@
 	</select>
 	
 	<select id="getSubjectAll" parameterType="java.util.Map" resultType="Subject">
-	
 		select <include refid="all_column"></include> from subject limit #{start},#{count};
-	
 	</select>
+	<!-- 获取表中数据条数 -->
+	<select id="getSubjectForCount" resultType="java.lang.Integer">
+		select count(1) from subject;
+	</select>
+	
+	<!-- 获取最后一个科目的ID -->
+	<select id="getLastSubjectID" resultType="java.lang.String">
+		select sub_id from subject order by sub_id desc limit 0,1;
+	</select>
+	
+	<insert id="do_insertSubject" parameterType="Subject">
+		insert into subject(sub_id, sub_name,if_downline) values(#{sub_id},#{sub_name},#{if_downline});
+	</insert>
+	
 	
 </mapper>
 

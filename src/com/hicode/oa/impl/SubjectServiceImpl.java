@@ -32,4 +32,18 @@ public class SubjectServiceImpl implements SubjectService{
 		return subjectDAO.getSubjectAll(start, count);
 	}
 
+	@Override
+	public Integer getSubjectForCount() {
+		// TODO Auto-generated method stub
+		return subjectDAO.getSubjectForCount();
+	}
+
+	@Override
+	public Integer do_insertSubject(Subject subject) {
+		String id = subjectDAO.getLastSubjectID();
+		Integer int_id = Integer.valueOf(id.substring(4, id.length()));
+		subject.setSub_id(id.substring(0, 4)+(int_id+1));
+		return subjectDAO.do_insertSubject(subject);
+	}
+
 }

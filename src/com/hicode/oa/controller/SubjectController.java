@@ -1,5 +1,8 @@
 package com.hicode.oa.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hicode.oa.service.SubjectService;
+import com.hicode.oa.tool.Adviser;
 import com.hicode.oa.tool.Subject;
 
 import net.sf.json.JSONArray;
@@ -31,17 +35,27 @@ public class SubjectController {
 	@ResponseBody
 	@RequestMapping(value="/showSubjectByInfo")
 	public String showSubjectByInfo(HttpServletRequest request){
-		String start = request.getParameter("start");
-		String count = request.getParameter("count");
-		int s = 0;
-		int e = 10;
-		if(start != null){
-			s = Integer.valueOf(start);
+		//页码
+		String page = request.getParameter("page");
+		//开始数字
+		Integer start = 0;
+		//每页显示条数
+		Integer num = 10;
+		
+		if(page != null){
+			start = (Integer.valueOf(page)-1)*10;
 		}
-		if(count != null){
-			e = Integer.valueOf(count);
+		
+		Integer all_num = null;
+		if(page.equals("1")){
+			all_num = subjectService.getSubjectForCount();
+			
+			if(all_num != null){
+				all_num = (all_num%10==0)?(all_num/10):(all_num/10+1);
+			}
+			
 		}
-		List<Subject> subs = subjectService.getSubjectAll(s, e);
+		List<Subject> subs = subjectService.getSubjectAll(start, num);
 		
 		JSONArray objs = new JSONArray();
 		
@@ -56,20 +70,36 @@ public class SubjectController {
 		JSONObject obj_arr = new JSONObject();
 		obj_arr.put("list_advs", objs);
 		
+		if(page.equals("1")){
+			obj_arr.put("all_num", all_num);
+		}
+		return obj_arr.toString();
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping("/do_insertSubject")
+	public String do_insertSubject(HttpServletRequest request){
+		String name = request.getParameter("userName");
+		String if_downline = request.getParameter("if_Onthejob");
+		
+		Subject subject = new Subject();
+		subject.setSub_name(name);
+		subject.setIf_downline(Integer.valueOf(if_downline));
+		
+		Integer count =subjectService.do_insertSubject(subject);
+		JSONObject obj_arr = new JSONObject();
+		if(count>0){
+			obj_arr.put("list_advs", "ok");
+		}
+		
 		return obj_arr.toString();
 	}
 	
+	
 	@RequestMapping(value = "/showAll")
 	public String showAll(){
-		System.out.println("==============ok==============");
-		Subject sub = subjectService.getSubjectByID("sub_1001");
-		System.out.println(sub.getSub_id()+" : "+ sub.getSub_name());
-		System.out.println("==============ok==============");
-		List<Subject> all = subjectService.getSubjectAll(null, null);
-		for (Subject s : all) {
-			System.out.println(s.getSub_id()+" : "+s.getSub_name());
-		}
-		System.out.println("==============================");
+		
 		return "/welcome.html";
 	}
 

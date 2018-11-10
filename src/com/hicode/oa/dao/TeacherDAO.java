@@ -24,7 +24,7 @@ public class TeacherDAO extends SysDAO{
 	}
 
 	public Teacher getTeacherByID(String t_id){
-		return this.selectOne(nameSpace+"getTeacherByID", t_id);
+		return selectOne(nameSpace+"getTeacherByID", t_id);
 	}
 	
 	public List<Teacher> getTeacherAll(Integer start,Integer count){
@@ -32,8 +32,22 @@ public class TeacherDAO extends SysDAO{
 		map.put("start", start);
 		map.put("count", count);
 		
-		return this.selectList(nameSpace+"getTeacherAll", map);
+		return selectList(nameSpace+"getTeacherAll", map);
 	}
 	
+	public Integer getTeacherForCount() {
+		
+		return selectOne(nameSpace+"getTeacherForCount");
+	}
 
+	public Integer do_insertTeacher(Teacher teacher){
+		
+		return insert(nameSpace+"do_insertTeacher", teacher);
+	}
+	
+	public String getLastTeacherID(){
+		return selectOne(nameSpace+"getLastTeacherID");
+	}
+	
+	
 }

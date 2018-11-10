@@ -35,5 +35,9 @@ public class CustomerDAO extends SysDAO{
 		return selectList(nameSpace+"getCustomerAll", map);
 	
 	}
+	public Integer getCustomerForCount() {
+		// TODO Auto-generated method stub
+		return selectOne(nameSpace+"getCustomerForCount");
+	}
 
 }
