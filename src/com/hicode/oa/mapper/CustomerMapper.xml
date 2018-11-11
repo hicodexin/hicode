@@ -28,7 +28,11 @@
 	<!-- 添加签单学员 -->
 	<insert id="do_insertCustomer" parameterType="Customer">
 		insert into customer(au_id,sub_id,period,if_renewal,t_id,first_time,if_done,phone,if_refund,remarks) 
-		values();
+		values(
+				#{auditions.au_id},#{subject.sub_id},#{period},
+				#{if_renewal},#{teacher.t_id},#{first_time},
+				#{if_done},#{phone},#{if_refund},#{remarks}
+			);
 	</insert>
 	
 	

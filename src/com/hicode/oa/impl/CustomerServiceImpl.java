@@ -39,4 +39,11 @@ public class CustomerServiceImpl implements CustomerService{
 		return customerDAO.getCustomerForCount();
 	}
 
+	@Override
+	public Integer do_insertCustomer(Customer customer) {
+		// TODO Auto-generated method stub
+		return customerDAO.do_insertCustomer(customer);
+	}
+	
+
 }

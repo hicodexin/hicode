@@ -23,7 +23,7 @@ public class Customer implements Serializable {
 	 */
 	private Subject subject;
 	/**
-	 * 所报课时(1：季度； 2：年度； 3：两年)
+	 * 所报课时(1：一个季度； 2：两个季度； 3：一个年度； 4：两个年度)
 	 */
 	private Integer period;
 	/**

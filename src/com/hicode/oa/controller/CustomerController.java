@@ -96,46 +96,48 @@ public class CustomerController {
 	@ResponseBody
 	@RequestMapping("/do_insertCustomer")
 	public String do_insertCustomer(HttpServletRequest request){
-		String adv_name = request.getParameter("userName");
-		String adv_sex = request.getParameter("sex");
-		String title = request.getParameter("title");
-		String if_Onthejob = request.getParameter("if_Onthejob");
-		String time_creatDate = request.getParameter("time_creatDate");
-		String time_endDate = request.getParameter("time_endDate");
-		String title_updatetime = request.getParameter("title_updatetime");
-		/*
-		private Auditions auditions;
-		private Subject subject;
-		private Integer period;
-		private Integer if_renewal;
-		private Teacher teacher;
-		private Date first_time;
-		private Integer if_done;
-		private String phone;
-		private Integer if_refund;
-		private String remarks;
-		*/
+		String aud_id = request.getParameter("userName");
+		String sub_id = request.getParameter("subject");
+		String period = request.getParameter("title");
+		String if_renewal = request.getParameter("title");
+		String t_id = request.getParameter("title");
+		String first_time = request.getParameter("time_creatDate");
+		String if_done = request.getParameter("if_Onthejob");
+		
+		String phone = request.getParameter("time_endDate");
+		String if_refund = request.getParameter("title_updatetime");
+		String remarks = request.getParameter("time_endDate");
+		
 		Customer customer = new Customer();
 		
+		Auditions auditions = new Auditions();
+		auditions.setAu_id(Integer.valueOf(aud_id));
+		
+		Subject subject = new Subject();
+		subject.setSub_id(sub_id);
+		
+		Teacher teacher = new Teacher();
+		teacher.setT_id(t_id);
+		
+		customer.setAuditions(auditions);
+		customer.setSubject(subject);
+		customer.setPeriod(Integer.valueOf(period));
+		customer.setIf_renewal(Integer.valueOf(if_renewal));
+		customer.setTeacher(teacher);
 
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 		Date d;
-		/*try {
-			d = sf.parse(time_creatDate);
-			adviser.setTime_creatDate(d);
-			if(time_endDate != null && time_endDate != ""){
-				d = sf.parse(time_endDate);
-				adviser.setTime_endDate(d);
-			}
-			if(title_updatetime != null && title_updatetime != ""){
-				d = sf.parse(title_updatetime);
-				adviser.setTitle_updatetime(d);
-			}
-			
+		try {
+			d = sf.parse(first_time);
+			customer.setFirst_time(d);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
+		customer.setIf_done(Integer.valueOf(if_done));
+		customer.setPhone(phone);
+		customer.setIf_refund(Integer.valueOf(if_refund));
+		customer.setRemarks(remarks);
 		
 		Integer count = 1;
 		JSONObject obj_arr = new JSONObject();

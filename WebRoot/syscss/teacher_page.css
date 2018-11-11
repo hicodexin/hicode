@@ -178,7 +178,7 @@
 */
 #dv_update {
 	width: 500px;
-	height: 750px;
+	height: 800px;
 	background-color: #CCCCCC;
 	border-radius: 6px;
 	position: absolute;
@@ -212,7 +212,7 @@
 	text-align: right;
 	line-height: 50px;
 	font-family: "楷体";
-	font-size: 20px;
+	font-size: 18px;
 }
 
 .up_ul input[type="text"] {

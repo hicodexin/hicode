@@ -5,7 +5,7 @@ import java.util.List;
 import com.hicode.oa.tool.Customer;
 
 /**
- * 报名
+ * 签单学员 
  * @author xinpeixiang 
  *
  */
@@ -22,4 +22,16 @@ public interface CustomerService {
 	 * @author xinpeixiang 2018-11-10
 	 */
 	public Integer getCustomerForCount();
+	
+	/**
+	 * 添加签单学员 
+	 * @param customer
+	 * @return
+	 * @date 2018-11-11
+	 */
+	public Integer do_insertCustomer(Customer customer);
+	
+	
+	
+	
 }
