@@ -48,6 +48,11 @@ public class TeacherDAO extends SysDAO{
 	public String getLastTeacherID(){
 		return selectOne(nameSpace+"getLastTeacherID");
 	}
+
+	public List<Teacher> getTeaNameAndID() {
+		// TODO Auto-generated method stub
+		return selectList(nameSpace+"getTeaNameAndID");
+	}
 	
 	
 }

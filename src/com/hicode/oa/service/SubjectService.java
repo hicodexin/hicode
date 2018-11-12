@@ -22,4 +22,8 @@ public interface SubjectService {
 	 * @return
 	 */
 	public Integer do_insertSubject(Subject subject);
+	
+	
+	
+	
 }

@@ -137,9 +137,19 @@ public class AuditionsController {
 		return obj_arr.toString();
 	}
 	
+	@ResponseBody
 	@RequestMapping(value="/showAuditions")
 	public String showAuditions(){
-		return "/welcome.html";
+		List<Auditions> advs = auditionsService.getAudNameAndID();
+		JSONArray jsay = new JSONArray();
+		
+		for (Auditions adv1 : advs) {
+			JSONObject obj = new JSONObject();
+			obj.put("id", adv1.getAu_id());
+			obj.put("name", adv1.getSt_name() );
+			jsay.add(obj);
+		}
+		return jsay.toString();
 	}
 	
 	

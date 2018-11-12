@@ -154,7 +154,7 @@ public class TeacherController {
 	@RequestMapping("/showTeacher")
 	public String showTeacher_() {
 
-		List<Teacher> teacher = teacherService.getTeacherAll(0, 20);
+		List<Teacher> teacher = teacherService.getTeaNameAndID();
 		JSONArray jsry = new JSONArray();
 		for (Teacher t : teacher) {
 			// 确保该讲师在职

@@ -32,6 +32,10 @@
 		select count(1) from auditions;
 	</select>
 	
+	<select id="getAudNameAndID" resultType="Auditions">
+		select au_id,st_name from auditions  order by au_id;
+	</select>
+	
 	<insert id="do_insertAuditions" parameterType="Auditions" keyProperty="au_id">
 		insert into auditions (st_time,st_name,st_sex,st_class,t_id,adv_id,remarks)
 		values(#{st_time},#{st_name},#{st_sex},#{st_class},#{teacher.t_id},#{adviser.adv_id},#{remarks});

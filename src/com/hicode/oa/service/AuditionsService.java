@@ -35,4 +35,10 @@ public interface AuditionsService {
 	 */
 	public Integer getAuditionsForCount();
 	
+	/**
+	 * 获取
+	 * @return
+	 */
+	public List<Auditions> getAudNameAndID();
+	
 }

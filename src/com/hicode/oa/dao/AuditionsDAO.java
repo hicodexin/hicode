@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.hicode.oa.system.SysDAO;
+import com.hicode.oa.tool.Adviser;
 import com.hicode.oa.tool.Auditions;
 
 @Repository
@@ -39,6 +40,11 @@ public class AuditionsDAO extends SysDAO {
 	
 	public Integer getAuditionsForCount(){
 		return selectOne(nameSpace+"getAuditionsForCount");
+	}
+
+	public List<Auditions> getAudNameAndID() {
+		// TODO Auto-generated method stub
+		return selectList(nameSpace+"getAudNameAndID");
 	}
 
 	

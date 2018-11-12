@@ -242,6 +242,7 @@
 					creat_tb(a.list_tea,"#tbl_body");
 					/* 添加页码 */
 					if(a.all_num){
+						$("#dv_but").children("button").remove();
 						for(var k=0;k<a.all_num;k++){
 							var btn = document.createElement("button");
 							$(btn).html(k+1);

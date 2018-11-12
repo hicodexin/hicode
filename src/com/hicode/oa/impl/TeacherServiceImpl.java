@@ -68,6 +68,12 @@ public class TeacherServiceImpl implements TeacherService {
 		return teacherDAO.do_insertTeacher(teacher);
 	}
 
+	@Override
+	public List<Teacher> getTeaNameAndID() {
+		// TODO Auto-generated method stub
+		return teacherDAO.getTeaNameAndID();
+	}
+
 
 
 

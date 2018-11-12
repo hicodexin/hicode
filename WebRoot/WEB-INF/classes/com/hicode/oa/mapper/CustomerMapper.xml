@@ -8,10 +8,12 @@
 		</association>
 		<association property="teacher" column="t_id" select="com.hicode.oa.dao.TeacherDAO.getTeacherByID">
 		</association> 
+		<association property="adviser" column="adv_id" select="com.hicode.oa.dao.AdviserDAO.getAdviserByID">
+		</association> 
 	</resultMap>
 	
 	<sql id="all_column">
-		 er_id, au_id,sub_id,period,if_renewal,t_id,first_time,if_done,phone,if_refund,remarks
+		 er_id, au_id,sub_id,period,adv_id,if_renewal,t_id,first_time,if_done,phone,if_refund,remarks
 	</sql>
 	
 	<select id="getCustomerByID" parameterType="java.lang.Integer" resultMap="getCustomer_oop">
@@ -26,9 +28,21 @@
 		select count(1) from customer;
 	</select>
 	<!-- 添加签单学员 -->
-	<insert id="do_insertCustomer" parameterType="Customer">
-		insert into customer(au_id,sub_id,period,if_renewal,t_id,first_time,if_done,phone,if_refund,remarks) 
-		values();
+	<insert id="do_insertCustomer" parameterType="Customer" keyProperty="er_id">
+		insert into customer(au_id,sub_id,period,adv_id,if_renewal,t_id,first_time,if_done,phone,if_refund,remarks) 
+		values(
+				#{auditions.au_id},
+				#{subject.sub_id},
+				#{period},
+				#{adviser.adv_id},
+				#{if_renewal},
+				#{teacher.t_id},
+				#{first_time},
+				#{if_done},
+				#{phone},
+				#{if_refund},
+				#{remarks}
+			);
 	</insert>
 	
 	

@@ -1,8 +1,5 @@
 package com.hicode.oa.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -97,11 +94,27 @@ public class SubjectController {
 	}
 	
 	
-	@RequestMapping(value = "/showAll")
-	public String showAll(){
+	@ResponseBody
+	@RequestMapping("/showSubject")
+	public String showSubject(){
 		
-		return "/welcome.html";
+		List<Subject> advs = subjectService.getSubjectAll(0, 200);
+		JSONArray jsay = new JSONArray();
+		
+		for (Subject adv1 : advs) {
+			if(adv1.getIf_downline() == 1){
+				continue;
+			}
+			JSONObject obj = new JSONObject();
+			obj.put("id", adv1.getSub_id());
+			obj.put("name", adv1.getSub_name() );
+			
+			jsay.add(obj);
+		}
+		
+		return jsay.toString();
 	}
+	
 
 	
 	

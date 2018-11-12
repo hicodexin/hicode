@@ -198,7 +198,7 @@
 	width: 85%;
 }
 
-.up_ul li {
+.up_ul>li {
 	margin: 5px;
 	/*background-color: #ff3355;*/
 	height: 50px;

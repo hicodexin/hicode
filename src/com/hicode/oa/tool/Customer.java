@@ -26,6 +26,9 @@ public class Customer implements Serializable {
 	 * 所报课时(1：一个季度； 2：两个季度； 3：一个年度； 4：两个年度)
 	 */
 	private Integer period;
+	
+	private Adviser adviser;
+	
 	/**
 	 * 是否为续费用户(1:是 ；  0:否)
 	 */
@@ -123,6 +126,20 @@ public class Customer implements Serializable {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+	public Adviser getAdviser() {
+		return adviser;
+	}
+	public void setAdviser(Adviser adviser) {
+		this.adviser = adviser;
+	}
+	@Override
+	public String toString() {
+		return "Customer [er_id=" + er_id + ", auditions=" + auditions + ", subject=" + subject + ", period=" + period
+				+ ", adviser=" + adviser + ", if_renewal=" + if_renewal + ", teacher=" + teacher + ", first_time="
+				+ first_time + ", if_done=" + if_done + ", phone=" + phone + ", if_refund=" + if_refund + ", remarks="
+				+ remarks + "]";
+	}
 
+	
 	
 }

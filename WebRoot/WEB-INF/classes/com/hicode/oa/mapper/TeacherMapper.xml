@@ -36,6 +36,10 @@
 		select t_id from teacher order by t_id desc limit 0,1;
 	</select>
 	
+	<!-- 获取讲师的姓名，ID，离职时间 -->
+	<select id="getTeaNameAndID" resultType="Teacher">
+		select t_id,t_name,time_endDate from teacher;
+	</select>
 	
 	
 	<!-- 添加讲师信息 -->

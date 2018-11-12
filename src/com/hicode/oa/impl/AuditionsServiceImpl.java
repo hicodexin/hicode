@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.hicode.oa.dao.AuditionsDAO;
 import com.hicode.oa.service.AuditionsService;
+import com.hicode.oa.tool.Adviser;
 import com.hicode.oa.tool.Auditions;
 
 @Service
@@ -36,5 +37,11 @@ public class AuditionsServiceImpl implements AuditionsService{
 	public Integer getAuditionsForCount(){
 		
 		return auditionsDAO.getAuditionsForCount();
+	}
+
+	@Override
+	public List<Auditions> getAudNameAndID() {
+		// TODO Auto-generated method stub
+		return auditionsDAO.getAudNameAndID();
 	}
 }

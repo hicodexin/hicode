@@ -16,7 +16,7 @@
 	</select>
 	
 	<select id="getAdvNameAndID"  resultType="Adviser">
-		select adv_id, adv_name from adviser order by adv_id;
+		select adv_id, adv_name,time_endDate from adviser order by adv_id;
 	</select>
 	
 	<select id="getAdvisersForCount" resultType="java.lang.Integer">

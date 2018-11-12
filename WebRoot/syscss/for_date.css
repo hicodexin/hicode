@@ -297,6 +297,11 @@ em {
 	height: 28px;
 	line-height: 28px;
 }
+.jedatebot .botflex li em:HOVER{
+	cursor: pointer;
+	background-color: #00a1cb;
+	border-radius:6px; 
+}
 
 .jedatebot .botflex li i {
 	width: 30%;
@@ -329,7 +334,7 @@ em {
 	text-align: center;
 }
 .jedateprophms{
-	height: 30px;
+	height: 66px;
 	overflow: auto;
 	font-size:16px ;
 	font-weight:600 ;
@@ -339,3 +344,19 @@ em {
 	width: 100%;
 	border-bottom:solid 1px #336699 ;
 }
+.jedateprophms p:HOVER{
+	cursor: pointer;
+	background-color: #00A1CB;
+	color: #fff;
+}
+.jedatehmstitle{
+	height: 22px;
+	font-size: 16px;
+	font-family: "楷体";
+}
+.jedatehmsclose{
+	display: inline-block;
+	width: 10px;
+	margin-left:200px; 
+}
+

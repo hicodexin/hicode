@@ -141,8 +141,8 @@
 			$("#title_updatetime").val("");
 			
 			$.post("/hicode/teacher/showTeacher.spc",function(c){
-				console.log(c);
 				if(c.length > 0){
+					$("#update_selteas").children("option").remove();
 					for(var i=0;i<c.length;i++){
 						var str = "<option value="+c[i].tid+">"+c[i].name+"</option>";
 						$("#update_selteas").append(str);
@@ -152,8 +152,8 @@
 			},"json");
 			
 			$.post("/hicode/adviser/showAdviser.spc",function(f){
-				console.log(f);
 				if(f.length > 0){
+					$("#update_seladvs").children("option").remove();
 					for(var i=0;i<f.length;i++){
 						var str = "<option value="+f[i].id+">"+f[i].name+"</option>";
 						$("#update_seladvs").append(str);
@@ -236,6 +236,7 @@
 					creat_tb(a.list_advs,"#tbl_body");
 					/* 添加页码 */
 					if(a.all_num){
+						$("#dv_but").children("button").remove();
 						for(var k=0;k<a.all_num;k++){
 							var btn = document.createElement("button");
 							$(btn).html(k+1);

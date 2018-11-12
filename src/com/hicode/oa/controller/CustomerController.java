@@ -70,6 +70,7 @@ public class CustomerController {
 			obj.put("kemu", adv1.getSubject().getSub_name());
 			obj.put("period", adv1.getPeriod());
 			obj.put("xufei", adv1.getIf_renewal());
+			obj.put("qianyue", adv1.getAdviser().getAdv_name());
 			obj.put("tea_name", adv1.getTeacher().getT_name());
 			obj.put("firsttime", adv1.getFirst_time());
 			obj.put("over", adv1.getIf_done());
@@ -98,15 +99,15 @@ public class CustomerController {
 	public String do_insertCustomer(HttpServletRequest request){
 		String aud_id = request.getParameter("userName");
 		String sub_id = request.getParameter("subject");
-		String period = request.getParameter("title");
-		String if_renewal = request.getParameter("title");
-		String t_id = request.getParameter("title");
-		String first_time = request.getParameter("time_creatDate");
-		String if_done = request.getParameter("if_Onthejob");
+		String period = request.getParameter("period");
+		String if_renewal = request.getParameter("if_renewal");
 		
-		String phone = request.getParameter("time_endDate");
-		String if_refund = request.getParameter("title_updatetime");
-		String remarks = request.getParameter("time_endDate");
+		String t_id = request.getParameter("the_teacher");
+		String first_time = request.getParameter("first_time");
+		
+		String phone = request.getParameter("phone");
+		String adv_id = request.getParameter("adviser_sel");
+		String remarks = request.getParameter("remarks");
 		
 		Customer customer = new Customer();
 		
@@ -118,6 +119,9 @@ public class CustomerController {
 		
 		Teacher teacher = new Teacher();
 		teacher.setT_id(t_id);
+		
+		Adviser adviser = new Adviser();
+		adviser.setAdv_id(adv_id);
 		
 		customer.setAuditions(auditions);
 		customer.setSubject(subject);
@@ -134,12 +138,13 @@ public class CustomerController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		customer.setIf_done(Integer.valueOf(if_done));
 		customer.setPhone(phone);
-		customer.setIf_refund(Integer.valueOf(if_refund));
+		customer.setAdviser(adviser);
 		customer.setRemarks(remarks);
+		customer.setIf_done(0);
+		customer.setIf_refund(0);
 		
-		Integer count = 1;
+		Integer count = customerService.do_insertCustomer(customer);
 		JSONObject obj_arr = new JSONObject();
 		if(count>0){
 			obj_arr.put("list_advs", "ok");

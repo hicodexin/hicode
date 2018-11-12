@@ -41,6 +41,12 @@ public interface TeacherService extends DAO<Teacher>{
 	 */
 	public Integer do_insertTeacher(Teacher teacher);
 	
+	/**
+	 * 获取讲师的姓名，ID，离职时间
+	 * @return
+	 */
+	public List<Teacher> getTeaNameAndID();
+	
 	
 	
 	
