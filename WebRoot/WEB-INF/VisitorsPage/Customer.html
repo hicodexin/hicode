@@ -275,11 +275,13 @@
 					str += "<td>"+back_all[i].kemu+"</td>";
 					
 				if(back_all[i].period == 1){
-					str += "<td> 季度 </td>";
+					str += "<td> 一个季度 </td>";
 				}else if(back_all[i].period == 2){
-					str += "<td> 年度 </td>";
+					str += "<td> 两个季度 </td>";
 				}else if(back_all[i].period == 3){
-					str += "<td> 两年 </td>";
+					str += "<td> 一个年度 </td>";
+				}else if(back_all[i].period == 4){
+					str += "<td> 两个年度 </td>";
 				}
 				
 				str += "<td>"+back_all[i].tea_name+"</td>";
