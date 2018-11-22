@@ -96,7 +96,9 @@
 	  		</div>
   	</div>
   	  	
-  	<div class="dv_top"></div>
+  	<div class="dv_top">
+		<button id="index_go">首页</button>
+	</div>
     <hr>
     <div class="dv_title">讲师信息详情</div>
     <button id="bt_1">添加</button>
@@ -146,7 +148,9 @@
  			$("#dv_but button:eq(-1)").css({"backgroundColor":"#336699","color":"#fff"});
  		});
   		
-  		
+  		$("#index_go").click(function(){
+ 			window.location = "/hicode/index.html";
+ 		});
   		// 日历插件
 		jeDate({
 			dateCell:"#time_creatDate",

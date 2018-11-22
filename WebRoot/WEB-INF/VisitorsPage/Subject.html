@@ -57,7 +57,9 @@
 		</div>
 	</div>
 
-	<div class="dv_top"></div>
+	<div class="dv_top">
+		<button id="index_go">首页</button>
+	</div>
 	<hr>
 	<div class="dv_title">课程信息详情</div>
 	<button id="bt_1">添加</button>
@@ -116,7 +118,9 @@
   			$("#hidd_mask").hide().hide(300);
  			$("#dv_update").show().hide(300);
  		});
- 		
+ 		$("#index_go").click(function(){
+ 			window.location = "/hicode/index.html";
+ 		});
  		/* 添加学员信息，提交按钮  */
  		$("#up_sub").click(function(){
  			if($("#userName").val().trim().length<2){
@@ -155,7 +159,7 @@
 				
 				var js_arry = eval('(' + a_s + ')');
 				
-				creat_tb(js_arry.list_advs,"#tbl_body");
+				creat_tb_sub(js_arry.list_advs,"#tbl_body");
 			});
 		}
  		
@@ -163,7 +167,7 @@
 		function start_post(){
 	  		$.post("/hicode/subject/showSubjectByInfo.spc",{ "page" : 1 }, function(a) {
 				if (a) {
-					creat_tb(a.list_advs,"#tbl_body");
+					creat_tb_sub(a.list_advs,"#tbl_body");
 					/* 添加页码 */
 					if(a.all_num){
 						$("#dv_but").children("button").remove();
@@ -193,42 +197,7 @@
 	  		
   		}
  		
- 		
- 		/* back_all: 待便利的值 */
- 		function creat_tb(back_all,p_dom){
- 			for (var i = 0; i < back_all.length; i++) {
-				var tr = document.createElement("tr");
-				var str = "<td>" + (i + 1) + "</td>";
-					str += "<td>"+back_all[i].name+"</td>";
-					
-					if(back_all[i].xiaxian == 0){
-						str += "<td> <img src='/hicode/sysimg/face_smile.jpg' /> </td>";
-					}else{
-						str += "<td> <img src='/hicode/sysimg/face_grieved.jpg' /> </td>";
-					}
-					
-					var btid = back_all[i].id;
-					str += "<td><button id = '"+btid+"' name='"+(i+1)+"'>修改</button></td>";
-					str += "<td><input type='checkbox' value='"+btid+"' /></td>";
-				$(tr).append(str);
-				$(p_dom).append(tr);
-			} 
- 		}
- 		
- 		
- 		
- 		
- 		
- 		
- 		
 	});
 	
-	
-	
-	
-	
-	
-	
-	
-	
 </script>
+</html>

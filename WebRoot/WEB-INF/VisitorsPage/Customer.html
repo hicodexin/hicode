@@ -65,7 +65,7 @@
 				<li><b>授课老师 : </b> 
 					<select id="the_teacher"></select>
 				</li>
-				<li><b>首次上课时间: </b> 
+				<li><b>第一堂正课: </b> 
 					<input id="first_time" type="text" readonly="readonly" placeholder="请选择" class="datainp" >
 				</li>
 				<li><b>手机号码 : </b> <input type="text" id="phone"  placeholder="手机号" /></li>
@@ -85,7 +85,9 @@
 		</div>
 	</div>
 
-	<div class="dv_top"></div>
+	<div class="dv_top">
+		<button id="index_go">首页</button>
+	</div>
 	<hr>
 	<div class="dv_title">报名信息详情</div>
 	<button id="bt_1">添加</button>
@@ -139,7 +141,9 @@
  			change_page(this);
  			$("#dv_but button:eq(-1)").css({"backgroundColor":"#336699","color":"#fff"});
  		});
- 		
+ 		$("#index_go").click(function(){
+ 			window.location = "/hicode/index.html";
+ 		});
  		//点击添加按钮
  		$("#bt_1").click(function(){
  			$("#hidd_mask").hide().show(300);
@@ -152,11 +156,7 @@
 			
 			$.post("/hicode/subject/showSubject.spc",function(c){
 				if(c.length > 0){
-					$("#sub_sel").children("option").remove();
-					for(var i=0;i<c.length;i++){
-						var str = "<option value="+c[i].id+">"+c[i].name+"</option>";
-						$("#sub_sel").append(str);
-					}
+					for_sel("sub_sel",c);
 				}
 				window.setTimeout(function() {
 					$('.chosen-select').chosen();
@@ -166,22 +166,14 @@
 			
 			$.post("/hicode/auditions/showAuditions.spc",function(c){
 				if(c.length > 0){
-					$("#student_sel").children("option").remove();
-					for(var i=0;i<c.length;i++){
-						var str = "<option value="+c[i].id+">"+c[i].name+"</option>";
-						$("#student_sel").append(str);
-					}
+					for_sel("student_sel",c);
 				}
 			
 			},"json");
 			
 			$.post("/hicode/teacher/showTeacher.spc",function(c){
 				if(c.length > 0){
-					$("#the_teacher").children("option").remove();
-					for(var i=0;i<c.length;i++){
-						var str = "<option value="+c[i].tid+">"+c[i].name+"</option>";
-						$("#the_teacher").append(str);
-					}
+					for_sel("the_teacher",c);
 				}
 			
 			},"json");
@@ -189,11 +181,7 @@
 			$.post("/hicode/adviser/showAdviser.spc",function(f){
 				console.log(f);
 				if(f.length > 0){
-					$("#adviser_sel").children("option").remove();
-					for(var i=0;i<f.length;i++){
-						var str = "<option value="+f[i].id+">"+f[i].name+"</option>";
-						$("#adviser_sel").append(str);
-					}
+					for_sel("adviser_sel",f);
 				}
 			
 			},"json");
@@ -266,69 +254,6 @@
  			$("#dv_update").show().hide(300);
  		});
  		
- 		/* back_all: 待便利的值 */
- 		function creat_tb(back_all,p_dom){
- 			for (var i = 0; i < back_all.length; i++) {
-				var tr = document.createElement("tr");
-				var str = "<td>" + (i + 1) + "</td>";
-					str += "<td>"+back_all[i].name+"</td>";
-					str += "<td>"+back_all[i].kemu+"</td>";
-					
-				if(back_all[i].period == 1){
-					str += "<td> 一个季度 </td>";
-				}else if(back_all[i].period == 2){
-					str += "<td> 两个季度 </td>";
-				}else if(back_all[i].period == 3){
-					str += "<td> 一个年度 </td>";
-				}else if(back_all[i].period == 4){
-					str += "<td> 两个年度 </td>";
-				}
-				
-				str += "<td>"+back_all[i].tea_name+"</td>";
-				
-				var firsttime = timestampToTime_hms(back_all[i].firsttime.time);
-				
-				str += "<td>"+firsttime+"</td>";
-				
-				str += "<td>"+back_all[i].tel+"</td>";
-				
-				str += "<td>"+back_all[i].qianyue+"</td>";
-				
-				if(back_all[i].over == 1){
-					str += "<td> <img src='/hicode/sysimg/face_smile.jpg' /> </td>";
-				}else{
-					str += "<td>  </td>";
-				}
-				
-				if(back_all[i].xufei == 1){
-					str += "<td> <img src='/hicode/sysimg/face_smile.jpg' /> </td>";
-				}else{
-					str += "<td>  </td>";
-				}
-				
-				if(back_all[i].tuifei == 1){
-					str += "<td> <img src='/hicode/sysimg/face_grieved.jpg' /> </td>";
-					$(tr).css("color","#b0b0b0");
-				}else{
-					str += "<td>  </td>";
-				}
-				
-				if(back_all[i].remarks){
-					str += "<td>"+back_all[i].beizhu+"</td>";
-				}else{
-					str += "<td>   </td>";
-				}
-				
-				var btid = back_all[i].id;
-				str += "<td><button id = '"+btid+"' name='"+(i+1)+"'onclick=alert('权限不足，请联系管理员')>修改</button></td>";
-				str += "<td><input type='checkbox' value='"+btid+"' /></td>";
-				$(tr).append(str);
-				$(p_dom).append(tr);
-
-			} 
- 		
- 		}
- 		
  		/*切换页面*/
  		function change_page(this_dom){
 			$("#dv_but button").css({"backgroundColor":"#fff","color":"#336699"});
@@ -337,7 +262,7 @@
 			$.post("/hicode/customer/showCustomerByInfo.spc",{"page":$(this_dom).attr("mypage")},function(a_s){
 				$("#tbl_body").html(' ');
 				var js_arry = eval('(' + a_s + ')');
-				creat_tb(js_arry.list_advs,"#tbl_body");
+				creat_tb_cus(js_arry.list_advs,"#tbl_body");
 			});
 		}
  		
@@ -346,7 +271,7 @@
  			$.post("/hicode/customer/showCustomerByInfo.spc", { "page" : 1 }, function(a) {
 				console.log(a.list_advs);
 				if (a) {
-					creat_tb(a.list_advs,"#tbl_body");
+					creat_tb_cus(a.list_advs,"#tbl_body");
 					/* 添加页码 */
 					if(a.all_num){
 						$("#dv_but").children("button").remove();

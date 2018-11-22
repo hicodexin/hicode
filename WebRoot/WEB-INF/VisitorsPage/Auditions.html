@@ -100,7 +100,9 @@
 	</form>
 	</div>
 
-	<div class="dv_top"></div>
+	<div class="dv_top">
+		<button id="index_go">首页</button>
+	</div>
 	<hr>
 	<div class="dv_title">试听课信息详情</div>
 	<button id="bt_1">添加</button>
@@ -167,27 +169,20 @@
 			$.post("/hicode/teacher/showTeacher.spc",function(c){
 				console.log(c);
 				if(c.length > 0){
-					$("#update_selteas").children("option").remove();
-					for(var i=0;i<c.length;i++){
-						var str = "<option value="+c[i].tid+">"+c[i].name+"</option>";
-						$("#update_selteas").append(str);
-					}
+					for_sel("update_selteas",c);
 				}
-			
 			},"json");
 			
 			$.post("/hicode/adviser/showAdviser.spc",function(f){
 				console.log(f);
 				if(f.length > 0){
-					$("#update_seladvs").children("option").remove();
-					for(var i=0;i<f.length;i++){
-						var str = "<option value="+f[i].id+">"+f[i].name+"</option>";
-						$("#update_seladvs").append(str);
-					}
+					for_sel("update_seladvs",f);
 				}
-			
 			},"json");
 			
+ 		});
+ 		$("#index_go").click(function(){
+ 			window.location = "/hicode/index.html";
  		});
  	
  		/* 添加学员信息，提交按钮  */
@@ -246,7 +241,7 @@
 			$.post("/hicode/auditions/showAuditionsByInfo.spc", { "page" : 1 }, function(a) {
 				console.log(a.list_advs);
 				if (a) {
-					creat_tb(a.list_advs,"#tbl_body");
+					creat_tb_aud(a.list_advs,"#tbl_body");
 					/* 添加页码 */
 					if(a.all_num){
 						$("#dv_but").children("button").remove();
@@ -284,43 +279,9 @@
 				
 				var js_arry = eval('(' + a_s + ')');
 				
-				creat_tb(js_arry.list_advs,"#tbl_body");
+				creat_tb_aud(js_arry.list_advs,"#tbl_body");
 			});
 		}
- 		
- 		/* back_all: 待便利的值 */
- 		function creat_tb(back_all,p_dom){
- 			for (var i = 0; i < back_all.length; i++) {
-					var tr = document.createElement("tr");
-					var str = "<td>" + (i + 1) + "</td>";
-						var st_time = timestampToTime_hms(back_all[i].time.time);
-						str += "<td>"+st_time+"</td>";
-						str += "<td>"+back_all[i].name+"</td>";
-						
-						if(back_all[i].sex == 1){
-							str += "<td><img src='/hicode/sysimg/face_boy.jpg'/> </td>";
-						}else{
-							str += "<td><img src='/hicode/sysimg/face_girl.jpg'/></td>";
-						}
-						
-						str += "<td>"+back_all[i].classinfo+"</td>";
-						str += "<td>"+back_all[i].tea_name+"</td>";
-						str += "<td>"+back_all[i].adv_name+"</td>";
-						
-						if(back_all[i].remarks){
-							str += "<td>"+back_all[i].beizhu+"</td>";
-						}else{
-							str += "<td>   </td>";
-						}
-					
-						var btid = back_all[i].id;
-						str += "<td><button id = '"+btid+"' name='"+(i+1)+"' onclick=alert('权限不足，请联系管理员')>修改</button></td>";
-						str += "<td><input type='checkbox' value='"+btid+"' /></td>";
-					$(tr).append(str);
-					$(p_dom).append(tr);
-
-				}
- 		}
  		
 	});
 </script>

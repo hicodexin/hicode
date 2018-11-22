@@ -12,6 +12,7 @@
 			margin: 0px;
 			padding: 0px;
 		}
+		
 	</style>
     <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
 	<link type="text/css" rel="stylesheet"  href="/hicode/syscss/teacher_page.css" />
@@ -37,15 +38,7 @@
 				</label> <label for="sex_g"> <img src="/hicode/sysimg/face_girl.jpg" />
 						<input type="radio" id="sex_g" name="t_sex" value="0" />
 				</label></li>
-				<li><b>当前职务 : </b> <select id="update_sel">
-						<option>课程顾问</option>
-						<option>地推专员</option>
-						<option>TML专员</option>
-						<option>地推主管</option>
-						<option>TMK主管</option>
-						<option>顾问主管</option>
-						<option>市场总监</option>
-				</select></li>
+				<li><b>当前职务 : </b> <select id="update_sel"></select></li>
 				<li><b>是否在职 : </b> 
 				<label for="job_b"> 
 						<img src="/hicode/sysimg/face_smile.jpg" /> 
@@ -70,7 +63,9 @@
 		</div>
 	</div>
 
-	<div class="dv_top"></div>
+	<div class="dv_top">
+		<button id="index_go">首页</button>
+	</div>
 	<hr>
 	<div class="dv_title">市场顾问信息详情</div>
 	<button id="bt_1">添加</button>
@@ -140,24 +135,9 @@
 			$("#time_endDate").val("");
 			$("#title_updatetime").val("");
 			
-			$.post("/hicode/teacher/showTeacher.spc",function(c){
-				if(c.length > 0){
-					$("#update_selteas").children("option").remove();
-					for(var i=0;i<c.length;i++){
-						var str = "<option value="+c[i].tid+">"+c[i].name+"</option>";
-						$("#update_selteas").append(str);
-					}
-				}
-			
-			},"json");
-			
 			$.post("/hicode/adviser/showAdviser.spc",function(f){
 				if(f.length > 0){
-					$("#update_seladvs").children("option").remove();
-					for(var i=0;i<f.length;i++){
-						var str = "<option value="+f[i].id+">"+f[i].name+"</option>";
-						$("#update_seladvs").append(str);
-					}
+					for_sel("update_sel",f);
 				}
 			
 			},"json");
@@ -204,7 +184,9 @@
  			
  		});
  		
- 		
+ 		$("#index_go").click(function(){
+ 			window.location = "/hicode/index.html";
+ 		});
  		
  		// 日历插件
 		jeDate({
@@ -276,55 +258,6 @@
 				creat_tb(js_arry.list_advs,"#tbl_body");
 			});
 		}
-		
-		/* back_all: 待便利的值 */
- 		function creat_tb(back_all,p_dom){
- 			for (var i = 0; i < back_all.length; i++) {
-				var tr = document.createElement("tr");
-				var str = "<td>" + (i + 1) + "</td>";
-					str += "<td>"+back_all[i].name+"</td>";
-					
-					if(back_all[i].sex == 1){
-						str += "<td><img src='/hicode/sysimg/face_boy.jpg'/> </td>";
-					}else{
-						str += "<td><img src='/hicode/sysimg/face_girl.jpg'/></td>";
-					}
-					str += "<td>"+back_all[i].title+"</td>";
-					
-					if(back_all[i].onthejob == 1){
-						str += "<td> <img src='/hicode/sysimg/face_smile.jpg' /> </td>";
-					}else{
-						str += "<td> <img src='/hicode/sysimg/face_grieved.jpg' /> </td>";
-					}
-					
-					var creatDate = timestampToTime(back_all[i].opentime.time);
-					str += "<td>"+creatDate+"</td>";
-					
-					if(back_all[i].endtime){
-						var endDate = timestampToTime(back_all[i].endtime.time);
-						str += "<td>"+endDate+"</td>";
-						$(tr).css("color","#b0b0b0");
-					}else{
-						str += "<td>   </td>";
-					}
-					
-					if(back_all[i].title_updatetime){
-						var updatetime = timestampToTime(back_all[i].title_updatetime.time);
-						str += "<td>"+updatetime+"</td>";
-					}else{
-						str += "<td>   </td>";
-					}
-				
-					var btid = back_all[i].id;
-					str += "<td><button id = '"+btid+"'name='"+(i+1)+"'  onclick=alert('权限不足，请联系管理员')>修改</button></td>";
-					str += "<td><input type='checkbox' value='"+btid+"' /></td>";
-				$(tr).append(str);
-				$(p_dom).append(tr);
-			
-			}
- 		}
- 		
- 		
  		
 	});
 </script>

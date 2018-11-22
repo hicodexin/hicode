@@ -3,6 +3,28 @@
 	background-color: #336699;
 }
 
+#index_go{
+	outline-style: none;
+	border: 1px #fff solid;
+	background-color: #336699;
+	color: #fff;
+	display: inline-block;
+	margin-left: 15%;
+	margin-top:10px;
+	width: 65px;
+	height: 30px;
+	border-radius: 6px;
+	font-size: 16px;
+	font-family: "楷体";
+	font-weight: 600;
+}
+#index_go:HOVER {
+	cursor: pointer;
+	border: 1px #336699 solid;
+	background-color: #fff;
+	color: #336699;
+}
+		
 .dv_title {
 	height: 90px;
 	color: #336699;
