@@ -181,7 +181,7 @@ function creat_tb_sub(back_all,p_dom){
 	for (var i = 0; i < back_all.length; i++) {
 		var tr = document.createElement("tr");
 		var str = "<td>" + (i + 1) + "</td>";
-			str += "<td>"+back_all[i].name+"</td>";
+			str += "<td name = 'userName'>"+back_all[i].name+"</td>";
 			
 			if(back_all[i].xiaxian == 0){
 				str += "<td> <img src='/hicode/sysimg/face_smile.jpg' /> </td>";

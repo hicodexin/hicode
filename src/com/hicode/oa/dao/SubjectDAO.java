@@ -45,6 +45,11 @@ public class SubjectDAO  extends SysDAO{
 		// TODO Auto-generated method stub
 		return selectOne(nameSpace+"getLastSubjectID");
 	}
+
+	public Integer do_updateSubject(Subject subject) {
+		// TODO Auto-generated method stub
+		return update(nameSpace+"do_updateSubject", subject);
+	}
 	
 
 }

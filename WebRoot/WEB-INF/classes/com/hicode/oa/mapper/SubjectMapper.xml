@@ -28,7 +28,10 @@
 		insert into subject(sub_id, sub_name,if_downline) values(#{sub_id},#{sub_name},#{if_downline});
 	</insert>
 	
-	
+	<!-- 修改 -->
+	<update id="do_updateSubject" parameterType="Subject">
+		update subject set sub_name = #{sub_name},if_downline = #{if_downline} where sub_id = #{sub_id};
+	</update>
 </mapper>
 
 

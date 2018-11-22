@@ -34,8 +34,9 @@
 		<div class="dv_title" id="dv_title">修改讲师信息</div>
 		<div class="dv_upmain">
 			<ul class="up_ul">
-				<li><b>序号 : </b> <input type="text" id="tea_list" value=""
-					disabled="disabled" /></li>
+				<li><b>序号 : </b> 
+					<input type="text" id="tea_list" value="" disabled="disabled" />
+				</li>
 				<li><b>科目名称 : </b> <input type="text" id="userName" /></li>
 				<li>
 					<b>是否在线 : </b> 
@@ -52,7 +53,7 @@
 			</ul>
 		</div>
 		<div id="dv_upbottom">
-			<button id="up_sub">提交</button>
+			<button id="up_sub">添加</button>
 			<button id="up_res">返回</button>
 		</div>
 	</div>
@@ -100,6 +101,51 @@
 			$("#tea_list").val(len+1);
 			$("#userName").val("");
  		});
+ 		
+ 		
+
+		var for_btn = function() {
+			window.setTimeout(function() {
+				var bts = $("button");
+
+				var revise = new Array();
+
+				if (bts.length > 0) {
+					for (var i = 0, j = 0; i < bts.length; i++) {
+						if ($(bts[i]).html() == "修改") {
+							revise[j] = bts[i];
+							j++;
+						}
+
+					}
+				}
+
+				if (revise.length > 0) {
+					for (var k = 0; k < revise.length; k++) {
+						(function() {
+							var t = k;
+							console.log(t);
+							console.log($("#tbl_body tr:eq(" + k + ")"));
+							console.log(("---------"));
+
+							$(revise[t]).click(function() {
+								$("#hidd_mask").hide().show(300);
+								$("#dv_update").hide().show(300);
+								$("#tea_list").val($(this).attr("name"));
+								$("#tea_list").attr("name", $(this).attr("id"));
+								$("#userName").val($("[name='userName']:eq(" + t + ")").html());
+								$("#up_sub").html("修改");
+							});
+
+						})();
+
+					}
+				}
+
+			}, 500);
+
+		}
+		for_btn();
   		
   		//第一页
  		$("#bt_first").click(function(){
@@ -130,22 +176,49 @@
  				$("#userName").css("borderColor","#336699");
  			}
  			
- 			var data = {
-			 			"userName":$("#userName").val().trim(),
-			 			"if_Onthejob":$('input:radio[name="if_Onthejob"]:checked').val()
- 			};
- 		 	$.post("/hicode/subject/do_insertSubject.spc",data,function(e){
- 				$("#hidd_mask").hide().hide(300);
- 				$("#dv_update").show().hide(300);
- 				if(e.list_advs == 'ok'){
- 					alert("添加成功");
- 					$("#tbl_body").children("tr").remove();
- 					start_post();
- 				}else{
- 					alert("添加失败,请联系管理员。。。。");
- 				}
  			
- 			},"json");
+ 			var content = $(this).html();
+  			if(content=="添加"){
+  				var data = {
+		 			"userName":$("#userName").val().trim(),
+		 			"if_Onthejob":$('input:radio[name="if_Onthejob"]:checked').val()
+ 				};
+ 				$.post("/hicode/subject/do_insertSubject.spc",data,function(e){
+	 				$("#hidd_mask").hide().hide(300);
+	 				$("#dv_update").show().hide(300);
+	 				if(e.list_advs == 'ok'){
+	 					alert("添加成功");
+	 					$("#tbl_body").children("tr").remove();
+	 					start_post();
+	 				}else{
+	 					alert("添加失败,请联系管理员。。。。");
+	 				}
+	 			
+	 			},"json");
+ 			}
+ 			else if(content=="修改"){
+  				var data = {
+  					"id":$("#tea_list").attr("name"),
+		 			"userName":$("#userName").val().trim(),
+		 			"if_Onthejob":$('input:radio[name="if_Onthejob"]:checked').val()
+ 				};
+ 				console.log(data);
+ 				$.post("/hicode/subject/do_updateSubject.spc",data,function(e){
+	 				$("#hidd_mask").hide().hide(300);
+	 				$("#dv_update").show().hide(300);
+	 				if(e.list_advs == 'ok'){
+	 				
+	 					alert("修改成功");
+	 					$("#tbl_body").children("tr").remove();
+	 					start_post();
+	 					for_btn();
+	 				}else{
+	 					alert("修改失败,请联系管理员。。。。");
+	 				}
+	 			
+	 			},"json");
+ 			}
+ 		 	
  			
  		});
  		
@@ -200,4 +273,16 @@
 	});
 	
 </script>
+<script type="text/javascript">
+/* 	window.setTimeout(function(){
+  			console.log("td:button------------");
+  			console.log($("button"));
+  		},2000); */
+
+</script>
+
+
+
+
+
 </html>

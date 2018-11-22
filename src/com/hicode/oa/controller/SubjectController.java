@@ -115,6 +115,28 @@ public class SubjectController {
 		return jsay.toString();
 	}
 	
+	@ResponseBody
+	@RequestMapping("/do_updateSubject")
+	public String do_updateSubject(HttpServletRequest request){
+		
+		String subid = request.getParameter("id");
+		String name = request.getParameter("userName");
+		String if_downline = request.getParameter("if_Onthejob");
+		
+		Subject subject = new Subject();
+		subject.setSub_id(subid);
+		subject.setSub_name(name);
+		subject.setIf_downline(Integer.valueOf(if_downline));
+		
+		Integer count =subjectService.do_updateSubject(subject);
+		JSONObject obj_arr = new JSONObject();
+		if(count>0){
+			obj_arr.put("list_advs", "ok");
+		}
+		
+		return obj_arr.toString();
+	}
+	
 
 	
 	

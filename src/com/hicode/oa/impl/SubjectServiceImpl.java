@@ -46,4 +46,10 @@ public class SubjectServiceImpl implements SubjectService{
 		return subjectDAO.do_insertSubject(subject);
 	}
 
+	@Override
+	public Integer do_updateSubject(Subject subject) {
+		// TODO Auto-generated method stub
+		return subjectDAO.do_updateSubject(subject);
+	}
+
 }

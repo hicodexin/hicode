@@ -22,6 +22,13 @@ public interface SubjectService {
 	 * @return
 	 */
 	public Integer do_insertSubject(Subject subject);
+
+	/**
+	 * 修改课程信息
+	 * @param subject
+	 * @return
+	 */
+	public Integer do_updateSubject(Subject subject);
 	
 	
 	
