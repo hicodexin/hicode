@@ -2,8 +2,8 @@
 // 格式化时间格式
 function timestampToTime(timestamp) {
 	var date = new Date(timestamp); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
-	Y = date.getFullYear() + ' - ';
-	M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + ' - ';
+	Y = date.getFullYear() + '-';
+	M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
 	D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
 	h = (date.getHours() < 10 ? '0' + (date.getHours()) : date.getHours()) + ':';
 	m = (date.getMinutes() < 10 ? '0' + (date.getMinutes()) : date.getMinutes()) + ':';
@@ -13,8 +13,8 @@ function timestampToTime(timestamp) {
 //格式化时间格式
 function timestampToTime_hms(timestamp) {
 	var date = new Date(timestamp); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
-	Y = date.getFullYear() + ' - ';
-	M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + ' - ';
+	Y = date.getFullYear() + '-';
+	M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
 	D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
 	h = (date.getHours() < 10 ? '0' + (date.getHours()) : date.getHours()) + ':';
 	m = (date.getMinutes() < 10 ? '0' + (date.getMinutes()) : date.getMinutes()) + ':';
@@ -177,23 +177,66 @@ function creat_tb_cus(back_all, p_dom) {
 }
 
 /* back_all: 待便利的值 */
-function creat_tb_sub(back_all,p_dom){	
+function creat_tb_sub(back_all, p_dom) {
 	for (var i = 0; i < back_all.length; i++) {
 		var tr = document.createElement("tr");
 		var str = "<td>" + (i + 1) + "</td>";
-			str += "<td name = 'userName'>"+back_all[i].name+"</td>";
-			
-			if(back_all[i].xiaxian == 0){
-				str += "<td> <img src='/hicode/sysimg/face_smile.jpg' /> </td>";
-			}else{
-				str += "<td> <img src='/hicode/sysimg/face_grieved.jpg' /> </td>";
-			}
-			
-			var btid = back_all[i].id;
-			str += "<td><button id = '"+btid+"' name='"+(i+1)+"'>修改</button></td>";
-			str += "<td><input type='checkbox' value='"+btid+"' /></td>";
+		str += "<td name = 'userName'>" + back_all[i].name + "</td>";
+
+		if (back_all[i].xiaxian == 0) {
+			str += "<td> <img src='/hicode/sysimg/face_smile.jpg' /> </td>";
+		} else {
+			str += "<td> <img src='/hicode/sysimg/face_grieved.jpg' /> </td>";
+		}
+
+		var btid = back_all[i].id;
+		str += "<td><button id = '" + btid + "' name='" + (i + 1) + "'>修改</button></td>";
+		str += "<td><input type='checkbox' value='" + btid + "' /></td>";
 		$(tr).append(str);
 		$(p_dom).append(tr);
-	} 
+	}
 }
 
+
+/* back_all: 待便利的值 */
+function creat_tbTea(back_all, p_dom) {
+	for (var i = 0; i < back_all.length; i++) {
+		var tr = document.createElement("tr");
+		var str = "<td>" + (i + 1) + "</td>";
+		str += "<td name = 'userName'>" + back_all[i].t_name + "</td>";
+		if (back_all[i].t_sex == 1) {
+			str += "<td><img src='/hicode/sysimg/face_boy.jpg'/> </td>";
+		} else {
+			str += "<td><img src='/hicode/sysimg/face_girl.jpg'/></td>";
+		}
+		if (back_all[i].if_Onthejob == 1) {
+			str += "<td> <img src='/hicode/sysimg/face_smile.jpg' /> </td>";
+		} else {
+			str += "<td> <img src='/hicode/sysimg/face_grieved.jpg' /> </td>";
+		}
+
+		var creatDate = timestampToTime(back_all[i].time_creatDate.time);
+
+		str += "<td name='creatDate'>" + creatDate + "</td>";
+		if (back_all[i].time_endDate) {
+			var endDate = timestampToTime(back_all[i].time_endDate.time);
+			str += "<td name='endDate'>" + endDate + "</td>";
+			$(tr).css("color", "#b0b0b0");
+		} else {
+			str += "<td name='endDate'></td>";
+		}
+		str += "<td>" + back_all[i].title + "</td>";
+		if (back_all[i].title_updatetime) {
+			var updatetime = timestampToTime(back_all[i].title_updatetime.time);
+			str += "<td name='updatetime'>" + updatetime + "</td>";
+		} else {
+			str += "<td name='updatetime'></td>";
+		}
+		var btid = back_all[i].t_id;
+		str += "<td><button id = '" + btid + "' name='" + (i + 1) + "'>修改</button></td>";
+		str += "<td><input type='checkbox' value='" + back_all[i].t_id + "' /></td>";
+		$(tr).append(str);
+		$(p_dom).append(tr);
+	}
+
+}

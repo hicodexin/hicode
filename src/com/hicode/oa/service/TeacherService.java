@@ -46,6 +46,12 @@ public interface TeacherService extends DAO<Teacher>{
 	 * @return
 	 */
 	public List<Teacher> getTeaNameAndID();
+	/**
+	 * 修改讲师信息
+	 * @param teacher
+	 * @return
+	 */
+	public Integer do_updateTeacher(Teacher teacher);
 	
 	
 	

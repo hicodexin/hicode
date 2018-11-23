@@ -53,6 +53,11 @@ public class TeacherDAO extends SysDAO{
 		// TODO Auto-generated method stub
 		return selectList(nameSpace+"getTeaNameAndID");
 	}
+
+	public Integer do_updateTeacher(Teacher teacher) {
+		// TODO Auto-generated method stub
+		return update(nameSpace+"do_updateTeacher", teacher);
+	}
 	
 	
 }

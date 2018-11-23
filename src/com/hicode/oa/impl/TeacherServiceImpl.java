@@ -74,6 +74,12 @@ public class TeacherServiceImpl implements TeacherService {
 		return teacherDAO.getTeaNameAndID();
 	}
 
+	@Override
+	public Integer do_updateTeacher(Teacher teacher) {
+		// TODO Auto-generated method stub
+		return teacherDAO.do_updateTeacher(teacher);
+	}
+
 
 
 

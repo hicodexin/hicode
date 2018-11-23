@@ -151,28 +151,56 @@
   		$("#index_go").click(function(){
  			window.location = "/hicode/index.html";
  		});
-  		// 日历插件
-		jeDate({
-			dateCell:"#time_creatDate",
-			format:"YYYY-MM-DD",
-			isinitVal:true,
-			isTime:false, //isClear:false,
-			minDate:"1014-09-19 00:00:00"
-		}) ;
-		jeDate({
-			dateCell:"#time_endDate",
-			format:"YYYY-MM-DD",
-			isinitVal:true,
-			isTime:false, //isClear:false,
-			minDate:"1014-09-19 00:00:00"
-		}) ;
-		jeDate({
-			dateCell:"#title_updatetime",
-			format:"YYYY-MM-DD",
-			isinitVal:true,
-			isTime:false, //isClear:false,
-			minDate:"1014-09-19 00:00:00"
-		}) ;
+ 		
+ 		/* 修改按钮 */
+		var for_btn = function() {
+			window.setTimeout(function() {
+				var bts = $("button");
+				var revise = new Array();
+				if (bts.length > 0) {
+					for (var i = 0, j = 0; i < bts.length; i++) {
+						if ($(bts[i]).html() == "修改") {
+							revise[j] = bts[i];
+							j++;
+						}
+					}
+				}
+				
+				console.log("================");
+				console.log(revise);
+				if (revise.length > 0) {
+					for (var k = 0; k < revise.length; k++) {
+						(function() {
+							var t = k;
+							$(revise[t]).click(function() {
+								$("#hidd_mask").hide().show(300);
+								$("#dv_update").hide().show(300);
+								$("#dv_title").html("修改讲师信息");
+								$("#tea_list").val($(this).attr("name"));
+								$("#tea_list").attr("name", $(this).attr("id"));
+								$("#userName").val($("[name='userName']:eq(" + t + ")").html());
+								$("#time_creatDate").val($("[name='creatDate']:eq(" + t + ")").html());
+								$("#time_endDate").val($("[name='endDate']:eq(" + t + ")").html());
+								if($("#time_endDate").val() == '' || $("#time_endDate").val() == null){
+									$("#time_endDate").removeAttr("disabled");
+									$("#title_updatetime").removeAttr("disabled");
+								}else{
+									$("#time_endDate").attr("disabled","disabled");
+									$("#title_updatetime").attr("disabled","disabled");
+								}
+								$("#title_updatetime").val($("[name='updatetime']:eq(" + t + ")").html());
+								$("#up_sub").html("修改");
+							});
+
+						})();
+
+					}
+				}
+
+			}, 500);
+		}
+		for_btn();
+  		
   		// 点击返回消失
   		$("#up_res").click(function(){
   			$("#hidd_mask").hide().hide(300);
@@ -194,23 +222,22 @@
  		});
   		
   		$("#up_sub").click(function(){
-  			var content = $(this).html();
-  			if(content=="添加"){
-  				if($("#userName").val().trim().length<2){
-	 				$("#userName").css("borderColor","#f00");
-	 				return;
-	 			}else{
-	 				$("#userName").css("borderColor","#336699");
-	 			}
-	 			
-	 			if($("#time_creatDate").val().length < 10){
-	 				$("#time_creatDate").css("borderColor","#f00");
-	 				return;
-	 			}else{
-	 				$("#time_creatDate").css("borderColor","#336699");
-	 			}
-	 			
-	 			var data = {
+  			if($("#userName").val().trim().length<2){
+ 				$("#userName").css("borderColor","#f00");
+ 				return;
+ 			}else{
+ 				$("#userName").css("borderColor","#336699");
+ 			}
+ 			
+ 			if($("#time_creatDate").val().length < 10){
+ 				$("#time_creatDate").css("borderColor","#f00");
+ 				return;
+ 			}else{
+ 				$("#time_creatDate").css("borderColor","#336699");
+ 			}
+  			var data = {};
+  			
+  			data = {
 				 			"userName":$("#userName").val().trim(),
 				 			"sex":$('input:radio[name="t_sex"]:checked').val(),
 				 			"title":$("#update_sel").val(),
@@ -219,7 +246,9 @@
 				 			"time_endDate":$("#time_endDate").val(),
 				 			"title_updatetime":$("#title_updatetime").val()
 	 			};
-	 			console.log(data);
+	 			
+  			var content = $(this).html();
+  			if(content=="添加"){
 	 		 	$.post("/hicode/teacher/do_insertTeacher.spc",data,function(e){
 	 				$("#hidd_mask").hide().hide(300);
 	 				$("#dv_update").show().hide(300);
@@ -227,6 +256,7 @@
 	 					alert("添加成功");
 	 					$("#tbl_body").children("tr").remove();
 	 					start_post();
+	 					for_btn();
 	 				}else{
 	 					alert("添加失败,请联系管理员。。。。");
 	 				}
@@ -234,16 +264,41 @@
 	 			},"json");
   			}
   			if(content=="修改"){
-  				alert("权限不足，请联系管理员。。。。");
+  				if($("#time_endDate").val().length > 3){
+	 				$("#time_endDate").css("borderColor","#f00");
+	 				 if(!window.confirm("此人确定离职？？？？")){
+	 					 return;
+	 				 }
+	 			}
+	 			
+	 			if(!window.confirm("是否确定要修改的内容？？？？")){
+	 				return;
+	 			}
+  				data.id =$("#tea_list").attr("name");
+  				
+	 			$.post("/hicode/teacher/do_updateTeacher.spc",data,function(e){
+	 				$("#hidd_mask").hide().hide(300);
+	 				$("#dv_update").show().hide(300);
+	 				if(e.list_advs == 'ok'){
+	 					alert("修改成功");
+	 					$("#tbl_body").children("tr").remove();
+	 					start_post();
+	 					for_btn();
+	 				}else{
+	 					alert("添加失败,请联系管理员。。。。");
+	 				}
+	 			
+	 			},"json");
+	 			
+	 			
   			}
   		});
   		
   		function start_post(){
   			
 			$.post("/hicode/teacher/showTeacherByInfo.spc",{ "page" : 1 },function(a){
-				console.log(a.list_tea);
 				if(a){
-					creat_tb(a.list_tea,"#tbl_body");
+					creat_tbTea(a.list_tea,"#tbl_body");
 					/* 添加页码 */
 					if(a.all_num){
 						$("#dv_but").children("button").remove();
@@ -283,98 +338,32 @@
 				
 				var js_arry = eval('(' + a_s + ')');
 				
-				creat_tb(js_arry.list_tea,"#tbl_body");
+				creat_tbTea(js_arry.list_tea,"#tbl_body");
+				for_btn();
 			});
 		}
-  		/* back_all: 待便利的值 */
- 		function creat_tb(back_all,p_dom){
-  			for(var i=0;i<back_all.length;i++){
-				var tr = document.createElement("tr");
-				var str = "<td>"+(i+1)+"</td>";
-					str += "<td>"+back_all[i].t_name+"</td>";
-					if(back_all[i].t_sex == 1){
-						str += "<td><img src='/hicode/sysimg/face_boy.jpg'/> </td>";
-					}else{
-						str += "<td><img src='/hicode/sysimg/face_girl.jpg'/></td>";
-					}
-					if(back_all[i].if_Onthejob == 1){
-						str += "<td> <img src='/hicode/sysimg/face_smile.jpg' /> </td>";
-					}else{
-						str += "<td> <img src='/hicode/sysimg/face_grieved.jpg' /> </td>";
-					}
-					
-					var creatDate = timestampToTime(back_all[i].time_creatDate.time);
-					
-					str += "<td>"+creatDate+"</td>";
-					if(back_all[i].time_endDate){
-						var endDate = timestampToTime(back_all[i].time_endDate.time);
-						str += "<td>"+endDate+"</td>";
-						$(tr).css("color","#b0b0b0");
-					}else{
-						str += "<td>   </td>";
-					}
-					str += "<td>"+back_all[i].title+"</td>";
-					if(back_all[i].title_updatetime){
-						var updatetime = timestampToTime(back_all[i].title_updatetime.time);
-						str += "<td>"+updatetime+"</td>";
-					}else{
-						str += "<td>   </td>";
-					}
-					var btid = back_all[i].t_id;
-					str += "<td><button id = '"+btid+"' name='"+(i+1)+"'>修改</button></td>";
-					str += "<td><input type='checkbox' value='"+back_all[i].t_id+"' /></td>";
-				$(tr).append(str);
-				$(p_dom).append(tr);
-				//修改功能
-				(function(){
-					var tname = back_all[i].t_name;
-					var tsex = back_all[i].t_sex;
-					var onthejob = back_all[i].if_Onthejob;
-					var st_date = timestampToTime(back_all[i].time_creatDate);
-					var ed_date = back_all[i].time_endDate;
-						ed_date = ed_date==''|| ed_date==null?'':timestampToTime(ed_date);	
-					var tit = back_all[i].title;
-					var uptime = back_all[i].title_updatetime;
-						uptime = uptime==''|| uptime==null?'':timestampToTime(uptime);	
-					$("#"+btid).click(function(){
-						$("#hidd_mask").hide().show(300);
-						$("#dv_update").hide().show(300);
-						$("#dv_title").html("修改讲师信息");
-						$("#up_sub").html("修改");
-						$("#tea_list").val($(this).attr("name"));
-						$("#userName").val(tname);
-						if(tsex == 1){
-							$("#sex_b").attr("checked","checked");
-						}else{
-							$("#sex_g").attr("checked","checked");
-						}
-						if(onthejob == 1){
-							$("#job_b").attr("checked","checked");
-						}else{
-							$("#job_g").attr("checked","checked");
-						}
-						$("#time_creatDate").val(st_date);
-						$("#time_creatDate").attr("disabled","disabled");
-						$("#time_endDate").val(ed_date);
-						
-						switch(tit){
-							case "讲师助教": $("#update_sel :eq(0)").attr("selected","selected"); break;
-							case "初级讲师": $("#update_sel :eq(1)").attr("selected","selected"); break;
-							case "中级讲师": $("#update_sel :eq(2)").attr("selected","selected"); break;
-							case "高级讲师": $("#update_sel :eq(3)").attr("selected","selected"); break;
-							case "教学总监": $("#update_sel :eq(4)").attr("selected","selected"); break;
-						}
-						$("#title_updatetime").val(uptime);
-						
-					});
-				})();
-				
-			}
-  		
-  		}
-  		
-  		
-  		
+		// 日历插件
+		jeDate({
+			dateCell:"#time_creatDate",
+			format:"YYYY-MM-DD",
+			isinitVal:true,
+			isTime:false, //isClear:false,
+			minDate:"1014-09-19 00:00:00"
+		}) ;
+		jeDate({
+			dateCell:"#time_endDate",
+			format:"YYYY-MM-DD",
+			isinitVal:true,
+			isTime:false, //isClear:false,
+			minDate:"1014-09-19 00:00:00"
+		}) ;
+		jeDate({
+			dateCell:"#title_updatetime",
+			format:"YYYY-MM-DD",
+			isinitVal:true,
+			isTime:false, //isClear:false,
+			minDate:"1014-09-19 00:00:00"
+		}) ;
   	});
   </script>
 </html>

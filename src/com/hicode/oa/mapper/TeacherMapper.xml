@@ -48,7 +48,13 @@
 		values(#{t_id},#{t_name},#{t_sex},#{if_Onthejob},#{time_creatDate},#{time_endDate},#{title},#{title_updatetime});
 	
 	</insert>
-	
+	<update id="do_updateTeacher" parameterType="Teacher" >
+		update teacher set 
+			t_name=#{t_name},t_sex=#{t_sex},if_Onthejob=#{if_Onthejob},
+			time_creatDate=#{time_creatDate},time_endDate=#{time_endDate},
+			title=#{title},title_updatetime=#{title_updatetime}
+		where t_id = #{t_id};	
+	</update>
 	
 	
 <!-- 	
