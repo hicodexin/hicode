@@ -44,4 +44,10 @@ public class AuditionsServiceImpl implements AuditionsService{
 		// TODO Auto-generated method stub
 		return auditionsDAO.getAudNameAndID();
 	}
+
+	@Override
+	public Integer do_updateAuditions(Auditions auditions) {
+		// TODO Auto-generated method stub
+		return auditionsDAO.do_updateAuditions(auditions);
+	}
 }

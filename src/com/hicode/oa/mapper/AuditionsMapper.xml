@@ -42,6 +42,14 @@
 	
 	</insert>
 	
+	<update id="do_updateAuditions"  parameterType="Auditions">
+		update auditions set 
+			st_time =#{st_time}, st_name =#{st_name}, st_sex =#{st_sex}, 
+			st_class =#{st_class}, t_id =#{teacher.t_id}, adv_id =#{adviser.adv_id}, 
+			remarks =#{remarks}
+		 where  au_id =#{au_id};
+	</update>
+	
 	
 </mapper>
 

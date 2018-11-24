@@ -40,5 +40,7 @@ public interface AuditionsService {
 	 * @return
 	 */
 	public List<Auditions> getAudNameAndID();
+
+	public Integer do_updateAuditions(Auditions auditions);
 	
 }

@@ -47,5 +47,10 @@ public class AuditionsDAO extends SysDAO {
 		return selectList(nameSpace+"getAudNameAndID");
 	}
 
+	public Integer do_updateAuditions(Auditions auditions) {
+		// TODO Auto-generated method stub
+		return update(nameSpace+"do_updateAuditions", auditions);
+	}
+
 	
 }

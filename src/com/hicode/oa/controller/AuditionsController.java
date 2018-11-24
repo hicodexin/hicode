@@ -152,6 +152,47 @@ public class AuditionsController {
 		return jsay.toString();
 	}
 	
-	
+	@ResponseBody
+	@RequestMapping(value="/do_updateAuditions")
+	public String do_updateAuditions(HttpServletRequest request){
+		String id = request.getParameter("id");
+		String st_time = request.getParameter("time_creatDate");
+		String st_name = request.getParameter("userName");
+		String st_sex = request.getParameter("t_sex");
+		String st_class = request.getParameter("update_selclass");
+		String t_id = request.getParameter("update_selteas");
+		String adv_id = request.getParameter("update_seladvs");
+		String remarks = request.getParameter("remarks");
+		
+		Auditions auditions = new Auditions();
+		
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date d;
+		try {
+			d = sf.parse(st_time);
+			auditions.setSt_time(d);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		auditions.setAu_id(Integer.valueOf(id));
+		auditions.setSt_name(st_name);
+		auditions.setSt_sex(Integer.valueOf(st_sex));
+		auditions.setSt_class(st_class);
+		Teacher t = new Teacher();
+		t.setT_id(t_id);
+		auditions.setTeacher(t);
+		Adviser adviser = new Adviser();
+		adviser.setAdv_id(adv_id);
+		auditions.setAdviser(adviser);
+		auditions.setRemarks(remarks);
+		
+		Integer count = auditionsService.do_updateAuditions(auditions);
+		JSONObject obj_arr = new JSONObject();
+		if(count>0){
+			obj_arr.put("list_advs", "ok");
+		}
+		return obj_arr.toString();
+	}
 	
 }

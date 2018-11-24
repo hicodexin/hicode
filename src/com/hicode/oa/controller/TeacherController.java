@@ -162,7 +162,7 @@ public class TeacherController {
 				continue;
 			}
 			net.sf.json.JSONObject obj = new net.sf.json.JSONObject();
-			obj.put("tid", t.getT_id());
+			obj.put("id", t.getT_id());
 			obj.put("name", t.getT_name());
 			jsry.add(obj);
 		}

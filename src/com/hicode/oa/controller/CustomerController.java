@@ -153,10 +153,64 @@ public class CustomerController {
 		return obj_arr.toString();
 	}
 	
-	@RequestMapping(value="/showCustomer")
-	public String showCustomer(){
+	@ResponseBody
+	@RequestMapping("/do_updateCustomer")
+	public String do_updateCustomer(HttpServletRequest request){
+		String aud_id = request.getParameter("userName");
+		String sub_id = request.getParameter("subject");
+		String period = request.getParameter("period");
+		String if_renewal = request.getParameter("if_renewal");
 		
-		return "/welcome.html";
+		String t_id = request.getParameter("the_teacher");
+		String first_time = request.getParameter("first_time");
+		
+		String phone = request.getParameter("phone");
+		String adv_id = request.getParameter("adviser_sel");
+		String remarks = request.getParameter("remarks");
+		
+		Customer customer = new Customer();
+		
+		Auditions auditions = new Auditions();
+		auditions.setAu_id(Integer.valueOf(aud_id));
+		
+		Subject subject = new Subject();
+		subject.setSub_id(sub_id);
+		
+		Teacher teacher = new Teacher();
+		teacher.setT_id(t_id);
+		
+		Adviser adviser = new Adviser();
+		adviser.setAdv_id(adv_id);
+		
+		customer.setAuditions(auditions);
+		customer.setSubject(subject);
+		customer.setPeriod(Integer.valueOf(period));
+		customer.setIf_renewal(Integer.valueOf(if_renewal));
+		customer.setTeacher(teacher);
+
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+		Date d;
+		try {
+			d = sf.parse(first_time);
+			customer.setFirst_time(d);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		customer.setPhone(phone);
+		customer.setAdviser(adviser);
+		customer.setRemarks(remarks);
+		customer.setIf_done(0);
+		customer.setIf_refund(0);
+		
+		Integer count = customerService.do_updateCustomer(customer);
+		JSONObject obj_arr = new JSONObject();
+		if(count>0){
+			obj_arr.put("list_advs", "ok");
+		}
+		
+		return obj_arr.toString();
 	}
+	
 	
 }

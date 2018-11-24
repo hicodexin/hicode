@@ -44,6 +44,12 @@ public class CustomerServiceImpl implements CustomerService{
 		// TODO Auto-generated method stub
 		return customerDAO.do_insertCustomer(customer);
 	}
+
+	@Override
+	public Integer do_updateCustomer(Customer customer) {
+		// TODO Auto-generated method stub
+		return customerDAO.do_updateCustomer(customer);
+	}
 	
 
 }

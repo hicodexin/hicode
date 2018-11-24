@@ -44,5 +44,9 @@ public class CustomerDAO extends SysDAO{
 		// TODO Auto-generated method stub
 		return insert(nameSpace+"do_insertCustomer",customer);
 	}
+	public Integer do_updateCustomer(Customer customer) {
+		// TODO Auto-generated method stub
+		return update(nameSpace+"do_updateCustomer", customer);
+	}
 
 }

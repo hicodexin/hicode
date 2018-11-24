@@ -30,6 +30,8 @@ public interface CustomerService {
 	 * @date 2018-11-11
 	 */
 	public Integer do_insertCustomer(Customer customer);
+
+	public Integer do_updateCustomer(Customer customer);
 	
 	
 	

@@ -152,53 +152,7 @@
  			window.location = "/hicode/index.html";
  		});
  		
- 		/* 修改按钮 */
-		var for_btn = function() {
-			window.setTimeout(function() {
-				var bts = $("button");
-				var revise = new Array();
-				if (bts.length > 0) {
-					for (var i = 0, j = 0; i < bts.length; i++) {
-						if ($(bts[i]).html() == "修改") {
-							revise[j] = bts[i];
-							j++;
-						}
-					}
-				}
-				
-				console.log("================");
-				console.log(revise);
-				if (revise.length > 0) {
-					for (var k = 0; k < revise.length; k++) {
-						(function() {
-							var t = k;
-							$(revise[t]).click(function() {
-								$("#hidd_mask").hide().show(300);
-								$("#dv_update").hide().show(300);
-								$("#dv_title").html("修改讲师信息");
-								$("#tea_list").val($(this).attr("name"));
-								$("#tea_list").attr("name", $(this).attr("id"));
-								$("#userName").val($("[name='userName']:eq(" + t + ")").html());
-								$("#time_creatDate").val($("[name='creatDate']:eq(" + t + ")").html());
-								$("#time_endDate").val($("[name='endDate']:eq(" + t + ")").html());
-								if($("#time_endDate").val() == '' || $("#time_endDate").val() == null){
-									$("#time_endDate").removeAttr("disabled");
-									$("#title_updatetime").removeAttr("disabled");
-								}else{
-									$("#time_endDate").attr("disabled","disabled");
-									$("#title_updatetime").attr("disabled","disabled");
-								}
-								$("#title_updatetime").val($("[name='updatetime']:eq(" + t + ")").html());
-								$("#up_sub").html("修改");
-							});
-
-						})();
-
-					}
-				}
-
-			}, 500);
-		}
+ 		
 		for_btn();
   		
   		// 点击返回消失
@@ -342,6 +296,55 @@
 				for_btn();
 			});
 		}
+		
+		/* 修改按钮 */
+		function for_btn() {
+			window.setTimeout(function() {
+				var bts = $("button");
+				var revise = new Array();
+				if (bts.length > 0) {
+					for (var i = 0, j = 0; i < bts.length; i++) {
+						if ($(bts[i]).html() == "修改") {
+							revise[j] = bts[i];
+							j++;
+						}
+					}
+				}
+				
+				console.log("================");
+				console.log(revise);
+				if (revise.length > 0) {
+					for (var k = 0; k < revise.length; k++) {
+						(function() {
+							var t = k;
+							$(revise[t]).click(function() {
+								$("#hidd_mask").hide().show(300);
+								$("#dv_update").hide().show(300);
+								$("#dv_title").html("修改讲师信息");
+								$("#tea_list").val($(this).attr("name"));
+								$("#tea_list").attr("name", $(this).attr("id"));
+								$("#userName").val($("[name='userName']:eq(" + t + ")").html());
+								$("#time_creatDate").val($("[name='creatDate']:eq(" + t + ")").html());
+								$("#time_endDate").val($("[name='endDate']:eq(" + t + ")").html());
+								if($("#time_endDate").val() == '' || $("#time_endDate").val() == null){
+									$("#time_endDate").removeAttr("disabled");
+									$("#title_updatetime").removeAttr("disabled");
+								}else{
+									$("#time_endDate").attr("disabled","disabled");
+									$("#title_updatetime").attr("disabled","disabled");
+								}
+								$("#title_updatetime").val($("[name='updatetime']:eq(" + t + ")").html());
+								$("#up_sub").html("修改");
+							});
+
+						})();
+
+					}
+				}
+
+			}, 500);
+		}
+		
 		// 日历插件
 		jeDate({
 			dateCell:"#time_creatDate",
