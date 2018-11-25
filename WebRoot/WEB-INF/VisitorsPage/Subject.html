@@ -91,65 +91,21 @@
   		$("#hidd_mask").css("height",bd_hig+"px");
   		$("#dv_update").hide();
   		$("#hidd_mask").hide();
-  		start_post();
-  		
+  		start_post_sub(for_btn_sub);
   		//点击添加按钮
- 		$("#bt_1").click(function(){
- 			$("#hidd_mask").hide().show(300);
- 			$("#dv_update").hide().show(300);
- 			$("#dv_title").html("添加课程信息");
- 			var len = $("#tea_tbl tbody tr").length;   
-			$("#tea_list").val(len+1);
-			$("#userName").val("");
- 		});
- 		
- 		
-		/* 修改按钮 */
-		var for_btn = function() {
-			window.setTimeout(function() {
-				var bts = $("button");
-				var revise = new Array();
-				if (bts.length > 0) {
-					for (var i = 0, j = 0; i < bts.length; i++) {
-						if ($(bts[i]).html() == "修改") {
-							revise[j] = bts[i];
-							j++;
-						}
-					}
-				}
-
-				if (revise.length > 0) {
-					for (var k = 0; k < revise.length; k++) {
-						(function() {
-							var t = k;
-							$(revise[t]).click(function() {
-								$("#hidd_mask").hide().show(300);
-								$("#dv_update").hide().show(300);
-								$("#dv_title").html("修改课程信息");
-								$("#tea_list").val($(this).attr("name"));
-								$("#tea_list").attr("name", $(this).attr("id"));
-								$("#userName").val($("[name='userName']:eq(" + t + ")").html());
-								$("#up_sub").html("修改");
-							});
-
-						})();
-
-					}
-				}
-
-			}, 500);
-		}
-		for_btn();
+ 		$("#bt_1").click(add_sub);
+ 		/* 添加学员信息，提交按钮  */
+ 		$("#up_sub").click(up_sub_sub);
   		
   		//第一页
  		$("#bt_first").click(function(){
- 			change_page(this);
+ 			change_page_sub(this);
  			$("#dv_but button:eq(0)").css({"backgroundColor":"#336699","color":"#fff"});
  		});
  		
  		//最后一页
  		$("#bt_end").click(function(){
- 			change_page(this);
+ 			change_page_sub(this);
  			$("#dv_but button:eq(-1)").css({"backgroundColor":"#336699","color":"#fff"});
  		});
 		
@@ -158,112 +114,10 @@
   			$("#hidd_mask").hide().hide(300);
  			$("#dv_update").show().hide(300);
  		});
+ 		
  		$("#index_go").click(function(){
  			window.location = "/hicode/index.html";
  		});
- 		/* 添加学员信息，提交按钮  */
- 		$("#up_sub").click(function(){
- 			if($("#userName").val().trim().length<2){
- 				$("#userName").css("borderColor","#f00");
- 				return;
- 			}else{
- 				$("#userName").css("borderColor","#336699");
- 			}
- 			
- 			var content = $(this).html();
-  			if(content=="添加"){
-  				var data = {
-		 			"userName":$("#userName").val().trim(),
-		 			"if_Onthejob":$('input:radio[name="if_Onthejob"]:checked').val()
- 				};
- 				$.post("/hicode/subject/do_insertSubject.spc",data,function(e){
-	 				$("#hidd_mask").hide().hide(300);
-	 				$("#dv_update").show().hide(300);
-	 				if(e.list_advs == 'ok'){
-	 					alert("添加成功");
-	 					$("#tbl_body").children("tr").remove();
-	 					start_post();
-	 				}else{
-	 					alert("添加失败,请联系管理员。。。。");
-	 				}
-	 			
-	 			},"json");
- 			}
- 			else if(content=="修改"){
-  				var data = {
-  					"id":$("#tea_list").attr("name"),
-		 			"userName":$("#userName").val().trim(),
-		 			"if_Onthejob":$('input:radio[name="if_Onthejob"]:checked').val()
- 				};
- 				console.log(data);
- 				$.post("/hicode/subject/do_updateSubject.spc",data,function(e){
-	 				$("#hidd_mask").hide().hide(300);
-	 				$("#dv_update").show().hide(300);
-	 				if(e.list_advs == 'ok'){
-	 				
-	 					alert("修改成功");
-	 					$("#tbl_body").children("tr").remove();
-	 					start_post();
-	 					for_btn();
-	 				}else{
-	 					alert("修改失败,请联系管理员。。。。");
-	 				}
-	 			
-	 			},"json");
- 			}
- 		 	
- 			
- 		});
- 		
- 		/* 切换页码 */
- 		function change_page(this_dom){
-			$("#dv_but button").css({"backgroundColor":"#fff","color":"#336699"});
-			$(this_dom).css({"backgroundColor":"#336699","color":"#fff"});
-			
-			$.post("/hicode/subject/showSubjectByInfo.spc",{"page":$(this_dom).attr("mypage")},function(a_s){
-				$("#tbl_body").html(' ');
-				
-				var js_arry = eval('(' + a_s + ')');
-				
-				creat_tb_sub(js_arry.list_advs,"#tbl_body");
-				for_btn();
-			});
-		}
- 		
- 		/* 初始化数据 */
-		function start_post(){
-	  		$.post("/hicode/subject/showSubjectByInfo.spc",{ "page" : 1 }, function(a) {
-				if (a) {
-					creat_tb_sub(a.list_advs,"#tbl_body");
-					/* 添加页码 */
-					if(a.all_num){
-						$("#dv_but").children("button").remove();
-						for(var k=0;k<a.all_num;k++){
-							var btn = document.createElement("button");
-							$(btn).html(k+1);
-							$(btn).attr("mypage",(k+1));
-							if(k==0){
-								$(btn).css({"backgroundColor":"#336699","color":"#fff"});
-							}
-							$(btn).click(function(){
-								change_page(this);
-							});
-							
-							$("#dv_but").append(btn);
-						}
-						$("#bt_end").attr("mypage",a.all_num);
-					}
-					
-				}
-				var hei = $("#tea_tbl").css("height");
-				hei = hei.substr(0,hei.length-2 );
-	 			if(hei>650){
-	 				$("#dv_table").css("height","800px");
-	 			}
-			}, "json");
-	  		
-  		}
- 		
 	});
 	
 </script>

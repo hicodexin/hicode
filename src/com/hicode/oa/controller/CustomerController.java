@@ -156,6 +156,7 @@ public class CustomerController {
 	@ResponseBody
 	@RequestMapping("/do_updateCustomer")
 	public String do_updateCustomer(HttpServletRequest request){
+		String id = request.getParameter("id");
 		String aud_id = request.getParameter("userName");
 		String sub_id = request.getParameter("subject");
 		String period = request.getParameter("period");
@@ -169,6 +170,7 @@ public class CustomerController {
 		String remarks = request.getParameter("remarks");
 		
 		Customer customer = new Customer();
+		customer.setEr_id(Integer.valueOf(id));
 		
 		Auditions auditions = new Auditions();
 		auditions.setAu_id(Integer.valueOf(aud_id));
@@ -211,6 +213,5 @@ public class CustomerController {
 		
 		return obj_arr.toString();
 	}
-	
 	
 }
