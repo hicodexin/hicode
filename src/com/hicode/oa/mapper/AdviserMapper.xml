@@ -33,7 +33,14 @@
 		select adv_id from adviser order by adv_id desc limit 0,1;
 	</select>
 	
-	
+	<update id="do_updateAdvisers" parameterType="Adviser">
+		update adviser set 
+			adv_name=#{adv_name},adv_sex=#{adv_sex},title=#{title},
+			if_onthejob=#{if_Onthejob},time_creatDate=#{time_creatDate},
+			time_endDate=#{time_endDate},title_updatetime=#{title_updatetime}
+		where 
+		adv_id=#{adv_id};
+	</update>
 	
 	
 	

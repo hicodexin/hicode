@@ -41,9 +41,9 @@ function for_sel02(id, f, optionName) {
 	$("#" + id).children("option").remove();
 	for (var k = 0; k < f.length; k++) {
 		if ($(f[k]).html() == optionName) {
-			var str = "<option selected='selected' value='"+(k+1)+"' >" + $(f[k]).html() + "</option>";
+			var str = "<option selected='selected' value='" + (k + 1) + "' >" + $(f[k]).html() + "</option>";
 		} else {
-			var str = "<option value='"+(k+1)+"'>" + $(f[k]).html() + "</option>";
+			var str = "<option value='" + (k + 1) + "'>" + $(f[k]).html() + "</option>";
 		}
 
 		$("#" + id).append(str);
@@ -95,9 +95,70 @@ function for_btn_aud() {
 						if (f.length > 0) {
 							var name = $("[name='update_seladvs']:eq(" + t + ")").html();
 							for_sel("update_seladvs", f, name);
+							var name2 = $("[name='update_seladvs2']:eq(" + t + ")").html();
+							for_sel("update_seladvs2", f,name2);
 						}
 					}, "json");
 
+					$("#up_sub").html("修改");
+				});
+
+			})();
+
+		}
+	}
+
+}
+
+/* 试听课修改按钮 */
+function for_btn_adv() {
+	var bts = $("button");
+	var revise = new Array();
+	if (bts.length > 0) {
+		for (var i = 0, j = 0; i < bts.length; i++) {
+			if ($(bts[i]).html() == "修改") {
+				revise[j] = bts[i];
+				j++;
+			}
+		}
+	}
+
+	console.log("=============adv==================")
+	console.log(revise)
+
+	if (revise.length > 0) {
+		for (var k = 0; k < revise.length; k++) {
+			(function() {
+				var t = k;
+				//对于自然上门,口碑介绍,活动上门   三项内容不允许修改
+				if (t < 3) {
+					$(revise[t]).click(function() {
+						alert('权限不足,请联系管理员。。。。');
+					});
+					return;
+				}
+				$(revise[t]).click(function() {
+					$("#hidd_mask").hide().show(300);
+					$("#dv_update").hide().show(300);
+					$("#dv_title").html("修改市场部门信息");
+					$("#tea_list").val($(this).attr("name"));
+					$("#tea_list").attr("name", $(this).attr("id"));
+					$("#userName").val($("[name='userName']:eq(" + t + ")").html());
+
+					var optionName = $("[name='update_sel']:eq(" + t + ")").html();
+					var sel_class = $("#update_sel option");
+					for_sel02("update_sel", sel_class, optionName);
+
+					$("#time_creatDate").val($("[name='creatDate']:eq(" + t + ")").html());
+					$("#time_endDate").val($("[name='endDate']:eq(" + t + ")").html());
+					if ($("#time_endDate").val() == '' || $("#time_endDate").val() == null) {
+						$("#time_endDate").removeAttr("disabled");
+						$("#title_updatetime").removeAttr("disabled");
+					} else {
+						$("#time_endDate").attr("disabled", "disabled");
+						$("#title_updatetime").attr("disabled", "disabled");
+					}
+					$("#title_updatetime").val($("[name='updatetime']:eq(" + t + ")").html());
 					$("#up_sub").html("修改");
 				});
 
@@ -200,9 +261,6 @@ function for_btn_cus() {
 		}
 	}
 
-	console.log("=============cus==================")
-	console.log(revise)
-
 	if (revise.length > 0) {
 		for (var k = 0; k < revise.length; k++) {
 			(function() {
@@ -213,7 +271,7 @@ function for_btn_cus() {
 					$("#dv_title").html("修改学员信息");
 					$("#tea_list").val($(this).attr("name"));
 					$("#tea_list").attr("name", $(this).attr("id"));
-					
+
 					$.post("/hicode/auditions/showAuditions.spc", function(c) {
 						if (c.length > 0) {
 							var stu_name = $("[name='userName']:eq(" + t + ")").html();
@@ -225,19 +283,19 @@ function for_btn_cus() {
 							$(".chosen-single span").html(stu_name);
 						}, 500);
 					}, "json");
-					
+
 					$.post("/hicode/subject/showSubject.spc", function(c) {
 						if (c.length > 0) {
 							var sbu_name = $("[name='sub_sel']:eq(" + t + ")").html();
-							for_sel("sub_sel", c,sbu_name);
+							for_sel("sub_sel", c, sbu_name);
 						}
-						
+
 					}, "json");
-					
+
 					var optionName = $("[name='period']:eq(" + t + ")").html();
 					var sel_class = $("#period option");
 					for_sel02("period", sel_class, optionName);
-					
+
 
 					$.post("/hicode/teacher/showTeacher.spc", function(c) {
 						if (c.length > 0) {
@@ -245,9 +303,9 @@ function for_btn_cus() {
 							for_sel("the_teacher", c, name);
 						}
 					}, "json");
-					
+
 					$("#first_time").val($("[name='first_time']:eq(" + t + ")").html());
-					
+
 					$("#phone").val($("[name='phone']:eq(" + t + ")").html());
 
 					$.post("/hicode/adviser/showAdviser.spc", function(f) {
@@ -286,9 +344,11 @@ function add_aud() {
 		}
 	}, "json");
 
+	
 	$.post("/hicode/adviser/showAdviser.spc", function(f) {
 		if (f.length > 0) {
 			for_sel("update_seladvs", f);
+			for_sel("update_seladvs2", f);
 		}
 	}, "json");
 
@@ -299,18 +359,12 @@ function add_adv() {
 	$("#dv_update").hide().show(300);
 	var len = $("#tea_tbl tbody tr").length;
 	$("#tea_list").val(len + 1);
+	$("#dv_title").html("添加市场部门信息");
+	$("#up_sub").html("添加");
 	$("#userName").val("");
 	$("#time_creatDate").val("");
 	$("#time_endDate").val("");
 	$("#title_updatetime").val("");
-
-	$.post("/hicode/adviser/showAdviser.spc", function(f) {
-		if (f.length > 0) {
-			for_sel("update_sel", f);
-		}
-
-	}, "json");
-
 }
 
 function add_tea() {
@@ -403,6 +457,7 @@ function up_sub_aud() {
 		"update_selclass" : $("#update_selclass").val(),
 		"update_selteas" : $("#update_selteas").val(),
 		"update_seladvs" : $("#update_seladvs").val(),
+		"update_seladvs2" : $("#update_seladvs2").val(),
 		"remarks" : $("#remarks").val()
 	};
 	var content = $(this).html();
@@ -413,17 +468,14 @@ function up_sub_aud() {
 			if (e.list_advs == 'ok') {
 				alert("添加成功");
 				$("#tbl_body").children("tr").remove();
-				start_post_aud();
-				for_btn_aud();
+				start_post_aud(for_btn_aud);
 			} else {
 				alert("添加失败,请联系管理员。。。。");
 			}
 
 		}, "json");
 
-	}
-
-	if (content == "修改") {
+	} else if (content == "修改") {
 		if (!window.confirm("是否确定要修改的内容？？？？")) {
 			return;
 		}
@@ -434,10 +486,9 @@ function up_sub_aud() {
 			if (e.list_advs == 'ok') {
 				alert("修改成功");
 				$("#tbl_body").children("tr").remove();
-				start_post_aud();
-				for_btn_aud();
+				start_post_aud(for_btn_aud);
 			} else {
-				alert("添加失败,请联系管理员。。。。");
+				alert("修改失败,请联系管理员。。。。");
 			}
 
 		}, "json");
@@ -471,18 +522,46 @@ function up_sub_adv() {
 		"time_endDate" : $("#time_endDate").val(),
 		"title_updatetime" : $("#title_updatetime").val()
 	};
-	$.post("/hicode/adviser/do_insertAdviser.spc", data, function(e) {
-		$("#hidd_mask").hide().hide(300);
-		$("#dv_update").show().hide(300);
-		if (e.list_advs == 'ok') {
-			alert("添加成功");
-			$("#tbl_body").children("tr").remove();
-			start_post_adv();
-		} else {
-			alert("添加失败,请联系管理员。。。。");
+
+	var content = $(this).html();
+	if (content == "添加") {
+		$.post("/hicode/adviser/do_insertAdviser.spc", data, function(e) {
+			$("#hidd_mask").hide().hide(300);
+			$("#dv_update").show().hide(300);
+			if (e.list_advs == 'ok') {
+				alert("添加成功");
+				$("#tbl_body").children("tr").remove();
+				start_post_adv(for_btn_adv);
+			} else {
+				alert("添加失败,请联系管理员。。。。");
+			}
+
+		}, "json");
+	} else if (content == "修改") {
+		if ($("#time_endDate").val().length > 3) {
+			$("#time_endDate").css("borderColor", "#f00");
+			if (!window.confirm("此人确定离职？？？？")) {
+				return;
+			}
 		}
 
-	}, "json");
+		if (!window.confirm("是否确定要修改的内容？？？？")) {
+			return;
+		}
+		data.id = $("#tea_list").attr("name");
+		$.post("/hicode/adviser/do_updateAdviser.spc", data, function(e) {
+			$("#hidd_mask").hide().hide(300);
+			$("#dv_update").show().hide(300);
+			if (e.list_advs == 'ok') {
+				alert("修改成功");
+				$("#tbl_body").children("tr").remove();
+				start_post_adv(for_btn_adv);
+			} else {
+				alert("修改失败,请联系管理员。。。。");
+			}
+
+		}, "json");
+	}
 
 }
 
@@ -520,15 +599,13 @@ function up_sub_tea() {
 			if (e.list_advs == 'ok') {
 				alert("添加成功");
 				$("#tbl_body").children("tr").remove();
-				start_post_tea();
-				for_btn_tea();
+				start_post_tea(for_btn_tea);
 			} else {
 				alert("添加失败,请联系管理员。。。。");
 			}
 
 		}, "json");
-	}
-	if (content == "修改") {
+	} else if (content == "修改") {
 		if ($("#time_endDate").val().length > 3) {
 			$("#time_endDate").css("borderColor", "#f00");
 			if (!window.confirm("此人确定离职？？？？")) {
@@ -547,10 +624,9 @@ function up_sub_tea() {
 			if (e.list_advs == 'ok') {
 				alert("修改成功");
 				$("#tbl_body").children("tr").remove();
-				start_post_tea();
-				for_btn_tea();
+				start_post_tea(for_btn_tea);
 			} else {
-				alert("添加失败,请联系管理员。。。。");
+				alert("修改失败,请联系管理员。。。。");
 			}
 
 		}, "json");
@@ -567,19 +643,19 @@ function up_sub_sub() {
 		$("#userName").css("borderColor", "#336699");
 	}
 	var data = {
-			"userName" : $("#userName").val().trim(),
-			"if_Onthejob" : $('input:radio[name="if_Onthejob"]:checked').val()
-		};
+		"userName" : $("#userName").val().trim(),
+		"if_Onthejob" : $('input:radio[name="if_Onthejob"]:checked').val()
+	};
 	var content = $(this).html();
 	if (content == "添加") {
-		
+
 		$.post("/hicode/subject/do_insertSubject.spc", data, function(e) {
 			$("#hidd_mask").hide().hide(300);
 			$("#dv_update").show().hide(300);
 			if (e.list_advs == 'ok') {
 				alert("添加成功");
 				$("#tbl_body").children("tr").remove();
-				start_post_sub();
+				start_post_sub(for_btn_sub);
 			} else {
 				alert("添加失败,请联系管理员。。。。");
 			}
@@ -598,8 +674,7 @@ function up_sub_sub() {
 
 				alert("修改成功");
 				$("#tbl_body").children("tr").remove();
-				start_post_sub();
-				for_btn_sub();
+				start_post_sub(for_btn_sub);
 			} else {
 				alert("修改失败,请联系管理员。。。。");
 			}
@@ -646,7 +721,7 @@ function up_sub_cus() {
 		"remarks" : $("#remarks").val()
 	};
 	console.log(data);
-	
+
 	var content = $(this).html();
 	if (content == "添加") {
 		$.post("/hicode/customer/do_insertCustomer.spc", data, function(e) {
@@ -661,9 +736,8 @@ function up_sub_cus() {
 			}
 
 		}, "json");
-		
-	}
-	else if(content == "修改"){
+
+	} else if (content == "修改") {
 		if (!window.confirm("是否确定要修改的内容？？？？")) {
 			return;
 		}
@@ -676,7 +750,7 @@ function up_sub_cus() {
 				$("#tbl_body").children("tr").remove();
 				start_post_cus(for_btn_cus);
 			} else {
-				alert("添加失败,请联系管理员。。。。");
+				alert("修改失败,请联系管理员。。。。");
 			}
 
 		}, "json");
@@ -890,19 +964,19 @@ function start_post_cus(backFunction) {
 
 /** ==============================================待便利的值============================================== */
 
-/* back_all: 待便利的值 */
+/* back_all: 待便利的值 ====市场顾问 */
 function creat_tb(back_all, p_dom) {
 	for (var i = 0; i < back_all.length; i++) {
 		var tr = document.createElement("tr");
 		var str = "<td>" + (i + 1) + "</td>";
-		str += "<td>" + back_all[i].name + "</td>";
+		str += "<td name = 'userName'>" + back_all[i].name + "</td>";
 
 		if (back_all[i].sex == 1) {
 			str += "<td><img src='/hicode/sysimg/face_boy.jpg'/> </td>";
 		} else {
 			str += "<td><img src='/hicode/sysimg/face_girl.jpg'/></td>";
 		}
-		str += "<td>" + back_all[i].title + "</td>";
+		str += "<td name='update_sel'>" + back_all[i].title + "</td>";
 
 		if (back_all[i].onthejob == 1) {
 			str += "<td> <img src='/hicode/sysimg/face_smile.jpg' /> </td>";
@@ -911,25 +985,25 @@ function creat_tb(back_all, p_dom) {
 		}
 
 		var creatDate = timestampToTime(back_all[i].opentime.time);
-		str += "<td>" + creatDate + "</td>";
+		str += "<td name='creatDate'>" + creatDate + "</td>";
 
 		if (back_all[i].endtime) {
 			var endDate = timestampToTime(back_all[i].endtime.time);
-			str += "<td>" + endDate + "</td>";
+			str += "<td name='time_endDate'>" + endDate + "</td>";
 			$(tr).css("color", "#b0b0b0");
 		} else {
-			str += "<td>   </td>";
+			str += "<td name='time_endDate'></td>";
 		}
 
 		if (back_all[i].title_updatetime) {
 			var updatetime = timestampToTime(back_all[i].title_updatetime.time);
-			str += "<td>" + updatetime + "</td>";
+			str += "<td name = 'title_updatetime'>" + updatetime + "</td>";
 		} else {
-			str += "<td>   </td>";
+			str += "<td name = 'title_updatetime'></td>";
 		}
 
 		var btid = back_all[i].id;
-		str += "<td><button id = '" + btid + "'name='" + (i + 1) + "'  onclick=alert('权限不足，请联系管理员')>修改</button></td>";
+		str += "<td><button id = '" + btid + "'name='" + (i + 1) + "'>修改</button></td>";
 		str += "<td><input type='checkbox' value='" + btid + "' /></td>";
 		$(tr).append(str);
 		$(p_dom).append(tr);
@@ -955,7 +1029,8 @@ function creat_tb_aud(back_all, p_dom) {
 		str += "<td name='update_selclass'>" + back_all[i].classinfo + "</td>";
 		str += "<td name='update_selteas'>" + back_all[i].tea_name + "</td>";
 		str += "<td name='update_seladvs'>" + back_all[i].adv_name + "</td>";
-
+		str += "<td name='update_seladvs2'>" + back_all[i].adv_name2 + "</td>";
+		
 		if (back_all[i].remarks) {
 			str += "<td>" + back_all[i].beizhu + "</td>";
 		} else {
@@ -994,7 +1069,7 @@ function creat_tb_cus(back_all, p_dom) {
 
 		var firsttime = timestampToTime_hms(back_all[i].firsttime.time);
 
-		str += "<td name='first_time'>" +firsttime+ "</td>";
+		str += "<td name='first_time'>" + firsttime + "</td>";
 
 		str += "<td name='phone'>" + back_all[i].tel + "</td>";
 
@@ -1143,6 +1218,7 @@ function change_page_adv(this_dom) {
 		var js_arry = eval('(' + a_s + ')');
 
 		creat_tb(js_arry.list_advs, "#tbl_body");
+		for_btn_adv();
 	});
 }
 
@@ -1209,5 +1285,6 @@ function change_page_cus(this_dom) {
 		$("#tbl_body").html(' ');
 		var js_arry = eval('(' + a_s + ')');
 		creat_tb_cus(js_arry.list_advs, "#tbl_body");
+		for_btn_cus();
 	});
 }

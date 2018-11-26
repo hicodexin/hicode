@@ -80,6 +80,7 @@ public class AuditionsController {
 			obj.put("classinfo", adv1.getSt_class());
 			obj.put("tea_name", adv1.getTeacher().getT_name());
 			obj.put("adv_name", adv1.getAdviser().getAdv_name());
+			obj.put("adv_name2", adv1.getAdviser2().getAdv_name());
 			obj.put("beizhu", adv1.getRemarks());
 			
 			objs.add(obj);
@@ -102,8 +103,24 @@ public class AuditionsController {
 		String st_name = request.getParameter("userName");
 		String st_sex = request.getParameter("t_sex");
 		String st_class = request.getParameter("update_selclass");
+		switch (st_class) {
+			case "1":st_class ="学前班"; break;
+			case "2":st_class ="一年级"; break;
+			case "3":st_class ="二年级"; break;
+			case "4":st_class ="三年级"; break;
+			case "5":st_class ="四年级"; break;
+			case "6":st_class ="五年级"; break;
+			case "7":st_class ="六年级"; break;
+			case "8":st_class ="初一"; break;
+			case "9":st_class ="初二"; break;
+			case "10":st_class ="初三"; break;
+			case "11":st_class ="高一"; break;
+			case "12":st_class ="高二"; break;
+			case "13":st_class ="高三"; break;
+		}
 		String t_id = request.getParameter("update_selteas");
 		String adv_id = request.getParameter("update_seladvs");
+		String adv_id2 = request.getParameter("update_seladvs2");
 		String remarks = request.getParameter("remarks");
 		
 		Auditions auditions = new Auditions();
@@ -126,7 +143,11 @@ public class AuditionsController {
 		auditions.setTeacher(t);
 		Adviser adviser = new Adviser();
 		adviser.setAdv_id(adv_id);
+		Adviser adviser2 = new Adviser();
+		adviser2.setAdv_id(adv_id2);
+		
 		auditions.setAdviser(adviser);
+		auditions.setAdviser2(adviser2);
 		auditions.setRemarks(remarks);
 		
 		Integer count = auditionsService.do_insertAuditions(auditions);
@@ -160,11 +181,28 @@ public class AuditionsController {
 		String st_name = request.getParameter("userName");
 		String st_sex = request.getParameter("t_sex");
 		String st_class = request.getParameter("update_selclass");
+		switch (st_class) {
+			case "1":st_class ="学前班"; break;
+			case "2":st_class ="一年级"; break;
+			case "3":st_class ="二年级"; break;
+			case "4":st_class ="三年级"; break;
+			case "5":st_class ="四年级"; break;
+			case "6":st_class ="五年级"; break;
+			case "7":st_class ="六年级"; break;
+			case "8":st_class ="初一"; break;
+			case "9":st_class ="初二"; break;
+			case "10":st_class ="初三"; break;
+			case "11":st_class ="高一"; break;
+			case "12":st_class ="高二"; break;
+			case "13":st_class ="高三"; break;
+		}
 		String t_id = request.getParameter("update_selteas");
 		String adv_id = request.getParameter("update_seladvs");
+		String adv_id2 = request.getParameter("update_seladvs2");
 		String remarks = request.getParameter("remarks");
 		
 		Auditions auditions = new Auditions();
+		auditions.setAu_id(Integer.valueOf(id));
 		
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date d;
@@ -175,7 +213,7 @@ public class AuditionsController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		auditions.setAu_id(Integer.valueOf(id));
+		
 		auditions.setSt_name(st_name);
 		auditions.setSt_sex(Integer.valueOf(st_sex));
 		auditions.setSt_class(st_class);
@@ -184,8 +222,13 @@ public class AuditionsController {
 		auditions.setTeacher(t);
 		Adviser adviser = new Adviser();
 		adviser.setAdv_id(adv_id);
+		Adviser adviser2 = new Adviser();
+		adviser2.setAdv_id(adv_id2);
+		
 		auditions.setAdviser(adviser);
+		auditions.setAdviser2(adviser2);
 		auditions.setRemarks(remarks);
+		
 		
 		Integer count = auditionsService.do_updateAuditions(auditions);
 		JSONObject obj_arr = new JSONObject();

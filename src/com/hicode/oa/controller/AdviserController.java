@@ -104,6 +104,15 @@ public class AdviserController {
 		String adv_name = request.getParameter("userName");
 		String adv_sex = request.getParameter("sex");
 		String title = request.getParameter("title");
+		switch (title) {
+			case "1":title ="课程顾问"; break;
+			case "2":title ="地推专员"; break;
+			case "3":title ="TMK专员"; break;
+			case "4":title ="TMK主管"; break;
+			case "5":title ="顾问主管"; break;
+			case "6":title ="地推主管"; break;
+			case "7":title ="市场总监"; break;
+		}
 		String if_Onthejob = request.getParameter("if_Onthejob");
 		String time_creatDate = request.getParameter("time_creatDate");
 		String time_endDate = request.getParameter("time_endDate");
@@ -165,6 +174,67 @@ public class AdviserController {
 		}
 		
 		return jsay.toString();
+	}
+	
+	/**
+	 * 修改市场人员
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/do_updateAdviser")
+	public String do_updateAdviser(HttpServletRequest request){
+		String id = request.getParameter("id");
+		String adv_name = request.getParameter("userName");
+		String adv_sex = request.getParameter("sex");
+		String title = request.getParameter("title");
+		switch (title) {
+			case "1":title ="课程顾问"; break;
+			case "2":title ="地推专员"; break;
+			case "3":title ="TMK专员"; break;
+			case "4":title ="TMK主管"; break;
+			case "5":title ="顾问主管"; break;
+			case "6":title ="地推主管"; break;
+			case "7":title ="市场总监"; break;
+		}
+		
+		String if_Onthejob = request.getParameter("if_Onthejob");
+		String time_creatDate = request.getParameter("time_creatDate");
+		String time_endDate = request.getParameter("time_endDate");
+		String title_updatetime = request.getParameter("title_updatetime");
+		
+		Adviser adviser = new Adviser();
+		adviser.setAdv_id(id);
+		adviser.setAdv_name(adv_name);
+		adviser.setAdv_sex(Integer.valueOf(adv_sex));
+		adviser.setTitle(title);
+		adviser.setIf_Onthejob(Integer.valueOf(if_Onthejob));
+		
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+		Date d;
+		try {
+			d = sf.parse(time_creatDate);
+			adviser.setTime_creatDate(d);
+			if(time_endDate != null && time_endDate != ""){
+				d = sf.parse(time_endDate);
+				adviser.setTime_endDate(d);
+			}
+			if(title_updatetime != null && title_updatetime != ""){
+				d = sf.parse(title_updatetime);
+				adviser.setTitle_updatetime(d);
+			}
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Integer count =adviserService.do_updateAdvisers(adviser);
+		JSONObject obj_arr = new JSONObject();
+		if(count>0){
+			obj_arr.put("list_advs", "ok");
+		}
+		
+		return obj_arr.toString();
 	}
 	
 	

@@ -35,5 +35,13 @@ public interface AdviserService {
 	 * @author xinpeixiang 2018-11-9
 	 */
 	public Integer do_insertAdvisers(Adviser adviser);
+
+	/**
+	 * 修改市场人员
+	 * @param adviser
+	 * @return
+	 * @author xinpeixiang 2018-11-26
+	 */
+	public Integer do_updateAdvisers(Adviser adviser);
 	
 }

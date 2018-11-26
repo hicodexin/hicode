@@ -9,10 +9,13 @@
 	   	 <!-- 一的一方 -->
 	   	 <association property="adviser" column="adv_id" select="com.hicode.oa.dao.AdviserDAO.getAdviserByID">
 	   	 </association>
+	   	  <!-- 一的一方 -->
+	   	 <association property="adviser2" column="adv_id2" select="com.hicode.oa.dao.AdviserDAO.getAdviserByID">
+	   	 </association>
 	</resultMap>
 	
 	<sql id="all_column">
-		 au_id, st_time,st_name,st_sex,st_class,t_id,adv_id,remarks
+		 au_id, st_time,st_name,st_sex,st_class,t_id,adv_id,adv_id2,remarks
 	</sql>
 	
 	<select id="getAuditionsByID" parameterType="java.lang.Integer" resultMap="getAuditions_oop">
@@ -37,8 +40,11 @@
 	</select>
 	
 	<insert id="do_insertAuditions" parameterType="Auditions" keyProperty="au_id">
-		insert into auditions (st_time,st_name,st_sex,st_class,t_id,adv_id,remarks)
-		values(#{st_time},#{st_name},#{st_sex},#{st_class},#{teacher.t_id},#{adviser.adv_id},#{remarks});
+		insert into auditions 
+			(st_time,st_name,st_sex,st_class,t_id,adv_id,adv_id2,remarks)
+		values
+			(#{st_time},#{st_name},#{st_sex},#{st_class},#{teacher.t_id},
+			#{adviser.adv_id},#{adviser2.adv_id},#{remarks});
 	
 	</insert>
 	
@@ -46,7 +52,7 @@
 		update auditions set 
 			st_time =#{st_time}, st_name =#{st_name}, st_sex =#{st_sex}, 
 			st_class =#{st_class}, t_id =#{teacher.t_id}, adv_id =#{adviser.adv_id}, 
-			remarks =#{remarks}
+			adv_id2 =#{adviser2.adv_id},remarks =#{remarks}
 		 where  au_id =#{au_id};
 	</update>
 	

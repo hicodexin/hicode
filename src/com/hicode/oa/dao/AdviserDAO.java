@@ -56,6 +56,11 @@ public class AdviserDAO extends SysDAO{
 	public String getLastAdvisersID(){
 		return selectOne(nameSpace+"getLastAdvisersID");
 	}
+
+	public Integer do_updateAdvisers(Adviser adviser) {
+		// TODO Auto-generated method stub
+		return update(nameSpace+"do_updateAdvisers", adviser);
+	}
 	
 	
 	

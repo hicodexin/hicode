@@ -35,9 +35,13 @@ public class Auditions implements Serializable {
 	 */
 	private Teacher teacher;
 	/**
-	 * 顾问id
+	 * 邀约上门顾问id
 	 */
 	private Adviser adviser;
+	/**
+	 * 签单跟进顾问id
+	 */
+	private Adviser adviser2;
 	/**
 	 * 备注
 	 */
@@ -105,6 +109,21 @@ public class Auditions implements Serializable {
 
 	public void setAdviser(Adviser adviser) {
 		this.adviser = adviser;
+	}
+
+	public Adviser getAdviser2() {
+		return adviser2;
+	}
+
+	public void setAdviser2(Adviser adviser2) {
+		this.adviser2 = adviser2;
+	}
+
+	@Override
+	public String toString() {
+		return "Auditions [au_id=" + au_id + ", st_time=" + st_time + ", st_name=" + st_name + ", st_sex=" + st_sex
+				+ ", st_class=" + st_class + ", teacher=" + teacher + ", adviser=" + adviser + ", adviser2=" + adviser2
+				+ ", remarks=" + remarks + "]";
 	}
 
 

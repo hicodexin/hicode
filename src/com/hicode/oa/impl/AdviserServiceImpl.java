@@ -56,4 +56,10 @@ public class AdviserServiceImpl implements AdviserService{
 		return adviserDAO.do_insertAdvisers(adviser);
 	}
 
+	@Override
+	public Integer do_updateAdvisers(Adviser adviser) {
+		// TODO Auto-generated method stub
+		return adviserDAO.do_updateAdvisers(adviser);
+	}
+
 }

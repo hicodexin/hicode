@@ -11,6 +11,8 @@ import java.util.Date;
  */
 public class Adviser implements Serializable{
 
+	
+
 	private static final long serialVersionUID = 145343123452311L;
 	
 	private String adv_id;
@@ -106,6 +108,11 @@ public class Adviser implements Serializable{
 	public void setTitle_updatetime(Date title_updatetime) {
 		this.title_updatetime = title_updatetime;
 	}
-
+	@Override
+	public String toString() {
+		return "Adviser [adv_id=" + adv_id + ", adv_name=" + adv_name + ", adv_sex=" + adv_sex + ", title=" + title
+				+ ", if_Onthejob=" + if_Onthejob + ", time_creatDate=" + time_creatDate + ", time_endDate="
+				+ time_endDate + ", title_updatetime=" + title_updatetime + "]";
+	}
 	
 }
