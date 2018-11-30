@@ -56,15 +56,29 @@
 		background-color: #333;
 	}
 
-	#dvrow_img>div{
+	#dvrow_img>img{
 		width: 76px;
 		height: 76px;
 		float: left;
 		margin-left:5.5% ;
-		border: 1px red solid;
+		border: 1px #333 solid;
 		display: 
 	}
 	
+	#dvrow_img>img:HOVER {
+		cursor: pointer;
+		border: 1px red solid;
+	}
+	#next_btn{
+		color: #fff; 
+		float:right; 
+		text-align: center;
+	}
+	
+	#next_btn:HOVER {
+		cursor: pointer;
+		color: #A23526;
+	}
 	@media ( max-width: 1430px) {
 		.dv_login_left {
 			margin-left: 3%;
@@ -76,8 +90,8 @@
 	}
 	
 	@media ( max-width: 1090px) {
-		#dvrow_img>div{
-			margin: 10px 8%;
+		#dvrow_img>img{
+			margin: auto 10% 20px;
 			width: 150px;
 			height: 150px;
 		}
@@ -91,6 +105,14 @@
 			padding-top: 0;
 			margin: 0px;
 		}
+	}
+	@media ( max-width: 540px) {
+		#dvrow_img>img{
+			margin: auto;
+			width: 100px;
+			height: 100px;
+		}
+		
 	}
 </style>
 </head>
@@ -139,7 +161,8 @@
 				<div class="col s12 z-depth-6 card-panel" style="background-color: #333;">
 						<div class="row">
 							<div class="input-field col s12 center">
-								<img src="/hicode/sysimg/login/biao.jpg" alt="" class="responsive-img valign profile-image-login">
+								<img src="/hicode/sysimg/login/biao.jpg" class="responsive-img valign profile-image-login">
+								<p></p>
 								<p class="center login-form-text">
 									<font color="#b0b0b0">创意无限，时间有限，立即行动</font>
 								</p>
@@ -149,32 +172,32 @@
 						<div class="row margin">
 							<div class="input-field col s12">
 								<i class="mdi-social-person-outline prefix"></i>
-								<input class="validate" id="email" type="email">
-								<label for="email" data-error="wrong" data-success="right" class="center-align">Email/用户名</label>
+								<input style="color:#fff" class="validate" id="email" type="text">
+								<label id="sp1" for="email" class="center-align">
+									Email/用户名
+								</label>
 							</div>
 						</div>
 						<div class="row margin">
 							<div class="input-field col s12">
 								<i class="mdi-action-lock-outline prefix"></i>
-								<input id="password" type="password">
+								<input id="password" type="password"  style="color:#fff" >
 								<label for="password">Password</label>
 							</div>
 						</div>
 						<div class="row">
-							<div id="" style="color: #fff;"class="input-field col s12">调整验证码</div>
+							<div id="" style="color: #fff; float:left;"class="input-field col s9">调整验证码</div>
+							<div id="next_btn" class="input-field col s3">换一组</div>
 						</div>
 						<div class="row" id="dvrow_img">
-							<div id="" ></div>
-							<div id=""></div>
-							<div id=""></div>
-							<div id=""></div>
+							
 						</div>
 						<div class="row">
 							<div id="" ></div>
 						</div>
 						<div class="row">
 							<div class="input-field col s12">
-								<a class="btn waves-effect waves-light col s12">登　录</a>
+								<button id="bt_sub" class="btn waves-effect waves-light col s12">登　录</button>
 							</div>
 						</div>
 						<div class="row">
@@ -188,32 +211,80 @@
 </body>
 <script type="text/javascript">
 	$().ready(function(){
-	
+		
+		getCode();
+		
+		
+		$("#next_btn").click(function(){
+			if($(this).html() == "请稍后"){
+				return;
+			}
+			getCode();
+			$(this).html("请稍后");
+			window.setTimeout(function() {
+				$("#next_btn").html("换一组");
+			}, 3000);
+			
+		});
+		
+		$("#bt_sub").click(function(){
+			
+			$("#sp1").html("Email/用户名");
+			$("#sp1").css("color","#9e9e9e");
+			$("#email").css("borderColor","#9e9e9e");
+			
+			
+			if($("#email").val() == "" || $("#email").val()==null){
+				$("#sp1").html("用户名不能为空");
+				$("#sp1").css("color","red");
+				$("#email").css("borderColor","red");
+				return;
+			}
+			if ($("#email").val().indexOf(" ") != -1) {
+				$("#sp1").html("用户名不能含有空格");
+				$("#sp1").css("color","red");
+				$("#email").css("borderColor","red");
+				return;
+			}
+			//查询用户名密码是否存在
+			$.get("/hicode/validateCode/getUserAndPass.spc",
+				{"ufname" : $("[name='ufname']").val(),
+				"ufpass" : $("[name='ufpass']").val()},
+				function(a) {$("#sp1").html();
+			});
+			
+		
+		});
+		
+		
 		//验证码方法
 		 function getCode() {
-			$.getJSON("/login/sys/loginaction_denglu",function(code) {
-				$("#dv_code").html("");
-				var jsonArray = code.map.count;
-				for (var ja in jsonArray) {
+			$.post("/hicode/validateCode/getValidateCode.spc",function(code) {
+			
+				console.log(code);
+				$("#dvrow_img").html("");
+				
+				for (var i=0;i<code.length;i++) {
 					var img = document.createElement("img");
-					$(img).attr("src", "/login/img/login/code/" + ja[i].n);
-					$(img).css("transform", "rotate(" + ja[i].d + "deg)");
-					$(img).attr("deg", ja[i].d);
-					$(img).attr("n", ja[i].n);
+					$(img).attr("src", "/hicode/sysimg/code/" + code[i].vc_name);
+					$(img).css("transform", "rotate(" + code[i].vc_deg + "deg)");
+					$(img).attr("deg", code[i].vc_deg);
+					$(img).attr("the_img", code[i].id);
 
 					$(img).click(function() {
-						var hehe = $(this);
-						$.get("/login/sys/loginaction_denglu", {
-							"n" : $(this).attr("n"),
-							"d" : $(this).attr("deg")
+						 var hehe = $(this);
+						$.get("/hicode/validateCode/getCodeDeg.spc", {
+							"the_img" : $(this).attr("the_img"),
+							"deg" : $(this).attr("deg")
 						}, function(b) {
 							hehe.attr("deg", b);
 							hehe.css("transform", "rotate(" + b + "deg)");
-						});
+						}); 
 					});
-					$("#dv_code").append($(img));
+					$("#dvrow_img").append($(img));
 				}
-			});
+				
+			},"json");
 		} 
 	
 	

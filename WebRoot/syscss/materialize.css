@@ -8306,7 +8306,7 @@ input[type=text]:focus:not ([readonly] )+label, input[type=password]:focus:not
 	color: #26a69a
 }
 
-input[type=text].valid, input[type=text]:focus.valid, input[type=password].valid,
+/* input[type=text].valid, input[type=text]:focus.valid, input[type=password].valid,
 	input[type=password]:focus.valid, input[type=email].valid, input[type=email]:focus.valid,
 	input[type=url].valid, input[type=url]:focus.valid, input[type=time].valid,
 	input[type=time]:focus.valid, input[type=date].valid, input[type=date]:focus.valid,
@@ -8378,7 +8378,7 @@ input[type=text]+label:after, input[type=password]+label:after, input[type=email
 	opacity: 0;
 	transition: .2s opacity ease-out, .2s color ease-out
 }
-
+ */
 .input-field {
 	position: relative;
 	margin-top: 1rem
@@ -8419,7 +8419,7 @@ input[type=text]+label:after, input[type=password]+label:after, input[type=email
 }
 
 .input-field .prefix.active {
-	color: #26a69a
+	color: #26a69a;
 }
 
 .input-field .prefix ~ input, .input-field .prefix ~ textarea {
