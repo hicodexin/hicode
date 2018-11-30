@@ -1,17 +1,237 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>welcome.html</title>
-	
-    <meta name="keywords" content="keyword1,keyword2,keyword3">
-    <meta name="description" content="this is my page">
-    <meta name="content-type" content="text/html; charset=UTF-8">
-    
-    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+<head>
+<title>welcome.html</title>
 
-  </head>
-  
-  <body bgColor="orange">
-    This is my HTML page. <br>
-  </body>
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta name="content-type" content="text/html; charset=UTF-8">
+
+<link rel="stylesheet" type="text/css" href="/hicode/syscss/bootstrap.css">
+<link rel="stylesheet" href="/hicode/syscss/materialize.css">
+<script type="text/javascript" src="/hicode/sysjs/jquery.min.js"></script>
+<script type="text/javascript" src="/hicode/sysjs/bootstrap.js"></script>
+<script src="/hicode/sysjs/materialize.min.js"></script>
+<style type="text/css">
+	* {
+		margin: 0px;
+		padding: 0px;
+	}
+	.dv_top{
+		background-color: #000;
+		height: 130px;
+	}
+	.dv_title{
+		margin: auto;
+		/* background-color:green; */
+		width:700px;
+		color: #C0C0C0;
+		text-align: center;
+		font-size:60px; 
+		line-height: 130px;
+	}
+	.dv_login{
+		width:100%;
+		height:800px;
+		background-image: url("/hicode/sysimg/login/backimg.jpg"); 
+		background-size: 100% 100%;
+	}
+	
+	.dv_login_left {
+		width: 52%;
+		/*height: 600px;*/
+		float: left;
+		margin-left: 8%;
+		margin-top: 100px;
+		background-color: #996633;
+		border-radius: 9px;
+	}
+	
+	.dv_login_right {
+		width: 430px;
+		height: 610px;
+		float: right;
+		margin-right: 10%;
+		margin-top: 100px;
+		background-color: #333;
+	}
+
+	#dvrow_img>div{
+		width: 76px;
+		height: 76px;
+		float: left;
+		margin-left:5.5% ;
+		border: 1px red solid;
+		display: 
+	}
+	
+	@media ( max-width: 1430px) {
+		.dv_login_left {
+			margin-left: 3%;
+			margin-top: 200px;
+		}
+		.dv_login_right {
+			margin-right: 3%;
+		}
+	}
+	
+	@media ( max-width: 1090px) {
+		#dvrow_img>div{
+			margin: 10px 8%;
+			width: 150px;
+			height: 150px;
+		}
+		.dv_login_left {
+			width: 100%;
+			padding-top: 0;
+			margin: 0;
+		}
+		.dv_login_right {
+			width: 100%;
+			padding-top: 0;
+			margin: 0px;
+		}
+	}
+</style>
+</head>
+
+<body bgColor="#ff6666">
+	<div class="dv_top">
+		<div class="dv_title">HICODE管理后台</div>
+	</div>
+	
+	<div class="dv_login">
+		<div class="dv_login_left">
+			<div class="carousel slide  bagtop1" id="myCarousel">
+				<ul class="carousel-indicators">
+					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+					<li data-target="#myCarousel" data-slide-to="1"></li>
+					<li data-target="#myCarousel" data-slide-to="2"></li>
+					<li data-target="#myCarousel" data-slide-to="3"></li>
+					<li data-target="#myCarousel" data-slide-to="4"></li>
+	
+				</ul>
+				<div class="carousel-inner">
+	
+					<div class="item active">
+						<img src="/hicode/sysimg/login/c01.jpg">
+					</div>
+					<div class="item">
+						<img src="/hicode/sysimg/login/c02.jpg">
+					</div>
+					<div class="item">
+						<img src="/hicode/sysimg/login/c03.jpg">
+					</div>
+					<div class="item">
+						<img src="/hicode/sysimg/login/c04.jpg">
+					</div>
+					<div class="item">
+						<img src="/hicode/sysimg/login/c05.jpg">
+					</div>
+	
+				</div>
+				<a class="left carousel-control" href="#myCarousel" data-slide="prev"></a>
+				<a class="right carousel-control" href="#myCarousel" data-slide="next"></a>
+			</div>
+		</div>
+		<div class="dv_login_right">
+			<div id="login-page" class="row">
+				<div class="col s12 z-depth-6 card-panel" style="background-color: #333;">
+						<div class="row">
+							<div class="input-field col s12 center">
+								<img src="/hicode/sysimg/login/biao.jpg" alt="" class="responsive-img valign profile-image-login">
+								<p class="center login-form-text">
+									<font color="#b0b0b0">创意无限，时间有限，立即行动</font>
+								</p>
+	
+							</div>
+						</div>
+						<div class="row margin">
+							<div class="input-field col s12">
+								<i class="mdi-social-person-outline prefix"></i>
+								<input class="validate" id="email" type="email">
+								<label for="email" data-error="wrong" data-success="right" class="center-align">Email/用户名</label>
+							</div>
+						</div>
+						<div class="row margin">
+							<div class="input-field col s12">
+								<i class="mdi-action-lock-outline prefix"></i>
+								<input id="password" type="password">
+								<label for="password">Password</label>
+							</div>
+						</div>
+						<div class="row">
+							<div id="" style="color: #fff;"class="input-field col s12">调整验证码</div>
+						</div>
+						<div class="row" id="dvrow_img">
+							<div id="" ></div>
+							<div id=""></div>
+							<div id=""></div>
+							<div id=""></div>
+						</div>
+						<div class="row">
+							<div id="" ></div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<a class="btn waves-effect waves-light col s12">登　录</a>
+							</div>
+						</div>
+						<div class="row">
+							<br />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$().ready(function(){
+	
+		//验证码方法
+		 function getCode() {
+			$.getJSON("/login/sys/loginaction_denglu",function(code) {
+				$("#dv_code").html("");
+				var jsonArray = code.map.count;
+				for (var ja in jsonArray) {
+					var img = document.createElement("img");
+					$(img).attr("src", "/login/img/login/code/" + ja[i].n);
+					$(img).css("transform", "rotate(" + ja[i].d + "deg)");
+					$(img).attr("deg", ja[i].d);
+					$(img).attr("n", ja[i].n);
+
+					$(img).click(function() {
+						var hehe = $(this);
+						$.get("/login/sys/loginaction_denglu", {
+							"n" : $(this).attr("n"),
+							"d" : $(this).attr("deg")
+						}, function(b) {
+							hehe.attr("deg", b);
+							hehe.css("transform", "rotate(" + b + "deg)");
+						});
+					});
+					$("#dv_code").append($(img));
+				}
+			});
+		} 
+	
+	
+	
+	});
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
 </html>

@@ -10,7 +10,7 @@ import com.hicode.oa.tool.Teacher;
  * @author xinpeixiang
  * @date 2018-10-22
  */
-public interface TeacherService extends DAO<Teacher>{
+public interface TeacherService {
 
 	/**
 	 * 通过ID获取教师对象

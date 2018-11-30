@@ -26,6 +26,7 @@
  		<typeAlias type="com.hicode.oa.tool.Customer" alias="Customer"/>
  		<typeAlias type="com.hicode.oa.tool.Teacher" alias="Teacher"/>
  		<typeAlias type="com.hicode.oa.tool.Subject" alias="Subject"/>
+ 		<typeAlias type="com.hicode.oa.tool.ValidateCode" alias="ValidateCode"/>
  	</typeAliases>
  
 	<mappers>
@@ -34,6 +35,7 @@
 		<mapper resource="com/hicode/oa/mapper/CustomerMapper.xml"/>
 		<mapper resource="com/hicode/oa/mapper/SubjectMapper.xml"/>
 		<mapper resource="com/hicode/oa/mapper/TeacherMapper.xml"/>
+		<mapper resource="com/hicode/oa/mapper/ValidateCodeMapper.xml"/>
 	</mappers>
 
 </configuration>

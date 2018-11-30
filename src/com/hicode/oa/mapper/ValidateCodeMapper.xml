@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hicode.oa.dao.ValidateCodeDAO">
+
+	<sql id="all_column">
+		 code_id,code_img
+	</sql>
+	
+	<insert id="do_insertValidateCode" parameterType="ValidateCode" keyProperty="code_id">
+		insert into ValidateCode (code_img) values (#{code_img});
+	</insert>
+	
+	<select id="getValidateCodeInfo" parameterType="java.util.Map" resultType="ValidateCode"> 
+		select <include refid="all_column"></include> from ValidateCode limit #{start},#{count};
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+</mapper>
+
+
+	

@@ -100,7 +100,7 @@ function for_btn_aud() {
 						}
 					}, "json");
 
-					$("#up_sub").html("修改");
+					$("#up_sub").html("提交");
 				});
 
 			})();
@@ -131,12 +131,25 @@ function for_btn_adv() {
 			(function() {
 				var t = k;
 				//对于自然上门,口碑介绍,活动上门   三项内容不允许修改
-				if (t < 3) {
+				if($("[name='userName']:eq(" + t + ")").html() == "自然上门"){
 					$(revise[t]).click(function() {
 						alert('权限不足,请联系管理员。。。。');
 					});
 					return;
 				}
+				if($("[name='userName']:eq(" + t + ")").html() == "口碑介绍"){
+					$(revise[t]).click(function() {
+						alert('权限不足,请联系管理员。。。。');
+					});
+					return;
+				}
+				if($("[name='userName']:eq(" + t + ")").html() == "活动上门"){
+					$(revise[t]).click(function() {
+						alert('权限不足,请联系管理员。。。。');
+					});
+					return;
+				}
+					
 				$(revise[t]).click(function() {
 					$("#hidd_mask").hide().show(300);
 					$("#dv_update").hide().show(300);
@@ -159,7 +172,7 @@ function for_btn_adv() {
 						$("#title_updatetime").attr("disabled", "disabled");
 					}
 					$("#title_updatetime").val($("[name='updatetime']:eq(" + t + ")").html());
-					$("#up_sub").html("修改");
+					$("#up_sub").html("提交");
 				});
 
 			})();
@@ -204,7 +217,7 @@ function for_btn_tea() {
 						$("#title_updatetime").attr("disabled", "disabled");
 					}
 					$("#title_updatetime").val($("[name='updatetime']:eq(" + t + ")").html());
-					$("#up_sub").html("修改");
+					$("#up_sub").html("提交");
 				});
 
 			})();
@@ -238,7 +251,7 @@ function for_btn_sub() {
 					$("#tea_list").val($(this).attr("name"));
 					$("#tea_list").attr("name", $(this).attr("id"));
 					$("#userName").val($("[name='userName']:eq(" + t + ")").html());
-					$("#up_sub").html("修改");
+					$("#up_sub").html("提交");
 				});
 
 			})();
@@ -315,7 +328,7 @@ function for_btn_cus() {
 						}
 					}, "json");
 
-					$("#up_sub").html("修改");
+					$("#up_sub").html("提交");
 				});
 
 			})();
@@ -475,7 +488,7 @@ function up_sub_aud() {
 
 		}, "json");
 
-	} else if (content == "修改") {
+	} else if (content == "提交") {
 		if (!window.confirm("是否确定要修改的内容？？？？")) {
 			return;
 		}
@@ -537,7 +550,7 @@ function up_sub_adv() {
 			}
 
 		}, "json");
-	} else if (content == "修改") {
+	} else if (content == "提交") {
 		if ($("#time_endDate").val().length > 3) {
 			$("#time_endDate").css("borderColor", "#f00");
 			if (!window.confirm("此人确定离职？？？？")) {
@@ -605,7 +618,7 @@ function up_sub_tea() {
 			}
 
 		}, "json");
-	} else if (content == "修改") {
+	} else if (content == "提交") {
 		if ($("#time_endDate").val().length > 3) {
 			$("#time_endDate").css("borderColor", "#f00");
 			if (!window.confirm("此人确定离职？？？？")) {
@@ -661,7 +674,7 @@ function up_sub_sub() {
 			}
 
 		}, "json");
-	} else if (content == "修改") {
+	} else if (content == "提交") {
 		if (!window.confirm("是否确定要修改的内容？？？？")) {
 			return;
 		}
@@ -737,7 +750,7 @@ function up_sub_cus() {
 
 		}, "json");
 
-	} else if (content == "修改") {
+	} else if (content == "提交") {
 		if (!window.confirm("是否确定要修改的内容？？？？")) {
 			return;
 		}

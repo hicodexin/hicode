@@ -35,23 +35,6 @@ public class TeacherServiceImpl implements TeacherService {
 		return teacherDAO.getTeacherAll(start, count);
 	}
 
-	@Override
-	public boolean do_insert(Teacher t) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean do_delete(Teacher t) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean do_update(Teacher t) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public Integer getTeacherForCount() {

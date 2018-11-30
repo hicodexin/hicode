@@ -28,80 +28,75 @@
 	<!-- 隐藏  -->
 	<div id="hidd_mask"></div>
 	<div id="dv_update">
-	<form action="#" method="post">
-		<div class="dv_title" id="dv_title">添加学生信息</div>
-		<div class="dv_upmain">
-			<ul class="up_ul">
-				<li>
-					<b>序号 : </b> 
-					<input type="text" id="tea_list" value="" disabled="disabled" />
-				</li>
-				<li>
-					<b>试听时间 : </b> 
-					<input id="time_creatDate" type="text" readonly="readonly">
-				</li>
-				<li>
-					<b>学生姓名 : </b> 
-					<input type="text" id="userName" />
-				</li>
-				<li>
-					<b>学生性别 : </b> 
-					<label for="sex_b"> 
-						<img src="/hicode/sysimg/face_boy.jpg" /> 
-						<input type="radio" id="sex_b" name="t_sex" checked="checked" value="1" />
-					</label> 
-					<label for="sex_g"> 
-						<img src="/hicode/sysimg/face_girl.jpg" />
-						<input type="radio" id="sex_g" name="t_sex" value="0" />
-					</label>
-				</li>
-				<li>
-					<b>学校/年级 : </b> 
-					<select id="update_selclass">
-							<option>学前班</option>
-							<option>一年级</option>
-							<option>二年级</option>
-							<option>三年级</option>
-							<option>四年级</option>
-							<option>五年级</option>
-							<option>六年级</option>
-							<option>初一</option>
-							<option>初二</option>
-							<option>初三</option>
-							<option>高一</option>
-							<option>高二</option>
-							<option>高三</option>
-					</select>
-				</li>
-				<li>
-					<b>授课老师: </b> 
-					<select id="update_selteas">
-					
-					</select>
-				</li>
-				<li>
-					<b>邀约顾问: </b> 
-					<select id="update_seladvs"></select>
-				</li>
-				<li>
-					<b>签单顾问: </b> 
-					<select id="update_seladvs2"></select>
-				</li>
-				<li>
-					<b>备注: </b> 
-					<input type="text" id="remarks"></textarea>
-				</li>
+	<div class="dv_title" id="dv_title">添加学生信息</div>
+	<div class="dv_upmain">
+		<ul class="up_ul">
+			<li>
+				<b>序号 : </b> 
+				<input type="text" id="tea_list" value="" disabled="disabled" />
+			</li>
+			<li>
+				<b>试听时间 : </b> 
+				<input id="time_creatDate" type="text" readonly="readonly">
+			</li>
+			<li>
+				<b>学生姓名 : </b> 
+				<input type="text" id="userName" />
+			</li>
+			<li>
+				<b>学生性别 : </b> 
+				<label for="sex_b"> 
+					<img src="/hicode/sysimg/face_boy.jpg" /> 
+					<input type="radio" id="sex_b" name="t_sex" checked="checked" value="1" />
+				</label> 
+				<label for="sex_g"> 
+					<img src="/hicode/sysimg/face_girl.jpg" />
+					<input type="radio" id="sex_g" name="t_sex" value="0" />
+				</label>
+			</li>
+			<li>
+				<b>学校/年级 : </b> 
+				<select id="update_selclass">
+						<option>学前班</option>
+						<option>一年级</option>
+						<option>二年级</option>
+						<option>三年级</option>
+						<option>四年级</option>
+						<option>五年级</option>
+						<option>六年级</option>
+						<option>初一</option>
+						<option>初二</option>
+						<option>初三</option>
+						<option>高一</option>
+						<option>高二</option>
+						<option>高三</option>
+				</select>
+			</li>
+			<li>
+				<b>授课老师: </b> 
+				<select id="update_selteas">
 				
-			</ul>
-		</div>
-		<div id="dv_upbottom">
-			<button id="up_sub" type="button">提交</button>
-			<button id="up_res">返回</button>
-			
-		</div>
-	</form>
+				</select>
+			</li>
+			<li>
+				<b>邀约顾问: </b> 
+				<select id="update_seladvs"></select>
+			</li>
+			<li>
+				<b>签单顾问: </b> 
+				<select id="update_seladvs2"></select>
+			</li>
+			<li>
+				<b>备注: </b> 
+				<input type="text" id="remarks"></textarea>
+			</li>
+		</ul>
 	</div>
-
+	<div id="dv_upbottom">
+		<button id="up_sub" type="button">提交</button>
+		<button id="up_res">返回</button>
+	</div>
+	</div>
 	<div class="dv_top">
 		<button id="index_go">首页</button>
 	</div>
