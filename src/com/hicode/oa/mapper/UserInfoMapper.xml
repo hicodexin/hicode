@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hicode.oa.dao.UserInfoDAO">
+
+	<!-- 多对一处理 -->
+	<resultMap id="getUserInfo_oop" type="UserInfo">
+		<!-- 一的一方 -->
+		 <association property="userState" column="state_id" select="com.hicode.oa.dao.UserStateDAO.getUserInfoById">
+	   	 </association>
+	   	 <!-- 一的一方 -->
+	   	 <association property="userType" column="type_id" select="com.hicode.oa.dao.UserTypeDAO.getUserTypeById">
+	   	 </association>
+	</resultMap>
+	
+	<sql id="all_column">
+		user_id,user_name,user_pwd,state_id,type_id,create_date
+	</sql>
+	
+	<select id="getUserInfoByID" parameterType="java.lang.String" resultMap="getUserInfo_oop">
+		select <include refid="all_column"></include> from userInfo where user_id = #{user_id};
+	</select>
+	
+	<select id="getUserInfo"  resultMap="getUserInfo_oop" parameterType="java.util.Map">
+		select <include refid="all_column"></include> from userInfo limit #{start},#{count};
+	</select>
+	
+	<insert id="do_insertUserInfo" parameterType="UserInfo">
+		insert into userInfo 
+			(user_id,user_name,user_pwd,state_id,type_id,create_date)
+		values
+			(#{user_id},#{user_name},#{user_pwd},#{userState.state_id},#{userType.type_id},#{create_date});
+	</insert>
+	
+	<update id="do_updateUserInfo"  parameterType="UserInfo">
+		update userInfo set 
+			user_name =#{user_name}, user_pwd =#{user_pwd}, state_id =#{userState.state_id}, 
+			type_id =#{userType.type_id}, create_date =#{create_date}
+		 where  user_id =#{user_id};
+	</update>
+
+
+</mapper>

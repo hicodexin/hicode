@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hicode.oa.dao.UserTypeDAO">
+
+	<sql id="all_column">
+		type_id,type_leibie
+	</sql>
+	
+	<insert id="do_insertUserType" keyProperty="type_id" parameterType="UserType">
+		insert into UserType (type_leibie) values (#{type_leibie});
+	</insert>
+	
+	<select id="getUserTypeInfo" parameterType="java.util.Map" resultType="UserType">
+		select <include refid="all_column"></include> from userType limit #{start},#{count};
+	</select>
+	
+	<select id="getUserTypeById" parameterType="java.lang.Integer" resultType="UserType">
+		select <include refid="all_column"></include> from userType where type_id=#{type_id};
+	</select>
+	
+	<update id="do_updateUserType" parameterType="UserType" >
+		update userType set type_leibie=#{type_leibie} where  type_id=#{type_id};
+	</update>
+
+</mapper>

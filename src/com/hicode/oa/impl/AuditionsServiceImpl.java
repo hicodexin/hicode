@@ -24,6 +24,12 @@ public class AuditionsServiceImpl implements AuditionsService{
 	@Override
 	public List<Auditions> getAuditionsByInfo(Integer start, Integer count) {
 		// TODO Auto-generated method stub
+		if(null == start){
+			start = 0;
+		}
+		if(null == count){
+			count = 20;
+		}
 		return auditionsDAO.getAuditionsAll(start, count);
 	}
 

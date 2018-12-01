@@ -27,6 +27,10 @@
  		<typeAlias type="com.hicode.oa.tool.Teacher" alias="Teacher"/>
  		<typeAlias type="com.hicode.oa.tool.Subject" alias="Subject"/>
  		<typeAlias type="com.hicode.oa.tool.ValidateCode" alias="ValidateCode"/>
+ 		<typeAlias type="com.hicode.oa.tool.UserInfo" alias="UserInfo"/>
+ 		<typeAlias type="com.hicode.oa.tool.UserState" alias="UserState"/>
+ 		<typeAlias type="com.hicode.oa.tool.UserType" alias="UserType"/>
+ 		<typeAlias type="com.hicode.oa.tool.LogInfo" alias="LogInfo"/>
  	</typeAliases>
  
 	<mappers>
@@ -36,6 +40,10 @@
 		<mapper resource="com/hicode/oa/mapper/SubjectMapper.xml"/>
 		<mapper resource="com/hicode/oa/mapper/TeacherMapper.xml"/>
 		<mapper resource="com/hicode/oa/mapper/ValidateCodeMapper.xml"/>
+		<mapper resource="com/hicode/oa/mapper/UserInfoMapper.xml"/>
+		<mapper resource="com/hicode/oa/mapper/UserStateMapper.xml"/>
+		<mapper resource="com/hicode/oa/mapper/UserTypeMapper.xml"/>
+		<mapper resource="com/hicode/oa/mapper/LogInfoMapper.xml"/>
 	</mappers>
 
 </configuration>

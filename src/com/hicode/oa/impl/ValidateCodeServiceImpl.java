@@ -25,6 +25,12 @@ public class ValidateCodeServiceImpl implements ValidateCodeService{
 	@Override
 	public List<ValidateCode> getValidateCodeInfo(Integer start, Integer count) {
 		// TODO Auto-generated method stub
+		if(null == start){
+			start = 0;
+		}
+		if(null == count){
+			count = 20;
+		}
 		return validateCodeDAO.getValidateCodeInfo(start,count);
 	}
 

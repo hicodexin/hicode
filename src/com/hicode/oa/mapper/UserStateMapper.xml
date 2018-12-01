@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hicode.oa.dao.UserStateDAO">
+
+	<sql id="all_column">
+		state_id, state_type
+	</sql>
+
+	<insert id="do_insertUserState" keyProperty="state_id" parameterType="UserState">
+		insert into userState (state_type) values (#{state_type});
+	</insert>
+	
+	<select id="getUserStateInfo" parameterType="UserState" resultType="UserState">
+		select <include refid="all_column"></include> from userState limit #{start},#{count};
+	</select>
+	
+	<select id="getUserInfoById"  parameterType="java.lang.Integer" resultType="UserState">
+		select <include refid="all_column"></include> from userState where state_id=#{state_id};
+	</select>
+	
+	<update id="do_updateUserState" parameterType="UserState">
+		update userState set state_type = #{state_type} where state_id=#{state_id};
+	</update>
+
+</mapper>
