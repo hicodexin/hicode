@@ -6,10 +6,12 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hicode.oa.service.CustomerService;
@@ -28,41 +30,47 @@ public class CustomerController {
 
 	@Autowired
 	private CustomerService customerService;
-	
+
 	@RequestMapping("/to_login")
-	public String login(){
+	public String login(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		Object obj = session.getAttribute("user");
+		// 未登陆返回登陆页面
+		if (obj == null) {
+			return "redirect:/welcome.html";
+		}
 		System.out.println("--------------------");
 		return "/WEB-INF/VisitorsPage/Customer.html";
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value="/showCustomerByInfo")
-	public String showCustomerByInfo(HttpServletRequest request){
-		//页码
+	@RequestMapping(value = "/showCustomerByInfo", method = RequestMethod.POST)
+	public String showCustomerByInfo(HttpServletRequest request) {
+		// 页码
 		String page = request.getParameter("page");
-		
-		//开始数字
+
+		// 开始数字
 		Integer start = 0;
-		//每页显示条数
+		// 每页显示条数
 		Integer num = 10;
-		
-		if(page != null){
-			start = (Integer.valueOf(page)-1)*10;
+
+		if (page != null) {
+			start = (Integer.valueOf(page) - 1) * 10;
 		}
-		
+
 		Integer all_num = null;
-		if(page.equals("1")){
+		if (page.equals("1")) {
 			all_num = customerService.getCustomerForCount();
-			
-			if(all_num != null){
-				all_num = (all_num%10==0)?(all_num/10):(all_num/10+1);
+
+			if (all_num != null) {
+				all_num = (all_num % 10 == 0) ? (all_num / 10) : (all_num / 10 + 1);
 			}
-			
+
 		}
 		List<Customer> advs = customerService.getCustomerAll(start, num);
-		
+
 		JSONArray objs = new JSONArray();
-		
+
 		for (Customer adv1 : advs) {
 			JSONObject obj = new JSONObject();
 			obj.put("id", adv1.getEr_id());
@@ -81,55 +89,56 @@ public class CustomerController {
 		}
 		JSONObject obj_arr = new JSONObject();
 		obj_arr.put("list_advs", objs);
-		
-		if(page.equals("1")){
+
+		if (page.equals("1")) {
 			obj_arr.put("all_num", all_num);
 		}
-		
+
 		return obj_arr.toString();
 	}
-	
+
 	/**
 	 * 添加报名学员
+	 * 
 	 * @param request
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping("/do_insertCustomer")
-	public String do_insertCustomer(HttpServletRequest request){
+	@RequestMapping(value = "/do_insertCustomer", method = RequestMethod.POST)
+	public String do_insertCustomer(HttpServletRequest request) {
 		String aud_id = request.getParameter("userName");
 		String sub_id = request.getParameter("subject");
 		String period = request.getParameter("period");
 		String if_renewal = request.getParameter("if_renewal");
-		
+
 		String t_id = request.getParameter("the_teacher");
 		String first_time = request.getParameter("first_time");
-		
+
 		String phone = request.getParameter("phone");
 		String adv_id = request.getParameter("adviser_sel");
 		String remarks = request.getParameter("remarks");
-		
+
 		Customer customer = new Customer();
-		
+
 		Auditions auditions = new Auditions();
 		auditions.setAu_id(Integer.valueOf(aud_id));
-		
+
 		Subject subject = new Subject();
 		subject.setSub_id(sub_id);
-		
+
 		Teacher teacher = new Teacher();
 		teacher.setT_id(t_id);
-		
+
 		Adviser adviser = new Adviser();
 		adviser.setAdv_id(adv_id);
-		
+
 		customer.setAuditions(auditions);
 		customer.setSubject(subject);
 		customer.setPeriod(Integer.valueOf(period));
 		customer.setIf_renewal(Integer.valueOf(if_renewal));
 		customer.setTeacher(teacher);
 
-		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date d;
 		try {
 			d = sf.parse(first_time);
@@ -143,54 +152,54 @@ public class CustomerController {
 		customer.setRemarks(remarks);
 		customer.setIf_done(0);
 		customer.setIf_refund(0);
-		
+
 		Integer count = customerService.do_insertCustomer(customer);
 		JSONObject obj_arr = new JSONObject();
-		if(count>0){
+		if (count > 0) {
 			obj_arr.put("list_advs", "ok");
 		}
-		
+
 		return obj_arr.toString();
 	}
-	
+
 	@ResponseBody
-	@RequestMapping("/do_updateCustomer")
-	public String do_updateCustomer(HttpServletRequest request){
+	@RequestMapping(value = "/do_updateCustomer", method = RequestMethod.POST)
+	public String do_updateCustomer(HttpServletRequest request) {
 		String id = request.getParameter("id");
 		String aud_id = request.getParameter("userName");
 		String sub_id = request.getParameter("subject");
 		String period = request.getParameter("period");
 		String if_renewal = request.getParameter("if_renewal");
-		
+
 		String t_id = request.getParameter("the_teacher");
 		String first_time = request.getParameter("first_time");
-		
+
 		String phone = request.getParameter("phone");
 		String adv_id = request.getParameter("adviser_sel");
 		String remarks = request.getParameter("remarks");
-		
+
 		Customer customer = new Customer();
 		customer.setEr_id(Integer.valueOf(id));
-		
+
 		Auditions auditions = new Auditions();
 		auditions.setAu_id(Integer.valueOf(aud_id));
-		
+
 		Subject subject = new Subject();
 		subject.setSub_id(sub_id);
-		
+
 		Teacher teacher = new Teacher();
 		teacher.setT_id(t_id);
-		
+
 		Adviser adviser = new Adviser();
 		adviser.setAdv_id(adv_id);
-		
+
 		customer.setAuditions(auditions);
 		customer.setSubject(subject);
 		customer.setPeriod(Integer.valueOf(period));
 		customer.setIf_renewal(Integer.valueOf(if_renewal));
 		customer.setTeacher(teacher);
 
-		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date d;
 		try {
 			d = sf.parse(first_time);
@@ -204,14 +213,14 @@ public class CustomerController {
 		customer.setRemarks(remarks);
 		customer.setIf_done(0);
 		customer.setIf_refund(0);
-		
+
 		Integer count = customerService.do_updateCustomer(customer);
 		JSONObject obj_arr = new JSONObject();
-		if(count>0){
+		if (count > 0) {
 			obj_arr.put("list_advs", "ok");
 		}
-		
+
 		return obj_arr.toString();
 	}
-	
+
 }

@@ -29,7 +29,7 @@ public interface UserStateServcice {
 	 * @param state_id
 	 * @return
 	 */
-	public UserState getUserInfoById(Integer state_id);
+	public UserState getUserStateById(Integer state_id);
 	/**
 	 * 修改用户状态
 	 * @param userState

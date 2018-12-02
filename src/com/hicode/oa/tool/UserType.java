@@ -22,6 +22,8 @@ public class UserType implements Serializable {
 	 */
 	private Integer type_leibie;
 
+	private String type_remarks;
+	
 	public Integer getType_id() {
 		return type_id;
 	}
@@ -36,6 +38,14 @@ public class UserType implements Serializable {
 
 	public void setType_leibie(Integer type_leibie) {
 		this.type_leibie = type_leibie;
+	}
+
+	public String getType_remarks() {
+		return type_remarks;
+	}
+
+	public void setType_remarks(String type_remarks) {
+		this.type_remarks = type_remarks;
 	}
 
 	@Override

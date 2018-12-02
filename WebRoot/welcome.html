@@ -186,14 +186,14 @@
 							</div>
 						</div>
 						<div class="row">
-							<div id="" style="color: #fff; float:left;"class="input-field col s9">调整验证码</div>
+							<div id="" style="color: #fff; float:left;"class="input-field col s9">请点击图片旋转至正向朝上</div>
 							<div id="next_btn" class="input-field col s3">换一组</div>
 						</div>
 						<div class="row" id="dvrow_img">
 							
 						</div>
 						<div class="row">
-							<div id="" ></div>
+							<div id="hehe" >&nbsp;&nbsp;&nbsp;&nbsp;</div>
 						</div>
 						<div class="row">
 							<div class="input-field col s12">
@@ -214,7 +214,7 @@
 		
 		getCode();
 		
-		
+		//下一组验证码
 		$("#next_btn").click(function(){
 			if($(this).html() == "请稍后"){
 				return;
@@ -233,7 +233,6 @@
 			$("#sp1").css("color","#9e9e9e");
 			$("#email").css("borderColor","#9e9e9e");
 			
-			
 			if($("#email").val() == "" || $("#email").val()==null){
 				$("#sp1").html("用户名不能为空");
 				$("#sp1").css("color","red");
@@ -246,12 +245,51 @@
 				$("#email").css("borderColor","red");
 				return;
 			}
+			var img_arry = new Array();
+			img_arry = $("#dvrow_img>img");
+			
+			var data_img = [];
+			for(var i=0;i<img_arry.length;i++){
+				data_img.push($(img_arry[i]).attr("deg"));
+			}
+
+			$.post("/hicode/validateCode/checkCodeDeg.spc",{"data_img":data_img},function(a){
+				if(a){
+					if(a.call_back == "no"){
+						getCode();
+						$("#hehe").html("验证码有误。。。。");
+						$("#hehe").css("color","red");
+						return;
+					}
+				}
+				
+			},"json");
+			
+			if($("#hehe").html().trim().length>0 ){
+				return;
+			}
+			
 			//查询用户名密码是否存在
-			$.get("/hicode/validateCode/getUserAndPass.spc",
-				{"ufname" : $("[name='ufname']").val(),
-				"ufpass" : $("[name='ufpass']").val()},
-				function(a) {$("#sp1").html();
-			});
+			var data = {"ufname" : $("#email").val(),
+						"ufpass" : $("#password").val()};
+			$.post("/hicode/UserInfo/getUserAndPass.spc",data,function(a) {
+				$("#sp1").html();
+				if(a){
+					console.log(a);
+					if(a.call_back != "ok"){
+						console.log(a.call_back);
+						console.log("--------------------");
+						$("#sp1").html(a.call_back);
+						$("#sp1").css("color","red");
+						$("#email").css("borderColor","red");
+						return;
+					}
+					if(a.call_back == "ok"){
+						window.location = "/hicode/index.html";
+					}
+				}
+				
+			},"json");
 			
 		
 		});
@@ -273,7 +311,8 @@
 
 					$(img).click(function() {
 						 var hehe = $(this);
-						$.get("/hicode/validateCode/getCodeDeg.spc", {
+						 $("#hehe").html("    ");
+						$.post("/hicode/validateCode/getCodeDeg.spc", {
 							"the_img" : $(this).attr("the_img"),
 							"deg" : $(this).attr("deg")
 						}, function(b) {

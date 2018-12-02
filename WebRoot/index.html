@@ -37,11 +37,15 @@
 		}
 	</style>
 	<link type="text/css" rel="stylesheet" href="/hicode/syscss/teacher_page.css" />
+	<script type="text/javascript" src="/hicode/sysjs/jquery.min.js"></script>
+	<script type="text/javascript" src="/hicode/sysjs/forfunctions.js"></script>
   </head>
   
   <body bgColor="#ff6666">
-  <!--   <a href="teacher/showTeacher.spc">yyyyyf</a> -->
-  	<div class="dv_top"></div>
+ 
+  	<div class="dv_top">
+  		<button id="find_user" style="margin-left: 70%;">欢迎:</button>
+  	</div>
 	<hr>
 	<div class="dv_title">欢迎来到HICODE管理后台</div>
     <br>
@@ -59,4 +63,12 @@
    		<a href="#">新功能</a>
    	</div>
   </body>
+  <script type="text/javascript">
+  	$().ready(function(){
+  		window.setTimeout(function() {
+  			getUserName();
+  		}, 500);
+  	});
+  	
+  </script>
 </html>

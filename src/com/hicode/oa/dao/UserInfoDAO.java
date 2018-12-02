@@ -13,6 +13,7 @@ import com.hicode.oa.tool.UserInfo;
 
 /**
  * 登录用户
+ * 
  * @author Administrator
  *
  */
@@ -24,25 +25,31 @@ public class UserInfoDAO extends SysDAO {
 		super(sqlSessionFactory);
 		// TODO Auto-generated constructor stub
 	}
-	
-	public Integer do_insertUserInfo(UserInfo userInfo){
-		
-		return insert(nameSpace+"do_insertUserInfo", userInfo);
+
+	public Integer do_insertUserInfo(UserInfo userInfo) {
+
+		return insert(nameSpace + "do_insertUserInfo", userInfo);
 	}
-	
-	public UserInfo getUserInfoByID(String user_id){
-		
-		return selectOne(nameSpace+"getUserInfoByID", user_id);
+
+	public UserInfo getUserInfoByID(String user_id) {
+
+		return selectOne(nameSpace + "getUserInfoByID", user_id);
 	}
-	
-	public List<UserInfo> getUserInfo(Integer start,Integer count){
+
+	public List<UserInfo> getUserInfo(Integer start, Integer count) {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("start", start);
 		map.put("count", count);
-		return selectList(nameSpace+"getUserInfo", map);
+		return selectList(nameSpace + "getUserInfo", map);
 	}
-	
-	public Integer do_updateUserInfo(UserInfo userInfo){
-		return update(nameSpace+"do_updateUserInfo", userInfo);
+
+	public List<UserInfo> getUserInfoByName(String name) {
+		// TODO Auto-generated method stub
+		return selectList(nameSpace + "getUserInfoByName", name);
 	}
+
+	public Integer do_updateUserInfo(UserInfo userInfo) {
+		return update(nameSpace + "do_updateUserInfo", userInfo);
+	}
+
 }

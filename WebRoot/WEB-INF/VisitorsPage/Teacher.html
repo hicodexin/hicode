@@ -98,6 +98,7 @@
   	  	
   	<div class="dv_top">
 		<button id="index_go">首页</button>
+		<button id="find_user">欢迎:</button>
 	</div>
     <hr>
     <div class="dv_title">讲师信息详情</div>
@@ -136,6 +137,7 @@
   		$("#dv_update").hide();
   		$("#hidd_mask").hide();
   		start_post_tea(for_btn_tea);
+  		getUserName();
   		//第一页
  		$("#bt_first").click(function(){
  			change_page_tea(this);

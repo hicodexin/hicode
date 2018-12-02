@@ -9,8 +9,8 @@ import java.util.Date;
  * @author Administrator
  *
  */
-public class UserInfo  implements Serializable{
-	
+public class UserInfo implements Serializable {
+
 	private static final long serialVersionUID = 10122241546451L;
 	/**
 	 * 用户id
@@ -90,7 +90,5 @@ public class UserInfo  implements Serializable{
 		return "UserInfo [user_id=" + user_id + ", user_name=" + user_name + ", user_pwd=" + user_pwd + ", userState="
 				+ userState + ", userType=" + userType + ", create_date=" + create_date + "]";
 	}
-	
-	
 
 }

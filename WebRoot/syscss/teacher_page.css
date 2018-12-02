@@ -3,14 +3,15 @@
 	background-color: #336699;
 }
 
-#index_go{
+#index_go {
 	outline-style: none;
 	border: 1px #fff solid;
 	background-color: #336699;
 	color: #fff;
 	display: inline-block;
+	float: left;
 	margin-left: 15%;
-	margin-top:10px;
+	margin-top: 10px;
 	width: 65px;
 	height: 30px;
 	border-radius: 6px;
@@ -18,13 +19,37 @@
 	font-family: "楷体";
 	font-weight: 600;
 }
+
 #index_go:HOVER {
 	cursor: pointer;
 	border: 1px #336699 solid;
 	background-color: #fff;
 	color: #336699;
 }
-		
+
+#find_user {
+	outline-style: none;
+	border: 1px #fff solid;
+	background-color: #336699;
+	color: #fff;
+	display: inline-block;
+	margin-left: 55%;
+	margin-top: 10px;
+	float: left;
+	padding: 5px;
+	border-radius: 6px;
+	font-size: 16px;
+	font-family: "楷体";
+	font-weight: 600;
+}
+
+#find_user:HOVER {
+	cursor: pointer;
+	border: 1px #336699 solid;
+	background-color: #fff;
+	color: #336699;
+}
+
 .dv_title {
 	height: 90px;
 	color: #336699;
@@ -35,10 +60,10 @@
 	line-height: 90px;
 }
 
-#hidd_mask{
+#hidd_mask {
 	background-color: #D0D0D0;
 	opacity: 0.5;
-	width:100%;
+	width: 100%;
 	position: fixed;
 	z-index: 6;
 }
@@ -169,14 +194,15 @@
 	float: right;
 	margin-right: 20%;
 }
-#dv_but{
+
+#dv_but {
 	float: left;
 	width: 75%;
 }
 
 #dv_but button {
 	display: inline-block;
-	outline-style:none;
+	outline-style: none;
 	background-color: #D0D0D0;
 	border: solid 1px #336699;
 	width: 35px;

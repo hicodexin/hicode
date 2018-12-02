@@ -3,11 +3,11 @@
 <mapper namespace="com.hicode.oa.dao.UserTypeDAO">
 
 	<sql id="all_column">
-		type_id,type_leibie
+		type_id,type_leibie,type_remarks
 	</sql>
 	
 	<insert id="do_insertUserType" keyProperty="type_id" parameterType="UserType">
-		insert into UserType (type_leibie) values (#{type_leibie});
+		insert into UserType (type_leibie,type_remarks) values (#{type_leibie},#{type_remarks});
 	</insert>
 	
 	<select id="getUserTypeInfo" parameterType="java.util.Map" resultType="UserType">
@@ -19,7 +19,7 @@
 	</select>
 	
 	<update id="do_updateUserType" parameterType="UserType" >
-		update userType set type_leibie=#{type_leibie} where  type_id=#{type_id};
+		update userType set type_leibie=#{type_leibie},type_remarks=#{type_remarks} where  type_id=#{type_id};
 	</update>
 
 </mapper>

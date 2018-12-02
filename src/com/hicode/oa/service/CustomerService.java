@@ -6,7 +6,7 @@ import com.hicode.oa.tool.Customer;
 
 /**
  * 签单学员 
- * @author xinpeixiang 
+ * @author XinPeiXiang 
  *
  */
 public interface CustomerService {

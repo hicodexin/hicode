@@ -22,6 +22,31 @@ function timestampToTime_hms(timestamp) {
 	return Y + M + D + h + m + s;
 }
 
+/**
+ * 获取登陆用户名
+ */
+function getUserName() {
+	
+	$.post("/hicode/UserInfo/getUserName.spc", function(a) {
+		console.log(a);
+		if (a) {
+			if(a.ok == "okk"){
+				$("#find_user").html("请登陆");
+				$("#find_user").click(function() {
+					window.location = "/hicode/welcome.html";
+				});
+			}
+			
+			if(a.name){
+				$("#find_user").html("欢迎 " + a.type + " : " + a.name);
+				$("#find_user").click(function() {});
+			}
+		} 
+
+	}, "json");
+
+}
+
 /*通过ajax后台访问所得结果遍历*/
 function for_sel(id, f, optionName) {
 	$("#" + id).children("option").remove();
@@ -96,7 +121,7 @@ function for_btn_aud() {
 							var name = $("[name='update_seladvs']:eq(" + t + ")").html();
 							for_sel("update_seladvs", f, name);
 							var name2 = $("[name='update_seladvs2']:eq(" + t + ")").html();
-							for_sel("update_seladvs2", f,name2);
+							for_sel("update_seladvs2", f, name2);
 						}
 					}, "json");
 
@@ -131,25 +156,25 @@ function for_btn_adv() {
 			(function() {
 				var t = k;
 				//对于自然上门,口碑介绍,活动上门   三项内容不允许修改
-				if($("[name='userName']:eq(" + t + ")").html() == "自然上门"){
+				if ($("[name='userName']:eq(" + t + ")").html() == "自然上门") {
 					$(revise[t]).click(function() {
 						alert('权限不足,请联系管理员。。。。');
 					});
 					return;
 				}
-				if($("[name='userName']:eq(" + t + ")").html() == "口碑介绍"){
+				if ($("[name='userName']:eq(" + t + ")").html() == "口碑介绍") {
 					$(revise[t]).click(function() {
 						alert('权限不足,请联系管理员。。。。');
 					});
 					return;
 				}
-				if($("[name='userName']:eq(" + t + ")").html() == "活动上门"){
+				if ($("[name='userName']:eq(" + t + ")").html() == "活动上门") {
 					$(revise[t]).click(function() {
 						alert('权限不足,请联系管理员。。。。');
 					});
 					return;
 				}
-					
+
 				$(revise[t]).click(function() {
 					$("#hidd_mask").hide().show(300);
 					$("#dv_update").hide().show(300);
@@ -357,7 +382,7 @@ function add_aud() {
 		}
 	}, "json");
 
-	
+
 	$.post("/hicode/adviser/showAdviser.spc", function(f) {
 		if (f.length > 0) {
 			for_sel("update_seladvs", f);
@@ -1043,7 +1068,7 @@ function creat_tb_aud(back_all, p_dom) {
 		str += "<td name='update_selteas'>" + back_all[i].tea_name + "</td>";
 		str += "<td name='update_seladvs'>" + back_all[i].adv_name + "</td>";
 		str += "<td name='update_seladvs2'>" + back_all[i].adv_name2 + "</td>";
-		
+
 		if (back_all[i].remarks) {
 			str += "<td>" + back_all[i].beizhu + "</td>";
 		} else {

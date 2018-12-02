@@ -34,9 +34,9 @@ public class UserStateServciceImpl implements UserStateServcice{
 	}
 
 	@Override
-	public UserState getUserInfoById(Integer state_id) {
+	public UserState getUserStateById(Integer state_id) {
 		// TODO Auto-generated method stub
-		return userStateDAO.getUserInfoById( state_id);
+		return userStateDAO.getUserStateById( state_id);
 	}
 
 	@Override

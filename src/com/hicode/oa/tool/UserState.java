@@ -21,6 +21,11 @@ public class UserState implements Serializable {
 	 */
 	private Integer state_type;
 
+	/**
+	 * 状态介绍
+	 */
+	private String state_remarks;
+
 	public Integer getState_id() {
 		return state_id;
 	}
@@ -37,11 +42,17 @@ public class UserState implements Serializable {
 		this.state_type = state_type;
 	}
 
+	public String getState_remarks() {
+		return state_remarks;
+	}
+
+	public void setState_remarks(String state_remarks) {
+		this.state_remarks = state_remarks;
+	}
+
 	@Override
 	public String toString() {
 		return "UserState [state_id=" + state_id + ", state_type=" + state_type + "]";
 	}
-
-	
 
 }

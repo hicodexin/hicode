@@ -6,10 +6,12 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hicode.oa.service.TeacherService;
@@ -32,8 +34,16 @@ public class TeacherController {
 	private TeacherService teacherService;
 
 	@RequestMapping("/to_login")
-	public String login() {
+	public String login(HttpServletRequest request) {
 		System.out.println("--------------------");
+
+		HttpSession session = request.getSession();
+		Object obj = session.getAttribute("user");
+		// 未登陆返回登陆页面
+		if (obj == null) {
+			return "redirect:/welcome.html";
+		}
+
 		return "/WEB-INF/VisitorsPage/Teacher.html";
 	}
 
@@ -44,7 +54,7 @@ public class TeacherController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/showTeacherByInfo")
+	@RequestMapping(value = "/showTeacherByInfo", method = RequestMethod.POST)
 	public String showTeacherByInfo(HttpServletRequest request) {
 
 		// 页码
@@ -101,7 +111,7 @@ public class TeacherController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping("/do_insertTeacher")
+	@RequestMapping(value = "/do_insertTeacher", method = RequestMethod.POST)
 	public String do_insertTeacher(HttpServletRequest request) {
 		String t_name = request.getParameter("userName");
 		String t_sex = request.getParameter("sex");
@@ -151,7 +161,7 @@ public class TeacherController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping("/showTeacher")
+	@RequestMapping(value = "/showTeacher", method = RequestMethod.POST)
 	public String showTeacher_() {
 
 		List<Teacher> teacher = teacherService.getTeaNameAndID();
@@ -169,7 +179,7 @@ public class TeacherController {
 
 		return jsry.toString();
 	}
-	
+
 	/**
 	 * 修改讲师
 	 * 
@@ -177,8 +187,8 @@ public class TeacherController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping("/do_updateTeacher")
-	public String do_updateTeacher(HttpServletRequest request){
+	@RequestMapping(value = "/do_updateTeacher", method = RequestMethod.POST)
+	public String do_updateTeacher(HttpServletRequest request) {
 		String id = request.getParameter("id");
 		String t_name = request.getParameter("userName");
 		String t_sex = request.getParameter("sex");
@@ -221,7 +231,7 @@ public class TeacherController {
 		}
 
 		return obj_arr.toString();
-		
+
 	}
-	
+
 }

@@ -3,23 +3,23 @@
 <mapper namespace="com.hicode.oa.dao.UserStateDAO">
 
 	<sql id="all_column">
-		state_id, state_type
+		state_id, state_type,state_remarks
 	</sql>
 
 	<insert id="do_insertUserState" keyProperty="state_id" parameterType="UserState">
-		insert into userState (state_type) values (#{state_type});
+		insert into userState (state_type,state_remarks) values (#{state_type},#{state_remarks});
 	</insert>
 	
 	<select id="getUserStateInfo" parameterType="UserState" resultType="UserState">
 		select <include refid="all_column"></include> from userState limit #{start},#{count};
 	</select>
 	
-	<select id="getUserInfoById"  parameterType="java.lang.Integer" resultType="UserState">
+	<select id="getUserStateById"  parameterType="java.lang.Integer" resultType="UserState">
 		select <include refid="all_column"></include> from userState where state_id=#{state_id};
 	</select>
 	
 	<update id="do_updateUserState" parameterType="UserState">
-		update userState set state_type = #{state_type} where state_id=#{state_id};
+		update userState set state_type = #{state_type},state_remarks=#{state_remarks} where state_id=#{state_id};
 	</update>
 
 </mapper>

@@ -5,7 +5,7 @@
 	<!-- 多对一处理 -->
 	<resultMap id="getUserInfo_oop" type="UserInfo">
 		<!-- 一的一方 -->
-		 <association property="userState" column="state_id" select="com.hicode.oa.dao.UserStateDAO.getUserInfoById">
+		 <association property="userState" column="state_id" select="com.hicode.oa.dao.UserStateDAO.getUserStateById">
 	   	 </association>
 	   	 <!-- 一的一方 -->
 	   	 <association property="userType" column="type_id" select="com.hicode.oa.dao.UserTypeDAO.getUserTypeById">
@@ -18,6 +18,10 @@
 	
 	<select id="getUserInfoByID" parameterType="java.lang.String" resultMap="getUserInfo_oop">
 		select <include refid="all_column"></include> from userInfo where user_id = #{user_id};
+	</select>
+	
+	<select id="getUserInfoByName" parameterType="java.lang.String" resultMap="getUserInfo_oop">
+		select <include refid="all_column"></include> from userInfo where user_name = #{user_name};
 	</select>
 	
 	<select id="getUserInfo"  resultMap="getUserInfo_oop" parameterType="java.util.Map">

@@ -34,9 +34,9 @@ public class UserStateDAO extends SysDAO{
 		
 	}
 
-	public UserState getUserInfoById(Integer state_id) {
+	public UserState getUserStateById(Integer state_id) {
 		// TODO Auto-generated method stub
-		return selectOne(nameSpace+"getUserInfoById", state_id);
+		return selectOne(nameSpace+"getUserStateById", state_id);
 	}
 
 	public Integer do_updateUserState(UserState userState) {

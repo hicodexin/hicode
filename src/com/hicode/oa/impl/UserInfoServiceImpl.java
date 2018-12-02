@@ -10,7 +10,7 @@ import com.hicode.oa.service.UserInfoService;
 import com.hicode.oa.tool.UserInfo;
 
 @Service
-public class UserInfoServiceImpl implements UserInfoService{
+public class UserInfoServiceImpl implements UserInfoService {
 
 	@Autowired
 	private UserInfoDAO userInfoDAO;
@@ -38,9 +38,11 @@ public class UserInfoServiceImpl implements UserInfoService{
 		// TODO Auto-generated method stub
 		return userInfoDAO.do_updateUserInfo(userInfo);
 	}
-	
-	
-	
-	
-	
+
+	@Override
+	public List<UserInfo> getUserInfoByName(String name) {
+		// TODO Auto-generated method stub
+		return userInfoDAO.getUserInfoByName(name);
+	}
+
 }
