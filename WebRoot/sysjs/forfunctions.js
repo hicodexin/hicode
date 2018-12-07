@@ -26,26 +26,25 @@ function timestampToTime_hms(timestamp) {
  * 获取登陆用户名
  */
 function getUserName(id) {
-	
 	$.post("/hicode/UserInfo/getUserName.spc", function(a) {
 		console.log(a);
 		$("#" + id).children("#user_out").remove();
 		if (a) {
-			if(a.ok == "okk"){
+			if (a.ok == "okk") {
 				$("#find_user").html("请登陆");
 				$("#find_user").click(function() {
 					window.location = "/hicode/welcome.html";
 				});
 			}
-			
-			if(a.name){
+
+			if (a.name) {
 				$("#find_user").html("欢迎 " + a.type + " : " + a.name);
 				$("#find_user").click(function() {});
 				var str = "<button id='user_out' class='for_button'>退出</button>";
 				$("#" + id).append(str);
 				$("#user_out").click(userOut);
 			}
-		} 
+		}
 
 	}, "json");
 
@@ -53,13 +52,13 @@ function getUserName(id) {
 /**
  * 退出登录
  */
-function userOut(){
-	$.post("/hicode/UserInfo/logOut.spc",function(a){
-		if(a.ok == "okk"){
+function userOut() {
+	$.post("/hicode/UserInfo/logOut.spc", function(a) {
+		if (a.ok == "okk") {
 			alert("谢谢使用，再见。。。。。");
 			window.location = "/hicode/welcome.html";
 		}
-	},"json");
+	}, "json");
 }
 
 
@@ -1012,6 +1011,46 @@ function start_post_cus(backFunction) {
 			$("#dv_table").css("height", "800px");
 		}
 
+	}, "json");
+
+}
+
+/* 初始化数据 */
+function start_post_usr(backFunction) {
+	$.post("/hicode/UserInfo/showUserOnline.spc", {
+		"page" : 1
+	}, function(a) {
+		if (a) {
+			creat_tb_sub(a.list_advs, "#tbl_body");
+			/* 添加页码 */
+			if (a.all_num) {
+				$("#dv_but").children("button").remove();
+				for (var k = 0; k < a.all_num; k++) {
+					var btn = document.createElement("button");
+					$(btn).html(k + 1);
+					$(btn).attr("mypage", (k + 1));
+					if (k == 0) {
+						$(btn).css({
+							"backgroundColor" : "#336699",
+							"color" : "#fff"
+						});
+					}
+					$(btn).click(function() {
+						change_page_sub(this);
+					});
+
+					$("#dv_but").append(btn);
+				}
+				$("#bt_end").attr("mypage", a.all_num);
+			}
+			//修改按钮赋单击事件
+			backFunction();
+		}
+		var hei = $("#tea_tbl").css("height");
+		hei = hei.substr(0, hei.length - 2);
+		if (hei > 650) {
+			$("#dv_table").css("height", "800px");
+		}
 	}, "json");
 
 }

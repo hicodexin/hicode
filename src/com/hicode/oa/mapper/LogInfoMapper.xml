@@ -24,27 +24,27 @@
 	<select id="getLogInfoByTime" parameterType="java.util.Map" resultMap="getLogInfo_oop">
 		select <include refid="all_column"></include> from logInfo 
 		where 
-			log_time &gt;= #{start} AND log_time &lt;= #{end};
+			log_time &gt;= #{start} AND log_time &lt;= #{end}  order by log_id;
 	</select>
 	
 	<!-- 根据用户ID查询日志记录 -->
 	<select id="getLogInfoByUserID" parameterType="java.lang.String" resultType="LogInfo">
 		select <include refid="all_column"></include> from logInfo 
 		where
-		 user_id = #{user_id};
+		 user_id = #{user_id} order by log_id;
 	</select>
 	
 	<!-- 根据IP查询日志记录 -->
 	<select id="getLogInfoByIP" parameterType="java.lang.String" resultMap="getLogInfo_oop">
 		select <include refid="all_column"></include> from logInfo 
 		where 
-			log_ip=#{log_ip};
+			log_ip=#{log_ip} order by log_id;
 	</select>
 	
 	<!-- 根据登录状态查询日志记录(是否登录成功)  -->
 	<select id="getLogInfoByState" parameterType="java.lang.Integer" resultMap="getLogInfo_oop">
 		select <include refid="all_column"></include> from logInfo 
 		where
-			log_success = #{log_success};
+			log_success = #{log_success} order by log_id;
 	</select>
 </mapper>
