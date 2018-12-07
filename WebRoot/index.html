@@ -30,6 +30,7 @@
 		}
 		a:HOVER {
 			background-color: orange;
+			box-shadow: 5px 5px 15px #f00; 
 		}
 		#dv_show{
 			width: 80%;
@@ -41,10 +42,10 @@
 	<script type="text/javascript" src="/hicode/sysjs/forfunctions.js"></script>
   </head>
   
-  <body bgColor="#ff6666">
+  <body bgColor="#E0E0E0">
  
-  	<div class="dv_top">
-  		<button id="find_user" style="margin-left: 70%;">欢迎:</button>
+  	<div class="dv_top" id="dv_top">
+  		<button id="find_user" class="for_button" style="margin-left: 70%;">欢迎:</button>
   	</div>
 	<hr>
 	<div class="dv_title">欢迎来到HICODE管理后台</div>
@@ -60,13 +61,15 @@
 	    
 	    <a href="/hicode/customer/to_login.spc">报名学员</a>
 	    
+	    <a href="/hicode/UserInfo/to_login.spc">登录展示</a>
+	    
    		<a href="#">新功能</a>
    	</div>
   </body>
   <script type="text/javascript">
   	$().ready(function(){
   		window.setTimeout(function() {
-  			getUserName();
+  			getUserName("dv_top");
   		}, 500);
   	});
   	

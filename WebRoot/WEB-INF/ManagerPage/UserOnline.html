@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Subject.html</title>
+    <title>UserOnline.html</title>
 	
     <meta name="keywords" content="keyword1,keyword2,keyword3">
     <meta name="description" content="this is my page">
-    <meta name="content-type" content="text/html; charset=UTF-8">
+    <meta name="content-type" charset="UTF-8">
     <style type="text/css">
 		*{
 			margin: 0px;
@@ -20,51 +20,18 @@
 		}
 		
 	</style>
-    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
-	<link type="text/css" rel="stylesheet"
-		href="/hicode/syscss/teacher_page.css" />
+	<link type="text/css" rel="stylesheet" href="/hicode/syscss/teacher_page.css" />
 	<script type="text/javascript" src="/hicode/sysjs/jquery.min.js"></script>
 	<script type="text/javascript" src="/hicode/sysjs/forfunctions.js"></script>
   </head>
   
   <body>
-    <!-- 隐藏  -->
-	<div id="hidd_mask"></div>
-	<div id="dv_update">
-		<div class="dv_title" id="dv_title">添加课程信息</div>
-		<div class="dv_upmain">
-			<ul class="up_ul">
-				<li><b>序号 : </b> 
-					<input type="text" id="tea_list" value="" disabled="disabled" />
-				</li>
-				<li><b>科目名称 : </b> <input type="text" id="userName" /></li>
-				<li>
-					<b>是否在线 : </b> 
-					<label for="job_b"> 
-						<img src="/hicode/sysimg/face_smile.jpg" /> 
-						<input type="radio" id="job_b" name="if_Onthejob" value="0" checked="checked"/>
-					</label> 
-					<label for="job_g"> 
-						<img src="/hicode/sysimg/face_grieved.jpg" /> 
-						<input type="radio" id="job_g" name="if_Onthejob" value="1" />
-					</label>
-				</li>
-				
-			</ul>
-		</div>
-		<div id="dv_upbottom">
-			<button id="up_sub">添加</button>
-			<button id="up_res">返回</button>
-		</div>
-	</div>
-
-	<div class="dv_top" id="dv_top">
+    <div class="dv_top" id="dv_top">
 		<button id="index_go" class="for_button">首页</button>
 		<button id="find_user" class="for_button">欢迎:</button>
 	</div>
 	<hr>
-	<div class="dv_title">课程信息详情</div>
-	<button id="bt_1">添加</button>
+	<div class="dv_title">登录信息详情</div>
 	<div id="dv_table">
 		<table id="tea_tbl" cellspacing="0">
 			<thead>
@@ -85,8 +52,8 @@
 		<div id="dv_but"></div>
 		<button id="bt_end">尾页</button>
 	</div>
-</body>
-<script type="text/javascript">
+  </body>
+  <script type="text/javascript">
 	$().ready(function() {
 		var bd_hig = document.documentElement.clientHeight;
   		$("#hidd_mask").css("height",bd_hig+"px");
@@ -123,5 +90,5 @@
 	});
 	
 </script>
-
+  
 </html>

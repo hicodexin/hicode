@@ -25,10 +25,11 @@ function timestampToTime_hms(timestamp) {
 /**
  * 获取登陆用户名
  */
-function getUserName() {
+function getUserName(id) {
 	
 	$.post("/hicode/UserInfo/getUserName.spc", function(a) {
 		console.log(a);
+		$("#" + id).children("#user_out").remove();
 		if (a) {
 			if(a.ok == "okk"){
 				$("#find_user").html("请登陆");
@@ -40,12 +41,27 @@ function getUserName() {
 			if(a.name){
 				$("#find_user").html("欢迎 " + a.type + " : " + a.name);
 				$("#find_user").click(function() {});
+				var str = "<button id='user_out' class='for_button'>退出</button>";
+				$("#" + id).append(str);
+				$("#user_out").click(userOut);
 			}
 		} 
 
 	}, "json");
 
 }
+/**
+ * 退出登录
+ */
+function userOut(){
+	$.post("/hicode/UserInfo/logOut.spc",function(a){
+		if(a.ok == "okk"){
+			alert("谢谢使用，再见。。。。。");
+			window.location = "/hicode/welcome.html";
+		}
+	},"json");
+}
+
 
 /*通过ajax后台访问所得结果遍历*/
 function for_sel(id, f, optionName) {

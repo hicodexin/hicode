@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.hicode.oa.tool.UserType;
 /**
- * 用户类型接口
+ * 用户类型接口(0:游客; 1:普通用户; 2:会员用户; 3:管理员;)
  * @author XinPeiXiang 2018-12-01
  *
  */

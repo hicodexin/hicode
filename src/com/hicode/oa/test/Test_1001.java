@@ -1,7 +1,10 @@
 package com.hicode.oa.test;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Ignore;
@@ -23,7 +26,23 @@ import com.hicode.oa.tool.UserType;
 import com.hicode.oa.tool.ValidateCode;
 
 public class Test_1001 {
-
+	
+	
+	@Test
+	public void Teat_1007() {
+		
+		String[] abc ={"w","q","e","ww","rrr","qqq","rrrrr","wwwww"};
+		for(String s:abc){
+			
+			if(s.equals("rrr")){
+				System.out.println("=====");
+				break;
+			}
+			System.out.println("ppp = "+s);
+		}
+		
+	}
+	@Ignore
 	@Test
 	public void Teat_1006() {
 		

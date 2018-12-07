@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * 登录用户信息
  * 
- * @author Administrator
+ * @author XinPeiXiang 
  *
  */
 public class UserInfo implements Serializable {
@@ -29,7 +29,7 @@ public class UserInfo implements Serializable {
 	 */
 	private UserState userState;
 	/**
-	 * 用户类型(0:游客; 1:普通用户; 2:管理员;)
+	 * 用户类型(0:游客; 1:普通用户; 2:会员用户; 3:管理员;)
 	 */
 	private UserType userType;
 	/**

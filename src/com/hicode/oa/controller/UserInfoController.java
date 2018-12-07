@@ -1,7 +1,11 @@
 package com.hicode.oa.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -28,6 +32,31 @@ public class UserInfoController {
 
 	@Autowired
 	private UserInfoService UserInfoService;
+	
+	/**
+	 * 
+	 */
+	@RequestMapping("/to_login")
+	public String login(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+		// 未登陆返回登陆页面
+		if (obj == null) {
+			return "redirect:/welcome.html";
+		}
+		// 非管理员用户
+		if(obj.getUserType().getType_leibie() != 3){
+			
+			return "redirect:/Fighting.html";
+		}
+		
+		return "/WEB-INF/ManagerPage/UserOnline.html";
+	}
+	
+	
+	
+	
 
 	/**
 	 * 判断用户名和密码
@@ -68,21 +97,30 @@ public class UserInfoController {
 		}
 
 		HttpSession session = request.getSession();
-		/*
-		 * ServletContext context = session.getServletContext();
-		 * context.getAttribute("users"); if(){
-		 * 
-		 * }
-		 * 
-		 */
 
+		ServletContext application = session.getServletContext();
+		// 在全局变量中检索登录用户信息
+		Map<String, HttpSession> userOnline = (Map<String, HttpSession>) application.getAttribute("userOnline");
+		// 如果未检索到,为其新创建,防止空指针异常
+		if (userOnline == null) {
+			userOnline = new HashMap<String, HttpSession>();
+			application.setAttribute("userOnline", userOnline);
+		}
+
+		if (userOnline.containsKey(ufname)) {
+			obj.put("call_back", "该账户已在线,不支持重复登录。。。。");
+
+			return obj.toString();
+		}
+		// 设置进入session作用域,进而放入application作用域
 		session.setAttribute("user", uf_list.get(0));
+		userOnline.put(ufname, session);
 
 		obj.put("call_back", "ok");
 
 		return obj.toString();
 	}
-	
+
 	/**
 	 * 判断用户名和密码
 	 * 
@@ -94,12 +132,12 @@ public class UserInfoController {
 	public String getUserName(HttpServletRequest request) {
 
 		JSONObject obj = new JSONObject();
-	
+
 		HttpSession session = request.getSession();
-	
+
 		UserInfo userInfo = (UserInfo) session.getAttribute("user");
-		if(userInfo != null){
-			
+		if (userInfo != null) {
+
 			obj.put("name", userInfo.getUser_name());
 			obj.put("type", userInfo.getUserType().getType_remarks());
 			return obj.toString();
@@ -107,9 +145,39 @@ public class UserInfoController {
 		obj.put("ok", "okk");
 		return obj.toString();
 	}
-	
-	
-	
-	
+
+	/**
+	 * 用户登录退出
+	 * 
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/logOut", method = RequestMethod.POST)
+	public String logOut(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+
+		ServletContext application = session.getServletContext();
+
+		Map<String, HttpSession> userOnline = (Map<String, HttpSession>) application.getAttribute("userOnline");
+
+		JSONObject obj = new JSONObject();
+		
+		if (userOnline != null && userOnline.size() > 0) {
+
+			Set<String> sets = userOnline.keySet();
+
+			for (String s : sets) {
+
+				if (userOnline.get(s) == session) {
+
+					userOnline.remove(s);
+					obj.put("ok", "okk");
+					return obj.toString();
+				}
+			}
+		}
+		
+		return obj.toString();
+	}
 
 }

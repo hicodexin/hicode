@@ -3,9 +3,9 @@ package com.hicode.oa.tool;
 import java.io.Serializable;
 
 /**
- * 用户类型(0:游客; 1:普通用户; 2:管理员;)
+ * 用户类型(0:游客; 1:普通用户; 2:会员用户; 3:管理员;)
  * 
- * @author Administrator
+ * @author XinPeiXiang 
  *
  */
 public class UserType implements Serializable {
@@ -18,7 +18,7 @@ public class UserType implements Serializable {
 	private Integer type_id;
 
 	/**
-	 * 用户类型(0:游客; 1:普通用户; 2:管理员;)
+	 * 用户类型(0:游客; 1:普通用户; 2:会员用户; 3:管理员;)
 	 */
 	private Integer type_leibie;
 
