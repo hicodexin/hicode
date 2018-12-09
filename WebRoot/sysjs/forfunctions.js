@@ -26,7 +26,7 @@ function timestampToTime_hms(timestamp) {
  * 获取登陆用户名
  */
 function getUserName(id) {
-	$.post("/hicode/UserInfo/getUserName.spc", function(a) {
+	$.post("/hicode/UserInfo/getUserName.jsp", function(a) {
 		console.log(a);
 		$("#" + id).children("#user_out").remove();
 		if (a) {
@@ -1328,17 +1328,8 @@ function creat_tb_usr(back_all, p_dom) {
 		str += "<td>" + back_all[i].ip + "</td>";
 		var startTime = timestampToTime_hms(back_all[i].time.time);
 		str += "<td>" + startTime + "</td>";
-
-		if(back_all[i].mger){
-			str += "<td></td>";
-		}else{
-			/*
-				str += "<td><button style='background-color: #FF3333;'>锁定</button>";
-				str += "<button style='background-color: #FF3333;margin-left:5px;'>下线</button></td>";
-			 */
-			str += "<td><button>锁定</button>";
-			str += "<button style='margin-left:5px;'>下线</button></td>";
-		}
+		str += "<td><button>锁定</button>";
+		str += "<button style='margin-left:5px;'>下线</button></td>";
 		
 		str += "<td><input type='checkbox' /></td>";
 		$(tr).append(str);

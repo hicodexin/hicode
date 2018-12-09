@@ -37,12 +37,6 @@ public class AdviserController {
 	@RequestMapping("/to_login")
 	public String login(HttpServletRequest request) {
 		System.out.println("----------to_login----------");
-		HttpSession session = request.getSession();
-		Object obj = session.getAttribute("user");
-		// 未登陆返回登陆页面
-		if (obj == null) {
-			return "redirect:/welcome.html";
-		}
 		return "/WEB-INF/VisitorsPage/Adviser.html";
 	}
 

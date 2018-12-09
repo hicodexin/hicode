@@ -50,13 +50,8 @@ public class UserInfoController {
 
 		HttpSession session = request.getSession();
 		UserInfo obj = (UserInfo) session.getAttribute("user");
-		// 未登陆返回登陆页面
-		if (obj == null) {
-			return "redirect:/welcome.html";
-		}
 		// 非管理员用户
 		if (obj.getUserType().getType_leibie() != 3) {
-
 			return "redirect:/Fighting.html";
 		}
 

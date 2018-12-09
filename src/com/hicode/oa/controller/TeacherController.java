@@ -36,14 +36,6 @@ public class TeacherController {
 	@RequestMapping("/to_login")
 	public String login(HttpServletRequest request) {
 		System.out.println("--------------------");
-
-		HttpSession session = request.getSession();
-		Object obj = session.getAttribute("user");
-		// 未登陆返回登陆页面
-		if (obj == null) {
-			return "redirect:/welcome.html";
-		}
-
 		return "/WEB-INF/VisitorsPage/Teacher.html";
 	}
 

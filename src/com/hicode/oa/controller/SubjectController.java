@@ -27,12 +27,6 @@ public class SubjectController {
 
 	@RequestMapping("/to_login")
 	public String login(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		Object obj = session.getAttribute("user");
-		// 未登陆返回登陆页面
-		if (obj == null) {
-			return "redirect:/welcome.html";
-		}
 		System.out.println("-------subject-------------");
 		return "/WEB-INF/VisitorsPage/Subject.html";
 	}

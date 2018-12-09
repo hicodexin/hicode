@@ -24,6 +24,7 @@
 	<servlet-mapping>
 		<servlet-name>springmvc_selt</servlet-name>
 		<url-pattern>*.spc</url-pattern>
+		<url-pattern>*.jsp</url-pattern>
 	</servlet-mapping>
 	
 	<!--  加载Spring容器配置 -->
@@ -64,9 +65,29 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	<!-- 自定义登录过滤器 -->
+	<filter>
+		<filter-name>loginFilter</filter-name>
+		<filter-class>com.hicode.oa.system.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>loginFilter</filter-name>
+		<url-pattern>*.spc</url-pattern>
+	</filter-mapping>
+	
+	<!-- Session过期时间(分钟) -->
 	<session-config>
 		<session-timeout>10</session-timeout>
 	</session-config>
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 </web-app>

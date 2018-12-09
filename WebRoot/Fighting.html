@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Sorry.html</title>
+<title>Fighting.html</title>
 
 <meta http-equiv="content" content="text/html" charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="/hicode/syscss/Fighting/main.css" />
@@ -10,10 +10,8 @@
 
 <style type="text/css">
 	.jinggao{
-		height: 70px;
-		width: 80%;
-		display:block;
-		margin: auto;
+		height: 300px;
+		width: 300px;
 		background-color: #ff6666; 
 		font-size:30px; 
 		text-align: center;
@@ -21,15 +19,31 @@
 		color: #336699;
 		font-family: "楷体";
 		font-weight:600; 
+		position: absolute;
+		top:50px;
+		
+	}
+	.quanxian{
+		width: 500px;
+		height: 600px;
+		font-size:40px; 
+		left: 950px;
+		top:0px;
+		line-height: 300px;
 	}
 </style>
 
 </head>
 
 <body>
-	<div class="dv_top" id="dv_top">
+	<div class="dv_top" id="dv_top" style="width: 300px;position: absolute;">
 		<button id="index_go" class="for_button">首页</button>
-		<button id="find_user" class="for_button">欢迎:</button>
+	</div>
+	<div class="jinggao">
+		拿下30000分,<br/>进入你想要的页面
+	</div>
+	<div class="jinggao quanxian">
+		权限不足,返回首页
 	</div>
 	<div id="contentdiv">
 		<div id="startdiv">
@@ -63,7 +77,9 @@
 	 	window.setTimeout(function(){
 			alert("兄嘚! ! ! 留步...\n \n权限不足。。。。\n \n 请返回首页。。。。。");
 		},1000);
-	
+		$("#index_go").click(function(){
+ 			window.location = "/hicode/index.html";
+ 		});
 	 
 	});
 </script>

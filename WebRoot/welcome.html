@@ -255,51 +255,46 @@
 				data_img.push($(img_arry[i]).attr("deg"));
 			}
 			
-			$.post("/hicode/validateCode/checkCodeDeg.spc",{"data_img":data_img},function(a){
+			$.post("/hicode/validateCode/checkCodeDeg.jsp",{"data_img":data_img},function(a){
 				if(a){
 					if(a.call_back == "no"){
 						getCode();
 						$("#hehe").html("验证码有误。。。。");
 						$("#hehe").css("color","red");
 						return;
-					}
-				}
-				
-			},"json");
-			getCode();
-			if($("#hehe").html().trim().length>0 ){
-				return;
-			}
-			
-			//查询用户名密码是否存在
-			var data = {"ufname" : $("#email").val(),
-						"ufpass" : $("#password").val()};
-			$.post("/hicode/UserInfo/getUserAndPass.spc",data,function(a) {
-				$("#sp1").html();
-				if(a){
-					console.log(a);
-					if(a.call_back != "ok"){
-						console.log(a.call_back);
-						console.log("--------------------");
-						$("#sp1").html(a.call_back);
-						$("#sp1").css("color","red");
-						$("#email").css("borderColor","red");
-						return;
-					}
-					if(a.call_back == "ok"){
-						window.location = "/hicode/index.html";
+					}else{
+						//查询用户名密码是否存在
+						var data = {"ufname" : $("#email").val(),
+									"ufpass" : $("#password").val()};
+						$.post("/hicode/UserInfo/getUserAndPass.jsp",data,function(a) {
+							$("#sp1").html();
+							if(a){
+								console.log(a);
+								if(a.call_back != "ok"){
+									console.log(a.call_back);
+									console.log("--------------------");
+									$("#sp1").html(a.call_back);
+									$("#sp1").css("color","red");
+									$("#email").css("borderColor","red");
+									return;
+								}
+								if(a.call_back == "ok"){
+									window.location = "/hicode/index.html";
+								}
+							}
+							
+						},"json");
 					}
 				}
 				
 			},"json");
 			
-		
 		});
 		
 		
 		//验证码方法
 		 function getCode() {
-			$.post("/hicode/validateCode/getValidateCode.spc",function(code) {
+			$.post("/hicode/validateCode/getValidateCode.jsp",function(code) {
 			
 				console.log(code);
 				$("#dvrow_img").html("");
@@ -314,7 +309,7 @@
 					$(img).click(function() {
 						 var hehe = $(this);
 						 $("#hehe").html("    ");
-						$.post("/hicode/validateCode/getCodeDeg.spc", {
+						$.post("/hicode/validateCode/getCodeDeg.jsp", {
 							"the_img" : $(this).attr("the_img"),
 							"deg" : $(this).attr("deg")
 						}, function(b) {

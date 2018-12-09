@@ -40,12 +40,6 @@ public class AuditionsController {
 
 	@RequestMapping("/to_login")
 	public String login(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		Object obj = session.getAttribute("user");
-		// 未登陆返回登陆页面
-		if (obj == null) {
-			return "redirect:/welcome.html";
-		}
 		System.out.println("-------auditions------------");
 		return "/WEB-INF/VisitorsPage/Auditions.html";
 	}
