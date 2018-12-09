@@ -21,7 +21,7 @@ public class MySessionListener implements HttpSessionListener {
 
 	@Override
 	public void sessionCreated(HttpSessionEvent arg0) {
-		System.out.println("+++++++++++++++sessionCreated+++++++++++++++" + arg0);
+
 	}
 
 	/**

@@ -237,12 +237,14 @@
 				$("#sp1").html("用户名不能为空");
 				$("#sp1").css("color","red");
 				$("#email").css("borderColor","red");
+				getCode();
 				return;
 			}
 			if ($("#email").val().indexOf(" ") != -1) {
 				$("#sp1").html("用户名不能含有空格");
 				$("#sp1").css("color","red");
 				$("#email").css("borderColor","red");
+				getCode();
 				return;
 			}
 			var img_arry = new Array();
@@ -252,7 +254,7 @@
 			for(var i=0;i<img_arry.length;i++){
 				data_img.push($(img_arry[i]).attr("deg"));
 			}
-
+			
 			$.post("/hicode/validateCode/checkCodeDeg.spc",{"data_img":data_img},function(a){
 				if(a){
 					if(a.call_back == "no"){
@@ -264,7 +266,7 @@
 				}
 				
 			},"json");
-			
+			getCode();
 			if($("#hehe").html().trim().length>0 ){
 				return;
 			}

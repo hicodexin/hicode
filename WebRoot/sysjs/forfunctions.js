@@ -91,6 +91,84 @@ function for_sel02(id, f, optionName) {
 
 }
 
+/** ==============================================锁定按钮============================================== */
+function for_btnSD_usr() {
+	var bts = $("button");
+	var revise = new Array();
+	if (bts.length > 0) {
+		for (var i = 0, j = 0; i < bts.length; i++) {
+			if ($(bts[i]).html() == "锁定") {
+				revise[j] = bts[i];
+				j++;
+			}
+		}
+	}
+	console.log("=============adv==================")
+	console.log(revise)
+	if (revise.length > 0) {
+		for (var k = 0; k < revise.length; k++) {
+			(function() {
+				var t = k;
+				$(revise[t]).click(function() {
+					//确认锁定？
+					if (!window.confirm("是否确定要锁定该用户的账号？？？？")) {
+						return;
+					}
+					var data = {"id":$("[name='userName']:eq(" + t + ")").attr("usid")}
+					//传递userid
+					$.post("/hicode/UserInfo/closeUserInfoState.spc",data,function(a){
+						if(a){
+							alert(a.ok);
+						}
+					},"json");
+				});
+
+			})();
+
+		}
+	}
+
+}
+
+/** ==============================================下线按钮============================================== */
+function for_btnXX_usr() {
+	var bts = $("button");
+	var revise = new Array();
+	if (bts.length > 0) {
+		for (var i = 0, j = 0; i < bts.length; i++) {
+			console.log($(bts[i]).html())
+			if ($(bts[i]).html() == "下线") {
+				revise[j] = bts[i];
+				j++;
+			}
+		}
+	}
+	if (revise.length > 0) {
+		for (var k = 0; k < revise.length; k++) {
+			(function() {
+				var t = k;
+				$(revise[t]).click(function() {
+					//确认锁定？
+					if (!window.confirm("是否确定要令该用户下线？？？？")) {
+						return;
+					}
+					var data = {"userName":$("[name='userName']:eq(" + t + ")").html()}
+					//传递userid
+					$.post("/hicode/UserInfo/logOut.spc",data,function(a){
+						if(a){
+							alert(a.ok);
+							start_post_usr(for_btnSD_usr,for_btnXX_usr);
+						}
+					},"json");
+				});
+
+			})();
+
+		}
+	}
+
+}
+
 /** ==============================================修改按钮============================================== */
 
 /* 试听课修改按钮 */
@@ -162,9 +240,6 @@ function for_btn_adv() {
 			}
 		}
 	}
-
-	console.log("=============adv==================")
-	console.log(revise)
 
 	if (revise.length > 0) {
 		for (var k = 0; k < revise.length; k++) {
@@ -293,9 +368,7 @@ function for_btn_sub() {
 					$("#userName").val($("[name='userName']:eq(" + t + ")").html());
 					$("#up_sub").html("提交");
 				});
-
 			})();
-
 		}
 	}
 
@@ -1016,41 +1089,17 @@ function start_post_cus(backFunction) {
 }
 
 /* 初始化数据 */
-function start_post_usr(backFunction) {
+function start_post_usr(backFunction,backFunction2) {
 	$.post("/hicode/UserInfo/showUserOnline.spc", {
 		"page" : 1
 	}, function(a) {
 		if (a) {
-			creat_tb_sub(a.list_advs, "#tbl_body");
-			/* 添加页码 */
-			if (a.all_num) {
-				$("#dv_but").children("button").remove();
-				for (var k = 0; k < a.all_num; k++) {
-					var btn = document.createElement("button");
-					$(btn).html(k + 1);
-					$(btn).attr("mypage", (k + 1));
-					if (k == 0) {
-						$(btn).css({
-							"backgroundColor" : "#336699",
-							"color" : "#fff"
-						});
-					}
-					$(btn).click(function() {
-						change_page_sub(this);
-					});
-
-					$("#dv_but").append(btn);
-				}
-				$("#bt_end").attr("mypage", a.all_num);
-			}
-			//修改按钮赋单击事件
-			backFunction();
+			creat_tb_usr(a.list_advs, "#tbl_body");
 		}
-		var hei = $("#tea_tbl").css("height");
-		hei = hei.substr(0, hei.length - 2);
-		if (hei > 650) {
-			$("#dv_table").css("height", "800px");
-		}
+		//锁定账号按钮赋单击事件
+		backFunction();
+		//勒令下线按钮赋单击事件
+		backFunction2();
 	}, "json");
 
 }
@@ -1267,6 +1316,36 @@ function creat_tbTea(back_all, p_dom) {
 	}
 
 }
+
+/* back_all: 待便利的值 */
+function creat_tb_usr(back_all, p_dom) {
+	$(p_dom).children("tr").remove();
+	for (var i = 0; i < back_all.length; i++) {
+		var tr = document.createElement("tr");
+		var str = "<td>" + (i + 1) + "</td>";
+		str += "<td name='userName' usid = '"+back_all[i].userID+"'>" + back_all[i].name + "</td>";
+		str += "<td>" + back_all[i].type + "</td>";
+		str += "<td>" + back_all[i].ip + "</td>";
+		var startTime = timestampToTime_hms(back_all[i].time.time);
+		str += "<td>" + startTime + "</td>";
+
+		if(back_all[i].mger){
+			str += "<td></td>";
+		}else{
+			/*
+				str += "<td><button style='background-color: #FF3333;'>锁定</button>";
+				str += "<button style='background-color: #FF3333;margin-left:5px;'>下线</button></td>";
+			 */
+			str += "<td><button>锁定</button>";
+			str += "<button style='margin-left:5px;'>下线</button></td>";
+		}
+		
+		str += "<td><input type='checkbox' /></td>";
+		$(tr).append(str);
+		$(p_dom).append(tr);
+	}
+}
+
 /** ==============================================切换页面============================================== */
 
 /*切换页面*/

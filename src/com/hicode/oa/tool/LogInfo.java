@@ -3,6 +3,12 @@ package com.hicode.oa.tool;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 登录日志
+ * 
+ * @author XinPeiXiang 2018-12-08
+ *
+ */
 public class LogInfo implements Serializable {
 
 	/**
@@ -29,6 +35,11 @@ public class LogInfo implements Serializable {
 	 * 是否登录成功（0:未成功；1:成功）
 	 */
 	private Integer log_success;
+
+	/**
+	 * 登录信息备注
+	 */
+	private String log_remarks;
 
 	public Integer getLog_id() {
 		return log_id;
@@ -70,11 +81,18 @@ public class LogInfo implements Serializable {
 		this.log_success = log_success;
 	}
 
+	public String getLog_remarks() {
+		return log_remarks;
+	}
+
+	public void setLog_remarks(String log_remarks) {
+		this.log_remarks = log_remarks;
+	}
+
 	@Override
 	public String toString() {
 		return "LogInfo [log_id=" + log_id + ", userInfo=" + userInfo + ", log_time=" + log_time + ", log_ip=" + log_ip
 				+ ", log_success=" + log_success + "]";
 	}
 
-	
 }

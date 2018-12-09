@@ -18,7 +18,6 @@
 			position: absolute;
 			z-index: 6;
 		}
-		
 	</style>
 	<link type="text/css" rel="stylesheet" href="/hicode/syscss/teacher_page.css" />
 	<script type="text/javascript" src="/hicode/sysjs/jquery.min.js"></script>
@@ -49,37 +48,16 @@
 			</tbody>
 		</table>
 	</div>
-	<div id="dv_page">
-		<button id="bt_first" mypage="1">首页</button>
-		<div id="dv_but"></div>
-		<button id="bt_end">尾页</button>
-	</div>
   </body>
   <script type="text/javascript">
 	$().ready(function() {
-		
-  		start_post_sub(for_btn_sub);
+  		start_post_usr(for_btnSD_usr,for_btnXX_usr);
   		getUserName("dv_top");
-  		//点击添加按钮
- 		$("#bt_1").click(add_sub);
- 		/* 添加学员信息，提交按钮  */
- 		$("#up_sub").click(up_sub_sub);
-  		
-  		//第一页
- 		$("#bt_first").click(function(){
- 			change_page_sub(this);
- 			$("#dv_but button:eq(0)").css({"backgroundColor":"#336699","color":"#fff"});
- 		});
- 		
- 		//最后一页
- 		$("#bt_end").click(function(){
- 			change_page_sub(this);
- 			$("#dv_but button:eq(-1)").css({"backgroundColor":"#336699","color":"#fff"});
- 		});
  		
  		$("#index_go").click(function(){
  			window.location = "/hicode/index.html";
  		});
+ 		
 	});
 	
 </script>

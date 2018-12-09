@@ -5,46 +5,60 @@
 	<!-- 多对一处理 -->
 	<resultMap id="getLogInfo_oop" type="LogInfo">
 		<!-- 一的一方 -->
-		 <association property="userInfo" column="user_id" select="com.hicode.oa.dao.UserInfoDAO.getUserInfoByID">
-	   	 </association>
+		<association property="userInfo" column="user_id"
+			select="com.hicode.oa.dao.UserInfoDAO.getUserInfoByID">
+		</association>
 	</resultMap>
-	
+
 	<sql id="all_column">
-		log_id,user_id,log_time,log_ip,log_success
+		log_id,user_id,log_time,log_ip,log_success,log_remarks
 	</sql>
-	
-	<insert id="do_insertLogInfo" parameterType="LogInfo" keyProperty="log_id">
-		insert into logInfo 
-			(user_id,log_time,log_ip,log_success) 
-		values 
-			(#{userInfo.user_id},#{log_time},#{log_ip},#{log_success});
-	
+
+	<insert id="do_insertLogInfo" parameterType="LogInfo"
+		keyProperty="log_id">
+		insert into logInfo
+		(user_id,log_time,log_ip,log_success,log_remarks)
+		values
+		(#{userInfo.user_id},#{log_time},#{log_ip},#{log_success},#{log_remarks});
+
 	</insert>
 	<!-- 根据时间查询 日志记录 -->
-	<select id="getLogInfoByTime" parameterType="java.util.Map" resultMap="getLogInfo_oop">
-		select <include refid="all_column"></include> from logInfo 
-		where 
-			log_time &gt;= #{start} AND log_time &lt;= #{end}  order by log_id;
+	<select id="getLogInfoByTime" parameterType="java.util.Map"
+		resultMap="getLogInfo_oop">
+		select
+		<include refid="all_column"></include>
+		from logInfo
+		where
+		log_time &gt;= #{start} AND log_time &lt;= #{end} order by log_id;
 	</select>
-	
+
 	<!-- 根据用户ID查询日志记录 -->
-	<select id="getLogInfoByUserID" parameterType="java.lang.String" resultType="LogInfo">
-		select <include refid="all_column"></include> from logInfo 
+	<select id="getLogInfoByUserID" parameterType="java.lang.String"
+		resultType="LogInfo">
+		select
+		<include refid="all_column"></include>
+		from logInfo
 		where
-		 user_id = #{user_id} order by log_id;
+		user_id = #{user_id} order by log_id;
 	</select>
-	
+
 	<!-- 根据IP查询日志记录 -->
-	<select id="getLogInfoByIP" parameterType="java.lang.String" resultMap="getLogInfo_oop">
-		select <include refid="all_column"></include> from logInfo 
-		where 
-			log_ip=#{log_ip} order by log_id;
-	</select>
-	
-	<!-- 根据登录状态查询日志记录(是否登录成功)  -->
-	<select id="getLogInfoByState" parameterType="java.lang.Integer" resultMap="getLogInfo_oop">
-		select <include refid="all_column"></include> from logInfo 
+	<select id="getLogInfoByIP" parameterType="java.lang.String"
+		resultMap="getLogInfo_oop">
+		select
+		<include refid="all_column"></include>
+		from logInfo
 		where
-			log_success = #{log_success} order by log_id;
+		log_ip=#{log_ip} order by log_id;
+	</select>
+
+	<!-- 根据登录状态查询日志记录(是否登录成功) -->
+	<select id="getLogInfoByState" parameterType="java.lang.Integer"
+		resultMap="getLogInfo_oop">
+		select
+		<include refid="all_column"></include>
+		from logInfo
+		where
+		log_success = #{log_success} order by log_id;
 	</select>
 </mapper>
