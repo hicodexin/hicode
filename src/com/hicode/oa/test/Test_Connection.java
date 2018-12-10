@@ -9,7 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.hicode.oa.controller.PersonController;
+import com.hicode.oa.controller.DepositController;
 import com.hicode.oa.dao.TeacherDAO;
 import com.hicode.oa.tool.Teacher;
 

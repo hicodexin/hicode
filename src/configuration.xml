@@ -31,6 +31,7 @@
  		<typeAlias type="com.hicode.oa.tool.UserState" alias="UserState"/>
  		<typeAlias type="com.hicode.oa.tool.UserType" alias="UserType"/>
  		<typeAlias type="com.hicode.oa.tool.LogInfo" alias="LogInfo"/>
+ 		<typeAlias type="com.hicode.oa.tool.Deposit" alias="Deposit"/>
  	</typeAliases>
  
 	<mappers>
@@ -44,6 +45,7 @@
 		<mapper resource="com/hicode/oa/mapper/UserStateMapper.xml"/>
 		<mapper resource="com/hicode/oa/mapper/UserTypeMapper.xml"/>
 		<mapper resource="com/hicode/oa/mapper/LogInfoMapper.xml"/>
+		<mapper resource="com/hicode/oa/mapper/DepositMapper.xml"/>
 	</mappers>
 
 </configuration>

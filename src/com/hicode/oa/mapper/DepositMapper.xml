@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hicode.oa.dao.DepositDAO">
+
+	<resultMap id="getDeposit_oop" type="Deposit">
+		<!-- 一的一方 -->
+		<association property="auditions" column="au_id"
+			select="com.hicode.oa.dao.AuditionsDAO.getAudNameByID">
+		</association>
+		<!-- 一的一方 -->
+		<association property="adviser" column="adv_id"
+			select="com.hicode.oa.dao.AdviserDAO.getAdviserByID">
+		</association>
+		<!-- 一的一方 -->
+		<association property="adviser2" column="advv_id"
+			select="com.hicode.oa.dao.AdviserDAO.getAdviserByID">
+		</association>
+	</resultMap>
+
+	<sql id="all_column">
+		dep_id,au_id,pay_time,money,phone,adv_id,advv_id,ifSignup,refundMoney,refund_time,remark
+	</sql>
+
+	<select id="getDepositByID" parameterType="java.lang.Integer" resultMap="getDeposit_oop">
+		SELECT
+		<include refid="all_column"></include>
+		FROM Deposit where dep_id=#{dep_id}
+	</select>
+
+	<select id="getDepositInfo" parameterType="java.util.Map" resultMap="getDeposit_oop">
+		SELECT
+		<include refid="all_column"></include>
+		FROM Deposit limit #{start},#{count};
+	</select>
+	
+	<!-- 查询表内数据总条数 -->
+	<select id="getCustomerForCount" resultType="java.lang.Integer">
+		SELECT count(1) FROM Deposit;
+	</select>
+	
+	<insert id="do_insertDeposit" parameterType="Deposit" keyProperty="dep_id">
+		INSERT INTO Deposit (
+			au_id,pay_time,money,phone,adv_id,advv_id,
+			ifSignup,refundMoney,refund_time,remark
+			)
+		VALUES (
+			#{auditions.au_id},#{pay_time},#{money},#{phone},
+			#{adviser.adv_id},#{adviser2.adv_id},#{ifSignup},
+			#{refundMoney},#{refund_time},#{remark}
+			);
+	</insert>
+	
+	<update id="do_updateDeposit" parameterType="Deposit">
+		UPDATE Deposit SET
+			au_id=#{auditions.au_id},
+			pay_time=#{pay_time},
+			money=#{money},
+			phone=#{phone},
+			adv_id=#{adviser.adv_id},
+			advv_id=#{adviser2.adv_id},
+			ifSignup=#{ifSignup},
+			refundMoney=#{refundMoney},
+			refund_time=#{refund_time},
+			remark=#{remark}
+		WHERE
+			dep_id=#{dep_id}
+	</update>
+
+
+
+
+</mapper>
+
+

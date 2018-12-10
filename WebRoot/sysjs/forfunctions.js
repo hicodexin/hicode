@@ -119,6 +119,8 @@ function for_btnSD_usr() {
 					$.post("/hicode/UserInfo/closeUserInfoState.spc",data,function(a){
 						if(a){
 							alert(a.ok);
+							//刷新当前页
+							start_post_usr(for_btnSD_usr,for_btnXX_usr);
 						}
 					},"json");
 				});
@@ -451,6 +453,63 @@ function for_btn_cus() {
 
 }
 
+/* 试听课修改按钮 */
+function for_btn_dep() {
+	var bts = $("button");
+	var revise = new Array();
+	if (bts.length > 0) {
+		for (var i = 0, j = 0; i < bts.length; i++) {
+			if ($(bts[i]).html() == "修改") {
+				revise[j] = bts[i];
+				j++;
+			}
+		}
+	}
+	if (revise.length > 0) {
+		for (var k = 0; k < revise.length; k++) {
+			(function() {
+				var t = k;
+				$(revise[t]).click(function() {
+					$("#hidd_mask").hide().show(300);
+					$("#dv_update").hide().show(300);
+					$("#dv_title").html("修改试听学员信息");
+					$("#tea_list").val($(this).attr("name"));
+					$("#tea_list").attr("name", $(this).attr("id"));
+					$("#time_creatDate").val($("[name='creatDate']:eq(" + t + ")").html());
+					$("#userName").val($("[name='userName']:eq(" + t + ")").html());
+
+					var optionName = $("[name='update_selclass']:eq(" + t + ")").html();
+
+					var sel_class = $("#update_selclass option");
+
+					for_sel02("update_selclass", sel_class, optionName);
+
+					$.post("/hicode/teacher/showTeacher.spc", function(c) {
+						if (c.length > 0) {
+							var name = $("[name='update_selteas']:eq(" + t + ")").html();
+							for_sel("update_selteas", c, name);
+						}
+					}, "json");
+
+					$.post("/hicode/adviser/showAdviser.spc", function(f) {
+						if (f.length > 0) {
+							var name = $("[name='update_seladvs']:eq(" + t + ")").html();
+							for_sel("update_seladvs", f, name);
+							var name2 = $("[name='update_seladvs2']:eq(" + t + ")").html();
+							for_sel("update_seladvs2", f, name2);
+						}
+					}, "json");
+
+					$("#up_sub").html("提交");
+				});
+
+			})();
+
+		}
+	}
+
+}
+
 /** ==============================================添加按钮============================================== */
 
 /* 试听课添加按钮 */
@@ -555,6 +614,33 @@ function add_cus() {
 			for_sel("adviser_sel", f);
 		}
 
+	}, "json");
+
+}
+
+/* 试听课添加按钮 */
+function add_dep() {
+	$("#hidd_mask").hide().show(300);
+	$("#dv_update").hide().show(300);
+	var len = $("#tea_tbl tbody tr").length;
+	$("#tea_list").val(len + 1);
+	$("#userName").val("");
+	$("#up_sub").html("添加");
+	$("#time_creatDate").val("");
+	$("#remarks").val("");
+
+	$.post("/hicode/teacher/showTeacher.spc", function(c) {
+		if (c.length > 0) {
+			for_sel("update_selteas", c);
+		}
+	}, "json");
+
+
+	$.post("/hicode/adviser/showAdviser.spc", function(f) {
+		if (f.length > 0) {
+			for_sel("update_seladvs", f);
+			for_sel("update_seladvs2", f);
+		}
 	}, "json");
 
 }
@@ -1104,6 +1190,47 @@ function start_post_usr(backFunction,backFunction2) {
 
 }
 
+/* 初始化数据 */
+function start_post_dep(backFunction) {
+	$.post("/hicode/deposit/showDepositByInfo.spc", {
+		"page" : 1
+	}, function(a) {
+		console.log(a.list_advs);
+		if (a) {
+			creat_tb_dep(a.list_advs, "#tbl_body");
+			/* 添加页码 */
+			if (a.all_num) {
+				$("#dv_but").children("button").remove();
+				for (var k = 0; k < a.all_num; k++) {
+					var btn = document.createElement("button");
+					$(btn).html(k + 1);
+					$(btn).attr("mypage", (k + 1));
+					if (k == 0) {
+						$(btn).css({
+							"backgroundColor" : "#336699",
+							"color" : "#fff"
+						});
+					}
+					$(btn).click(function() {
+						change_page_dep(this);
+					});
+
+					$("#dv_but").append(btn);
+				}
+				$("#bt_end").attr("mypage", a.all_num);
+			}
+			//修改按钮赋单击事件
+			backFunction();
+		}
+		var hei = $("#tea_tbl").css("height");
+		hei = hei.substr(0, hei.length - 2);
+		if (hei > 650) {
+			$("#dv_table").css("height", "800px");
+		}
+	}, "json");
+
+}
+
 /** ==============================================待便利的值============================================== */
 
 /* back_all: 待便利的值 ====市场顾问 */
@@ -1114,9 +1241,9 @@ function creat_tb(back_all, p_dom) {
 		str += "<td name = 'userName'>" + back_all[i].name + "</td>";
 
 		if (back_all[i].sex == 1) {
-			str += "<td><img src='/hicode/sysimg/face_boy.jpg'/> </td>";
+			str += "<td><img src='/hicode/sysimg/face_boy.png'/> </td>";
 		} else {
-			str += "<td><img src='/hicode/sysimg/face_girl.jpg'/></td>";
+			str += "<td><img src='/hicode/sysimg/face_girl.png'/></td>";
 		}
 		str += "<td name='update_sel'>" + back_all[i].title + "</td>";
 
@@ -1163,9 +1290,9 @@ function creat_tb_aud(back_all, p_dom) {
 		str += "<td name='userName'>" + back_all[i].name + "</td>";
 
 		if (back_all[i].sex == 1) {
-			str += "<td><img src='/hicode/sysimg/face_boy.jpg'/> </td>";
+			str += "<td><img src='/hicode/sysimg/face_boy.png'/> </td>";
 		} else {
-			str += "<td><img src='/hicode/sysimg/face_girl.jpg'/></td>";
+			str += "<td><img src='/hicode/sysimg/face_girl.png'/></td>";
 		}
 
 		str += "<td name='update_selclass'>" + back_all[i].classinfo + "</td>";
@@ -1281,9 +1408,9 @@ function creat_tbTea(back_all, p_dom) {
 		var str = "<td>" + (i + 1) + "</td>";
 		str += "<td name = 'userName'>" + back_all[i].t_name + "</td>";
 		if (back_all[i].t_sex == 1) {
-			str += "<td><img src='/hicode/sysimg/face_boy.jpg'/> </td>";
+			str += "<td><img src='/hicode/sysimg/face_boy.png'/> </td>";
 		} else {
-			str += "<td><img src='/hicode/sysimg/face_girl.jpg'/></td>";
+			str += "<td><img src='/hicode/sysimg/face_girl.png'/></td>";
 		}
 		if (back_all[i].if_Onthejob == 1) {
 			str += "<td> <img src='/hicode/sysimg/face_smile.jpg' /> </td>";
@@ -1332,6 +1459,51 @@ function creat_tb_usr(back_all, p_dom) {
 		str += "<button style='margin-left:5px;'>下线</button></td>";
 		
 		str += "<td><input type='checkbox' /></td>";
+		$(tr).append(str);
+		$(p_dom).append(tr);
+	}
+}
+
+/* back_all: 待便利的值 */
+function creat_tb_dep(back_all, p_dom) {
+	for (var i = 0; i < back_all.length; i++) {
+		var tr = document.createElement("tr");
+		var str = "<td>" + (i + 1) + "</td>";
+		str += "<td name='userName'>" + back_all[i].name + "</td>";
+		var st_time = timestampToTime(back_all[i].pay_time.time);
+		str += "<td name='creatDate'>" + st_time + "</td>";
+		str += "<td>" + back_all[i].num + "</td>";
+		str += "<td>" + back_all[i].tel + "</td>";
+		str += "<td>" + back_all[i].qianyue + "</td>";
+		str += "<td>" + back_all[i].yaoyue + "</td>";
+
+		if (back_all[i].if_ok == 1) {
+			str += "<td><img src='/hicode/sysimg/face_smile.jpg'/> </td>";
+		} else {
+			str += "<td></td>";
+		}
+		if(back_all[i].tuimoney){
+			str += "<td>" + back_all[i].tuimoney + "</td>";
+		} else {
+			str += "<td></td>";
+		}
+		
+		if(back_all[i].end_time){
+			var end_time = timestampToTime(back_all[i].end_time.time);
+			str += "<td>" + end_time + "</td>";
+		} else {
+			str += "<td></td>";
+		}
+		
+		if (back_all[i].remarks) {
+			str += "<td>" + back_all[i].beizhu + "</td>";
+		} else {
+			str += "<td></td>";
+		}
+
+		var btid = back_all[i].id;
+		str += "<td><button id = '" + btid + "' name='" + (i + 1) + "'>修改</button></td>";
+		str += "<td><input type='checkbox' value='" + btid + "' /></td>";
 		$(tr).append(str);
 		$(p_dom).append(tr);
 	}
@@ -1451,3 +1623,28 @@ function change_page_cus(this_dom) {
 		for_btn_cus();
 	});
 }
+
+/*切换页面*/
+function change_page_dep(this_dom) {
+	$("#dv_but button").css({
+		"backgroundColor" : "#fff",
+		"color" : "#336699"
+	});
+	$(this_dom).css({
+		"backgroundColor" : "#336699",
+		"color" : "#fff"
+	});
+
+	$.post("/hicode/deposit/showDepositByInfo.spc", {
+		"page" : $(this_dom).attr("mypage")
+	}, function(a_s) {
+		$("#tbl_body").html(' ');
+
+		var js_arry = eval('(' + a_s + ')');
+
+		creat_tb_dep(js_arry.list_advs, "#tbl_body");
+		for_btn_aud();
+	});
+}
+
+
