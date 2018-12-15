@@ -109,8 +109,8 @@ public class DepositController {
 		String money = request.getParameter("money");
 		String phone = request.getParameter("phone");
 		
-		String adv_id = request.getParameter("update_seladvs");
-		String adv_id2 = request.getParameter("update_seladvs2");
+		String adv_id = request.getParameter("adv_id");
+		String adv_id2 = request.getParameter("adv_id2");
 		String ifsignup = request.getParameter("ifsignup");
 		String refundmoney = request.getParameter("refundmoney");
 		String refund_time = request.getParameter("refund_time");
@@ -159,8 +159,8 @@ public class DepositController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/do_updateCustomer", method = RequestMethod.POST)
-	public String do_updateCustomer(HttpServletRequest request) {
+	@RequestMapping(value = "/do_updateDeposit", method = RequestMethod.POST)
+	public String do_updateDeposit(HttpServletRequest request) {
 		String id = request.getParameter("id");
 		String aud_id = request.getParameter("userName");
 		String pay_time = request.getParameter("pay_time");

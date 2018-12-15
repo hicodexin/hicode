@@ -618,7 +618,7 @@ function add_cus() {
 
 }
 
-/* 试听课添加按钮 */
+/* 订金页面添加按钮 */
 function add_dep() {
 	$("#hidd_mask").hide().show(300);
 	$("#dv_update").hide().show(300);
@@ -626,16 +626,23 @@ function add_dep() {
 	$("#tea_list").val(len + 1);
 	$("#userName").val("");
 	$("#up_sub").html("添加");
-	$("#time_creatDate").val("");
+	$("#pay_time").val("");
+	$("#money").val("");
+	$("#phone").val("");
+	$("#refundmoney").val("");
+	$("#refund_time").val("");
 	$("#remarks").val("");
-
-	$.post("/hicode/teacher/showTeacher.spc", function(c) {
+	
+	$.post("/hicode/auditions/showAuditions.spc", function(c) {
 		if (c.length > 0) {
-			for_sel("update_selteas", c);
+			for_sel("student_sel", c);
 		}
+		window.setTimeout(function() {
+			$('.chosen-select').chosen();
+			$('.chosen-container')[0].style.width = "250px";
+		}, 1000);
 	}, "json");
-
-
+	
 	$.post("/hicode/adviser/showAdviser.spc", function(f) {
 		if (f.length > 0) {
 			for_sel("update_seladvs", f);
@@ -961,6 +968,111 @@ function up_sub_cus() {
 				alert("修改成功");
 				$("#tbl_body").children("tr").remove();
 				start_post_cus(for_btn_cus);
+			} else {
+				alert("修改失败,请联系管理员。。。。");
+			}
+
+		}, "json");
+	}
+
+}
+
+function up_sub_dep() {
+	
+	if ($("#pay_time").val().length < 10) {
+		$("#pay_time").css("borderColor", "#f00");
+		return;
+	} else {
+		$("#pay_time").css("borderColor", "#336699");
+	}
+	
+	if($("#money").val().trim().length<1){
+		$("#jiao_money").css("borderColor", "#f00");
+		return;
+	}else {
+		$("#jiao_money").css("borderColor", "#336699");
+	}
+	
+	if (isNaN($("#money").val())) { 
+		$("#jiao_money").css("borderColor", "#f00");
+		return;
+　　	}else {
+		$("#jiao_money").css("borderColor", "#336699");
+	}
+	
+	if ($("#phone").val().trim().length != 11) {
+		$("#phone").css("borderColor", "#f00");
+		return;
+	} else {
+		$("#phone").css("borderColor", "#336699");
+	}
+	
+	if($("#refundmoney").val().length>0){
+		if (isNaN($("#refundmoney").val())) { 
+			$("#tui_money").css("borderColor", "#f00");
+			return;
+	　　	}else {
+			$("#tui_money").css("borderColor", "#336699");
+		}
+		if ($("#refund_time").val().length < 10) {
+			$("#refund_time").css("borderColor", "#f00");
+			return;
+		} else {
+			$("#refund_time").css("borderColor", "#336699");
+		}
+	}
+	
+	var ss = $(".chosen-single span").html();
+	var yy = $("#student_sel option");
+	for (var i = 0; i < yy.length; i++) {
+		if ($(yy[i]).html() == ss) {
+			console.log($(yy[i]).val());
+			ss = $(yy[i]).val();
+			break;
+		}
+	}
+
+	var data = {
+		"userName" : ss,
+		"pay_time" : $('#pay_time').val(),
+		"money" : $('#money').val().trim(),
+		"phone" : $("#phone").val().trim(),
+		"adv_id":$('#update_seladvs').val(),
+		"adv_id2":$('#update_seladvs2').val(),
+		"ifsignup":$('input:radio[name="ifsignup"]:checked').val(),
+		"refundmoney":$('#refundmoney').val(),
+		"refund_time" : $('#refund_time').val(),
+		"remarks" : $("#remarks").val()
+	};
+	console.log(data);
+
+	var content = $(this).html();
+	if (content == "添加") {
+		$.post("/hicode/deposit/do_insertDeposit.spc", data, function(e) {
+			$("#hidd_mask").hide().hide(300);
+			$("#dv_update").show().hide(300);
+			if (e.list_advs == 'ok') {
+				alert("添加成功");
+				$("#tbl_body").children("tr").remove();
+				start_post_dep(for_btn_dep);
+			} else {
+				alert("添加失败,请联系管理员。。。。");
+			}
+
+		}, "json");
+
+	} else if (content == "提交") {
+		if (!window.confirm("是否确定要修改的内容？？？？")) {
+			return;
+		}
+		data.id = $("#tea_list").attr("name");
+		$.post("/hicode/deposit/do_updateDeposit.spc", data, function(e) {
+			$("#hidd_mask").hide().hide(300);
+			$("#dv_update").show().hide(300);
+			if (e.list_advs == 'ok') {
+				alert("修改成功");
+				$("#tbl_body").children("tr").remove();
+				start_post_dep(for_btn_dep);
 			} else {
 				alert("修改失败,请联系管理员。。。。");
 			}

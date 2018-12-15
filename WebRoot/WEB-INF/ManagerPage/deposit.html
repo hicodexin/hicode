@@ -7,17 +7,36 @@
 <meta name="description" content="this is my page">
 <meta charset="UTF-8">
 <style type="text/css">
-* {
-	margin: 0px;
-	padding: 0px;
-}
+	* {
+		margin: 0px;
+		padding: 0px;
+	}
+	#student_sel_chosen{
+		width: 260px;
+	}
+	[name='dv_money']{
+		width: 245px; 
+		height: 35px;
+		background-color:#fff; 
+		display: inline-block;
+		border: solid 1px #336699;
+		border-radius: 6px;
+	}
+	[name='dv_money']>span{
+		font-family: '楷体'; 
+		color: #336699; 
+		font-weight: 600; 
+		font-size: 18px;
+	}
 </style>
 
 <link type="text/css" rel="stylesheet" href="/hicode/syscss/teacher_page.css" />
 <link type="text/css" rel="stylesheet" href="/hicode/syscss/for_date.css" />
+<link rel="stylesheet" href="/hicode/syscss/bootstrap-chosen.css">
 <script type="text/javascript" src="/hicode/sysjs/jquery.min.js"></script>
 <script type="text/javascript" src="/hicode/sysjs/forfunctions.js"></script>
 <script type="text/javascript" src="/hicode/sysjs/jeDate.js"></script>
+<script src="/hicode/sysjs/chosen.jquery.js"></script>
 <body>
 <!-- 隐藏  -->
 	<div id="hidd_mask"></div>
@@ -31,45 +50,57 @@
 			</li>
 			<li>
 				<b>学生姓名 : </b> 
-				<input type="text" id="userName" />
-			</li>
-			<li>
-				<b>试听时间 : </b> 
-				<input id="time_creatDate" type="text" readonly="readonly">
-			</li>
-			
-			<li>
-				<b>学生性别 : </b> 
-				<label for="sex_b"> 
-					<img src="/hicode/sysimg/face_boy.png" /> 
-					<input type="radio" id="sex_b" name="t_sex" checked="checked" value="1" />
-				</label> 
-				<label for="sex_g"> 
-					<img src="/hicode/sysimg/face_girl.png" />
-					<input type="radio" id="sex_g" name="t_sex" value="0" />
-				</label>
-			</li>
-			<li>
-				<b>学校/年级 : </b> 
-				<select id="update_selclass">
-						<option>学前班</option>
-						<option>一年级</option>
-						<option>二年级</option>
+				<select id="student_sel" data-placeholder="请选择" 
+							style="width: 260px" class="chosen-select" tabindex="2">
 				</select>
 			</li>
 			<li>
-				<b>授课老师: </b> 
-				<select id="update_selteas">
-				
-				</select>
+				<b>交费时间 : </b> 
+				<input id="pay_time" type="text"  placeholder="请选择"  readonly>
 			</li>
 			<li>
-				<b>邀约顾问: </b> 
-				<select id="update_seladvs"></select>
+				<b>交费金额 : </b> 
+				<div name = "dv_money" id="jiao_money">
+					<span>&nbsp;￥:</span>
+					<input type="text" id="money" style="width:160px;border: 0px" />
+					<span>元</span>
+				</div>
+			</li>
+			<li>
+				<b>电话 : </b> 
+				<input type="text" id="phone" />
 			</li>
 			<li>
 				<b>签单顾问: </b> 
+				<select id="update_seladvs"></select>
+			</li>
+			<li>
+				<b>邀约顾问: </b> 
 				<select id="update_seladvs2"></select>
+			</li>
+			
+			<li>
+				<b>是否报名 : </b> 
+				<label for="sex_b"> 
+					<img src="/hicode/sysimg/face_grieved.jpg" /> 
+					<input type="radio" id="sex_b" name="ifsignup" checked="checked" value="1" />
+				</label> 
+				<label for="sex_g"> 
+					<img src="/hicode/sysimg/face_smile.jpg" />
+					<input type="radio" id="sex_g" name="ifsignup" value="0" />
+				</label>
+			</li>
+			<li>
+				<b>退费金额 : </b> 
+				<div name = "dv_money" id="tui_money">
+					<span>&nbsp;￥:</span>
+					<input type="text" id="refundmoney" style="width:160px;border: 0px" />
+					<span>元</span>
+				</div>
+			</li>
+			<li>
+				<b>退费时间 : </b> 
+				<input id="refund_time" type="text"  placeholder="请选择"  readonly>
 			</li>
 			<li>
 				<b>备注: </b> 
@@ -152,16 +183,22 @@
  			$("#dv_but button:eq(-1)").css({"backgroundColor":"#336699","color":"#fff"});
  		});
  		/* 添加学员信息，提交按钮  */
- 		$("#up_sub").click( up_sub_aud );
+ 		$("#up_sub").click( up_sub_dep );
 		// 日历插件
 		jeDate({
-			dateCell : "#time_creatDate",
-			/* format : "YYYY-MM-DD", */
+			dateCell : "#pay_time",
+			format : "YYYY-MM-DD", 
 			isinitVal : true,
-			isTime : true, // isClear:true,
+			isTime : false, // isClear:true,
 			minDate : "1014-09-19 00:00:00"
 		}) ;
- 		
+		jeDate({
+			dateCell:"#refund_time",
+			format:"YYYY-MM-DD",
+			isinitVal:true,
+			isTime:false, //isClear:false,
+			minDate:"1014-09-19 00:00:00"
+		}) ;
 	});
 </script>
 </html>
