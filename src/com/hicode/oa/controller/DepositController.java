@@ -167,8 +167,8 @@ public class DepositController {
 		String money = request.getParameter("money");
 		String phone = request.getParameter("phone");
 		
-		String adv_id = request.getParameter("update_seladvs");
-		String adv_id2 = request.getParameter("update_seladvs2");
+		String adv_id = request.getParameter("adv_id");
+		String adv_id2 = request.getParameter("adv_id2");
 		String ifsignup = request.getParameter("ifsignup");
 		String refundmoney = request.getParameter("refundmoney");
 		String refund_time = request.getParameter("refund_time");
@@ -184,6 +184,7 @@ public class DepositController {
 		Adviser adviser2 = new Adviser();
 		adviser2.setAdv_id(adv_id2);
 
+		deposit.setDep_id(Integer.valueOf(id));
 		deposit.setAuditions(auditions);
 		deposit.setMoney(Float.valueOf(money));
 		deposit.setPhone(phone);

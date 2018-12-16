@@ -472,25 +472,26 @@ function for_btn_dep() {
 				$(revise[t]).click(function() {
 					$("#hidd_mask").hide().show(300);
 					$("#dv_update").hide().show(300);
-					$("#dv_title").html("修改试听学员信息");
+					$("#dv_title").html("修改学员订金信息");
 					$("#tea_list").val($(this).attr("name"));
 					$("#tea_list").attr("name", $(this).attr("id"));
-					$("#time_creatDate").val($("[name='creatDate']:eq(" + t + ")").html());
-					$("#userName").val($("[name='userName']:eq(" + t + ")").html());
-
-					var optionName = $("[name='update_selclass']:eq(" + t + ")").html();
-
-					var sel_class = $("#update_selclass option");
-
-					for_sel02("update_selclass", sel_class, optionName);
-
-					$.post("/hicode/teacher/showTeacher.spc", function(c) {
+					
+					$.post("/hicode/auditions/showAuditions.spc", function(c) {
 						if (c.length > 0) {
-							var name = $("[name='update_selteas']:eq(" + t + ")").html();
-							for_sel("update_selteas", c, name);
+							var stu_name = $("[name='userName']:eq(" + t + ")").html();
+							for_sel("student_sel", c, stu_name);
 						}
+						window.setTimeout(function() {
+							$('.chosen-select').chosen();
+							$('.chosen-container')[0].style.width = "250px";
+							$(".chosen-single span").html(stu_name);
+						}, 500);
 					}, "json");
-
+					
+					$("#pay_time").val($("[name='pay_time']:eq(" + t + ")").html());
+					
+					$("#money").val($("[name='money']:eq(" + t + ")").html());
+					$("#phone").val($("[name='phone']:eq(" + t + ")").html());
 					$.post("/hicode/adviser/showAdviser.spc", function(f) {
 						if (f.length > 0) {
 							var name = $("[name='update_seladvs']:eq(" + t + ")").html();
@@ -499,7 +500,9 @@ function for_btn_dep() {
 							for_sel("update_seladvs2", f, name2);
 						}
 					}, "json");
-
+					$("#refundmoney").val($("[name='refundmoney']:eq(" + t + ")").html());
+					$("#refund_time").val($("[name='refund_time']:eq(" + t + ")").html());
+					$("#remarks").val($("[name='remarks']:eq(" + t + ")").html());
 					$("#up_sub").html("提交");
 				});
 
@@ -1583,11 +1586,11 @@ function creat_tb_dep(back_all, p_dom) {
 		var str = "<td>" + (i + 1) + "</td>";
 		str += "<td name='userName'>" + back_all[i].name + "</td>";
 		var st_time = timestampToTime(back_all[i].pay_time.time);
-		str += "<td name='creatDate'>" + st_time + "</td>";
-		str += "<td>" + back_all[i].num + "</td>";
-		str += "<td>" + back_all[i].tel + "</td>";
-		str += "<td>" + back_all[i].qianyue + "</td>";
-		str += "<td>" + back_all[i].yaoyue + "</td>";
+		str += "<td name='pay_time'>" + st_time + "</td>";
+		str += "<td name='money'>" + back_all[i].num + "</td>";
+		str += "<td name='phone'>" + back_all[i].tel + "</td>";
+		str += "<td name='update_seladvs'>" + back_all[i].qianyue + "</td>";
+		str += "<td name='update_seladvs2'>" + back_all[i].yaoyue + "</td>";
 
 		if (back_all[i].if_ok == 1) {
 			str += "<td><img src='/hicode/sysimg/face_smile.jpg'/> </td>";
@@ -1595,22 +1598,22 @@ function creat_tb_dep(back_all, p_dom) {
 			str += "<td></td>";
 		}
 		if(back_all[i].tuimoney){
-			str += "<td>" + back_all[i].tuimoney + "</td>";
+			str += "<td name='refundmoney'>" + back_all[i].tuimoney + "</td>";
 		} else {
-			str += "<td></td>";
+			str += "<td name='refundmoney'></td>";
 		}
 		
 		if(back_all[i].end_time){
 			var end_time = timestampToTime(back_all[i].end_time.time);
-			str += "<td>" + end_time + "</td>";
+			str += "<td name='refund_time'>" + end_time + "</td>";
 		} else {
-			str += "<td></td>";
+			str += "<td name='refund_time'></td>";
 		}
 		
 		if (back_all[i].remarks) {
-			str += "<td>" + back_all[i].beizhu + "</td>";
+			str += "<td name='remarks'>" + back_all[i].beizhu + "</td>";
 		} else {
-			str += "<td></td>";
+			str += "<td name='remarks'></td>";
 		}
 
 		var btid = back_all[i].id;
