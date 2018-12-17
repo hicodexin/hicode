@@ -46,10 +46,10 @@ public class CustomerController {
 		// 开始数字
 		Integer start = 0;
 		// 每页显示条数
-		Integer num = 10;
+		Integer num = 20;
 
 		if (page != null) {
-			start = (Integer.valueOf(page) - 1) * 10;
+			start = (Integer.valueOf(page) - 1) * 20;
 		}
 
 		Integer all_num = null;
@@ -57,7 +57,7 @@ public class CustomerController {
 			all_num = customerService.getCustomerForCount();
 
 			if (all_num != null) {
-				all_num = (all_num % 10 == 0) ? (all_num / 10) : (all_num / 10 + 1);
+				all_num = (all_num % 20 == 0) ? (all_num / 20) : (all_num / 20 + 1);
 			}
 
 		}
@@ -71,12 +71,13 @@ public class CustomerController {
 			obj.put("name", adv1.getAuditions().getSt_name());
 			obj.put("kemu", adv1.getSubject().getSub_name());
 			obj.put("period", adv1.getPeriod());
+			obj.put("money", adv1.getMoney());
+			obj.put("giveClass", adv1.getGiveClass());
 			obj.put("xufei", adv1.getIf_renewal());
 			obj.put("qianyue", adv1.getAdviser().getAdv_name());
 			obj.put("tea_name", adv1.getTeacher().getT_name());
 			obj.put("firsttime", adv1.getFirst_time());
 			obj.put("over", adv1.getIf_done());
-			obj.put("tel", adv1.getPhone());
 			obj.put("tuifei", adv1.getIf_refund());
 			obj.put("beizhu", adv1.getRemarks());
 			objs.add(obj);
@@ -103,12 +104,14 @@ public class CustomerController {
 		String aud_id = request.getParameter("userName");
 		String sub_id = request.getParameter("subject");
 		String period = request.getParameter("period");
+		
+		String money = request.getParameter("money");
+		String giveClass = request.getParameter("giveClass");
 		String if_renewal = request.getParameter("if_renewal");
 
 		String t_id = request.getParameter("the_teacher");
 		String first_time = request.getParameter("first_time");
 
-		String phone = request.getParameter("phone");
 		String adv_id = request.getParameter("adviser_sel");
 		String remarks = request.getParameter("remarks");
 
@@ -129,6 +132,8 @@ public class CustomerController {
 		customer.setAuditions(auditions);
 		customer.setSubject(subject);
 		customer.setPeriod(Integer.valueOf(period));
+		customer.setMoney(Float.valueOf(money));
+		customer.setGiveClass(Integer.valueOf(giveClass));
 		customer.setIf_renewal(Integer.valueOf(if_renewal));
 		customer.setTeacher(teacher);
 
@@ -141,7 +146,6 @@ public class CustomerController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		customer.setPhone(phone);
 		customer.setAdviser(adviser);
 		customer.setRemarks(remarks);
 		customer.setIf_done(0);
@@ -163,12 +167,14 @@ public class CustomerController {
 		String aud_id = request.getParameter("userName");
 		String sub_id = request.getParameter("subject");
 		String period = request.getParameter("period");
+		
+		String money = request.getParameter("money");
+		String giveClass = request.getParameter("giveClass");
 		String if_renewal = request.getParameter("if_renewal");
 
 		String t_id = request.getParameter("the_teacher");
 		String first_time = request.getParameter("first_time");
 
-		String phone = request.getParameter("phone");
 		String adv_id = request.getParameter("adviser_sel");
 		String remarks = request.getParameter("remarks");
 
@@ -190,6 +196,8 @@ public class CustomerController {
 		customer.setAuditions(auditions);
 		customer.setSubject(subject);
 		customer.setPeriod(Integer.valueOf(period));
+		customer.setMoney(Float.valueOf(money));
+		customer.setGiveClass(Integer.valueOf(giveClass));
 		customer.setIf_renewal(Integer.valueOf(if_renewal));
 		customer.setTeacher(teacher);
 
@@ -202,7 +210,6 @@ public class CustomerController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		customer.setPhone(phone);
 		customer.setAdviser(adviser);
 		customer.setRemarks(remarks);
 		customer.setIf_done(0);

@@ -13,7 +13,7 @@
 	</resultMap>
 	
 	<sql id="all_column">
-		 er_id, au_id,sub_id,period,adv_id,if_renewal,t_id,first_time,if_done,phone,if_refund,remarks
+		 er_id, au_id,sub_id,period,money,giveClass,adv_id,if_renewal,t_id,first_time,if_done,if_refund,remarks
 	</sql>
 	
 	<select id="getCustomerByID" parameterType="java.lang.Integer" resultMap="getCustomer_oop">
@@ -29,17 +29,19 @@
 	</select>
 	<!-- 添加签单学员 -->
 	<insert id="do_insertCustomer" parameterType="Customer" keyProperty="er_id">
-		insert into customer(au_id,sub_id,period,adv_id,if_renewal,t_id,first_time,if_done,phone,if_refund,remarks) 
+		insert into customer
+			(au_id,sub_id,period,money,giveClass,adv_id,if_renewal,t_id,first_time,if_done,if_refund,remarks) 
 		values(
 				#{auditions.au_id},
 				#{subject.sub_id},
 				#{period},
+				#{money},
+				#{giveClass},
 				#{adviser.adv_id},
 				#{if_renewal},
 				#{teacher.t_id},
 				#{first_time},
 				#{if_done},
-				#{phone},
 				#{if_refund},
 				#{remarks}
 			);
@@ -48,9 +50,10 @@
 	<update id="do_updateCustomer" parameterType="Customer" >
 		update customer set 
 			au_id=#{auditions.au_id},sub_id=#{subject.sub_id},period=#{period},
+			money=#{money},giveClass=#{giveClass},
 			adv_id=#{adviser.adv_id},if_renewal=#{if_renewal},
 			t_id=#{teacher.t_id},first_time=#{first_time},if_done=#{if_done},
-			phone=#{phone},if_refund=#{if_refund},remarks=#{remarks}
+			if_refund=#{if_refund},remarks=#{remarks}
 		where er_id=#{er_id};
 	</update>
 	

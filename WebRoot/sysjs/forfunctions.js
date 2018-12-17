@@ -197,6 +197,7 @@ function for_btn_aud() {
 					$("#tea_list").attr("name", $(this).attr("id"));
 					$("#time_creatDate").val($("[name='creatDate']:eq(" + t + ")").html());
 					$("#userName").val($("[name='userName']:eq(" + t + ")").html());
+					$("#phone").val($("[name='phone']:eq(" + t + ")").html());
 
 					var optionName = $("[name='update_selclass']:eq(" + t + ")").html();
 
@@ -420,11 +421,14 @@ function for_btn_cus() {
 
 					}, "json");
 
-					var optionName = $("[name='period']:eq(" + t + ")").html();
+			/*		var optionName = $("[name='period']:eq(" + t + ")").html();
 					var sel_class = $("#period option");
-					for_sel02("period", sel_class, optionName);
+					for_sel02("period", sel_class, optionName);*/
 
-
+					$("#period").val($("[name='period']:eq(" + t + ")").html());
+					$("#money").val($("[name='money']:eq(" + t + ")").html());
+					$("#giveClass").val($("[name='giveClass']:eq(" + t + ")").html());
+					
 					$.post("/hicode/teacher/showTeacher.spc", function(c) {
 						if (c.length > 0) {
 							var name = $("[name='the_teacher']:eq(" + t + ")").html();
@@ -433,8 +437,6 @@ function for_btn_cus() {
 					}, "json");
 
 					$("#first_time").val($("[name='first_time']:eq(" + t + ")").html());
-
-					$("#phone").val($("[name='phone']:eq(" + t + ")").html());
 
 					$.post("/hicode/adviser/showAdviser.spc", function(f) {
 						if (f.length > 0) {
@@ -523,6 +525,7 @@ function add_aud() {
 	$("#tea_list").val(len + 1);
 	$("#userName").val("");
 	$("#up_sub").html("添加");
+	$("#phone").val("");
 	$("#time_creatDate").val("");
 	$("#remarks").val("");
 
@@ -586,6 +589,8 @@ function add_cus() {
 	$("#dv_title").html("添加签单信息");
 	$("#up_sub").html("添加");
 	$("#userName").val("");
+	$("#money").val("");
+	$("#giveClass").val("");
 	$("#first_time").val("");
 	$("#remarks").val("");
 
@@ -659,6 +664,12 @@ function add_dep() {
 
 /* 试听课提交按钮*/
 function up_sub_aud() {
+	if ($("#phone").val().trim().length != 11) {
+		$("#phone").css("borderColor", "#f00");
+		return;
+	} else {
+		$("#phone").css("borderColor", "#336699");
+	}
 	if ($("#time_creatDate").val().length < 10) {
 		$("#time_creatDate").css("borderColor", "#f00");
 		return;
@@ -676,6 +687,7 @@ function up_sub_aud() {
 		"time_creatDate" : $("#time_creatDate").val(),
 		"userName" : $("#userName").val().trim(),
 		"t_sex" : $('input:radio[name="t_sex"]:checked').val(),
+		"phone": $("#phone").val().trim(),
 		"update_selclass" : $("#update_selclass").val(),
 		"update_selteas" : $("#update_selteas").val(),
 		"update_seladvs" : $("#update_seladvs").val(),
@@ -908,11 +920,11 @@ function up_sub_sub() {
 }
 
 function up_sub_cus() {
-	if ($("#phone").val().trim().length != 11) {
-		$("#phone").css("borderColor", "#f00");
+	if ($("#money").val().trim().length < 2) {
+		$("#money").css("borderColor", "#f00");
 		return;
 	} else {
-		$("#phone").css("borderColor", "#336699");
+		$("#money").css("borderColor", "#336699");
 	}
 	if ($("#first_time").val().length < 10) {
 		$("#first_time").css("borderColor", "#f00");
@@ -935,10 +947,11 @@ function up_sub_cus() {
 		"userName" : ss,
 		"subject" : $('#sub_sel').val(),
 		"period" : $('#period').val(),
+		"money" : $("#money").val().trim(),
+		"giveClass" : $("#giveClass").val().trim(),
 		"if_renewal" : $('input:radio[name="if_renewal"]:checked').val(),
 		"the_teacher" : $("#the_teacher").val(),
 		"first_time" : $("#first_time").val(),
-		"phone" : $("#phone").val().trim(),
 		"adviser_sel" : $('#adviser_sel').val(),
 		"remarks" : $("#remarks").val()
 	};
@@ -1122,7 +1135,7 @@ function start_post_aud(backFunction) {
 		var hei = $("#tea_tbl").css("height");
 		hei = hei.substr(0, hei.length - 2);
 		if (hei > 650) {
-			$("#dv_table").css("height", "800px");
+			$("#dv_table").css("height", "700px");
 		}
 	}, "json");
 
@@ -1162,7 +1175,7 @@ function start_post_adv(backFunction) {
 		var hei = $("#tea_tbl").css("height");
 		hei = hei.substr(0, hei.length - 2);
 		if (hei > 650) {
-			$("#dv_table").css("height", "800px");
+			$("#dv_table").css("height", "700px");
 		}
 	}, "json");
 
@@ -1201,7 +1214,7 @@ function start_post_tea(backFunction) {
 		var hei = $("#tea_tbl").css("height");
 		hei = hei.substr(0, hei.length - 2);
 		if (hei > 650) {
-			$("#dv_table").css("height", "800px");
+			$("#dv_table").css("height", "700px");
 		}
 
 	}, "json");
@@ -1241,7 +1254,7 @@ function start_post_sub(backFunction) {
 		var hei = $("#tea_tbl").css("height");
 		hei = hei.substr(0, hei.length - 2);
 		if (hei > 650) {
-			$("#dv_table").css("height", "800px");
+			$("#dv_table").css("height", "700px");
 		}
 	}, "json");
 
@@ -1282,7 +1295,7 @@ function start_post_cus(backFunction) {
 		var hei = $("#tea_tbl").css("height");
 		hei = hei.substr(0, hei.length - 2);
 		if (hei > 650) {
-			$("#dv_table").css("height", "800px");
+			$("#dv_table").css("height", "700px");
 		}
 
 	}, "json");
@@ -1340,7 +1353,7 @@ function start_post_dep(backFunction) {
 		var hei = $("#tea_tbl").css("height");
 		hei = hei.substr(0, hei.length - 2);
 		if (hei > 650) {
-			$("#dv_table").css("height", "800px");
+			$("#dv_table").css("height", "700px");
 		}
 	}, "json");
 
@@ -1411,6 +1424,7 @@ function creat_tb_aud(back_all, p_dom) {
 		}
 
 		str += "<td name='update_selclass'>" + back_all[i].classinfo + "</td>";
+		str += "<td name='phone'>" + back_all[i].phone + "</td>";
 		str += "<td name='update_selteas'>" + back_all[i].tea_name + "</td>";
 		str += "<td name='update_seladvs'>" + back_all[i].adv_name + "</td>";
 		str += "<td name='update_seladvs2'>" + back_all[i].adv_name2 + "</td>";
@@ -1438,24 +1452,15 @@ function creat_tb_cus(back_all, p_dom) {
 		var str = "<td>" + (i + 1) + "</td>";
 		str += "<td name='userName'>" + back_all[i].name + "</td>";
 		str += "<td name='sub_sel'>" + back_all[i].kemu + "</td>";
-
-		if (back_all[i].period == 1) {
-			str += "<td name='period'>一个季度</td>";
-		} else if (back_all[i].period == 2) {
-			str += "<td name='period'>两个季度</td>";
-		} else if (back_all[i].period == 3) {
-			str += "<td name='period'>一个年度</td>";
-		} else if (back_all[i].period == 4) {
-			str += "<td name='period'>两个年度</td>";
-		}
-
+		str += "<td name='period'>"+back_all[i].period+"</td>";
+		str += "<td name='money'>"+back_all[i].money+"</td>";
+		str += "<td name='giveClass'>"+back_all[i].giveClass+"</td>";
+		
 		str += "<td name='the_teacher'>" + back_all[i].tea_name + "</td>";
 
 		var firsttime = timestampToTime_hms(back_all[i].firsttime.time);
 
 		str += "<td name='first_time'>" + firsttime + "</td>";
-
-		str += "<td name='phone'>" + back_all[i].tel + "</td>";
 
 		str += "<td name='adviser_sel'>" + back_all[i].qianyue + "</td>";
 

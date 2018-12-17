@@ -23,9 +23,19 @@ public class Customer implements Serializable {
 	 */
 	private Subject subject;
 	/**
-	 * 所报课时(1：一个季度； 2：两个季度； 3：一个年度； 4：两个年度)
+	 * 所报课时数
 	 */
 	private Integer period;
+	
+	/**
+	 * 所交钱数
+	 */
+	private Float money;
+	
+	/**
+	 * 赠送课时
+	 */
+	private Integer giveClass;
 	
 	private Adviser adviser;
 	
@@ -45,10 +55,6 @@ public class Customer implements Serializable {
 	 * 当前学期是否已经结束(1:是；0:否)
 	 */
 	private Integer if_done;
-	/**
-	 * 联系电话
-	 */
-	private String phone;
 	/**
 	 * 是否退费（0:否；1:是）
 	 */
@@ -81,6 +87,19 @@ public class Customer implements Serializable {
 	public void setPeriod(Integer period) {
 		this.period = period;
 	}
+	
+	public Float getMoney() {
+		return money;
+	}
+	public void setMoney(Float money) {
+		this.money = money;
+	}
+	public Integer getGiveClass() {
+		return giveClass;
+	}
+	public void setGiveClass(Integer giveClass) {
+		this.giveClass = giveClass;
+	}
 	public Integer getIf_renewal() {
 		return if_renewal;
 	}
@@ -104,12 +123,6 @@ public class Customer implements Serializable {
 	}
 	public void setIf_done(Integer if_done) {
 		this.if_done = if_done;
-	}
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -136,7 +149,7 @@ public class Customer implements Serializable {
 	public String toString() {
 		return "Customer [er_id=" + er_id + ", auditions=" + auditions + ", subject=" + subject + ", period=" + period
 				+ ", adviser=" + adviser + ", if_renewal=" + if_renewal + ", teacher=" + teacher + ", first_time="
-				+ first_time + ", if_done=" + if_done + ", phone=" + phone + ", if_refund=" + if_refund + ", remarks="
+				+ first_time + ", if_done=" + if_done +  ", if_refund=" + if_refund + ", remarks="
 				+ remarks + "]";
 	}
 

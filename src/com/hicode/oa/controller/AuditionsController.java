@@ -54,10 +54,10 @@ public class AuditionsController {
 		// 开始数字
 		Integer start = 0;
 		// 每页显示条数
-		Integer num = 10;
+		Integer num = 30;
 
 		if (page != null) {
-			start = (Integer.valueOf(page) - 1) * 10;
+			start = (Integer.valueOf(page) - 1) * 30;
 		}
 
 		Integer all_num = null;
@@ -65,7 +65,7 @@ public class AuditionsController {
 			all_num = auditionsService.getAuditionsForCount();
 
 			if (all_num != null) {
-				all_num = (all_num % 10 == 0) ? (all_num / 10) : (all_num / 10 + 1);
+				all_num = (all_num % 30 == 0) ? (all_num / 30) : (all_num / 30 + 1);
 			}
 
 		}
@@ -81,6 +81,7 @@ public class AuditionsController {
 			obj.put("name", adv1.getSt_name());
 			obj.put("sex", adv1.getSt_sex());
 			obj.put("classinfo", adv1.getSt_class());
+			obj.put("phone", adv1.getPhone());
 			obj.put("tea_name", adv1.getTeacher().getT_name());
 			obj.put("adv_name", adv1.getAdviser().getAdv_name());
 			obj.put("adv_name2", adv1.getAdviser2().getAdv_name());
@@ -147,6 +148,7 @@ public class AuditionsController {
 			st_class = "高三";
 			break;
 		}
+		String phone = request.getParameter("phone");
 		String t_id = request.getParameter("update_selteas");
 		String adv_id = request.getParameter("update_seladvs");
 		String adv_id2 = request.getParameter("update_seladvs2");
@@ -167,6 +169,7 @@ public class AuditionsController {
 		auditions.setSt_name(st_name);
 		auditions.setSt_sex(Integer.valueOf(st_sex));
 		auditions.setSt_class(st_class);
+		auditions.setPhone(phone);
 		Teacher t = new Teacher();
 		t.setT_id(t_id);
 		auditions.setTeacher(t);
@@ -251,6 +254,7 @@ public class AuditionsController {
 			st_class = "高三";
 			break;
 		}
+		String phone = request.getParameter("phone");
 		String t_id = request.getParameter("update_selteas");
 		String adv_id = request.getParameter("update_seladvs");
 		String adv_id2 = request.getParameter("update_seladvs2");
@@ -272,6 +276,7 @@ public class AuditionsController {
 		auditions.setSt_name(st_name);
 		auditions.setSt_sex(Integer.valueOf(st_sex));
 		auditions.setSt_class(st_class);
+		auditions.setPhone(phone);
 		Teacher t = new Teacher();
 		t.setT_id(t_id);
 		auditions.setTeacher(t);

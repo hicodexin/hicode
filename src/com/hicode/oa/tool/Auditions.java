@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * 试听课记录
+ * 
  * @author xinpeixiang
  * @date 2018-10-19
  */
@@ -30,6 +31,12 @@ public class Auditions implements Serializable {
 	 * 学校/年级
 	 */
 	private String st_class;
+
+	/**
+	 * 手机号
+	 */
+	private String phone;
+
 	/**
 	 * 试听课授课老师
 	 */
@@ -87,6 +94,14 @@ public class Auditions implements Serializable {
 		this.st_class = st_class;
 	}
 
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
 	public String getRemarks() {
 		return remarks;
 	}
@@ -125,7 +140,5 @@ public class Auditions implements Serializable {
 				+ ", st_class=" + st_class + ", teacher=" + teacher + ", adviser=" + adviser + ", adviser2=" + adviser2
 				+ ", remarks=" + remarks + "]";
 	}
-
-
 
 }
