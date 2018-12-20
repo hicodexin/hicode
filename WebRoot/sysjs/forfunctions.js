@@ -1428,17 +1428,32 @@ function creat_tb_aud(back_all, p_dom) {
 		str += "<td name='update_selteas'>" + back_all[i].tea_name + "</td>";
 		str += "<td name='update_seladvs'>" + back_all[i].adv_name + "</td>";
 		str += "<td name='update_seladvs2'>" + back_all[i].adv_name2 + "</td>";
-
-		if (back_all[i].remarks) {
-			str += "<td>" + back_all[i].beizhu + "</td>";
-		} else {
-			str += "<td>   </td>";
-		}
-
-		var btid = back_all[i].id;
-		str += "<td><button id = '" + btid + "' name='" + (i + 1) + "'>修改</button></td>";
-		str += "<td><input type='checkbox' value='" + btid + "' /></td>";
+		
 		$(tr).append(str);
+		
+		var td = document.createElement("td");
+		var img = document.createElement("img");
+		$(img).attr("src","/hicode/sysimg/beizhu/for_beizhu.png");
+		$(img).attr("name",back_all[i].name);
+		$(img).attr("myfont",back_all[i].beizhu);
+		img.onclick = function(){
+			var ss = $(this).attr("name");
+			var tt = $(this).attr("myfont");
+			if(tt != null && tt != ""){
+				create_remarks(ss,tt);
+			}else{
+				create_remarks(ss,"暂无。。。。。");
+			}
+			
+		};
+		
+		td.appendChild(img);
+		tr.appendChild(td);
+		
+		var btid = back_all[i].id;
+		var strr = "<td><button id = '" + btid + "' name='" + (i + 1) + "'>修改</button></td>";
+		strr += "<td><input type='checkbox' value='" + btid + "' /></td>";
+		$(tr).append(strr);
 		$(p_dom).append(tr);
 
 	}
@@ -1482,17 +1497,31 @@ function creat_tb_cus(back_all, p_dom) {
 		} else {
 			str += "<td>  </td>";
 		}
-
-		if (back_all[i].remarks) {
-			str += "<td>" + back_all[i].beizhu + "</td>";
-		} else {
-			str += "<td>   </td>";
-		}
-
-		var btid = back_all[i].id;
-		str += "<td><button id = '" + btid + "' name='" + (i + 1) + "'>修改</button></td>";
-		str += "<td><input type='checkbox' value='" + btid + "' /></td>";
 		$(tr).append(str);
+		
+		var td = document.createElement("td");
+		var img = document.createElement("img");
+		$(img).attr("src","/hicode/sysimg/beizhu/for_beizhu.png");
+		$(img).attr("name",back_all[i].name);
+		$(img).attr("myfont",back_all[i].beizhu);
+		img.onclick = function(){
+			var ss = $(this).attr("name");
+			var tt = $(this).attr("myfont");
+			if(tt != null && tt != ""){
+				create_remarks(ss,tt);
+			}else{
+				create_remarks(ss,"暂无。。。。。");
+			}
+			
+		};
+		
+		td.appendChild(img);
+		tr.appendChild(td);
+		
+		var btid = back_all[i].id;
+		var strr = "<td><button id = '" + btid + "' name='" + (i + 1) + "'>修改</button></td>";
+		strr += "<td><input type='checkbox' value='" + btid + "' /></td>";
+		$(tr).append(strr);
 		$(p_dom).append(tr);
 
 	}
@@ -1615,16 +1644,31 @@ function creat_tb_dep(back_all, p_dom) {
 			str += "<td name='refund_time'></td>";
 		}
 		
-		if (back_all[i].remarks) {
-			str += "<td name='remarks'>" + back_all[i].beizhu + "</td>";
-		} else {
-			str += "<td name='remarks'></td>";
-		}
-
-		var btid = back_all[i].id;
-		str += "<td><button id = '" + btid + "' name='" + (i + 1) + "'>修改</button></td>";
-		str += "<td><input type='checkbox' value='" + btid + "' /></td>";
 		$(tr).append(str);
+		
+		var td = document.createElement("td");
+		var img = document.createElement("img");
+		$(img).attr("src","/hicode/sysimg/beizhu/for_beizhu.png");
+		$(img).attr("name",back_all[i].name);
+		$(img).attr("myfont",back_all[i].beizhu);
+		img.onclick = function(){
+			var ss = $(this).attr("name");
+			var tt = $(this).attr("myfont");
+			if(tt != null && tt != ""){
+				create_remarks(ss,tt);
+			}else{
+				create_remarks(ss,"暂无。。。。。");
+			}
+			
+		};
+		
+		td.appendChild(img);
+		tr.appendChild(td);
+		
+		var btid = back_all[i].id;
+		var strr = "<td><button id = '" + btid + "' name='" + (i + 1) + "'>修改</button></td>";
+		strr += "<td><input type='checkbox' value='" + btid + "' /></td>";
+		$(tr).append(strr);
 		$(p_dom).append(tr);
 	}
 }

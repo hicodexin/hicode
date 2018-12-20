@@ -82,7 +82,7 @@ public class DepositController {
 			obj.put("if_ok", adv1.getIfSignup());
 			obj.put("tuimoney", adv1.getRefundMoney());
 			obj.put("end_time", adv1.getRefund_time());
-			obj.put("remark", adv1.getRemark());
+			obj.put("beizhu", adv1.getRemark());
 			objs.add(obj);
 		}
 		JSONObject obj_arr = new JSONObject();
