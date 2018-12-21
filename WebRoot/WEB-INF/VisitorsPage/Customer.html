@@ -27,7 +27,7 @@
 <body>
 	<!-- 隐藏  -->
 	<div id="hidd_mask"></div>
-	<div id="dv_update" style="height: 865px">
+	<div id="dv_update" style="height: 920px">
 		<div class="dv_title" id="dv_title">添加学生信息</div>
 		<div class="dv_upmain">
 			<ul class="up_ul">
@@ -54,17 +54,6 @@
 					<b>赠送课时 : </b> 
 					<input type="text" id="giveClass"/>
 				</li>
-				<li>
-					<b>续费用户 : </b> 
-					<label for="job_b"> 
-						<img src="/hicode/sysimg/face_smile.jpg" /> 
-						<input type="radio" id="job_b" name="if_renewal" value="1" checked="checked" />
-					</label> 
-					<label for="job_g"> 
-						<img src="/hicode/sysimg/face_grieved.jpg" /> 
-						<input type="radio" id="job_g" name="if_renewal" value="0" />
-					</label>
-				</li>
 				<li><b>授课老师 : </b> 
 					<select id="the_teacher"></select>
 				</li>
@@ -76,8 +65,42 @@
 					<select id="adviser_sel"></select>
 				</li>
 				<li>
-					<b>备注 : </b> 
-					<input type="text" id="remarks" />
+					<b>学期结束 : </b> 
+					<label for="done_b"> 
+						<img src="/hicode/sysimg/face_smile.jpg" /> 
+						<input type="radio" id="done_b" name="if_done" value="1" />
+					</label> 
+					<label for="done_g"> 
+						<img src="/hicode/sysimg/face_grieved.jpg" /> 
+						<input type="radio" id="done_g" name="if_done" value="0" checked="checked"/>
+					</label>
+				</li>
+				<li>
+					<b>续费用户 : </b> 
+					<label for="job_b"> 
+						<img src="/hicode/sysimg/face_smile.jpg" /> 
+						<input type="radio" id="job_b" name="if_renewal" value="1"/>
+					</label> 
+					<label for="job_g"> 
+						<img src="/hicode/sysimg/face_grieved.jpg" /> 
+						<input type="radio" id="job_g" name="if_renewal" value="0"  checked="checked" />
+					</label>
+				</li>
+				<li>
+					<b>退费 : </b> 
+					<label for="refund_b"> 
+						<img src="/hicode/sysimg/face_smile.jpg" /> 
+						<input type="radio" id="refund_b" name="if_refund" value="1" />
+					</label> 
+					<label for="refund_g"> 
+						<img src="/hicode/sysimg/face_grieved.jpg" /> 
+						<input type="radio" id="refund_g" name="if_refund" value="0"  checked="checked"/>
+					</label>
+				</li>
+				<li>
+					<b style="float: left">备注 : </b> 
+					<textarea rows="3" cols="24" id="remarks" style="float: left; outline:none;border:solid 1px #336699;
+					font-size: 18px;border-radius: 6px;padding: 3px;"></textarea>
 				</li>
 			</ul>
 		</div>

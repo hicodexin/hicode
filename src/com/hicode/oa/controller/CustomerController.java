@@ -176,6 +176,8 @@ public class CustomerController {
 		String first_time = request.getParameter("first_time");
 
 		String adv_id = request.getParameter("adviser_sel");
+		String if_done = request.getParameter("if_done");
+		String if_refund = request.getParameter("if_refund");
 		String remarks = request.getParameter("remarks");
 
 		Customer customer = new Customer();
@@ -212,8 +214,8 @@ public class CustomerController {
 		}
 		customer.setAdviser(adviser);
 		customer.setRemarks(remarks);
-		customer.setIf_done(0);
-		customer.setIf_refund(0);
+		customer.setIf_done(Integer.valueOf(if_done));
+		customer.setIf_refund(Integer.valueOf(if_refund));
 
 		Integer count = customerService.do_updateCustomer(customer);
 		JSONObject obj_arr = new JSONObject();

@@ -33,6 +33,13 @@ public interface CustomerService {
 
 	public Integer do_updateCustomer(Customer customer);
 	
+	/**
+	 * 修改备注信息
+	 * @param customer
+	 * @return
+	 * @date 2018-12-21
+	 */
+	public Integer do_updateCustomerRemarks(Customer customer);
 	
 	
 	

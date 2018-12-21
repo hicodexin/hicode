@@ -220,7 +220,8 @@ function for_btn_aud() {
 							for_sel("update_seladvs2", f, name2);
 						}
 					}, "json");
-
+					
+					$("#remarks").val($("[name='remarks']:eq(" + t + ")").attr("myfont"));
 					$("#up_sub").html("提交");
 				});
 
@@ -421,10 +422,6 @@ function for_btn_cus() {
 
 					}, "json");
 
-			/*		var optionName = $("[name='period']:eq(" + t + ")").html();
-					var sel_class = $("#period option");
-					for_sel02("period", sel_class, optionName);*/
-
 					$("#period").val($("[name='period']:eq(" + t + ")").html());
 					$("#money").val($("[name='money']:eq(" + t + ")").html());
 					$("#giveClass").val($("[name='giveClass']:eq(" + t + ")").html());
@@ -444,7 +441,8 @@ function for_btn_cus() {
 							for_sel("adviser_sel", f, name);
 						}
 					}, "json");
-
+					
+					$("#remarks").val($("[name='remarks']:eq(" + t + ")").attr("myfont"));
 					$("#up_sub").html("提交");
 				});
 
@@ -504,7 +502,7 @@ function for_btn_dep() {
 					}, "json");
 					$("#refundmoney").val($("[name='refundmoney']:eq(" + t + ")").html());
 					$("#refund_time").val($("[name='refund_time']:eq(" + t + ")").html());
-					$("#remarks").val($("[name='remarks']:eq(" + t + ")").html());
+					$("#remarks").val($("[name='remarks']:eq(" + t + ")").attr("myfont"));
 					$("#up_sub").html("提交");
 				});
 
@@ -977,6 +975,9 @@ function up_sub_cus() {
 			return;
 		}
 		data.id = $("#tea_list").attr("name");
+		data.if_done = $('input:radio[name="if_done"]:checked').val();
+		data.if_refund = $('input:radio[name="if_refund"]:checked').val();
+		
 		$.post("/hicode/customer/do_updateCustomer.spc", data, function(e) {
 			$("#hidd_mask").hide().hide(300);
 			$("#dv_update").show().hide(300);
@@ -1424,7 +1425,11 @@ function creat_tb_aud(back_all, p_dom) {
 		}
 
 		str += "<td name='update_selclass'>" + back_all[i].classinfo + "</td>";
-		str += "<td name='phone'>" + back_all[i].phone + "</td>";
+		if(back_all[i].phone){
+			str += "<td name='phone'>" + back_all[i].phone + "</td>";
+		}else{
+			str += "<td name='phone'></td>";
+		}
 		str += "<td name='update_selteas'>" + back_all[i].tea_name + "</td>";
 		str += "<td name='update_seladvs'>" + back_all[i].adv_name + "</td>";
 		str += "<td name='update_seladvs2'>" + back_all[i].adv_name2 + "</td>";
@@ -1433,11 +1438,16 @@ function creat_tb_aud(back_all, p_dom) {
 		
 		var td = document.createElement("td");
 		var img = document.createElement("img");
-		$(img).attr("src","/hicode/sysimg/beizhu/for_beizhu.png");
-		$(img).attr("name",back_all[i].name);
+		if(back_all[i].beizhu != null && back_all[i].beizhu != ""){
+			$(img).attr("src","/hicode/sysimg/beizhu/for_yes.png");
+		}else{
+			$(img).attr("src","/hicode/sysimg/beizhu/for_no.png");
+		}
+		$(img).attr("name","remarks");
+		$(img).attr("userName",back_all[i].name);
 		$(img).attr("myfont",back_all[i].beizhu);
 		img.onclick = function(){
-			var ss = $(this).attr("name");
+			var ss = $(this).attr("userName");
 			var tt = $(this).attr("myfont");
 			if(tt != null && tt != ""){
 				create_remarks(ss,tt);
@@ -1501,11 +1511,17 @@ function creat_tb_cus(back_all, p_dom) {
 		
 		var td = document.createElement("td");
 		var img = document.createElement("img");
-		$(img).attr("src","/hicode/sysimg/beizhu/for_beizhu.png");
-		$(img).attr("name",back_all[i].name);
+		if(back_all[i].beizhu != null && back_all[i].beizhu != ""){
+			$(img).attr("src","/hicode/sysimg/beizhu/for_yes.png");
+		}else{
+			$(img).attr("src","/hicode/sysimg/beizhu/for_no.png");
+		}
+		
+		$(img).attr("name","remarks");
+		$(img).attr("userName",back_all[i].name);
 		$(img).attr("myfont",back_all[i].beizhu);
 		img.onclick = function(){
-			var ss = $(this).attr("name");
+			var ss = $(this).attr("userName");
 			var tt = $(this).attr("myfont");
 			if(tt != null && tt != ""){
 				create_remarks(ss,tt);
@@ -1648,11 +1664,16 @@ function creat_tb_dep(back_all, p_dom) {
 		
 		var td = document.createElement("td");
 		var img = document.createElement("img");
-		$(img).attr("src","/hicode/sysimg/beizhu/for_beizhu.png");
-		$(img).attr("name",back_all[i].name);
+		if(back_all[i].beizhu != null && back_all[i].beizhu != ""){
+			$(img).attr("src","/hicode/sysimg/beizhu/for_yes.png");
+		}else{
+			$(img).attr("src","/hicode/sysimg/beizhu/for_no.png");
+		}
+		$(img).attr("name","remarks");
+		$(img).attr("userName",back_all[i].name);
 		$(img).attr("myfont",back_all[i].beizhu);
 		img.onclick = function(){
-			var ss = $(this).attr("name");
+			var ss = $(this).attr("userName");
 			var tt = $(this).attr("myfont");
 			if(tt != null && tt != ""){
 				create_remarks(ss,tt);

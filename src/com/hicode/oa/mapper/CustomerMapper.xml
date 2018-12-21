@@ -57,6 +57,14 @@
 		where er_id=#{er_id};
 	</update>
 	
+	<!-- 修改备注信息 -->
+	<update id="do_updateCustomerRemarks" parameterType="Customer" >
+		update customer set 
+			remarks=#{remarks}
+		where er_id=#{er_id};
+	</update>
+	
+	
 	
 </mapper>
 

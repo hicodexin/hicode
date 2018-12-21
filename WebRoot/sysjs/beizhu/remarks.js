@@ -2,6 +2,7 @@
  * 出现详情
  */
 function create_remarks(name, myfont) {
+	$("body").children("#dv_remarks").remove();
 	var str = "<div id='dv_remarks'>";
 	str += "<div id='dv_rmtitle' class='dv_font'>详情展示</div>";
 	str += "<div id='dv_img'></div>";

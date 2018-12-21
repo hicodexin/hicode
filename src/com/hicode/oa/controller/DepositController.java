@@ -132,7 +132,9 @@ public class DepositController {
 		deposit.setAdviser(adviser);
 		deposit.setAdviser2(adviser2);
 		deposit.setIfSignup(Integer.valueOf(ifsignup));
-		deposit.setRefundMoney(Float.valueOf(refundmoney));
+		if(refundmoney!=null && refundmoney != ""){
+			deposit.setRefundMoney(Float.valueOf(refundmoney));
+		}
 		deposit.setRemark(remarks);
 
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
@@ -191,7 +193,9 @@ public class DepositController {
 		deposit.setAdviser(adviser);
 		deposit.setAdviser2(adviser2);
 		deposit.setIfSignup(Integer.valueOf(ifsignup));
-		deposit.setRefundMoney(Float.valueOf(refundmoney));
+		if(refundmoney!=null && refundmoney != ""){
+			deposit.setRefundMoney(Float.valueOf(refundmoney));
+		}
 		deposit.setRemark(remarks);
 
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
