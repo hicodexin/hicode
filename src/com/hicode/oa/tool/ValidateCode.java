@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * 验证码表
  * 
- * @author xinpeixiang 2018-11-30
+ * @author XinPeiXiang 2018-11-30
  *
  */
 public class ValidateCode implements Serializable{

@@ -11,7 +11,24 @@
 			margin: 0px;
 			padding: 0px;
 		}
-		
+		[name='dv_money']{
+			width: 245px; 
+			height: 75px;
+			background-color:#fff; 
+			display: inline-block;
+			border: solid 1px #336699;
+			border-radius: 6px;
+			margin-left: 4px;
+		}
+		#remarks {
+			float: left; 
+			outline:none;
+			border:none;
+			font-size: 18px;
+			border-radius: 6px;
+			padding: 3px;
+			margin-left: 6px;
+		}
 	</style>
 
 <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
@@ -95,9 +112,10 @@
 				<select id="update_seladvs2"></select>
 			</li>
 			<li>
-				<b style="float: left">备注 : </b> 
-				<textarea rows="3" cols="24" id="remarks" style="float: left; outline:none;border:solid 1px #336699;
-				font-size: 18px;border-radius: 6px;padding: 3px;"></textarea>
+				<b style="float: left">备注 : </b>
+				<div name = "dv_money" id="jiao_money">
+					<textarea rows="3" cols="24" id="remarks" ></textarea>
+				</div>
 			</li>
 		</ul>
 	</div>

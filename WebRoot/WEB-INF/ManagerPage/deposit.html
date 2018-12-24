@@ -28,6 +28,24 @@
 		font-weight: 600; 
 		font-size: 18px;
 	}
+	[name='dv_money']{
+		width: 245px; 
+		height: 75px;
+		background-color:#fff; 
+		display: inline-block;
+		border: solid 1px #336699;
+		border-radius: 6px;
+		margin-left: 4px;
+	}
+	#remarks {
+		float: left; 
+		outline:none;
+		border:none;
+		font-size: 18px;
+		border-radius: 6px;
+		padding: 3px;
+		margin-left: 6px;
+	}
 </style>
 
 <link type="text/css" rel="stylesheet" href="/hicode/syscss/teacher_page.css" />
@@ -53,7 +71,8 @@
 			<li>
 				<b>学生姓名 : </b> 
 				<select id="student_sel" data-placeholder="请选择" 
-							style="width: 260px" class="chosen-select" tabindex="2">
+							style="width: 248px;border: solid 1px #336699;border-radius: 6px;" 
+							class="chosen-select" tabindex="2">
 				</select>
 			</li>
 			<li>
@@ -105,9 +124,10 @@
 				<input id="refund_time" type="text"  placeholder="请选择"  readonly>
 			</li>
 			<li>
-				<b style="float: left">备注 : </b> 
-				<textarea rows="3" cols="24" id="remarks" style="float: left; outline:none;border:solid 1px #336699;
-				font-size: 18px;border-radius: 6px;padding: 3px;"></textarea>
+				<b style="float: left">备注 : </b>
+				<div name = "dv_money" id="jiao_money">
+					<textarea rows="3" cols="24" id="remarks" ></textarea>
+				</div>
 			</li>
 		</ul>
 	</div>

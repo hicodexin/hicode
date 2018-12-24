@@ -3,7 +3,8 @@
  */
 function create_remarks(name, myfont) {
 	$("body").children("#dv_remarks").remove();
-	var str = "<div id='dv_remarks'>";
+	var bd_wid = document.documentElement.clientWidth;
+	var str = "<div id='dv_remarks' style='left:"+(bd_wid-600)/2+"px'>";
 	str += "<div id='dv_rmtitle' class='dv_font'>详情展示</div>";
 	str += "<div id='dv_img'></div>";
 	str += "<div id='dv_name' class='dv_font'><b>姓名:</b><span>" + name + "</span></div>";

@@ -19,7 +19,7 @@ public interface CustomerService {
 	/**
 	 * 查询表内数据总条数
 	 * @return
-	 * @author xinpeixiang 2018-11-10
+	 * @author XinPeiXiang 2018-11-10
 	 */
 	public Integer getCustomerForCount();
 	
