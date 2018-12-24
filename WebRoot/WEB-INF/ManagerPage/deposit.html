@@ -28,15 +28,6 @@
 		font-weight: 600; 
 		font-size: 18px;
 	}
-	[name='dv_money']{
-		width: 245px; 
-		height: 75px;
-		background-color:#fff; 
-		display: inline-block;
-		border: solid 1px #336699;
-		border-radius: 6px;
-		margin-left: 4px;
-	}
 	#remarks {
 		float: left; 
 		outline:none;
@@ -102,14 +93,14 @@
 			
 			<li>
 				<b>是否报名 : </b> 
-				<label for="sex_b"> 
-					<img src="/hicode/sysimg/face_grieved.jpg" /> 
-					<input type="radio" id="sex_b" name="ifsignup" checked="checked" value="1" />
-				</label> 
 				<label for="sex_g"> 
 					<img src="/hicode/sysimg/face_smile.jpg" />
-					<input type="radio" id="sex_g" name="ifsignup" value="0" />
+					<input type="radio" id="sex_g" name="ifsignup" value="1" />
 				</label>
+				<label for="sex_b"> 
+					<img src="/hicode/sysimg/face_grieved.jpg" /> 
+					<input type="radio" id="sex_b" name="ifsignup" checked="checked" value="0" />
+				</label> 
 			</li>
 			<li>
 				<b>退费金额 : </b> 
@@ -125,7 +116,7 @@
 			</li>
 			<li>
 				<b style="float: left">备注 : </b>
-				<div name = "dv_money" id="jiao_money">
+				<div name = "dv_money" id="jiao_money" style="height: 75px;margin-left: 4px;">
 					<textarea rows="3" cols="24" id="remarks" ></textarea>
 				</div>
 			</li>

@@ -1898,6 +1898,7 @@ function creat_tb_dep(back_all, p_dom) {
 		}
 		if(back_all[i].tuimoney){
 			str += "<td name='refundmoney'>" + back_all[i].tuimoney + "</td>";
+			$(tr).css("color", "#b0b0b0");
 		} else {
 			str += "<td name='refundmoney'></td>";
 		}
