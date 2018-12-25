@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hicode.oa.service.SubjectService;
 import com.hicode.oa.tool.Adviser;
 import com.hicode.oa.tool.Subject;
+import com.hicode.oa.tool.UserInfo;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -79,6 +80,20 @@ public class SubjectController {
 	@ResponseBody
 	@RequestMapping(value = "/do_insertSubject", method = RequestMethod.POST)
 	public String do_insertSubject(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+		
+		JSONObject obj_arr = new JSONObject();
+		//游客与普通用户没有添加权限
+		if (obj.getUserType().getType_leibie() == 0) {
+			obj_arr.put("list_advs", "ok1");
+			return obj_arr.toString();
+		}else if (obj.getUserType().getType_leibie() == 1) {
+			obj_arr.put("list_advs", "ok1");
+			return obj_arr.toString();
+		}
+		
 		String name = request.getParameter("userName");
 		String if_downline = request.getParameter("if_Onthejob");
 
@@ -87,7 +102,7 @@ public class SubjectController {
 		subject.setIf_downline(Integer.valueOf(if_downline));
 
 		Integer count = subjectService.do_insertSubject(subject);
-		JSONObject obj_arr = new JSONObject();
+		
 		if (count > 0) {
 			obj_arr.put("list_advs", "ok");
 		}
@@ -120,6 +135,19 @@ public class SubjectController {
 	@RequestMapping(value = "/do_updateSubject", method = RequestMethod.POST)
 	public String do_updateSubject(HttpServletRequest request) {
 
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+		
+		JSONObject obj_arr = new JSONObject();
+		//游客与普通用户没有修改权限
+		if (obj.getUserType().getType_leibie() == 0) {
+			obj_arr.put("list_advs", "ok1");
+			return obj_arr.toString();
+		}else if (obj.getUserType().getType_leibie() == 1) {
+			obj_arr.put("list_advs", "ok1");
+			return obj_arr.toString();
+		}
+		
 		String subid = request.getParameter("id");
 		String name = request.getParameter("userName");
 		String if_downline = request.getParameter("if_Onthejob");
@@ -130,7 +158,7 @@ public class SubjectController {
 		subject.setIf_downline(Integer.valueOf(if_downline));
 
 		Integer count = subjectService.do_updateSubject(subject);
-		JSONObject obj_arr = new JSONObject();
+		
 		if (count > 0) {
 			obj_arr.put("list_advs", "ok");
 		}

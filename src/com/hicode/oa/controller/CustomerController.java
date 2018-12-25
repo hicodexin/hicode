@@ -20,6 +20,7 @@ import com.hicode.oa.tool.Auditions;
 import com.hicode.oa.tool.Customer;
 import com.hicode.oa.tool.Subject;
 import com.hicode.oa.tool.Teacher;
+import com.hicode.oa.tool.UserInfo;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -33,7 +34,13 @@ public class CustomerController {
 
 	@RequestMapping("/to_login")
 	public String login(HttpServletRequest request) {
-		System.out.println("--------------------");
+		
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+		// 非管理员用户
+		if (obj.getUserType().getType_leibie() != 3) {
+			return "redirect:/Fighting.html";
+		}
 		return "/WEB-INF/VisitorsPage/Customer.html";
 	}
 

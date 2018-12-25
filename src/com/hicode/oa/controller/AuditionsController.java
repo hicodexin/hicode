@@ -20,6 +20,7 @@ import com.hicode.oa.service.AuditionsService;
 import com.hicode.oa.tool.Adviser;
 import com.hicode.oa.tool.Auditions;
 import com.hicode.oa.tool.Teacher;
+import com.hicode.oa.tool.UserInfo;
 
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
@@ -28,7 +29,7 @@ import net.sf.json.JSONObject;
 /**
  * 试听课详情控制层
  * 
- * @author Administrator
+ * @author XinPeiXiang
  *
  */
 @Controller
@@ -103,6 +104,17 @@ public class AuditionsController {
 	@ResponseBody
 	@RequestMapping(value = "/do_insertAuditions", method = RequestMethod.POST)
 	public String do_insertAuditions(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+		
+		JSONObject obj_arr = new JSONObject();
+		//游客没有添加权限
+		if (obj.getUserType().getType_leibie() == 0) {
+			obj_arr.put("list_advs", "ok1");
+			return obj_arr.toString();
+		}
+		
 		String st_time = request.getParameter("time_creatDate");
 		String st_name = request.getParameter("userName");
 		String st_sex = request.getParameter("t_sex");
@@ -183,7 +195,7 @@ public class AuditionsController {
 		auditions.setRemarks(remarks);
 
 		Integer count = auditionsService.do_insertAuditions(auditions);
-		JSONObject obj_arr = new JSONObject();
+		
 		if (count > 0) {
 			obj_arr.put("list_advs", "ok");
 		}
@@ -208,6 +220,20 @@ public class AuditionsController {
 	@ResponseBody
 	@RequestMapping(value = "/do_updateAuditions", method = RequestMethod.POST)
 	public String do_updateAuditions(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+		
+		JSONObject obj_arr = new JSONObject();
+		//游客与普通用户没有修改权限
+		if (obj.getUserType().getType_leibie() == 0) {
+			obj_arr.put("list_advs", "ok1");
+			return obj_arr.toString();
+		}else if (obj.getUserType().getType_leibie() == 1) {
+			obj_arr.put("list_advs", "ok1");
+			return obj_arr.toString();
+		}
+		
 		String id = request.getParameter("id");
 		String st_time = request.getParameter("time_creatDate");
 		String st_name = request.getParameter("userName");
@@ -290,7 +316,6 @@ public class AuditionsController {
 		auditions.setRemarks(remarks);
 
 		Integer count = auditionsService.do_updateAuditions(auditions);
-		JSONObject obj_arr = new JSONObject();
 		if (count > 0) {
 			obj_arr.put("list_advs", "ok");
 		}

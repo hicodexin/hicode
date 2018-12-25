@@ -103,8 +103,6 @@ function for_btnSD_usr() {
 			}
 		}
 	}
-	console.log("=============adv==================")
-	console.log(revise)
 	if (revise.length > 0) {
 		for (var k = 0; k < revise.length; k++) {
 			(function() {
@@ -822,7 +820,9 @@ function up_sub_aud() {
 				alert("添加成功");
 				$("#tbl_body").children("tr").remove();
 				start_post_aud(for_btn_aud);
-			} else {
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
+			}else {
 				alert("添加失败,请联系管理员。。。。");
 			}
 
@@ -840,6 +840,8 @@ function up_sub_aud() {
 				alert("修改成功");
 				$("#tbl_body").children("tr").remove();
 				start_post_aud(for_btn_aud);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
 			} else {
 				alert("修改失败,请联系管理员。。。。");
 			}
@@ -885,6 +887,8 @@ function up_sub_adv() {
 				alert("添加成功");
 				$("#tbl_body").children("tr").remove();
 				start_post_adv(for_btn_adv);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
 			} else {
 				alert("添加失败,请联系管理员。。。。");
 			}
@@ -909,6 +913,8 @@ function up_sub_adv() {
 				alert("修改成功");
 				$("#tbl_body").children("tr").remove();
 				start_post_adv(for_btn_adv);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
 			} else {
 				alert("修改失败,请联系管理员。。。。");
 			}
@@ -953,6 +959,8 @@ function up_sub_tea() {
 				alert("添加成功");
 				$("#tbl_body").children("tr").remove();
 				start_post_tea(for_btn_tea);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
 			} else {
 				alert("添加失败,请联系管理员。。。。");
 			}
@@ -978,6 +986,8 @@ function up_sub_tea() {
 				alert("修改成功");
 				$("#tbl_body").children("tr").remove();
 				start_post_tea(for_btn_tea);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
 			} else {
 				alert("修改失败,请联系管理员。。。。");
 			}
@@ -1009,6 +1019,8 @@ function up_sub_sub() {
 				alert("添加成功");
 				$("#tbl_body").children("tr").remove();
 				start_post_sub(for_btn_sub);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
 			} else {
 				alert("添加失败,请联系管理员。。。。");
 			}
@@ -1028,6 +1040,8 @@ function up_sub_sub() {
 				alert("修改成功");
 				$("#tbl_body").children("tr").remove();
 				start_post_sub(for_btn_sub);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
 			} else {
 				alert("修改失败,请联系管理员。。。。");
 			}
@@ -1085,6 +1099,8 @@ function up_sub_cus() {
 				alert("添加成功");
 				$("#tbl_body").children("tr").remove();
 				start_post_cus(for_btn_cus);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
 			} else {
 				alert("添加失败,请联系管理员。。。。");
 			}
@@ -1106,6 +1122,8 @@ function up_sub_cus() {
 				alert("修改成功");
 				$("#tbl_body").children("tr").remove();
 				start_post_cus(for_btn_cus);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
 			} else {
 				alert("修改失败,请联系管理员。。。。");
 			}
@@ -1193,6 +1211,8 @@ function up_sub_dep() {
 				alert("添加成功");
 				$("#tbl_body").children("tr").remove();
 				start_post_dep(for_btn_dep);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
 			} else {
 				alert("添加失败,请联系管理员。。。。");
 			}
@@ -1211,6 +1231,8 @@ function up_sub_dep() {
 				alert("修改成功");
 				$("#tbl_body").children("tr").remove();
 				start_post_dep(for_btn_dep);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
 			} else {
 				alert("修改失败,请联系管理员。。。。");
 			}
@@ -1276,6 +1298,8 @@ function up_sub_wv() {
 				alert("添加成功");
 				$("#tbl_body").children("tr").remove();
 				start_post_wv(for_btn_wv);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
 			} else {
 				alert("添加失败,请联系管理员。。。。");
 			}
@@ -1295,6 +1319,8 @@ function up_sub_wv() {
 				alert("修改成功");
 				$("#tbl_body").children("tr").remove();
 				start_post_wv(for_btn_wv);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
 			} else {
 				alert("修改失败,请联系管理员。。。。");
 			}

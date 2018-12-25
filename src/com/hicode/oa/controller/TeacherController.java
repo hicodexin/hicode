@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hicode.oa.service.TeacherService;
 import com.hicode.oa.tool.Teacher;
+import com.hicode.oa.tool.UserInfo;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -105,6 +106,20 @@ public class TeacherController {
 	@ResponseBody
 	@RequestMapping(value = "/do_insertTeacher", method = RequestMethod.POST)
 	public String do_insertTeacher(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+		
+		JSONObject obj_arr = new JSONObject();
+		//游客与普通用户没有添加权限
+		if (obj.getUserType().getType_leibie() == 0) {
+			obj_arr.put("list_advs", "ok1");
+			return obj_arr.toString();
+		}else if (obj.getUserType().getType_leibie() == 1) {
+			obj_arr.put("list_advs", "ok1");
+			return obj_arr.toString();
+		}
+		
 		String t_name = request.getParameter("userName");
 		String t_sex = request.getParameter("sex");
 		String if_Onthejob = request.getParameter("if_Onthejob");
@@ -139,7 +154,7 @@ public class TeacherController {
 		}
 
 		Integer count = teacherService.do_insertTeacher(teacher);
-		JSONObject obj_arr = new JSONObject();
+		
 		if (count > 0) {
 			obj_arr.put("list_advs", "ok");
 		}
@@ -181,6 +196,20 @@ public class TeacherController {
 	@ResponseBody
 	@RequestMapping(value = "/do_updateTeacher", method = RequestMethod.POST)
 	public String do_updateTeacher(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+		
+		JSONObject obj_arr = new JSONObject();
+		//游客与普通用户没有修改权限
+		if (obj.getUserType().getType_leibie() == 0) {
+			obj_arr.put("list_advs", "ok1");
+			return obj_arr.toString();
+		}else if (obj.getUserType().getType_leibie() == 1) {
+			obj_arr.put("list_advs", "ok1");
+			return obj_arr.toString();
+		}
+		
 		String id = request.getParameter("id");
 		String t_name = request.getParameter("userName");
 		String t_sex = request.getParameter("sex");
@@ -217,7 +246,7 @@ public class TeacherController {
 		}
 
 		Integer count = teacherService.do_updateTeacher(teacher);
-		JSONObject obj_arr = new JSONObject();
+		
 		if (count > 0) {
 			obj_arr.put("list_advs", "ok");
 		}

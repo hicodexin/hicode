@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import com.hicode.oa.tool.Auditions;
 import com.hicode.oa.tool.Customer;
 import com.hicode.oa.tool.Subject;
 import com.hicode.oa.tool.Teacher;
+import com.hicode.oa.tool.UserInfo;
 import com.hicode.oa.tool.WinterVacation;
 
 import net.sf.json.JSONArray;
@@ -101,6 +103,17 @@ public class WinterVacationController {
 	@RequestMapping(value = "/do_insertWinterVacation", method = RequestMethod.POST)
 	public String do_insertWinterVacation(HttpServletRequest request) {
 		
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+		
+		JSONObject obj_arr = new JSONObject();
+		
+		// 游客--没有添加的权限
+		if (obj.getUserType().getType_leibie() == 0) {
+			obj_arr.put("list_advs", "ok1");
+			return obj_arr.toString();
+		}
+		
 		String aud_id = request.getParameter("userName");
 		String sub_id = request.getParameter("subject");
 		String t_id = request.getParameter("the_teacher");
@@ -151,7 +164,7 @@ public class WinterVacationController {
 		winterVacation.setRemarks(remarks);
 		
 		Integer count = winterVacationService.do_insertWinterVacation(winterVacation);
-		JSONObject obj_arr = new JSONObject();
+		
 		if (count > 0) {
 			obj_arr.put("list_advs", "ok");
 		}
@@ -162,6 +175,20 @@ public class WinterVacationController {
 	@ResponseBody
 	@RequestMapping(value = "/do_updateWinterVacation", method = RequestMethod.POST)
 	public String do_updateWinterVacation(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+		
+		JSONObject obj_arr = new JSONObject();
+		//游客与普通用户没有修改权限
+		if (obj.getUserType().getType_leibie() == 0) {
+			obj_arr.put("list_advs", "ok1");
+			return obj_arr.toString();
+		}else if (obj.getUserType().getType_leibie() == 1) {
+			obj_arr.put("list_advs", "ok1");
+			return obj_arr.toString();
+		}
+		
 		String id = request.getParameter("id");
 
 		String aud_id = request.getParameter("userName");
@@ -215,7 +242,7 @@ public class WinterVacationController {
 		winterVacation.setRemarks(remarks);
 		
 		Integer count = winterVacationService.do_updateWinterVacation(winterVacation );
-		JSONObject obj_arr = new JSONObject();
+		
 		if (count > 0) {
 			obj_arr.put("list_advs", "ok");
 		}

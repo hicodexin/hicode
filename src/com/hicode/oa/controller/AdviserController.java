@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hicode.oa.service.AdviserService;
 import com.hicode.oa.tool.Adviser;
 import com.hicode.oa.tool.Auditions;
+import com.hicode.oa.tool.UserInfo;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -106,6 +107,20 @@ public class AdviserController {
 	@ResponseBody
 	@RequestMapping(value = "/do_insertAdviser", method = RequestMethod.POST)
 	public String do_insertAdviser(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+		
+		JSONObject obj_arr = new JSONObject();
+		//游客与普通用户没有添加权限
+		if (obj.getUserType().getType_leibie() == 0) {
+			obj_arr.put("list_advs", "ok1");
+			return obj_arr.toString();
+		}else if (obj.getUserType().getType_leibie() == 1) {
+			obj_arr.put("list_advs", "ok1");
+			return obj_arr.toString();
+		}
+		
 		String adv_name = request.getParameter("userName");
 		String adv_sex = request.getParameter("sex");
 		String title = request.getParameter("title");
@@ -162,7 +177,7 @@ public class AdviserController {
 			e.printStackTrace();
 		}
 		Integer count = adviserService.do_insertAdvisers(adviser);
-		JSONObject obj_arr = new JSONObject();
+
 		if (count > 0) {
 			obj_arr.put("list_advs", "ok");
 		}
@@ -205,6 +220,20 @@ public class AdviserController {
 	@ResponseBody
 	@RequestMapping(value = "/do_updateAdviser", method = RequestMethod.POST)
 	public String do_updateAdviser(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+		
+		JSONObject obj_arr = new JSONObject();
+		//游客与普通用户没有修改权限
+		if (obj.getUserType().getType_leibie() == 0) {
+			obj_arr.put("list_advs", "ok1");
+			return obj_arr.toString();
+		}else if (obj.getUserType().getType_leibie() == 1) {
+			obj_arr.put("list_advs", "ok1");
+			return obj_arr.toString();
+		}
+		
 		String id = request.getParameter("id");
 		String adv_name = request.getParameter("userName");
 		String adv_sex = request.getParameter("sex");
@@ -264,7 +293,7 @@ public class AdviserController {
 			e.printStackTrace();
 		}
 		Integer count = adviserService.do_updateAdvisers(adviser);
-		JSONObject obj_arr = new JSONObject();
+		
 		if (count > 0) {
 			obj_arr.put("list_advs", "ok");
 		}
