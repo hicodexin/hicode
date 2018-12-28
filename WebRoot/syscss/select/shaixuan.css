@@ -1,0 +1,146 @@
+/* 筛选查询 */
+
+#dv_select {
+	position: absolute;
+	width: 1080px;
+	height: 650px;
+	border-bottom: solid 1px #ff6699;
+	background-color: #D0D0D0;
+	z-index: 9;
+	left: 20%;
+	border-radius: 9px;
+}
+
+.dvselect_main {
+	width: 85%;
+	height: 400px;
+	margin: auto;
+	margin-top: 30px;
+}
+
+.dvselect_main>div {
+	width: 49%;
+	height: 100%;
+	float: left;
+}
+
+.main_left {
+	
+}
+
+#left_ul {
+	width: 100%;
+	height: 100%;
+}
+
+#left_ul>li {
+	width: 100%;
+	height: 70px;
+}
+
+#left_ul b {
+	display: inline-block;
+	width: 150px;
+	height: 70px;
+	text-align: right;
+	line-height: 70px;
+	font-family: "楷体";
+	font-size: 22px;
+	font-weight: 600;
+	color: #336699;
+	padding-right: 20px;
+}
+
+#left_ul input {
+	width: 220px;
+	height: 40px;
+	outline: none;
+	border-radius: 9px;
+	border: 1px solid #336699;
+	font-family: "楷体";
+	font-size: 22px;
+	font-weight: 600;
+	color: #336699;
+	padding-left: 10px;
+}
+
+#left_ul select {
+	width: 232px;
+	height: 40px;
+	outline: none;
+	border-radius: 9px;
+	border: 1px solid #336699;
+	font-family: "楷体";
+	font-size: 22px;
+	font-weight: 600;
+	color: #336699;
+	padding-left: 10px;
+}
+
+.main_right {
+	border-left: solid 1px #336699;
+}
+
+.dvselect_bottom {
+	height: 100px;
+	margin-top: 30px;
+}
+
+.dvselect_bottom>div {
+	width: 49%;
+	float: left;
+}
+
+.dvselect_bottom button {
+	border: 0px;
+	color: #336699;
+	background-color: #fff;
+	width: 90px;
+	height: 40px;
+	border-radius: 6px;
+	outline-style: none;
+	display: block;
+	font-family: "楷体";
+	font-size: 18px;
+}
+
+.dvselect_bottom button:hover {
+	background-color: #336699;
+	color: #fff;
+	font-weight: 600;
+	cursor: pointer;
+	border: solid 1px #336699;
+}
+
+.sel_sub {
+	float: right;
+	margin-right: 20px;
+}
+
+.sel_res {
+	margin-left: 25px;
+}
+
+.dv_title>button {
+	display: inline-block;
+	width: 120px;
+	height: 40px;
+	outline: none;
+	border: #336699 1px solid;
+	border-radius: 6px;
+	text-align: center;
+	line-height: 40px;
+	font-family: "楷体";
+	font-size: 18px;
+	font-weight: 600;
+	color: #336699;
+	background-color: #FFFFFF;
+	margin-left: 20px;
+}
+
+.dv_title>button:hover {
+	background-color: #336699;
+	color: #fff;
+	cursor: pointer;
+	border: solid 1px #FFFFFF;
+}

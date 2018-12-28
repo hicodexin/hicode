@@ -49,9 +49,43 @@ public class AuditionsController {
 	@RequestMapping(value = "/showAuditionsByInfo", method = RequestMethod.POST)
 	public String showAuditionsByInfo(HttpServletRequest request) {
 
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		String stu_name = request.getParameter("stu_name");
+		if (stu_name != null & stu_name != "") {
+			map.put("stu_name", "%" + stu_name + "%");
+		}
+		String stu_class = request.getParameter("stu_class");
+		if (stu_class != null & stu_class != "") {
+			map.put("stu_class", stu_class);
+		}
+		String stu_phone = request.getParameter("stu_phone");
+		if (stu_phone != null & stu_phone != "") {
+			map.put("stu_phone", stu_phone);
+		}
+		String stu_teacher = request.getParameter("stu_teacher");
+		if (stu_teacher != null & stu_teacher != "") {
+			map.put("stu_teacher", stu_teacher);
+		}
+		String kai_time = request.getParameter("kai_time");
+		if (kai_time != null & kai_time != "") {
+			map.put("kai_time", kai_time);
+		}
+		String ting_time = request.getParameter("ting_time");
+		if (ting_time != null & ting_time != "") {
+			map.put("ting_time", ting_time);
+		}
+		String yao_gu = request.getParameter("yao_gu");
+		if (yao_gu != null & yao_gu != "") {
+			map.put("yao_gu", yao_gu);
+		}
+		String qian_gu = request.getParameter("qian_gu");
+		if (qian_gu != null & qian_gu != "") {
+			map.put("qian_gu", qian_gu);
+		}
+
 		// 页码
 		String page = request.getParameter("page");
-
 		// 开始数字
 		Integer start = 0;
 		// 每页显示条数
@@ -62,17 +96,16 @@ public class AuditionsController {
 		}
 
 		Integer all_num = null;
-		if (page.equals("1")) {
-			all_num = auditionsService.getAuditionsForCount();
 
-			if (all_num != null) {
-				all_num = (all_num % 30 == 0) ? (all_num / 30) : (all_num / 30 + 1);
-			}
+		map.put("start", start);
+		map.put("count", num);
 
-		}
+		JSONObject obj_arr = new JSONObject();
 
-		List<Auditions> advs = auditionsService.getAuditionsByInfo(start, num);
+		List<Auditions> advs = null;
 
+		advs = auditionsService.getAuditionsBySomeOption(map);
+		
 		JSONArray objs = new JSONArray();
 
 		for (Auditions adv1 : advs) {
@@ -91,30 +124,33 @@ public class AuditionsController {
 			objs.add(obj);
 		}
 
-		JSONObject obj_arr = new JSONObject();
 		obj_arr.put("list_advs", objs);
-
 		if (page.equals("1")) {
+
+			all_num = auditionsService.getAuditionsForCountBySomeOption(map);
+
+			if (all_num != null) {
+				all_num = (all_num % 30 == 0) ? (all_num / 30) : (all_num / 30 + 1);
+			}
 			obj_arr.put("all_num", all_num);
 		}
-
 		return obj_arr.toString();
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/do_insertAuditions", method = RequestMethod.POST)
 	public String do_insertAuditions(HttpServletRequest request) {
-		
+
 		HttpSession session = request.getSession();
 		UserInfo obj = (UserInfo) session.getAttribute("user");
-		
+
 		JSONObject obj_arr = new JSONObject();
-		//游客没有添加权限
+		// 游客没有添加权限
 		if (obj.getUserType().getType_leibie() == 0) {
 			obj_arr.put("list_advs", "ok1");
 			return obj_arr.toString();
 		}
-		
+
 		String st_time = request.getParameter("time_creatDate");
 		String st_name = request.getParameter("userName");
 		String st_sex = request.getParameter("t_sex");
@@ -195,7 +231,7 @@ public class AuditionsController {
 		auditions.setRemarks(remarks);
 
 		Integer count = auditionsService.do_insertAuditions(auditions);
-		
+
 		if (count > 0) {
 			obj_arr.put("list_advs", "ok");
 		}
@@ -220,20 +256,20 @@ public class AuditionsController {
 	@ResponseBody
 	@RequestMapping(value = "/do_updateAuditions", method = RequestMethod.POST)
 	public String do_updateAuditions(HttpServletRequest request) {
-		
+
 		HttpSession session = request.getSession();
 		UserInfo obj = (UserInfo) session.getAttribute("user");
-		
+
 		JSONObject obj_arr = new JSONObject();
-		//游客与普通用户没有修改权限
+		// 游客与普通用户没有修改权限
 		if (obj.getUserType().getType_leibie() == 0) {
 			obj_arr.put("list_advs", "ok1");
 			return obj_arr.toString();
-		}else if (obj.getUserType().getType_leibie() == 1) {
+		} else if (obj.getUserType().getType_leibie() == 1) {
 			obj_arr.put("list_advs", "ok1");
 			return obj_arr.toString();
 		}
-		
+
 		String id = request.getParameter("id");
 		String st_time = request.getParameter("time_creatDate");
 		String st_name = request.getParameter("userName");
@@ -321,5 +357,6 @@ public class AuditionsController {
 		}
 		return obj_arr.toString();
 	}
+
 
 }

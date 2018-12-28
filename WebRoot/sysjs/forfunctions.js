@@ -819,7 +819,8 @@ function up_sub_aud() {
 			if (e.list_advs == 'ok') {
 				alert("添加成功");
 				$("#tbl_body").children("tr").remove();
-				start_post_aud(for_btn_aud);
+				var pagedata = {"page":1};
+				start_post_aud(for_btn_aud,pagedata);
 			}else if (e.list_advs == 'ok1') {
 				alert("对不起,权限不足。。。。");
 			}else {
@@ -839,7 +840,8 @@ function up_sub_aud() {
 			if (e.list_advs == 'ok') {
 				alert("修改成功");
 				$("#tbl_body").children("tr").remove();
-				start_post_aud(for_btn_aud);
+				var pagedata = {"page":1};
+				start_post_aud(for_btn_aud,pagedata);
 			}else if (e.list_advs == 'ok1') {
 				alert("对不起,权限不足。。。。");
 			} else {
@@ -853,6 +855,7 @@ function up_sub_aud() {
 
 }
 
+//顾问
 function up_sub_adv() {
 	if ($("#userName").val().trim().length < 2) {
 		$("#userName").css("borderColor", "#f00");
@@ -924,6 +927,7 @@ function up_sub_adv() {
 
 }
 
+//讲师
 function up_sub_tea() {
 	if ($("#userName").val().trim().length < 2) {
 		$("#userName").css("borderColor", "#f00");
@@ -998,6 +1002,7 @@ function up_sub_tea() {
 	}
 }
 
+//课程
 function up_sub_sub() {
 	if ($("#userName").val().trim().length < 2) {
 		$("#userName").css("borderColor", "#f00");
@@ -1052,6 +1057,7 @@ function up_sub_sub() {
 
 }
 
+//报名学员
 function up_sub_cus() {
 	if ($("#money").val().trim().length < 2) {
 		$("#money").css("borderColor", "#f00");
@@ -1334,10 +1340,8 @@ function up_sub_wv() {
 /** ==============================================初始化数据============================================== */
 
 /* 初始化数据 */
-function start_post_aud(backFunction) {
-	$.post("/hicode/auditions/showAuditionsByInfo.spc", {
-		"page" : 1
-	}, function(a) {
+function start_post_aud(backFunction,pagedata) {
+	$.post("/hicode/auditions/showAuditionsByInfo.spc", pagedata, function(a) {
 		console.log(a.list_advs);
 		if (a) {
 			creat_tb_aud(a.list_advs, "#tbl_body");
@@ -1355,7 +1359,7 @@ function start_post_aud(backFunction) {
 						});
 					}
 					$(btn).click(function() {
-						change_page_aud(this);
+						change_page_aud(this,pagedata);
 					});
 
 					$("#dv_but").append(btn);
@@ -1686,6 +1690,7 @@ function creat_tb(back_all, p_dom) {
 
 /* back_all: 待便利的值 */
 function creat_tb_aud(back_all, p_dom) {
+	$(p_dom).children("tr").remove();
 	for (var i = 0; i < back_all.length; i++) {
 		var tr = document.createElement("tr");
 		var str = "<td>" + (i + 1) + "</td>";
@@ -2026,7 +2031,7 @@ function creat_tb_wv(back_all, p_dom) {
 /** ==============================================切换页面============================================== */
 
 /*切换页面*/
-function change_page_aud(this_dom) {
+function change_page_aud(this_dom,pagedata) {
 	$("#dv_but button").css({
 		"backgroundColor" : "#fff",
 		"color" : "#336699"
@@ -2035,10 +2040,10 @@ function change_page_aud(this_dom) {
 		"backgroundColor" : "#336699",
 		"color" : "#fff"
 	});
-
-	$.post("/hicode/auditions/showAuditionsByInfo.spc", {
-		"page" : $(this_dom).attr("mypage")
-	}, function(a_s) {
+	
+	pagedata.page = $(this_dom).attr("mypage");
+	
+	$.post("/hicode/auditions/showAuditionsByInfo.spc",pagedata, function(a_s) {
 		$("#tbl_body").html(' ');
 
 		var js_arry = eval('(' + a_s + ')');

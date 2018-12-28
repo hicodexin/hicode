@@ -52,5 +52,13 @@ public class AuditionsDAO extends SysDAO {
 		return update(nameSpace+"do_updateAuditions", auditions);
 	}
 
+	public List<Auditions> getAuditionsBySomeOption(Map<String, Object> map){
+		return selectList(nameSpace+"getAuditionsBySomeOption", map);
+	}
+
+	public Integer getAuditionsForCountBySomeOption(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return selectOne(nameSpace+"getAuditionsForCountBySomeOption", map);
+	} 
 	
 }

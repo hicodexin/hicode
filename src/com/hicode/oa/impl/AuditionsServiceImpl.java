@@ -1,13 +1,13 @@
 package com.hicode.oa.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hicode.oa.dao.AuditionsDAO;
 import com.hicode.oa.service.AuditionsService;
-import com.hicode.oa.tool.Adviser;
 import com.hicode.oa.tool.Auditions;
 
 @Service
@@ -55,5 +55,17 @@ public class AuditionsServiceImpl implements AuditionsService{
 	public Integer do_updateAuditions(Auditions auditions) {
 		// TODO Auto-generated method stub
 		return auditionsDAO.do_updateAuditions(auditions);
+	}
+
+	@Override
+	public List<Auditions> getAuditionsBySomeOption(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return auditionsDAO.getAuditionsBySomeOption(map);
+	}
+
+	@Override
+	public Integer getAuditionsForCountBySomeOption(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return auditionsDAO.getAuditionsForCountBySomeOption(map);
 	}
 }

@@ -39,6 +39,89 @@
 		select au_id,st_name from auditions  order by au_id;
 	</select>
 	
+	<select id="getAuditionsBySomeOption" parameterType="java.util.Map" resultMap="getAuditions_oop">
+	<!-- stu_name,stu_class,stu_phone,stu_teacher,kai_time,ting_time,yao_gu,qian_gu -->
+		SELECT <include refid="all_column"></include> FROM auditions 
+		WHERE 1=1
+			<if test="stu_name != null">
+				AND st_name LIKE #{stu_name} 
+			</if>
+			
+			<if test="stu_class != null">
+				AND st_class = #{stu_class}
+			</if>
+			
+			<if test="stu_phone != null">
+				AND phone = #{stu_phone}
+			</if>
+			
+			<if test="stu_teacher != null">
+				AND t_id = #{stu_teacher}
+			</if>
+			
+			<if test="yao_gu != null">
+				AND adv_id = #{yao_gu}
+			</if>
+		
+			<if test="qian_gu != null">
+				AND adv_id2 = #{qian_gu}
+			</if>
+			
+		    <if test="kai_time != null">
+		   		 AND st_time &gt;= #{kai_time}
+		    </if>
+		
+			<if test="ting_time != null">
+				AND st_time &lt;= #{ting_time}
+			</if>
+		ORDER BY st_time
+		limit #{start},#{count};
+	
+	</select>
+	
+		<select id="getAuditionsForCountBySomeOption" parameterType="java.util.Map" resultType="java.lang.Integer">
+	<!-- stu_name,stu_class,stu_phone,stu_teacher,kai_time,ting_time,yao_gu,qian_gu -->
+		SELECT count(1) FROM auditions 
+		WHERE 1=1
+			<if test="stu_name != null">
+				AND st_name LIKE #{stu_name} 
+			</if>
+			
+			<if test="stu_class != null">
+				AND st_class = #{stu_class}
+			</if>
+			
+			<if test="stu_phone != null">
+				AND phone = #{stu_phone}
+			</if>
+			
+			<if test="stu_teacher != null">
+				AND t_id = #{stu_teacher}
+			</if>
+			
+			<if test="yao_gu != null">
+				AND adv_id = #{yao_gu}
+			</if>
+		
+			<if test="qian_gu != null">
+				AND adv_id2 = #{qian_gu}
+			</if>
+			
+		    <if test="kai_time != null">
+		   		 AND st_time &gt;= #{kai_time}
+		    </if>
+		
+			<if test="ting_time != null">
+				AND st_time &lt;= #{ting_time}
+			</if>
+	
+	</select>
+	
+	
+	
+	
+	
+	
 	<insert id="do_insertAuditions" parameterType="Auditions" keyProperty="au_id">
 		insert into auditions 
 			(st_time,st_name,st_sex,st_class,phone,t_id,adv_id,adv_id2,remarks)

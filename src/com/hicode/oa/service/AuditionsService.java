@@ -1,6 +1,7 @@
 package com.hicode.oa.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.hicode.oa.tool.Auditions;
 
@@ -42,5 +43,20 @@ public interface AuditionsService {
 	public List<Auditions> getAudNameAndID();
 
 	public Integer do_updateAuditions(Auditions auditions);
+	
+	/**
+	 * 条件查询
+	 * @param map
+	 * @return
+	 */
+	public List<Auditions> getAuditionsBySomeOption(Map<String, Object> map);
+	
+	/**
+	 * 根据条件获取数量
+	 * @param map
+	 * @return
+	 */
+	public Integer getAuditionsForCountBySomeOption(Map<String, Object> map);
+	
 	
 }
