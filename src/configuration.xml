@@ -33,6 +33,7 @@
  		<typeAlias type="com.hicode.oa.tool.LogInfo" alias="LogInfo"/>
  		<typeAlias type="com.hicode.oa.tool.Deposit" alias="Deposit"/>
  		<typeAlias type="com.hicode.oa.tool.WinterVacation" alias="WinterVacation"/>
+ 		<typeAlias type="com.hicode.oa.tool.School" alias="School"/>
  	</typeAliases>
  
 	<mappers>
@@ -48,6 +49,7 @@
 		<mapper resource="com/hicode/oa/mapper/LogInfoMapper.xml"/>
 		<mapper resource="com/hicode/oa/mapper/DepositMapper.xml"/>
 		<mapper resource="com/hicode/oa/mapper/WinterVacationMapper.xml"/>
+		<mapper resource="com/hicode/oa/mapper/SchoolMapper.xml"/>
 	</mappers>
 
 </configuration>

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hicode.oa.service.AuditionsService;
 import com.hicode.oa.tool.Adviser;
 import com.hicode.oa.tool.Auditions;
+import com.hicode.oa.tool.School;
 import com.hicode.oa.tool.Teacher;
 import com.hicode.oa.tool.UserInfo;
 
@@ -59,6 +60,12 @@ public class AuditionsController {
 		if (stu_class != null & stu_class != "") {
 			map.put("stu_class", stu_class);
 		}
+		
+		String stu_school = request.getParameter("stu_school");
+		if (stu_school != null & stu_school != "") {
+			map.put("stu_school", stu_school);
+		}
+		
 		String stu_phone = request.getParameter("stu_phone");
 		if (stu_phone != null & stu_phone != "") {
 			map.put("stu_phone", stu_phone);
@@ -115,6 +122,11 @@ public class AuditionsController {
 			obj.put("name", adv1.getSt_name());
 			obj.put("sex", adv1.getSt_sex());
 			obj.put("classinfo", adv1.getSt_class());
+			if(adv1.getSchool() != null){
+				obj.put("school", adv1.getSchool().getSch_name());
+			}else{
+				obj.put("school", "0000");
+			}
 			obj.put("phone", adv1.getPhone());
 			obj.put("tea_name", adv1.getTeacher().getT_name());
 			obj.put("adv_name", adv1.getAdviser().getAdv_name());
@@ -196,6 +208,7 @@ public class AuditionsController {
 			st_class = "高三";
 			break;
 		}
+		String sch_id = request.getParameter("update_school");
 		String phone = request.getParameter("phone");
 		String t_id = request.getParameter("update_selteas");
 		String adv_id = request.getParameter("update_seladvs");
@@ -213,10 +226,15 @@ public class AuditionsController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 		auditions.setSt_name(st_name);
 		auditions.setSt_sex(Integer.valueOf(st_sex));
 		auditions.setSt_class(st_class);
+		
+		School school = new School();
+		school.setSch_id(Integer.valueOf(sch_id));
+		
+		auditions.setSchool(school);
 		auditions.setPhone(phone);
 		Teacher t = new Teacher();
 		t.setT_id(t_id);
@@ -316,6 +334,7 @@ public class AuditionsController {
 			st_class = "高三";
 			break;
 		}
+		String sch_id = request.getParameter("update_school");
 		String phone = request.getParameter("phone");
 		String t_id = request.getParameter("update_selteas");
 		String adv_id = request.getParameter("update_seladvs");
@@ -338,6 +357,11 @@ public class AuditionsController {
 		auditions.setSt_name(st_name);
 		auditions.setSt_sex(Integer.valueOf(st_sex));
 		auditions.setSt_class(st_class);
+
+		School school = new School();
+		school.setSch_id(Integer.valueOf(sch_id));
+		
+		auditions.setSchool(school);
 		auditions.setPhone(phone);
 		Teacher t = new Teacher();
 		t.setT_id(t_id);

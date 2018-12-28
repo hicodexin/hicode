@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * 顾问详情
  * 
- * @author xinpeixiang
+ * @author XinPeiXiang
  * @date 2018-10-19
  */
 public class Adviser implements Serializable{

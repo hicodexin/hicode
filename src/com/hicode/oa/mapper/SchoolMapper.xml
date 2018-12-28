@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hicode.oa.dao.SchoolDAO">
+	
+	
+	<sql id="all_column">
+		 sch_id, sch_name,remarks
+	</sql>
+	
+	<select id="getSchoolByID" parameterType="java.lang.Integer" resultType="School">
+		select <include refid="all_column"></include> from school where sch_id = #{sch_id};
+	</select>
+	
+	<select id="getSchoolByInfo"  resultType="School">
+		select <include refid="all_column"></include> from school ;
+	</select>
+	
+	<insert id="do_insertSchool" parameterType="School" keyProperty="sch_id">
+		insert into school(sch_name,remarks) values(#{sch_name},#{remarks});
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="do_updateSchool" parameterType="School">
+		update school set sch_name = #{sch_name},remarks = #{remarks} where sch_id = #{sch_id};
+	</update>
+</mapper>
+
+

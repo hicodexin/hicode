@@ -27,6 +27,13 @@ $().ready(function() {
 
 		$("#stu_name").val("");
 		$("#stu_phone").val("");
+		
+		$.post("/hicode/school/showSchool.spc", function(c) {
+			if (c.length > 0) {
+				for_sel_sf("stu_school", c);
+			}
+		}, "json");
+		
 		$.post("/hicode/teacher/showTeacher.spc", function(c) {
 			if (c.length > 0) {
 				for_sel_sf("stu_teacher", c);
@@ -60,6 +67,7 @@ $().ready(function() {
 			"page" : 1,
 			"stu_name" : $("#stu_name").val().trim(),
 			"stu_class" : $('#stu_class').val(),
+			"stu_school":$("#stu_school").val(),
 			"stu_phone" : $('#stu_phone').val().trim(),
 			"stu_teacher" : $("#stu_teacher").val(),
 			"kai_time" : $("#kai_time").val().trim(),

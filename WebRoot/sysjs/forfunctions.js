@@ -202,6 +202,15 @@ function for_btn_aud() {
 					var sel_class = $("#update_selclass option");
 
 					for_sel02("update_selclass", sel_class, optionName);
+					
+					$.post("/hicode/school/showSchool.spc", function(c) {
+						if (c.length > 0) {
+							var name = $("[name='update_school']:eq(" + t + ")").html();
+							console.log("======c======");
+							console.log(c);
+							for_sel("update_school", c, name);
+						}
+					}, "json");
 
 					$.post("/hicode/teacher/showTeacher.spc", function(c) {
 						if (c.length > 0) {
@@ -593,6 +602,12 @@ function add_aud() {
 	$("#phone").val("");
 	$("#time_creatDate").val("");
 	$("#remarks").val("");
+	
+	$.post("/hicode/school/showSchool.spc", function(c) {
+		if (c.length > 0) {
+			for_sel("update_school", c);
+		}
+	}, "json");
 
 	$.post("/hicode/teacher/showTeacher.spc", function(c) {
 		if (c.length > 0) {
@@ -806,6 +821,7 @@ function up_sub_aud() {
 		"t_sex" : $('input:radio[name="t_sex"]:checked').val(),
 		"phone": $("#phone").val().trim(),
 		"update_selclass" : $("#update_selclass").val(),
+		"update_school":$("#update_school").val(),
 		"update_selteas" : $("#update_selteas").val(),
 		"update_seladvs" : $("#update_seladvs").val(),
 		"update_seladvs2" : $("#update_seladvs2").val(),
@@ -1705,6 +1721,9 @@ function creat_tb_aud(back_all, p_dom) {
 		}
 
 		str += "<td name='update_selclass'>" + back_all[i].classinfo + "</td>";
+		
+		str += "<td name='update_school'>" + back_all[i].school + "</td>";
+		
 		if(back_all[i].phone){
 			str += "<td name='phone'>" + back_all[i].phone + "</td>";
 		}else{

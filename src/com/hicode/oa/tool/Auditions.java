@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 试听课记录
  * 
- * @author xinpeixiang
+ * @author XinPeiXiang
  * @date 2018-10-19
  */
 public class Auditions implements Serializable {
@@ -28,9 +28,14 @@ public class Auditions implements Serializable {
 	 */
 	private Integer st_sex;
 	/**
-	 * 学校/年级
+	 * 年级
 	 */
 	private String st_class;
+	
+	/**
+	 * 学校
+	 */
+	private School school;
 
 	/**
 	 * 手机号
@@ -92,6 +97,14 @@ public class Auditions implements Serializable {
 
 	public void setSt_class(String st_class) {
 		this.st_class = st_class;
+	}
+	
+	public School getSchool() {
+		return school;
+	}
+
+	public void setSchool(School school) {
+		this.school = school;
 	}
 
 	public String getPhone() {
