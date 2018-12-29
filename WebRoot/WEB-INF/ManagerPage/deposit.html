@@ -158,9 +158,9 @@
 		</table>
 	</div>
 	<div id="dv_page">
-		<button id="bt_first" mypage="1">首页</button>
+		<!-- <button id="bt_first" mypage="1">首页</button> -->
 		<div id="dv_but"></div>
-		<button id="bt_end">尾页</button>
+		<!-- <button id="bt_end">尾页</button> -->
 	</div>
 </body>
 <script type="text/javascript">
@@ -186,16 +186,6 @@
  			window.location = "/hicode/index.html";
  		});
  		
- 		//第一页
- 		$("#bt_first").click(function(){
- 			change_page_dep(this);
- 			$("#dv_but button:eq(0)").css({"backgroundColor":"#336699","color":"#fff"});
- 		});
- 		//最后一页
- 		$("#bt_end").click(function(){
- 			change_page_dep(this);
- 			$("#dv_but button:eq(-1)").css({"backgroundColor":"#336699","color":"#fff"});
- 		});
  		/* 添加学员信息，提交按钮  */
  		$("#up_sub").click( up_sub_dep );
 		// 日历插件
@@ -213,6 +203,21 @@
 			isTime:false, //isClear:false,
 			minDate:"1014-09-19 00:00:00"
 		}) ;
+			/*
+		//第一页
+ 		$("#bt_first").click(function(){
+ 			change_page_tea(this);
+ 			$("#dv_but button:eq(0)").css({"backgroundColor":"#336699","color":"#fff"});
+ 		});
+ 		//最后一页
+ 		$("#bt_end").click(function(){
+ 			change_page_tea(this);
+ 			$("#dv_but button:eq(-1)").css({"backgroundColor":"#336699","color":"#fff"});
+ 		});
+  		$("#index_go").click(function(){
+ 			window.location = "/hicode/index.html";
+ 		});
+ 		*/
 	});
 </script>
 </html>

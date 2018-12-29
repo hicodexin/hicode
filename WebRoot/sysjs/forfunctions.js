@@ -27,7 +27,6 @@ function timestampToTime_hms(timestamp) {
  */
 function getUserName(id) {
 	$.post("/hicode/UserInfo/getUserName.jsp", function(a) {
-		console.log(a);
 		$("#" + id).children("#user_out").remove();
 		if (a) {
 			if (a.ok == "okk") {
@@ -136,7 +135,6 @@ function for_btnXX_usr() {
 	var revise = new Array();
 	if (bts.length > 0) {
 		for (var i = 0, j = 0; i < bts.length; i++) {
-			console.log($(bts[i]).html())
 			if ($(bts[i]).html() == "下线") {
 				revise[j] = bts[i];
 				j++;
@@ -206,8 +204,6 @@ function for_btn_aud() {
 					$.post("/hicode/school/showSchool.spc", function(c) {
 						if (c.length > 0) {
 							var name = $("[name='update_school']:eq(" + t + ")").html();
-							console.log("======c======");
-							console.log(c);
 							for_sel("update_school", c, name);
 						}
 					}, "json");
@@ -320,7 +316,6 @@ function for_btn_tea() {
 			}
 		}
 	}
-	console.log("==========tea========");
 
 	if (revise.length > 0) {
 		for (var k = 0; k < revise.length; k++) {
@@ -365,7 +360,6 @@ function for_btn_sub() {
 			}
 		}
 	}
-	console.log("==========sub========");
 	if (revise.length > 0) {
 		for (var k = 0; k < revise.length; k++) {
 			(function() {
@@ -1052,7 +1046,6 @@ function up_sub_sub() {
 			return;
 		}
 		data.id = $("#tea_list").attr("name");
-		console.log(data);
 		$.post("/hicode/subject/do_updateSubject.spc", data, function(e) {
 			$("#hidd_mask").hide().hide(300);
 			$("#dv_update").show().hide(300);
@@ -1092,7 +1085,6 @@ function up_sub_cus() {
 	var yy = $("#student_sel option");
 	for (var i = 0; i < yy.length; i++) {
 		if ($(yy[i]).html() == ss) {
-			console.log($(yy[i]).val());
 			ss = $(yy[i]).val();
 			break;
 		}
@@ -1110,7 +1102,6 @@ function up_sub_cus() {
 		"adviser_sel" : $('#adviser_sel').val(),
 		"remarks" : $("#remarks").val()
 	};
-	console.log(data);
 
 	var content = $(this).html();
 	if (content == "添加") {
@@ -1204,7 +1195,6 @@ function up_sub_dep() {
 	var yy = $("#student_sel option");
 	for (var i = 0; i < yy.length; i++) {
 		if ($(yy[i]).html() == ss) {
-			console.log($(yy[i]).val());
 			ss = $(yy[i]).val();
 			break;
 		}
@@ -1222,7 +1212,6 @@ function up_sub_dep() {
 		"refund_time" : $('#refund_time').val(),
 		"remarks" : $("#remarks").val()
 	};
-	console.log(data);
 
 	var content = $(this).html();
 	if (content == "添加") {
@@ -1293,7 +1282,6 @@ function up_sub_wv() {
 	var yy = $("#student_sel option");
 	for (var i = 0; i < yy.length; i++) {
 		if ($(yy[i]).html() == ss) {
-			console.log($(yy[i]).val());
 			ss = $(yy[i]).val();
 			break;
 		}
@@ -1309,7 +1297,6 @@ function up_sub_wv() {
 		"if_signup" : $('input:radio[name="if_signup"]:checked').val(),
 		"remarks" : $("#remarks").val()
 	};
-	console.log(data);
 
 	var content = $(this).html();
 	if (content == "添加") {
@@ -1358,11 +1345,11 @@ function up_sub_wv() {
 /* 初始化数据 */
 function start_post_aud(backFunction,pagedata) {
 	$.post("/hicode/auditions/showAuditionsByInfo.spc", pagedata, function(a) {
-		console.log(a.list_advs);
 		if (a) {
 			creat_tb_aud(a.list_advs, "#tbl_body");
 			/* 添加页码 */
 			if (a.all_num) {
+				
 				$("#dv_but").children("button").remove();
 				for (var k = 0; k < a.all_num; k++) {
 					var btn = document.createElement("button");
@@ -1380,7 +1367,6 @@ function start_post_aud(backFunction,pagedata) {
 
 					$("#dv_but").append(btn);
 				}
-				$("#bt_end").attr("mypage", a.all_num);
 			}
 			//修改按钮赋单击事件
 			backFunction();
@@ -1518,7 +1504,6 @@ function start_post_cus(backFunction) {
 	$.post("/hicode/customer/showCustomerByInfo.spc", {
 		"page" : 1
 	}, function(a) {
-		console.log(a.list_advs);
 		if (a) {
 			creat_tb_cus(a.list_advs, "#tbl_body");
 			/* 添加页码 */
@@ -1576,7 +1561,6 @@ function start_post_dep(backFunction) {
 	$.post("/hicode/deposit/showDepositByInfo.spc", {
 		"page" : 1
 	}, function(a) {
-		console.log(a.list_advs);
 		if (a) {
 			creat_tb_dep(a.list_advs, "#tbl_body");
 			/* 添加页码 */
@@ -1617,7 +1601,6 @@ function start_post_wv(backFunction) {
 	$.post("/hicode/winterVacation/showWinterVacationByInfo.spc", {
 		"page" : 1
 	}, function(a) {
-		console.log(a.list_advs);
 		if (a) {
 			creat_tb_wv(a.list_advs, "#tbl_body");
 			/* 添加页码 */

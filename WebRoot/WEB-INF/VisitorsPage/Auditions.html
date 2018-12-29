@@ -47,7 +47,7 @@
 <body>
 	<!-- 查询 -->
 	<div id="dv_select">
-  		<div class="dv_title" style="background-color: #FF547E;">请填入查询条件</div>
+  		<div class="dvselect_title" >请填入查询条件</div>
   		<div class="dvselect_main">
   			<div class="main_left">
   				<ul id="left_ul">
@@ -239,14 +239,11 @@
 		</table>
 	</div>
 	<div id="dv_page">
-		<button id="bt_first" mypage="1">首页</button>
 		<div id="dv_but"></div>
-		<button id="bt_end">尾页</button>
 	</div>
 </body>
 <script type="text/javascript">
 	$().ready(function() {
-	
 		var bd_hig = document.documentElement.clientHeight;
   		$("#hidd_mask").css("height",bd_hig+"px");
   		$("#dv_update").hide();
@@ -267,16 +264,6 @@
  			window.location = "/hicode/index.html";
  		});
  		
- 		//第一页
- 		$("#bt_first").click(function(){
- 			change_page_aud(this,pagedata);
- 			$("#dv_but button:eq(0)").css({"backgroundColor":"#336699","color":"#fff"});
- 		});
- 		//最后一页
- 		$("#bt_end").click(function(){
- 			change_page_aud(this);
- 			$("#dv_but button:eq(-1)").css({"backgroundColor":"#336699","color":"#fff"});
- 		});
  		/* 添加学员信息，提交按钮  */
  		$("#up_sub").click( up_sub_aud );
 		// 日历插件
@@ -288,7 +275,9 @@
 			minDate : "1014-09-19 00:00:00"
 		}) ;
 		
-		
+		//条件筛选
+		var bd_wid = document.documentElement.clientWidth;
+		$("#dv_select").css("left",(bd_wid-1080)/2+"px");
 		jeDate({
 			dateCell : "#kai_time",
 			format : "YYYY-MM-DD", 

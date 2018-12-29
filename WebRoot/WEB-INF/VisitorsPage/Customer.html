@@ -6,43 +6,116 @@
     <meta name="keywords" content="keyword1,keyword2,keyword3">
     <meta name="description" content="this is my page">
     <meta name="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+	#student_sel_chosen{
+		width: 260px;
+	}
+	[name='dv_money']{
+		width: 245px; 
+		height: 75px;
+		background-color:#fff; 
+		display: inline-block;
+		border: solid 1px #336699;
+		border-radius: 6px;
+		margin-left: 4px;
+	}
+	#remarks {
+		float: left; 
+		outline:none;
+		border:none;
+		font-size: 18px;
+		border-radius: 6px;
+		padding: 3px;
+		margin-left: 6px;
+	}
+</style>
 
 <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
 <link type="text/css" rel="stylesheet" href="/hicode/syscss/teacher_page.css" />
 <link type="text/css" rel="stylesheet" href="/hicode/syscss/for_date.css" />
 <link rel="stylesheet" href="/hicode/syscss/bootstrap-chosen.css">
 <link type="text/css" rel="stylesheet" href="/hicode/syscss/beizhu.css" />
+<link type="text/css" rel="stylesheet" href="/hicode/syscss/select/shaixuan.css" />
+
 <script type="text/javascript" src="/hicode/sysjs/jquery.min.js"></script>
 <script type="text/javascript" src="/hicode/sysjs/beizhu/remarks.js"></script>
 <script type="text/javascript" src="/hicode/sysjs/forfunctions.js"></script>
 <script type="text/javascript" src="/hicode/sysjs/jeDate.js"></script>
 <script src="/hicode/sysjs/chosen.jquery.js"></script>
-	<style type="text/css">
-		#student_sel_chosen{
-			width: 260px;
-		}
-		[name='dv_money']{
-			width: 245px; 
-			height: 75px;
-			background-color:#fff; 
-			display: inline-block;
-			border: solid 1px #336699;
-			border-radius: 6px;
-			margin-left: 4px;
-		}
-		#remarks {
-			float: left; 
-			outline:none;
-			border:none;
-			font-size: 18px;
-			border-radius: 6px;
-			padding: 3px;
-			margin-left: 6px;
-		}
-	</style>
+<script type="text/javascript" src="/hicode/sysjs/select/shaixuan.js"></script>
+
+
 </head>
 
 <body>
+	<!-- 查询 -->
+	<div id="dv_select">
+  		<div class="dvselect_title">请填入查询条件</div>
+  		<div class="dvselect_main">
+  			<div class="main_left">
+  				<ul id="left_ul">
+  					<li>
+  						<b>姓名:</b>
+  						<input type="text" id="stu_name"  placeholder="请输入"/>
+  					</li>
+  					<li>
+  						<b>课程:</b>
+	  					<select id="stu_subject"> </select>
+  					</li>
+  					<li>
+  						<b>课时:</b>
+  						<input type="text" id="stu_period"  placeholder="请输入"/>
+  					</li>
+  					<li>
+  						<b>授课老师:</b>
+  						<select id="stu_teacher"></select>
+  					</li>
+  					<li>
+  						<b>待定 : </b> 
+						<input type="text" disabled="disabled"/>
+  					</li>
+  				</ul>
+  			</div>
+  			<div class="main_right">
+  				<ul id="left_ul">
+  					<li>
+  						<b>开始时间:</b>
+  						<input type="text" id="kai_time"  readonly="readonly" placeholder="请输入"/>
+  					</li>
+  					<li>
+  						<b>截止时间:</b>
+  						<input type="text" id="ting_time"  readonly="readonly" placeholder="请输入"/>
+  					</li>
+  					<li>
+  						<b>签单顾问:</b>
+  						<select id="qian_gu"></select>
+  					</li>
+  					<li>
+  						<b>续费:</b>
+  						<select id="if_xufei">
+  							<option disabled="disabled" selected="selected">请选择</option>
+  							<option value="1">已续费</option>
+  							<option value="0">未续费</option>
+  						</select>
+  					</li>
+  					<li>
+  						<b>待续:</b>
+  						<input type="text" disabled="disabled"/>
+  					</li>
+  				</ul>
+  			</div>
+  		</div>
+  		<div class="dvselect_bottom">
+  			<div>
+  				<button id="sel_sub_cus" class="sel_sub">开始筛选</button>
+  			</div>
+  			
+  			<div>
+  				<button id="sel_res" class="sel_res">返回</button>
+  			</div>
+			
+  		</div>
+  	</div>
 	<!-- 隐藏  -->
 	<div id="hidd_mask"></div>
 	<div id="dv_update" style="height: 920px">
@@ -135,7 +208,7 @@
 		<button id="find_user" class="for_button">欢迎:</button>
 	</div>
 	<hr>
-	<div class="dv_title">报名信息详情</div>
+	<div class="dv_title">报名信息详情<button id="bt_open_aud">展开<span>▼</span></button></div>
 	<button id="bt_1">添加</button>
 	<div id="dv_table">
 		<table id="tea_tbl" cellspacing="0">
@@ -163,9 +236,9 @@
 		</table>
 	</div>
 	<div id="dv_page">
-		<button id="bt_first" mypage="1">首页</button>
+		<!-- <button id="bt_first" mypage="1">首页</button> -->
 		<div id="dv_but"></div>
-		<button id="bt_end">尾页</button>
+		<!-- <button id="bt_end">尾页</button> -->
 	</div>
 </body>
 <script type="text/javascript">
@@ -178,20 +251,6 @@
   		start_post_cus(for_btn_cus);
   		getUserName("dv_top");
   		
-  		//第一页
- 		$("#bt_first").click(function(){
- 			change_page_cus(this);
- 			$("#dv_but button:eq(0)").css({"backgroundColor":"#336699","color":"#fff"});
- 		});
- 		
- 		//最后一页
- 		$("#bt_end").click(function(){
- 			change_page_cus(this);
- 			$("#dv_but button:eq(-1)").css({"backgroundColor":"#336699","color":"#fff"});
- 		});
- 		$("#index_go").click(function(){
- 			window.location = "/hicode/index.html";
- 		});
  		//点击添加按钮
  		$("#bt_1").click(add_cus);
  		
@@ -206,13 +265,30 @@
 			isTime : true, //isClear:false,
 			minDate : "1014-09-19 00:00:00"
 		}) ;
+		jeDate({
+			dateCell : "#kai_time",
+			format : "YYYY-MM-DD", 
+			isinitVal : true,
+			isTime : false, // 
+			isClear:true,
+			minDate : "1014-09-19 00:00:00"
+		}) ;
+		
+		//条件筛选
+		var bd_wid = document.documentElement.clientWidth;
+		$("#dv_select").css("left",(bd_wid-1080)/2+"px");
+		jeDate({
+			dateCell : "#ting_time",
+			format : "YYYY-MM-DD", 
+			isinitVal : true,
+			isTime : false, // isClear:true,
+			minDate : "1014-09-19 00:00:00"
+		}) ;
 		// 点击返回消失
   		$("#up_res").click(function(){
   			$("#hidd_mask").hide().hide(300);
  			$("#dv_update").show().hide(300);
  		});
- 		
- 		
  		
 	});
 </script>

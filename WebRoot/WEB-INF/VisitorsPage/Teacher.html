@@ -124,9 +124,9 @@
 	    </table>
     </div>
     <div id="dv_page">
-		<button id="bt_first" mypage="1">首页</button>
+		<!-- <button id="bt_first" mypage="1">首页</button> -->
 		<div id="dv_but"></div>
-		<button id="bt_end">尾页</button>
+		<!-- <button id="bt_end">尾页</button> -->
 	</div>
   </body>
   <script type="text/javascript">
@@ -138,20 +138,7 @@
   		$("#hidd_mask").hide();
   		start_post_tea(for_btn_tea);
   		getUserName("dv_top");
-  		//第一页
- 		$("#bt_first").click(function(){
- 			change_page_tea(this);
- 			$("#dv_but button:eq(0)").css({"backgroundColor":"#336699","color":"#fff"});
- 		});
- 		//最后一页
- 		$("#bt_end").click(function(){
- 			change_page_tea(this);
- 			$("#dv_but button:eq(-1)").css({"backgroundColor":"#336699","color":"#fff"});
- 		});
-  		$("#index_go").click(function(){
- 			window.location = "/hicode/index.html";
- 		});
- 		
+  		
   		// 点击返回消失
   		$("#up_res").click(function(){
   			$("#hidd_mask").hide().hide(300);
@@ -184,6 +171,22 @@
 			isTime:false, //isClear:false,
 			minDate:"1014-09-19 00:00:00"
 		}) ;
+		
+		/*
+		//第一页
+ 		$("#bt_first").click(function(){
+ 			change_page_tea(this);
+ 			$("#dv_but button:eq(0)").css({"backgroundColor":"#336699","color":"#fff"});
+ 		});
+ 		//最后一页
+ 		$("#bt_end").click(function(){
+ 			change_page_tea(this);
+ 			$("#dv_but button:eq(-1)").css({"backgroundColor":"#336699","color":"#fff"});
+ 		});
+  		$("#index_go").click(function(){
+ 			window.location = "/hicode/index.html";
+ 		});
+ 		*/
   	});
   </script>
 </html>

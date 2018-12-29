@@ -5,10 +5,20 @@
 	width: 1080px;
 	height: 650px;
 	border-bottom: solid 1px #ff6699;
-	background-color: #D0D0D0;
+	background-color:#D0D0D0;
 	z-index: 9;
 	left: 20%;
 	border-radius: 9px;
+}
+.dvselect_title{
+	height: 90px;
+	color: #ffffff;
+	font-family: "楷体";
+	font-size: 40px;
+	font-weight: 700;
+	text-align: center;
+	line-height: 90px;
+	background-color: #336699;
 }
 
 .dvselect_main {
@@ -94,13 +104,14 @@
 .dvselect_bottom button {
 	border: 0px;
 	color: #336699;
-	background-color: #fff;
+	background-color: #ffffff;
 	width: 90px;
 	height: 40px;
 	border-radius: 6px;
 	outline-style: none;
 	display: block;
 	font-family: "楷体";
+	font-weight:600;
 	font-size: 18px;
 }
 

@@ -19,8 +19,10 @@ $().ready(function() {
 		start;
 	//初始位置
 	$("#dv_select").css("top", "-651px");
-
-	//展开
+	
+/** ==============================================条件查询--展开============================================== */
+	
+	//试听课展开
 	$("#bt_open_aud").click(function() {
 
 		$("#hidd_mask").hide().show(300);
@@ -55,12 +57,41 @@ $().ready(function() {
 		start = -650;
 		sit = setInterval(for_open, 10);
 	});
+	
+	//试听课展开
+	$("#bt_open_cus").click(function() {
 
+		$("#hidd_mask").hide().show(300);
 
-	//关闭
-	$("#sel_res").click(click_close);
+		$("#stu_name").val("");
+		$("#stu_phone").val("");
+		
+		$.post("/hicode/teacher/showTeacher.spc", function(c) {
+			if (c.length > 0) {
+				for_sel_sf("stu_teacher", c);
+			}
+		}, "json");
 
+		$("#kai_time").val("");
+		$("#ting_time").val("");
+		$("#yao_gu").val("");
+		$("#qian_gu").val("");
 
+		$.post("/hicode/adviser/showAdviser.spc", function(f) {
+			if (f.length > 0) {
+				for_sel_sf("yao_gu", f);
+				for_sel_sf("qian_gu", f);
+			}
+		}, "json");
+
+		start = -650;
+		sit = setInterval(for_open, 10);
+	});
+	
+	
+/** ==============================================条件查询data============================================== */
+	
+	
 	//试听课条件查询
 	$("#sel_sub_aud").click(function() {
 		var data = {
@@ -81,6 +112,9 @@ $().ready(function() {
 		click_close();
 	});
 
+	
+	//关闭
+	$("#sel_res").click(click_close);
 
 	function click_close() {
 		$("#hidd_mask").show().hide(300);

@@ -42,7 +42,6 @@ public class SchoolController {
 			obj.put("id", t.getSch_id());
 			obj.put("name", t.getSch_name());
 			jsry.add(obj);
-			System.out.println(t);
 		}
 
 		return jsry.toString();
