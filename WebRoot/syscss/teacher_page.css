@@ -32,6 +32,21 @@
 	margin-left: 55%;
 	padding: 5px;
 }
+
+@media ( max-width: 1330px) {
+	#find_user {
+		margin-left: 40%;
+		padding: 5px;
+	}
+}
+
+@media ( max-width: 800px) {
+	#find_user {
+		margin-left: 100px;
+		padding: 5px;
+	}
+}
+
 #user_out{
 	margin-left: 10px;
 	width: 65px;
@@ -78,14 +93,35 @@
 	cursor: pointer;
 }
 
+@media ( max-width: 1330px) {
+	#bt_1 {
+		left: 90%;
+	}
+}
+
 #dv_table {
 	height: 650px;
+	width:100%;
 	overflow: auto;
 }
 
 #tea_tbl {
 	margin: auto;
-	width: 70%;
+	width: 80%;
+}
+
+@media ( max-width: 1630px) {
+	#tea_tbl {
+		margin: auto;
+		width: 1400px;
+	}
+}
+
+@media ( max-width: 1430px) {
+	#tea_tbl {
+		margin: auto;
+		width: 1200px;
+	}
 }
 
 #tea_tbl thead tr th {

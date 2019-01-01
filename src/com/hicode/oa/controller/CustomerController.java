@@ -3,7 +3,9 @@ package com.hicode.oa.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -46,29 +48,66 @@ public class CustomerController {
 
 	@ResponseBody
 	@RequestMapping(value = "/showCustomerByInfo", method = RequestMethod.POST)
-	public String showCustomerByInfo(HttpServletRequest request) {
+	public String showCustomerByInfo(HttpServletRequest request) 	{
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		String stu_name = request.getParameter("stu_name");
+		if (stu_name != null & stu_name != "") {
+			map.put("stu_name", "%" + stu_name + "%");
+		}
+		String stu_subject = request.getParameter("stu_subject");
+		if (stu_subject != null & stu_subject != "") {
+			map.put("stu_subject", stu_subject);
+		}
+		
+		String stu_period = request.getParameter("stu_period");
+		if (stu_period != null & stu_period != "") {
+			map.put("stu_period", stu_period);
+		}
+		
+		String stu_teacher = request.getParameter("stu_teacher");
+		if (stu_teacher != null & stu_teacher != "") {
+			map.put("stu_teacher", stu_teacher);
+		}
+		String kai_time = request.getParameter("kai_time");
+		if (kai_time != null & kai_time != "") {
+			map.put("kai_time", kai_time);
+		}
+		String ting_time = request.getParameter("ting_time");
+		if (ting_time != null & ting_time != "") {
+			map.put("ting_time", ting_time);
+		}
+		
+		String qian_gu = request.getParameter("qian_gu");
+		if (qian_gu != null & qian_gu != "") {
+			map.put("qian_gu", qian_gu);
+		}
+		
+		String if_xufei = request.getParameter("if_xufei");
+		if (if_xufei != null & if_xufei != "") {
+			map.put("if_xufei", if_xufei);
+		}
+
 		// 页码
 		String page = request.getParameter("page");
-
 		// 开始数字
 		Integer start = 0;
 		// 每页显示条数
-		Integer num = 20;
+		Integer num = 30;
 
 		if (page != null) {
-			start = (Integer.valueOf(page) - 1) * 20;
+			start = (Integer.valueOf(page) - 1) * 30;
 		}
 
 		Integer all_num = null;
-		if (page.equals("1")) {
-			all_num = customerService.getCustomerForCount();
 
-			if (all_num != null) {
-				all_num = (all_num % 20 == 0) ? (all_num / 20) : (all_num / 20 + 1);
-			}
+		map.put("start", start);
+		map.put("count", num);
 
-		}
-		List<Customer> advs = customerService.getCustomerAll(start, num);
+		JSONObject obj_arr = new JSONObject();
+
+		List<Customer> advs = customerService.getCustomerBySomeOption(map);
 
 		JSONArray objs = new JSONArray();
 
@@ -89,15 +128,20 @@ public class CustomerController {
 			obj.put("beizhu", adv1.getRemarks());
 			objs.add(obj);
 		}
-		JSONObject obj_arr = new JSONObject();
 		obj_arr.put("list_advs", objs);
-
+		
 		if (page.equals("1")) {
+
+			all_num = customerService.getCustomerForCountBySomeOption(map);
+
+			if (all_num != null) {
+				all_num = (all_num % 30 == 0) ? (all_num / 30) : (all_num / 30 + 1);
+			}
 			obj_arr.put("all_num", all_num);
 		}
-
 		return obj_arr.toString();
 	}
+
 
 	/**
 	 * 添加报名学员

@@ -93,7 +93,7 @@
   					<li>
   						<b>续费:</b>
   						<select id="if_xufei">
-  							<option disabled="disabled" selected="selected">请选择</option>
+  							<option disabled="disabled" selected="selected" value="-1">请选择</option>
   							<option value="1">已续费</option>
   							<option value="0">未续费</option>
   						</select>
@@ -208,7 +208,7 @@
 		<button id="find_user" class="for_button">欢迎:</button>
 	</div>
 	<hr>
-	<div class="dv_title">报名信息详情<button id="bt_open_aud">展开<span>▼</span></button></div>
+	<div class="dv_title">报名信息详情<button id="bt_open_cus">展开<span>▼</span></button></div>
 	<button id="bt_1">添加</button>
 	<div id="dv_table">
 		<table id="tea_tbl" cellspacing="0">
@@ -248,7 +248,9 @@
   		$("#hidd_mask").css("height",bd_hig+"px");
   		$("#dv_update").hide();
   		$("#hidd_mask").hide();
-  		start_post_cus(for_btn_cus);
+  		
+  		var pagedata = {"page":1};
+  		start_post_cus(for_btn_cus,pagedata);
   		getUserName("dv_top");
   		
  		//点击添加按钮
@@ -256,6 +258,11 @@
  		
  		/* 添加学员信息，提交按钮  */
  		$("#up_sub").click(up_sub_cus);
+ 		
+ 		// 点击首页按钮
+ 		$("#index_go").click(function(){
+ 			window.location = "/hicode/index.html";
+ 		});
  		
 		// 日历插件
 		jeDate({

@@ -52,5 +52,13 @@ public class CustomerDAO extends SysDAO{
 		// TODO Auto-generated method stub
 		return update(nameSpace+"do_updateCustomerRemarks", customer);
 	}
+	public List<Customer> getCustomerBySomeOption(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return selectList(nameSpace+"getCustomerBySomeOption", map);
+	}
+	public Integer getCustomerForCountBySomeOption(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return  selectOne(nameSpace+"getCustomerForCountBySomeOption", map);
+	}
 
 }

@@ -27,6 +27,90 @@
 	<select id="getCustomerForCount" resultType="java.lang.Integer">
 		select count(1) from customer;
 	</select>
+	
+	<select id="getCustomerBySomeOption" parameterType="java.util.Map" resultMap="getCustomer_oop">
+	<!--stu_name,stu_subject,stu_period,stu_teacher,kai_time,ting_time,qian_gu ,if_xufei -->
+		SELECT <include refid="all_column"></include> FROM customer 
+		WHERE 1=1
+		
+			<if test="stu_name != null">
+				AND au_id in
+					(SELECT t2.au_id FROM auditions t2 WHERE t2.st_name LIKE #{stu_name} )
+			</if>
+			
+			<if test="stu_subject != null">
+				AND sub_id = #{stu_subject}
+			</if>
+			
+			<if test="stu_period != null">
+				AND period = #{stu_period}
+			</if>
+			
+			<if test="stu_teacher != null">
+				AND t_id = #{stu_teacher}
+			</if>
+			
+		    <if test="kai_time != null">
+		   		 AND first_time &gt;= #{kai_time}
+		    </if>
+		
+			<if test="ting_time != null">
+				AND first_time &lt;= #{ting_time}
+			</if>
+			
+			<if test="qian_gu != null">
+				AND adv_id = #{qian_gu}
+			</if>
+			
+			<if test="if_xufei != null">
+				AND if_renewal = #{if_xufei}
+			</if>
+		ORDER BY first_time
+		limit #{start},#{count};
+	</select>
+	
+	<select id="getCustomerForCountBySomeOption" parameterType="java.util.Map"  resultType="java.lang.Integer">
+	<!--stu_name,stu_subject,stu_period,stu_teacher,kai_time,ting_time,qian_gu ,if_xufei -->
+		SELECT count(1) FROM customer 
+		WHERE 1=1
+		
+			<if test="stu_name != null">
+				AND au_id in
+					(SELECT t2.au_id FROM auditions t2 WHERE t2.st_name LIKE #{stu_name} )
+			</if>
+			
+			<if test="stu_subject != null">
+				AND sub_id = #{stu_subject}
+			</if>
+			
+			<if test="stu_period != null">
+				AND period = #{stu_period}
+			</if>
+			
+			<if test="stu_teacher != null">
+				AND t_id = #{stu_teacher}
+			</if>
+			
+		    <if test="kai_time != null">
+		   		 AND first_time &gt;= #{kai_time}
+		    </if>
+		
+			<if test="ting_time != null">
+				AND first_time &lt;= #{ting_time}
+			</if>
+			
+			<if test="qian_gu != null">
+				AND adv_id = #{qian_gu}
+			</if>
+			
+			<if test="if_xufei != null">
+				AND if_renewal = #{if_xufei}
+			</if>
+		ORDER BY first_time
+		limit #{start},#{count};
+	</select>
+	
+	
 	<!-- 添加签单学员 -->
 	<insert id="do_insertCustomer" parameterType="Customer" keyProperty="er_id">
 		insert into customer

@@ -675,6 +675,7 @@ function add_cus() {
 	$("#dv_title").html("添加签单信息");
 	$("#up_sub").html("添加");
 	$("#userName").val("");
+	$("#period").val("");
 	$("#money").val("");
 	$("#giveClass").val("");
 	$("#first_time").val("");
@@ -1500,10 +1501,8 @@ function start_post_sub(backFunction) {
 }
 
 /* 初始化数据 */
-function start_post_cus(backFunction) {
-	$.post("/hicode/customer/showCustomerByInfo.spc", {
-		"page" : 1
-	}, function(a) {
+function start_post_cus(backFunction,pagedata) {
+	$.post("/hicode/customer/showCustomerByInfo.spc", pagedata, function(a) {
 		if (a) {
 			creat_tb_cus(a.list_advs, "#tbl_body");
 			/* 添加页码 */
@@ -1520,12 +1519,12 @@ function start_post_cus(backFunction) {
 						});
 					}
 					$(btn).click(function() {
-						change_page_cus(this);
+						change_page_cus(this,pagedata);
 					});
 
 					$("#dv_but").append(btn);
 				}
-				$("#bt_end").attr("mypage", a.all_num);
+				/*$("#bt_end").attr("mypage", a.all_num);*/
 			}
 			//修改按钮赋单击事件
 			backFunction();
@@ -1754,6 +1753,7 @@ function creat_tb_aud(back_all, p_dom) {
 
 /* back_all: 待便利的值 */
 function creat_tb_cus(back_all, p_dom) {
+	$(p_dom).children("tr").remove();
 	for (var i = 0; i < back_all.length; i++) {
 		var tr = document.createElement("tr");
 		var str = "<td>" + (i + 1) + "</td>";
@@ -2125,7 +2125,7 @@ function change_page_sub(this_dom) {
 }
 
 /*切换页面*/
-function change_page_cus(this_dom) {
+function change_page_cus(this_dom,pagedata) {
 	$("#dv_but button").css({
 		"backgroundColor" : "#fff",
 		"color" : "#336699"
@@ -2134,10 +2134,10 @@ function change_page_cus(this_dom) {
 		"backgroundColor" : "#336699",
 		"color" : "#fff"
 	});
+	
+	pagedata.page = $(this_dom).attr("mypage");
 
-	$.post("/hicode/customer/showCustomerByInfo.spc", {
-		"page" : $(this_dom).attr("mypage")
-	}, function(a_s) {
+	$.post("/hicode/customer/showCustomerByInfo.spc",pagedata, function(a_s) {
 		$("#tbl_body").html(' ');
 		var js_arry = eval('(' + a_s + ')');
 		creat_tb_cus(js_arry.list_advs, "#tbl_body");

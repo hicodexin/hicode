@@ -19,23 +19,23 @@ $().ready(function() {
 		start;
 	//初始位置
 	$("#dv_select").css("top", "-651px");
-	
-/** ==============================================条件查询--展开============================================== */
-	
-	//试听课展开
+
+	/** ==============================================条件查询--展开============================================== */
+
+	//试听课》》》展开
 	$("#bt_open_aud").click(function() {
 
 		$("#hidd_mask").hide().show(300);
 
 		$("#stu_name").val("");
 		$("#stu_phone").val("");
-		
+
 		$.post("/hicode/school/showSchool.spc", function(c) {
 			if (c.length > 0) {
 				for_sel_sf("stu_school", c);
 			}
 		}, "json");
-		
+
 		$.post("/hicode/teacher/showTeacher.spc", function(c) {
 			if (c.length > 0) {
 				for_sel_sf("stu_teacher", c);
@@ -44,8 +44,6 @@ $().ready(function() {
 
 		$("#kai_time").val("");
 		$("#ting_time").val("");
-		$("#yao_gu").val("");
-		$("#qian_gu").val("");
 
 		$.post("/hicode/adviser/showAdviser.spc", function(f) {
 			if (f.length > 0) {
@@ -57,15 +55,24 @@ $().ready(function() {
 		start = -650;
 		sit = setInterval(for_open, 10);
 	});
-	
-	//试听课展开
+
+	//已报名》》》展开
 	$("#bt_open_cus").click(function() {
 
 		$("#hidd_mask").hide().show(300);
 
 		$("#stu_name").val("");
-		$("#stu_phone").val("");
-		
+		$("#stu_subject").val("");
+
+		$.post("/hicode/subject/showSubject.spc", function(c) {
+			if (c.length > 0) {
+				console.log(c);
+				for_sel_sf("stu_subject", c);
+			}
+		}, "json");
+
+		$("#stu_period").val("");
+		$("#stu_teacher").val("");
 		$.post("/hicode/teacher/showTeacher.spc", function(c) {
 			if (c.length > 0) {
 				for_sel_sf("stu_teacher", c);
@@ -74,31 +81,27 @@ $().ready(function() {
 
 		$("#kai_time").val("");
 		$("#ting_time").val("");
-		$("#yao_gu").val("");
-		$("#qian_gu").val("");
 
 		$.post("/hicode/adviser/showAdviser.spc", function(f) {
 			if (f.length > 0) {
-				for_sel_sf("yao_gu", f);
 				for_sel_sf("qian_gu", f);
 			}
 		}, "json");
-
+		$("#if_xufei").val("-1");
 		start = -650;
 		sit = setInterval(for_open, 10);
 	});
-	
-	
-/** ==============================================条件查询data============================================== */
-	
-	
+
+
+	/** ==============================================条件查询data============================================== */
+
 	//试听课条件查询
 	$("#sel_sub_aud").click(function() {
 		var data = {
 			"page" : 1,
 			"stu_name" : $("#stu_name").val().trim(),
 			"stu_class" : $('#stu_class').val(),
-			"stu_school":$("#stu_school").val(),
+			"stu_school" : $("#stu_school").val(),
 			"stu_phone" : $('#stu_phone').val().trim(),
 			"stu_teacher" : $("#stu_teacher").val(),
 			"kai_time" : $("#kai_time").val().trim(),
@@ -111,8 +114,32 @@ $().ready(function() {
 		start_post_aud(for_btn_aud, data);
 		click_close();
 	});
-
 	
+	//报名学员>>>条件查询
+	$("#sel_sub_cus").click(function() {
+		var data = {
+			"page" : 1,
+			"stu_name" : $("#stu_name").val().trim(),
+			"stu_subject" : $('#stu_subject').val(),
+			"stu_period" : $("#stu_period").val(),
+			"stu_teacher" : $("#stu_teacher").val(),
+			"kai_time" : $("#kai_time").val().trim(),
+			"ting_time" : $("#ting_time").val(),
+			"if_xufei":$("#if_xufei").val(),
+			"qian_gu" : $('#qian_gu').val()
+		};
+
+		console.log(data);
+		start_post_cus(for_btn_cus, data);
+		click_close();
+	});
+
+
+
+
+
+	/** ==============================================关闭============================================== */
+
 	//关闭
 	$("#sel_res").click(click_close);
 

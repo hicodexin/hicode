@@ -1,6 +1,7 @@
 package com.hicode.oa.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.hicode.oa.tool.Customer;
 
@@ -40,6 +41,20 @@ public interface CustomerService {
 	 * @date 2018-12-21
 	 */
 	public Integer do_updateCustomerRemarks(Customer customer);
+
+	/**
+	 * 根据条件查询
+	 * @param map
+	 * @return
+	 */
+	public List<Customer> getCustomerBySomeOption(Map<String, Object> map);
+
+	/**
+	 * 根据条件》》》获取条数
+	 * @param map
+	 * @return
+	 */
+	public Integer getCustomerForCountBySomeOption(Map<String, Object> map);
 	
 	
 	

@@ -1,6 +1,7 @@
 package com.hicode.oa.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,6 +56,18 @@ public class CustomerServiceImpl implements CustomerService{
 	public Integer do_updateCustomerRemarks(Customer customer) {
 		// TODO Auto-generated method stub
 		return customerDAO.do_updateCustomerRemarks(customer);
+	}
+
+	@Override
+	public List<Customer> getCustomerBySomeOption(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return customerDAO.getCustomerBySomeOption(map);
+	}
+
+	@Override
+	public Integer getCustomerForCountBySomeOption(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return  customerDAO.getCustomerForCountBySomeOption(map);
 	}
 	
 
