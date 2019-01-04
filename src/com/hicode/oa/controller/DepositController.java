@@ -23,6 +23,11 @@ import com.hicode.oa.tool.UserInfo;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+/**
+ * 押金
+ * @author Administrator
+ *
+ */
 @Controller
 @RequestMapping(value = "/deposit")
 public class DepositController {

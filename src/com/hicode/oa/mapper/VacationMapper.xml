@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hicode.oa.dao.WinterVacationDAO">
+	<resultMap id="getWinterVacation_oop" type="WinterVacation">
+		<association property="auditions" column="au_id" select="com.hicode.oa.dao.AuditionsDAO.getAudNameByID">
+		</association>
+		<association property="subject" column="sub_id" select="com.hicode.oa.dao.SubjectDAO.getSubjectByID">
+		</association>
+		<association property="teacher" column="tea_id" select="com.hicode.oa.dao.TeacherDAO.getTeacherByID">
+		</association> 
+	</resultMap>
+	
+	<sql id="all_column">
+		wv_id,au_id,if_signup,give_class,sub_id,tea_id,start_time,clock_num,remarks
+	</sql>
+	
+	<select id="getWinterVacationByID" parameterType="java.lang.Integer" resultMap="getWinterVacation_oop">
+		select <include refid="all_column"></include> from WinterVacation where wv_id = #{wv_id};
+	</select>
+	
+	<select id="getgetWinterVacationByInfo" parameterType="java.util.Map" resultMap="getWinterVacation_oop">
+		select <include refid="all_column"></include> from WinterVacation limit #{start},#{count};
+	</select>
+	<!-- 获取表中数据条数 -->
+	<select id="getWinterVacationForCount" resultType="java.lang.Integer">
+		select count(1) from WinterVacation;
+	</select>
+	<!-- 添加签单学员 -->
+	<insert id="do_insertWinterVacation" parameterType="WinterVacation" keyProperty="wv_id">
+		insert into WinterVacation
+			(au_id,if_signup,give_class,start_time,sub_id,tea_id,clock_num,remarks) 
+		values(
+				#{auditions.au_id},
+				#{if_signup},
+				#{give_class},
+				#{start_time},
+				#{subject.sub_id},
+				#{teacher.t_id},
+				#{clock_num},
+				#{remarks}
+			);
+	</insert>
+	
+	<update id="do_updateWinterVacation" parameterType="WinterVacation" >
+		update WinterVacation set 
+			au_id=#{auditions.au_id},if_signup=#{if_signup},
+			give_class=#{give_class},sub_id=#{subject.sub_id},
+			tea_id=#{teacher.t_id},
+			start_time=#{start_time},clock_num=#{clock_num},
+			remarks=#{remarks}
+		where wv_id=#{wv_id};
+	</update>
+	
+	
+	
+</mapper>
+
+

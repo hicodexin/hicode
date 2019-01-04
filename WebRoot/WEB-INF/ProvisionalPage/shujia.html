@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SummerVacation.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+<link type="text/css" rel="stylesheet" href="/hicode/syscss/teacher_page.css" />
+<link type="text/css" rel="stylesheet" href="/hicode/syscss/for_date.css" />
+<link type="text/css" rel="stylesheet" href="/hicode/syscss/bootstrap-chosen.css">
+<link type="text/css" rel="stylesheet" href="/hicode/syscss/beizhu.css" />
+
+<script type="text/javascript" src="/hicode/sysjs/jquery.min.js"></script>
+<script type="text/javascript" src="/hicode/sysjs/beizhu/remarks.js"></script>
+<script type="text/javascript" src="/hicode/sysjs/forfunctions.js"></script>
+<script type="text/javascript" src="/hicode/sysjs/jeDate.js"></script>
+<script type="text/javascript" src="/hicode/sysjs/chosen.jquery.js"></script>
+
+<style type="text/css">
+	#student_sel_chosen{
+		width: 260px;
+	}
+	[name='dv_money']{
+		width: 245px; 
+		height: 75px;
+		background-color:#fff; 
+		display: inline-block;
+		border: solid 1px #336699;
+		border-radius: 6px;
+		margin-left: 4px;
+	}
+	#remarks {
+		float: left; 
+		outline:none;
+		border:none;
+		font-size: 18px;
+		border-radius: 6px;
+		padding: 3px;
+		margin-left: 6px;
+	}
+</style>
+
+</head>
+
+<body>
+	<!-- 隐藏  -->
+	<div id="hidd_mask"></div>
+	<div id="dv_update" style="height: 920px">
+		<div class="dv_title" id="dv_title">添加学生信息</div>
+		<div class="dv_upmain">
+			<ul class="up_ul">
+				<li><b>序号 : </b> <input type="text" id="tea_list" value=""disabled="disabled" /></li>
+				<li>
+					<b>学生姓名: </b> 
+					<select id="student_sel" data-placeholder="请选择" 
+							style="width: 260px" class="chosen-select" tabindex="2">
+					</select>
+				</li>
+				<li>
+					<b>所报科目 : </b> 
+					<select id="sub_sel"></select>
+				</li>
+				<li><b>授课老师 : </b> 
+					<select id="the_teacher"></select>
+				</li>
+				<li><b>开课时间: </b> 
+					<input id="start_time" type="text" readonly="readonly" placeholder="请选择" class="datainp" >
+				</li>
+				<li>
+					<b>打卡次数 : </b> 
+					<input type="text" id="clock_num" />
+				</li>
+				<li>
+					<b>已报名 : </b> 
+					<label for="signup_b"> 
+						<img src="/hicode/sysimg/face_smile.jpg" /> 
+						<input type="radio" id="signup_b" name="if_signup" value="1" />
+					</label> 
+					<label for="signup_g"> 
+						<img src="/hicode/sysimg/face_grieved.jpg" /> 
+						<input type="radio" id="signup_g" name="if_signup" value="0" checked="checked"/>
+					</label>
+				</li>
+				<li>
+					<b>赠暑假课时 : </b> 
+					<input type="text" id="giveClass"/>
+				</li>
+				<li>
+					<b style="float: left">备注 : </b>
+					
+					<div name = "dv_money" id="jiao_money">
+						<textarea rows="3" cols="24" id="remarks" ></textarea>
+					</div>
+					 
+					
+				</li>
+			</ul>
+		</div>
+		<div id="dv_upbottom">
+			<button id="up_sub">提交</button>
+			<button id="up_res">返回</button>
+		</div>
+	</div>
+
+	<div class="dv_top" id="dv_top">
+		<button id="index_go" class="for_button">首页</button>
+		<button id="find_user" class="for_button">欢迎:</button>
+	</div>
+	<hr>
+	<div class="dv_title">暑假班信息详情</div>
+	<button id="bt_1">添加</button>
+	<div id="dv_table">
+		<table id="tea_tbl" cellspacing="0">
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>学生姓名</th>
+					<th>科目</th>
+					<th>老师</th>
+					<th>开课时间</th>
+					<th>打卡次数</th>
+					<th>已报名</th>
+					<th>赠暑假课时</th>
+					<th>备注</th>
+					<th>操作</th>
+					<th>标记</th>
+				</tr>
+			</thead>
+			<tbody id="tbl_body">
+			</tbody>
+		</table>
+	</div>
+	<div id="dv_page">
+		<!-- <button id="bt_first" mypage="1">首页</button> -->
+		<div id="dv_but"></div>
+		<!-- <button id="bt_end">尾页</button> -->
+	</div>
+</body>
+<script type="text/javascript">
+	$().ready(function() {
+		
+		var bd_hig = document.documentElement.clientHeight;
+  		$("#hidd_mask").css("height",bd_hig+"px");
+  		$("#dv_update").hide();
+  		$("#hidd_mask").hide();
+  		start_post_sv(for_btn_sv);
+  		
+  		getUserName("dv_top");
+ 		// 点击首页按钮
+ 		$("#index_go").click(function(){
+ 			window.location = "/hicode/index.html";
+ 		});
+ 		//点击添加按钮
+ 		$("#bt_1").click(add_sv);
+ 		
+ 		/* 添加学员信息，提交按钮  */
+ 		$("#up_sub").click(up_sub_sv);
+ 		
+		// 日历插件
+		jeDate({
+			dateCell : "#start_time",
+			format : "YYYY-MM-DD",
+			isinitVal : true,
+			isTime : false, //isClear:false,
+			minDate : "1014-09-19 00:00:00"
+		}) ;
+		// 点击返回消失
+  		$("#up_res").click(function(){
+  			$("#hidd_mask").hide().hide(300);
+ 			$("#dv_update").show().hide(300);
+ 		});
+ 			/*
+		//第一页
+ 		$("#bt_first").click(function(){
+ 			change_page_tea(this);
+ 			$("#dv_but button:eq(0)").css({"backgroundColor":"#336699","color":"#fff"});
+ 		});
+ 		//最后一页
+ 		$("#bt_end").click(function(){
+ 			change_page_tea(this);
+ 			$("#dv_but button:eq(-1)").css({"backgroundColor":"#336699","color":"#fff"});
+ 		});
+  		$("#index_go").click(function(){
+ 			window.location = "/hicode/index.html";
+ 		});
+ 		*/
+ 		
+ 		
+	});
+</script>
+</html>

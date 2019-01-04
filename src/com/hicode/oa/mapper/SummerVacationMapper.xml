@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hicode.oa.dao.SummerVacationDAO">
+	<resultMap id="getSummerVacation_oop" type="SummerVacation">
+		<association property="auditions" column="au_id" select="com.hicode.oa.dao.AuditionsDAO.getAudNameByID">
+		</association>
+		<association property="subject" column="sub_id" select="com.hicode.oa.dao.SubjectDAO.getSubjectByID">
+		</association>
+		<association property="teacher" column="tea_id" select="com.hicode.oa.dao.TeacherDAO.getTeacherByID">
+		</association> 
+	</resultMap>
+	
+	<sql id="all_column">
+		sm_id,au_id,start_time,sub_id,tea_id,clock_num,if_signup,give_class,remarks
+	</sql>
+	
+	<select id="getSummerVacationByID" parameterType="java.lang.Integer" resultMap="getSummerVacation_oop">
+		select <include refid="all_column"></include> from SummerVacation where sm_id = #{sm_id};
+	</select>
+	
+	<select id="getSummerVacationByInfo" parameterType="java.util.Map" resultMap="getSummerVacation_oop">
+		select <include refid="all_column"></include> from SummerVacation limit #{start},#{count};
+	</select>
+	<!-- 获取表中数据条数 -->
+	<select id="getSummerVacationForCount" resultType="java.lang.Integer">
+		select count(1) from SummerVacation;
+	</select>
+	<!-- 添加签单学员 -->
+	<insert id="do_insertSummerVacation" parameterType="SummerVacation" keyProperty="sm_id">
+		insert into SummerVacation
+			(au_id,if_signup,give_class,start_time,sub_id,tea_id,clock_num,remarks) 
+		values(
+				#{auditions.au_id},
+				#{if_signup},
+				#{give_class},
+				#{start_time},
+				#{subject.sub_id},
+				#{teacher.t_id},
+				#{clock_num},
+				#{remarks}
+			);
+	</insert>
+	
+	<update id="do_updateSummerVacation" parameterType="SummerVacation" >
+		update SummerVacation set 
+			au_id=#{auditions.au_id},if_signup=#{if_signup},
+			give_class=#{give_class},sub_id=#{subject.sub_id},
+			tea_id=#{teacher.t_id},
+			start_time=#{start_time},clock_num=#{clock_num},
+			remarks=#{remarks}
+		where sm_id=#{sm_id};
+	</update>
+	
+	
+	
+</mapper>
+
+

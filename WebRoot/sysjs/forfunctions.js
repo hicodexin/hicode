@@ -582,6 +582,74 @@ function for_btn_wv() {
 
 }
 
+/* 暑假班>>>>修改按钮 */
+function for_btn_sv() {
+	var bts = $("button");
+	var revise = new Array();
+	if (bts.length > 0) {
+		for (var i = 0, j = 0; i < bts.length; i++) {
+			if ($(bts[i]).html() == "修改") {
+				revise[j] = bts[i];
+				j++;
+			}
+		}
+	}
+
+	if (revise.length > 0) {
+		for (var k = 0; k < revise.length; k++) {
+			(function() {
+				var t = k;
+				$(revise[t]).click(function() {
+					$("#hidd_mask").hide().show(300);
+					$("#dv_update").hide().show(300);
+					$("#dv_title").html("修改学员信息");
+					$("#tea_list").val($(this).attr("name"));
+					$("#tea_list").attr("name", $(this).attr("id"));
+
+					$.post("/hicode/auditions/showAuditions.spc", function(c) {
+						if (c.length > 0) {
+							var stu_name = $("[name='userName']:eq(" + t + ")").html();
+							for_sel("student_sel", c, stu_name);
+						}
+						window.setTimeout(function() {
+							$('.chosen-select').chosen();
+							$('.chosen-container')[0].style.width = "250px";
+							$(".chosen-single span").html(stu_name);
+						}, 500);
+					}, "json");
+
+					$.post("/hicode/subject/showSubject.spc", function(c) {
+						if (c.length > 0) {
+							var sbu_name = $("[name='sub_sel']:eq(" + t + ")").html();
+							for_sel("sub_sel", c, sbu_name);
+						}
+
+					}, "json");
+
+					$.post("/hicode/teacher/showTeacher.spc", function(c) {
+						if (c.length > 0) {
+							var name = $("[name='the_teacher']:eq(" + t + ")").html();
+							for_sel("the_teacher", c, name);
+						}
+					}, "json");
+					
+					$("#start_time").val($("[name='start_time']:eq(" + t + ")").html());
+					
+					$("#clock_num").val($("[name='clock_num']:eq(" + t + ")").html());
+					
+					$("#giveClass").val($("[name='giveClass']:eq(" + t + ")").html());
+					
+					$("#remarks").val($("[name='remarks']:eq(" + t + ")").attr("myfont"));
+					$("#up_sub").html("提交");
+				});
+
+			})();
+
+		}
+	}
+
+}
+
 
 /** ==============================================添加按钮============================================== */
 
@@ -787,6 +855,46 @@ function add_wv() {
 	$("#remarks").val("");
 }
 
+/**
+ * 暑假班学员>>>添加按钮
+ */
+function add_sv() {
+	$("#hidd_mask").hide().show(300);
+	$("#dv_update").hide().show(300);
+	var len = $("#tea_tbl tbody tr").length;
+	$("#tea_list").val(len + 1);
+	$("#dv_title").html("添加暑假班信息");
+	$("#up_sub").html("添加");
+	$("#userName").val("");
+	
+	$.post("/hicode/auditions/showAuditions.spc", function(c) {
+		if (c.length > 0) {
+			for_sel("student_sel", c);
+		}
+		window.setTimeout(function() {
+			$('.chosen-select').chosen();
+			$('.chosen-container')[0].style.width = "250px";
+		}, 1000);
+	}, "json");
+	
+	$.post("/hicode/subject/showSubject.spc", function(c) {
+		if (c.length > 0) {
+			for_sel("sub_sel", c);
+		}
+	}, "json");
+
+	$.post("/hicode/teacher/showTeacher.spc", function(c) {
+		if (c.length > 0) {
+			for_sel("the_teacher", c);
+		}
+	}, "json");
+	
+	$("#start_time").val("");
+	$("#clock_num").val("");
+	$("#giveClass").val("");
+	$("#remarks").val("");
+}
+
 /** ==============================================提交按钮============================================== */
 
 /* 试听课提交按钮*/
@@ -866,7 +974,9 @@ function up_sub_aud() {
 
 }
 
-//顾问
+/*
+ * 顾问》》》提交
+ */
 function up_sub_adv() {
 	if ($("#userName").val().trim().length < 2) {
 		$("#userName").css("borderColor", "#f00");
@@ -938,7 +1048,7 @@ function up_sub_adv() {
 
 }
 
-//讲师
+/*讲师》》》提交*/
 function up_sub_tea() {
 	if ($("#userName").val().trim().length < 2) {
 		$("#userName").css("borderColor", "#f00");
@@ -1013,7 +1123,7 @@ function up_sub_tea() {
 	}
 }
 
-//课程
+/*课程》》》提交按钮*/
 function up_sub_sub() {
 	if ($("#userName").val().trim().length < 2) {
 		$("#userName").css("borderColor", "#f00");
@@ -1067,7 +1177,7 @@ function up_sub_sub() {
 
 }
 
-//报名学员
+/*报名学员》》》提交按钮*/
 function up_sub_cus() {
 	if ($("#money").val().trim().length < 2) {
 		$("#money").css("borderColor", "#f00");
@@ -1147,6 +1257,7 @@ function up_sub_cus() {
 
 }
 
+/*押金>>>提交按钮*/
 function up_sub_dep() {
 	
 	if ($("#pay_time").val().length < 10) {
@@ -1340,6 +1451,91 @@ function up_sub_wv() {
 
 }
 
+/**
+ * 暑假班>>>提交按钮
+ */
+function up_sub_sv() {
+	if ($("#start_time").val().length < 10) {
+		$("#start_time").css("borderColor", "#f00");
+		return;
+	} else {
+		$("#start_time").css("borderColor", "#336699");
+	}
+	
+	if ($("#clock_num").val().trim().length < 1) {
+		$("#clock_num").css("borderColor", "#f00");
+		return;
+	} else {
+		$("#clock_num").css("borderColor", "#336699");
+	}
+	
+	if ($("#giveClass").val().trim().length < 1) {
+		$("#giveClass").css("borderColor", "#f00");
+		return;
+	} else {
+		$("#giveClass").css("borderColor", "#336699");
+	}
+
+	var ss = $(".chosen-single span").html();
+	var yy = $("#student_sel option");
+	for (var i = 0; i < yy.length; i++) {
+		if ($(yy[i]).html() == ss) {
+			ss = $(yy[i]).val();
+			break;
+		}
+	}
+
+	var data = {
+		"userName" : ss,
+		"subject" : $('#sub_sel').val(),
+		"the_teacher" : $("#the_teacher").val(),
+		"start_time" : $("#start_time").val(),
+		"clock_num" : $('#clock_num').val(),
+		"giveClass" : $("#giveClass").val().trim(),
+		"if_signup" : $('input:radio[name="if_signup"]:checked').val(),
+		"remarks" : $("#remarks").val()
+	};
+
+	var content = $(this).html();
+	if (content == "添加") {
+		$.post("/hicode/summerVacation/do_insertSummerVacation.spc", data, function(e) {
+			$("#hidd_mask").hide().hide(300);
+			$("#dv_update").show().hide(300);
+			if (e.list_advs == 'ok') {
+				alert("添加成功");
+				$("#tbl_body").children("tr").remove();
+				start_post_sv(for_btn_sv);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
+			} else {
+				alert("添加失败,请联系管理员。。。。");
+			}
+
+		}, "json");
+
+	} else if (content == "提交") {
+		if (!window.confirm("是否确定要修改的内容？？？？")) {
+			return;
+		}
+		data.id = $("#tea_list").attr("name");
+		
+		$.post("/hicode/summerVacation/do_updateSummerVacation.spc", data, function(e) {
+			$("#hidd_mask").hide().hide(300);
+			$("#dv_update").show().hide(300);
+			if (e.list_advs == 'ok') {
+				alert("修改成功");
+				$("#tbl_body").children("tr").remove();
+				start_post_sv(for_btn_sv);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
+			} else {
+				alert("修改失败,请联系管理员。。。。");
+			}
+
+		}, "json");
+	}
+
+}
 
 /** ==============================================初始化数据============================================== */
 
@@ -1636,6 +1832,47 @@ function start_post_wv(backFunction) {
 
 }
 
+
+/* 暑假班》》》初始化数据 */
+function start_post_sv(backFunction) {
+	$.post("/hicode/summerVacation/showSummerVacationByInfo.spc", {
+		"page" : 1
+	}, function(a) {
+		if (a) {
+			creat_tb_sv(a.list_advs, "#tbl_body");
+			/* 添加页码 */
+			if (a.all_num) {
+				$("#dv_but").children("button").remove();
+				for (var k = 0; k < a.all_num; k++) {
+					var btn = document.createElement("button");
+					$(btn).html(k + 1);
+					$(btn).attr("mypage", (k + 1));
+					if (k == 0) {
+						$(btn).css({
+							"backgroundColor" : "#336699",
+							"color" : "#fff"
+						});
+					}
+					$(btn).click(function() {
+						change_page_sv(this);
+					});
+
+					$("#dv_but").append(btn);
+				}
+				$("#bt_end").attr("mypage", a.all_num);
+			}
+			//修改按钮赋单击事件
+			backFunction();
+		}
+		var hei = $("#tea_tbl").css("height");
+		hei = hei.substr(0, hei.length - 2);
+		if (hei > 650) {
+			$("#dv_table").css("height", "700px");
+		}
+
+	}, "json");
+
+}
 
 /** ==============================================待便利的值============================================== */
 
@@ -2030,6 +2267,60 @@ function creat_tb_wv(back_all, p_dom) {
 	}
 
 }
+
+
+/* 暑假班>>>back_all: 待便利的值 */
+function creat_tb_sv(back_all, p_dom) {
+	for (var i = 0; i < back_all.length; i++) {
+		var tr = document.createElement("tr");
+		var str = "<td>" + (i + 1) + "</td>";
+		str += "<td name='userName'>" + back_all[i].name + "</td>";
+		str += "<td name='sub_sel'>" + back_all[i].subject + "</td>";
+		str += "<td name='the_teacher'>" + back_all[i].teacher + "</td>";
+		var start_time = timestampToTime(back_all[i].start_time.time);
+		str += "<td name='start_time'>" + start_time + "</td>";
+		str += "<td name='clock_num'>"+back_all[i].clock_num+"</td>";
+		if (back_all[i].if_signup == 1) {
+			str += "<td> <img src='/hicode/sysimg/face_smile.jpg' /> </td>";
+		} else {
+			str += "<td>  </td>";
+		}
+		str += "<td name='giveClass'>"+back_all[i].giveClass+"</td>";
+
+		$(tr).append(str);
+		
+		var td = document.createElement("td");
+		var img = document.createElement("img");
+		if(back_all[i].beizhu != null && back_all[i].beizhu != ""){
+			$(img).attr("src","/hicode/sysimg/beizhu/for_yes.png");
+		}else{
+			$(img).attr("src","/hicode/sysimg/beizhu/for_no.png");
+		}
+		
+		$(img).attr("name","remarks");
+		$(img).attr("userName",back_all[i].name);
+		$(img).attr("myfont",back_all[i].beizhu);
+		img.onclick = function(){
+			var ss = $(this).attr("userName");
+			var tt = $(this).attr("myfont");
+			if(tt != null && tt != ""){
+				create_remarks(ss,tt);
+			}else{
+				create_remarks(ss,"暂无。。。。。");
+			}
+		};
+		
+		td.appendChild(img);
+		tr.appendChild(td);
+		
+		var btid = back_all[i].id;
+		var strr = "<td><button id = '" + btid + "' name='" + (i + 1) + "'>修改</button></td>";
+		strr += "<td><input type='checkbox' value='" + btid + "' /></td>";
+		$(tr).append(strr);
+		$(p_dom).append(tr);
+	}
+
+}
 /** ==============================================切换页面============================================== */
 
 /*切换页面*/
@@ -2186,6 +2477,27 @@ function change_page_wv(this_dom) {
 		var js_arry = eval('(' + a_s + ')');
 		creat_tb_wv(js_arry.list_advs, "#tbl_body");
 		for_btn_wv();
+	});
+}
+
+/*暑假班>>>切换页面*/
+function change_page_sv(this_dom) {
+	$("#dv_but button").css({
+		"backgroundColor" : "#fff",
+		"color" : "#336699"
+	});
+	$(this_dom).css({
+		"backgroundColor" : "#336699",
+		"color" : "#fff"
+	});
+
+	$.post("/hicode/summerVacation/showSummerVacationByInfo.spc", {
+		"page" : $(this_dom).attr("mypage")
+	}, function(a_s) {
+		$("#tbl_body").html(' ');
+		var js_arry = eval('(' + a_s + ')');
+		creat_tb_sv(js_arry.list_advs, "#tbl_body");
+		for_btn_sv();
 	});
 }
 

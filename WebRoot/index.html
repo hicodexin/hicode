@@ -1,85 +1,180 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>index.html</title>
-	
-    <meta name="keywords" content="keyword1,keyword2,keyword3">
-    <meta name="description" content="this is my page">
-    <meta charset="UTF-8">
-    
-    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
-	<style type="text/css">
-		*{
-			margin: 0px;
-			padding: 0px;
-		}
-		a{
-			text-decoration:none;
-			display: inline-block;
-			width: 200px;
-			height: 300px;
-			background-color: #336699;
-			color:#fff;
-			text-align: center;
-			line-height: 300px;
-			margin: 20px;
-			border-radius:6px; 
-			float: left;
-			font-size: 25px;
-			
-		}
-		a:HOVER {
-			background-color: orange;
-			box-shadow: 5px 5px 15px #f00; 
-		}
-		#dv_show{
-			width: 80%;
-			margin: auto;
-		}
-	</style>
-	<link type="text/css" rel="stylesheet" href="/hicode/syscss/teacher_page.css" />
-	<script type="text/javascript" src="/hicode/sysjs/jquery.min.js"></script>
-	<script type="text/javascript" src="/hicode/sysjs/forfunctions.js"></script>
-  </head>
-  
-  <body bgColor="#E0E0E0">
- 
-  	<div class="dv_top" id="dv_top">
-  		<button id="find_user" class="for_button" style="margin-left: 70%;">欢迎:</button>
-  	</div>
+<head>
+<title>index.html</title>
+
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta charset="UTF-8">
+
+<!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+<style type="text/css">
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+a {
+	text-decoration: none;
+	display: inline-block;
+	width: 200px;
+	height: 300px;
+	background-color: #336699;
+	color: #fff;
+	text-align: center;
+	line-height: 300px;
+	margin: 20px;
+	border-radius: 6px;
+	float: left;
+	font-size: 25px;
+}
+
+a:HOVER {
+	background-color: orange;
+	box-shadow: 5px 5px 15px #f00;
+}
+
+#dv_show {
+	width: 80%;
+	margin: auto;
+	position: absolute;
+}
+
+.dv_more {
+	width: 200px;
+	height: 300px;
+	background-color: #336699;
+	margin: 20px;
+	border-radius: 6px;
+	float: left;
+}
+
+.dv_more:HOVER {
+	cursor: pointer;
+	background-color: orange;
+	box-shadow: 5px 5px 15px #f00;
+}
+
+.dv_more>div {
+	width: 50px;
+	height: 50px;
+	margin: auto;
+	margin-top: 120px;
+	background-image: url(/hicode/sysimg/index/for_more.png);
+	background-size: 100% 100%;
+}
+
+#dv_show2 {
+	width: 80%;
+	margin: auto;
+	position: absolute;
+}
+</style>
+<link type="text/css" rel="stylesheet"
+	href="/hicode/syscss/teacher_page.css" />
+<script type="text/javascript" src="/hicode/sysjs/jquery.min.js"></script>
+<script type="text/javascript" src="/hicode/sysjs/forfunctions.js"></script>
+</head>
+
+<body bgColor="#E0E0E0" style="overflow-x: hidden;">
+
+	<div class="dv_top" id="dv_top">
+		<button id="find_user" class="for_button" style="margin-left: 70%;">欢迎:</button>
+	</div>
 	<hr>
 	<div class="dv_title">欢迎来到HICODE管理后台</div>
-    <br>
-   	<div id="dv_show">
-   		 <a href="subject/to_login.spc">课程类别</a>
-    
-	    <a href="/hicode/teacher/to_login.spc">展示老师</a>
-	   
-	    <a href="/hicode/adviser/to_login.spc">顾问展示</a>
-	  
-	    <a href="/hicode/auditions/to_login.spc">试听课展示</a>
-	    
-	    <a href="/hicode/customer/to_login.spc">报名学员</a>
-	    
-	    <a href="/hicode/UserInfo/to_login.spc">登录展示</a>
-	    
-	    <a href="/hicode/deposit/to_login.spc">订金详情</a>
-	    
-	    <a href="/hicode/winterVacation/to_login.spc" >寒假班详情</a>
-	    
-	    <a href="#" onclick='alert("未完待续。。。")'>暑假班详情</a>
-	    
-	    <a href="#" onclick='alert("未完待续。。。")'>学校</a>
-	    
-   		<a href="#" onclick='alert("未完待续。。。")'>新功能</a>
-   	</div>
-  </body>
-  <script type="text/javascript">
-  	$().ready(function(){
-  		window.setTimeout(function() {
-  			getUserName("dv_top");
-  		}, 500);
-  	});
-  	
-  </script>
+	<br>
+	<div id="dv_show">
+		<a href="/hicode/auditions/to_login.spc">试听课展示</a> 
+		<a href="/hicode/customer/to_login.spc">报名学员</a> 
+		<a href="/hicode/deposit/to_login.spc">订金详情</a> 
+		<a href="/hicode/winterVacation/to_login.spc">寒假班详情</a> 
+		<a href="/hicode/summerVacation/to_login.spc">暑假班详情</a> 
+
+		<div id="dv_more" class="dv_more">
+			<div></div>
+		</div>
+	</div>
+	<div id="dv_show2">
+		<div id="back_go" class="dv_more">
+			<div style="background-image: url(/hicode/sysimg/index/for_back.png);"></div>
+		</div>
+		<a href="subject/to_login.spc">课程类别</a> 
+		<a href="/hicode/teacher/to_login.spc">展示老师</a> 
+		<a href="/hicode/adviser/to_login.spc">顾问展示</a> 
+		<a href="/hicode/UserInfo/to_login.spc">登录展示</a> 
+		<a href="#" onclick='alert("未完待续。。。")'>学校</a>
+	</div>
+</body>
+<script type="text/javascript">
+	$().ready(function() {
+
+		var bd_wd = document.documentElement.clientWidth;
+		var show_wd = $("#dv_show").css("width");
+		show_wd = show_wd.substr(0, show_wd.length - 2);
+		$("#dv_show").css("left", (bd_wd - show_wd) / 2 + "px");
+		$("#dv_show2").css("left", bd_wd + "px");
+		$("#dv_show2").css("display", "none");
+
+		window.setTimeout(function() {
+			getUserName("dv_top");
+		}, 500);
+
+		/*下一页 鼠标事件*/
+		$("#dv_more").mouseover(function() {
+			$("#dv_more div").css("background-image", "url(/hicode/sysimg/index/for_more2.png)");
+		});
+		$("#dv_more").mouseout(function() {
+			$("#dv_more div").css("background-image", "url(/hicode/sysimg/index/for_more.png)");
+		});
+
+		/*上一页 鼠标事件*/
+		$("#back_go").mouseover(function() {
+			$("#back_go div").css("background-image", "url(/hicode/sysimg/index/for_back2.png)");
+		});
+		$("#back_go").mouseout(function() {
+			$("#back_go div").css("background-image", "url(/hicode/sysimg/index/for_back.png)");
+		});
+		/* 往左移动总长度 */
+		var left_1 = (bd_wd - show_wd) / 2;
+		/* 往右移动总长度 */
+		var left_2 = bd_wd;
+		/* 往左移动---事件 */
+		var for_more;
+		/* 往右移动---事件*/
+		var for_back;
+
+		/* 往左移动---事件 */
+		$("#dv_more").click(function() {
+			$("#dv_show2").css("display", "block");
+			for_more = window.setInterval(left_go, 10);
+		});
+		/* 往右移动---事件*/
+		$("#back_go").click(function() {
+			$("#dv_show").css("display", "block");
+			for_back = window.setInterval(back_go, 10);
+		});
+
+		function left_go() {
+			left_1 = left_1 - 25;
+			left_2 = left_2 - 25;
+			$("#dv_show").css("left", left_1 + "px");
+			$("#dv_show2").css("left", left_2 + "px");
+			if (left_1 <= (-show_wd)) {
+				window.clearInterval(for_more);
+				$("#dv_show").css("display", "none");
+			}
+		}
+		function back_go() {
+			left_1 = left_1 + 25;
+			left_2 = left_2 + 25;
+			$("#dv_show").css("left", left_1 + "px");
+			$("#dv_show2").css("left", left_2 + "px");
+			if (left_2 >= (bd_wd)) {
+				window.clearInterval(for_back);
+				$("#dv_show2").css("display", "none");
+			}
+		}
+	});
+</script>
 </html>
