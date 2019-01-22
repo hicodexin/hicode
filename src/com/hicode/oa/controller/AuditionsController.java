@@ -96,10 +96,10 @@ public class AuditionsController {
 		// 开始数字
 		Integer start = 0;
 		// 每页显示条数
-		Integer num = 30;
+		Integer num = 100;
 
 		if (page != null) {
-			start = (Integer.valueOf(page) - 1) * 30;
+			start = (Integer.valueOf(page) - 1) * 100;
 		}
 
 		Integer all_num = null;
@@ -143,7 +143,7 @@ public class AuditionsController {
 			all_num = auditionsService.getAuditionsForCountBySomeOption(map);
 
 			if (all_num != null) {
-				all_num = (all_num % 30 == 0) ? (all_num / 30) : (all_num / 30 + 1);
+				all_num = (all_num % 100 == 0) ? (all_num / 100) : (all_num / 100 + 1);
 			}
 			obj_arr.put("all_num", all_num);
 		}

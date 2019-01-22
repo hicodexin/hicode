@@ -1245,7 +1245,8 @@ function up_sub_cus() {
 			if (e.list_advs == 'ok') {
 				alert("修改成功");
 				$("#tbl_body").children("tr").remove();
-				start_post_cus(for_btn_cus);
+				var pagedata = {"page":1};
+				start_post_cus(for_btn_cus,pagedata);
 			}else if (e.list_advs == 'ok1') {
 				alert("对不起,权限不足。。。。");
 			} else {
