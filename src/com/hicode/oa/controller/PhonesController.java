@@ -176,7 +176,7 @@ public class PhonesController {
 		JSONObject obj_arr = new JSONObject();
 		// 游客没有添加权限
 		// 只有管理员和TMK具有添加权限
-		if (obj.getUserType().getType_leibie() != 11 || obj.getUserType().getType_leibie() != 3) {
+		if (obj.getUserType().getType_leibie() != 11 && obj.getUserType().getType_leibie() != 3) {
 			obj_arr.put("list_advs", "ok1");
 			return obj_arr.toString();
 		}
