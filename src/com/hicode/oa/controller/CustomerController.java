@@ -39,8 +39,8 @@ public class CustomerController {
 		
 		HttpSession session = request.getSession();
 		UserInfo obj = (UserInfo) session.getAttribute("user");
-		// 非管理员用户
-		if (obj.getUserType().getType_leibie() != 3) {
+		// 非会员用户、管理员用户
+		if (obj.getUserType().getType_leibie() != 3 && obj.getUserType().getType_leibie() != 2) {
 			return "redirect:/Fighting.html";
 		}
 		return "/WEB-INF/VisitorsPage/Customer.html";
@@ -152,6 +152,17 @@ public class CustomerController {
 	@ResponseBody
 	@RequestMapping(value = "/do_insertCustomer", method = RequestMethod.POST)
 	public String do_insertCustomer(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+
+		JSONObject obj_arr = new JSONObject();
+		// 只有管理员具有添加权限
+		if (obj.getUserType().getType_leibie() != 3) {
+			obj_arr.put("list_advs", "ok1");
+			return obj_arr.toString();
+		}
+		
 		String aud_id = request.getParameter("userName");
 		String sub_id = request.getParameter("subject");
 		String period = request.getParameter("period");
@@ -203,7 +214,6 @@ public class CustomerController {
 		customer.setIf_refund(0);
 
 		Integer count = customerService.do_insertCustomer(customer);
-		JSONObject obj_arr = new JSONObject();
 		if (count > 0) {
 			obj_arr.put("list_advs", "ok");
 		}
@@ -214,6 +224,17 @@ public class CustomerController {
 	@ResponseBody
 	@RequestMapping(value = "/do_updateCustomer", method = RequestMethod.POST)
 	public String do_updateCustomer(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+
+		JSONObject obj_arr = new JSONObject();
+		// 只有管理员具有修改权限
+		if (obj.getUserType().getType_leibie() != 3) {
+			obj_arr.put("list_advs", "ok1");
+			return obj_arr.toString();
+		}
+		
 		String id = request.getParameter("id");
 		String aud_id = request.getParameter("userName");
 		String sub_id = request.getParameter("subject");
@@ -269,7 +290,6 @@ public class CustomerController {
 		customer.setIf_refund(Integer.valueOf(if_refund));
 
 		Integer count = customerService.do_updateCustomer(customer);
-		JSONObject obj_arr = new JSONObject();
 		if (count > 0) {
 			obj_arr.put("list_advs", "ok");
 		}

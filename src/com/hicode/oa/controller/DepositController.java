@@ -40,8 +40,8 @@ public class DepositController {
 		
 		HttpSession session = request.getSession();
 		UserInfo obj = (UserInfo) session.getAttribute("user");
-		// 非管理员用户
-		if (obj.getUserType().getType_leibie() != 3) {
+		// 非会员用户、管理员用户
+		if (obj.getUserType().getType_leibie() != 3 && obj.getUserType().getType_leibie() != 2) {
 			return "redirect:/Fighting.html";
 		}
 		return "/WEB-INF/ManagerPage/deposit.html";
@@ -50,6 +50,7 @@ public class DepositController {
 	@ResponseBody
 	@RequestMapping(value = "/showDepositByInfo", method = RequestMethod.POST)
 	public String showDepositByInfo(HttpServletRequest request) {
+		
 		// 页码
 		String page = request.getParameter("page");
 
@@ -109,6 +110,17 @@ public class DepositController {
 	@ResponseBody
 	@RequestMapping(value = "/do_insertDeposit", method = RequestMethod.POST)
 	public String do_insertDeposit(HttpServletRequest request) {
+
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+
+		JSONObject obj_arr = new JSONObject();
+		// 只有管理员具有添加权限
+		if (obj.getUserType().getType_leibie() != 3) {
+			obj_arr.put("list_advs", "ok1");
+			return obj_arr.toString();
+		}
+		
 		String aud_id = request.getParameter("userName");
 		String pay_time = request.getParameter("pay_time");
 		String money = request.getParameter("money");
@@ -157,7 +169,6 @@ public class DepositController {
 		}
 		
 		Integer count = depositService.do_insertDeposit(deposit);
-		JSONObject obj_arr = new JSONObject();
 		if (count > 0) {
 			obj_arr.put("list_advs", "ok");
 		}
@@ -168,6 +179,17 @@ public class DepositController {
 	@ResponseBody
 	@RequestMapping(value = "/do_updateDeposit", method = RequestMethod.POST)
 	public String do_updateDeposit(HttpServletRequest request) {
+
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+
+		JSONObject obj_arr = new JSONObject();
+		// 只有管理员具有修改权限
+		if (obj.getUserType().getType_leibie() != 3) {
+			obj_arr.put("list_advs", "ok1");
+			return obj_arr.toString();
+		}
+		
 		String id = request.getParameter("id");
 		String aud_id = request.getParameter("userName");
 		String pay_time = request.getParameter("pay_time");
@@ -218,7 +240,6 @@ public class DepositController {
 		}
 		
 		Integer count = depositService.do_updateDeposit(deposit);
-		JSONObject obj_arr = new JSONObject();
 		if (count > 0) {
 			obj_arr.put("list_advs", "ok");
 		}
