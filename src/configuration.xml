@@ -35,6 +35,7 @@
  		<typeAlias type="com.hicode.oa.tool.WinterVacation" alias="WinterVacation"/>
  		<typeAlias type="com.hicode.oa.tool.School" alias="School"/>
  		<typeAlias type="com.hicode.oa.tool.SummerVacation" alias="SummerVacation"/>
+ 		<typeAlias type="com.hicode.oa.tool.Phones" alias="Phones"/>
  	</typeAliases>
  
 	<mappers>
@@ -52,6 +53,7 @@
 		<mapper resource="com/hicode/oa/mapper/WinterVacationMapper.xml"/>
 		<mapper resource="com/hicode/oa/mapper/SchoolMapper.xml"/>
 		<mapper resource="com/hicode/oa/mapper/SummerVacationMapper.xml"/>
+		<mapper resource="com/hicode/oa/mapper/PhonesMapper.xml"/>
 	</mappers>
 
 </configuration>

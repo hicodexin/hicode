@@ -650,6 +650,61 @@ function for_btn_sv() {
 
 }
 
+/* TMK>>>修改按钮 */
+function for_btn_TMK() {
+	var bts = $("button");
+	var revise = new Array();
+	if (bts.length > 0) {
+		for (var i = 0, j = 0; i < bts.length; i++) {
+			if ($(bts[i]).html() == "修改") {
+				revise[j] = bts[i];
+				j++;
+			}
+		}
+	}
+	if (revise.length > 0) {
+		for (var k = 0; k < revise.length; k++) {
+			(function() {
+				var t = k;
+				$(revise[t]).click(function() {
+					$("#hidd_mask").hide().show(300);
+					$("#dv_update").hide().show(300);
+					$("#dv_title").html("修改学员信息");
+					$("#tea_list").val($(this).attr("name"));
+					$("#tea_list").attr("name", $(this).attr("id"));
+					
+					$("#userName").val($("[name='userName']:eq(" + t + ")").html());
+					
+					$("#userAge").val($("[name='userAge']:eq(" + t + ")").html());
+					
+					$("#phone").val($("[name='phone']:eq(" + t + ")").html());
+
+					var optionName = $("[name='update_selyixiang']:eq(" + t + ")").html();
+					
+					var sel_class = $("#update_selyixiang option");
+
+					for_sel02("update_selyixiang", sel_class, optionName);
+					
+					$.post("/hicode/school/showSchool.spc", function(c) {
+						if (c.length > 0) {
+							var name = $("[name='update_school']:eq(" + t + ")").html();
+							for_sel("update_school", c, name);
+						}
+					}, "json");
+
+					$("#gaikuang").val($("[name='gaikuang']:eq(" + t + ")").attr("myfont"));
+					
+					$("#remarks").val($("[name='remarks']:eq(" + t + ")").attr("myfont"));
+					$("#up_sub").html("提交");
+				});
+
+			})();
+
+		}
+	}
+
+}
+
 
 /** ==============================================添加按钮============================================== */
 
@@ -894,6 +949,28 @@ function add_sv() {
 	$("#giveClass").val("");
 	$("#remarks").val("");
 }
+
+/* TMK>>>添加按钮 */
+function add_TMK() {
+	$("#hidd_mask").hide().show(300);
+	$("#dv_update").hide().show(300);
+	var len = $("#tea_tbl tbody tr").length;
+	$("#tea_list").val(len + 1);
+	$("#userName").val("");
+	$("#up_sub").html("添加");
+	$("#userAge").val("");
+	$("#phone").val("");
+	$("#gaikuang").val("");
+	$("#remarks").val("");
+	
+	$.post("/hicode/school/showSchool.spc", function(c) {
+		if (c.length > 0) {
+			for_sel("update_school", c);
+		}
+	}, "json");
+
+}
+
 
 /** ==============================================提交按钮============================================== */
 
@@ -1538,6 +1615,87 @@ function up_sub_sv() {
 
 }
 
+/* TMK>>>提交按钮*/
+function up_sub_TMK() {
+	
+	if ($("#phone").val().trim().length != 11) {
+		$("#phone").css("borderColor", "#f00");
+		return;
+	} else {
+		$("#phone").css("borderColor", "#336699");
+	}
+	
+	if ($("#userName").val().trim().length < 2) {
+		$("#userName").css("borderColor", "#f00");
+		return;
+	} else {
+		$("#userName").css("borderColor", "#336699");
+	}
+
+	var data = {
+		"userName" : $("#userName").val().trim(),
+		"userAge" : $("#userAge").val(),
+		"t_sex" : $('input:radio[name="t_sex"]:checked').val(),
+		"phone": $("#phone").val().trim(),
+		"update_school":$("#update_school").val(),
+		"update_selyixiang" : $("#update_selyixiang").val(),
+		"gaikuang" : $("#gaikuang").val(),
+		"if_renewal" : $('input:radio[name="if_renewal"]:checked').val(),
+		"remarks" : $("#remarks").val()
+	};
+	console.log(data);
+	var content = $(this).html();
+	if (content == "添加") {
+		$.post("/hicode/phones/do_insertPhones.spc", data, function(e) {
+			$("#hidd_mask").hide().hide(300);
+			$("#dv_update").show().hide(300);
+			if (e.list_advs == 'ok') {
+				alert("添加成功");
+				$("#tbl_body").children("tr").remove();
+				var pagedata = {"page":1};
+				start_post_TMK(for_btn_TMK,pagedata);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
+			}else if (e.list_advs == 'no') {
+				$("#phone").css("borderColor", "#f00");
+				alert("该手机号已存在。。。");
+			}else {
+				alert("添加失败,请联系管理员。。。。");
+			}
+
+		}, "json");
+
+	} else if (content == "提交") {
+		if (!window.confirm("是否确定要修改的内容？？？？")) {
+			return;
+		}
+		data.id = $("#tea_list").attr("name");
+		$.post("/hicode/phones/do_updatePhones.spc", data, function(e) {
+			$("#hidd_mask").hide().hide(300);
+			$("#dv_update").show().hide(300);
+			if (e.list_advs == 'ok') {
+				alert("修改成功");
+				$("#tbl_body").children("tr").remove();
+				var pagedata = {"page":1};
+				start_post_TMK(for_btn_TMK,pagedata);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
+			}else if (e.list_advs == 'no') {
+				$("#phone").css("borderColor", "#f00");
+				alert("该手机号已存在。。。");
+			} else {
+				alert("修改失败,请联系管理员。。。。");
+			}
+
+		}, "json");
+
+
+	}
+	
+	
+
+}
+
 /** ==============================================初始化数据============================================== */
 
 /* 初始化数据 */
@@ -1871,6 +2029,44 @@ function start_post_sv(backFunction) {
 			$("#dv_table").css("height", "700px");
 		}
 
+	}, "json");
+
+}
+
+/* TMK》》》初始化数据 */
+function start_post_TMK(backFunction,pagedata) {
+	$.post("/hicode/phones/showPhonesByInfo.spc", pagedata, function(a) {
+		if (a) {
+			creat_tb_TMK(a.list_advs, "#tbl_body");
+			/* 添加页码 */
+			if (a.all_num) {
+				
+				$("#dv_but").children("button").remove();
+				for (var k = 0; k < a.all_num; k++) {
+					var btn = document.createElement("button");
+					$(btn).html(k + 1);
+					$(btn).attr("mypage", (k + 1));
+					if (k == 0) {
+						$(btn).css({
+							"backgroundColor" : "#336699",
+							"color" : "#fff"
+						});
+					}
+					$(btn).click(function() {
+						change_page_TMK(this,pagedata);
+					});
+
+					$("#dv_but").append(btn);
+				}
+			}
+			//修改按钮赋单击事件
+			backFunction();
+		}
+		var hei = $("#tea_tbl").css("height");
+		hei = hei.substr(0, hei.length - 2);
+		if (hei > 650) {
+			$("#dv_table").css("height", "700px");
+		}
 	}, "json");
 
 }
@@ -2322,6 +2518,107 @@ function creat_tb_sv(back_all, p_dom) {
 	}
 
 }
+
+/* TMK >>> back_all: 待便利的值 */
+function creat_tb_TMK(back_all, p_dom) {
+	$(p_dom).children("tr").remove();
+	for (var i = 0; i < back_all.length; i++) {
+		var tr = document.createElement("tr");
+		var str = "<td>" + (i + 1) + "</td>";
+		str += "<td name='userName'>" + back_all[i].name + "</td>";
+		str += "<td name='userAge'>" + back_all[i].age + "</td>";
+
+		if (back_all[i].sex == 1) {
+			str += "<td><img src='/hicode/sysimg/face_boy.png'/> </td>";
+		} else {
+			str += "<td><img src='/hicode/sysimg/face_girl.png'/></td>";
+		}
+		str += "<td name='phone'>" + back_all[i].phone + "</td>";
+		str += "<td name='update_school'>" + back_all[i].school + "</td>";
+//		（0:待确定；1:错号/空号；2:近期上门；3:可邀约上门；4:意向一般；5:无意向；）
+		if(back_all[i].yixiang == 0){
+			
+			str += "<td name='update_selyixiang'>待确定</td>";
+		}else if(back_all[i].yixiang == 1){
+			str += "<td name='update_selyixiang'>错号/空号</td>";
+			$(tr).css("color", "#b0b0b0");
+		}else if(back_all[i].yixiang == 2){
+			str += "<td name='update_selyixiang'>近期上门</td>";
+		}else if(back_all[i].yixiang == 3){
+			str += "<td name='update_selyixiang'>可邀约上门</td>";
+		}else if(back_all[i].yixiang == 4){
+			str += "<td name='update_selyixiang'>意向一般</td>";
+		}else if(back_all[i].yixiang == 5){
+			str += "<td name='update_selyixiang'>无意向</td>";
+		}else{
+			str += "<td name='update_selyixiang'>待确定</td>";
+		}
+	/*	str += "<td name='gaikuang'>" + back_all[i].gaikuang + "</td>";*/
+		
+		if (back_all[i].if_arrival == 1) {
+			str += "<td><img src='/hicode/sysimg/face_smile.jpg'/> </td>";
+		} else {
+			/*str += "<td><img src='/hicode/sysimg/face_grieved.jpg'/></td>";*/
+			str += "<td> </td>";
+		}
+		
+		$(tr).append(str);
+		
+		var td01 = document.createElement("td");
+		var img01 = document.createElement("img");
+		if(back_all[i].gaikuang != null && back_all[i].gaikuang != ""){
+			$(img01).attr("src","/hicode/sysimg/beizhu/for_yes.png");
+		}else{
+			$(img01).attr("src","/hicode/sysimg/beizhu/for_no.png");
+		}
+		$(img01).attr("name","gaikuang");
+		$(img01).attr("userName",back_all[i].name);
+		$(img01).attr("myfont",back_all[i].gaikuang);
+		img01.onclick = function(){
+			var ss = $(this).attr("userName");
+			var tt = $(this).attr("myfont");
+			if(tt != null && tt != ""){
+				create_remarks(ss,tt);
+			}else{
+				create_remarks(ss,"暂无。。。。。");
+			}
+		};
+		
+		td01.appendChild(img01);
+		tr.appendChild(td01);
+		
+		var td = document.createElement("td");
+		var img = document.createElement("img");
+		if(back_all[i].beizhu != null && back_all[i].beizhu != ""){
+			$(img).attr("src","/hicode/sysimg/beizhu/for_yes.png");
+		}else{
+			$(img).attr("src","/hicode/sysimg/beizhu/for_no.png");
+		}
+		$(img).attr("name","remarks");
+		$(img).attr("userName",back_all[i].name);
+		$(img).attr("myfont",back_all[i].beizhu);
+		img.onclick = function(){
+			var ss = $(this).attr("userName");
+			var tt = $(this).attr("myfont");
+			if(tt != null && tt != ""){
+				create_remarks(ss,tt);
+			}else{
+				create_remarks(ss,"暂无。。。。。");
+			}
+		};
+		
+		td.appendChild(img);
+		tr.appendChild(td);
+		
+		var btid = back_all[i].id;
+		var strr = "<td><button id = '" + btid + "' name='" + (i + 1) + "'>修改</button></td>";
+		strr += "<td><input type='checkbox' value='" + btid + "' /></td>";
+		$(tr).append(strr);
+		$(p_dom).append(tr);
+
+	}
+}
+
 /** ==============================================切换页面============================================== */
 
 /*切换页面*/
@@ -2503,3 +2800,25 @@ function change_page_sv(this_dom) {
 }
 
 
+/*切换页面*/
+function change_page_TMK(this_dom,pagedata) {
+	$("#dv_but button").css({
+		"backgroundColor" : "#fff",
+		"color" : "#336699"
+	});
+	$(this_dom).css({
+		"backgroundColor" : "#336699",
+		"color" : "#fff"
+	});
+	
+	pagedata.page = $(this_dom).attr("mypage");
+	
+	$.post("/hicode/phones/showPhonesByInfo.spc",pagedata, function(a_s) {
+		$("#tbl_body").html(' ');
+
+		var js_arry = eval('(' + a_s + ')');
+
+		creat_tb_TMK(js_arry.list_advs, "#tbl_body");
+		for_btn_TMK();
+	});
+}

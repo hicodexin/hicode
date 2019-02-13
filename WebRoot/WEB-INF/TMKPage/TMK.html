@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TMK.html</title>
+	
+<meta name="keywords" content="keyword1,keyword2,keyword3">
+<meta name="description" content="this is my page">
+<meta charset="UTF-8">
+<style type="text/css">
+		*{
+			margin: 0px;
+			padding: 0px;
+		}
+		[name='dv_money']{
+			width: 245px; 
+			height: 75px;
+			background-color:#fff; 
+			display: inline-block;
+			border: solid 1px #336699;
+			border-radius: 6px;
+			margin-left: 4px;
+		}
+		#remarks,#gaikuang{
+			float: left; 
+			outline:none;
+			border:none;
+			font-size: 18px;
+			border-radius: 6px;
+			padding: 3px;
+			margin-left: 6px;
+		}
+	</style>
+
+<!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+<link type="text/css" rel="stylesheet" href="/hicode/syscss/teacher_page.css" />
+<link type="text/css" rel="stylesheet" href="/hicode/syscss/for_date.css" />
+<link type="text/css" rel="stylesheet" href="/hicode/syscss/beizhu.css" />
+<link type="text/css" rel="stylesheet" href="/hicode/syscss/select/shaixuan.css" />
+
+<script type="text/javascript" src="/hicode/sysjs/jquery.min.js"></script>
+<script type="text/javascript" src="/hicode/sysjs/beizhu/remarks.js"></script>
+<script type="text/javascript" src="/hicode/sysjs/forfunctions.js"></script>
+<script type="text/javascript" src="/hicode/sysjs/jeDate.js"></script>
+<script type="text/javascript" src="/hicode/sysjs/select/shaixuan.js"></script>
+</head>
+
+<body>
+	<!-- 查询 -->
+	<div id="dv_select">
+  		<div class="dvselect_title" >请填入查询条件</div>
+  		<div class="dvselect_main">
+  			<div class="main_left">
+  				<ul id="left_ul">
+  					<li>
+  						<b>姓名:</b>
+  						<input type="text" id="stu_name"  placeholder="请输入"/>
+  					</li>
+  					<li>
+  						<b>电话:</b>
+  						<input type="text" id="stu_phone"  placeholder="请输入"/>
+  					</li>
+  					
+  					<li>
+  						<b>学校 : </b> 
+						<select id="stu_school"></select>
+  					</li>
+  				 	<li>
+  						<b>意向:</b>
+  						<select id="sel_yixiang">
+  							<option disabled="disabled" selected="selected">请选择</option>
+  							<option value="0">待确定</option>
+							<option value="1">错号/空号</option>
+							<option value="2">近期能上门</option>
+							<option value="3">可邀约上门</option>
+							<option value="4">意向一般</option>
+							<option value="5">无意向</option>
+  						</select>
+  					</li>
+  					<!-- <li>
+  						<b>待续:</b>
+  						<input type="text" disabled="disabled"/>
+  					</li> -->
+  				</ul>
+  			</div>
+  			<div class="main_right">
+  				<ul id="left_ul">
+  					<li>
+  						<b>年龄大于:</b>
+  						<select id="kai_age"></select>
+  					</li>
+  					<li>
+  						<b>年龄小于:</b>
+  						<select id="ting_age"></select>
+  					</li>
+  					 <li>
+  						<b>上门:</b>
+  						<select id="if_arrival">
+  							<option disabled="disabled" selected="selected">请选择</option>
+  							<option value="0">未上门</option>
+  							<option value="1">已上门</option>
+  						</select>
+  					</li>
+  				<!--	<li>
+  						<b>签单顾问:</b>
+  						<select id="qian_gu"></select>
+  					</li> -->
+  					<li>
+  						<b>待续:</b>
+  						<input type="text" disabled="disabled"/>
+  					</li>
+  				</ul>
+  			</div>
+  		</div>
+  		<div class="dvselect_bottom">
+  			<div>
+  				<button id="sel_sub_TMK" class="sel_sub">开始筛选</button>
+  			</div>
+  			
+  			<div>
+  				<button id="sel_res" class="sel_res">返回</button>
+  			</div>
+			
+  		</div>
+  	</div>
+	<!-- 隐藏  -->
+	<div id="hidd_mask"></div>
+	<!-- 添加与修改 -->
+	<div id="dv_update" style="height:840px;">
+	<div class="dv_title" id="dv_title">添加学生信息</div>
+	<div class="dv_upmain">
+		<ul class="up_ul">
+			<li>
+				<b>序号 : </b> 
+				<input type="text" id="tea_list" value="" disabled="disabled" />
+			</li>
+			<li>
+				<b>学生姓名 : </b> 
+				<input type="text" id="userName" />
+			</li>
+			<li>
+				<b>学生年龄 : </b> 
+				<input type="text" id="userAge" />
+			</li>
+			<li>
+				<b>学生性别 : </b> 
+				<label for="sex_b"> 
+					<img src="/hicode/sysimg/face_boy.png" /> 
+					<input type="radio" id="sex_b" name="t_sex" checked="checked" value="1" />
+				</label> 
+				<label for="sex_g"> 
+					<img src="/hicode/sysimg/face_girl.png" />
+					<input type="radio" id="sex_g" name="t_sex" value="0" />
+				</label>
+			</li>
+			<li>
+				<b>电话:</b>
+				<input type="text" id="phone">
+			</li>
+			<li>
+				<b>学校 : </b> 
+				<select id="update_school">
+				</select>
+			</li>
+			<li>
+				<b>意向 : </b>
+				<select id="update_selyixiang">
+						<option value="0">待确定</option>
+						<option value="1">错号/空号</option>
+						<option value="2">近期能上门</option>
+						<option value="3">可邀约上门</option>
+						<option value="4">意向一般</option>
+						<option value="5">无意向</option>
+				</select>
+			</li>
+			<li style="height:80px;">
+				<b style="float: left">概况 : </b>
+				<div name = "dv_money" id="jiao_money">
+					<textarea rows="3" cols="24" id="gaikuang" ></textarea>
+				</div>
+			</li>
+			<li>
+				<b>已上门 : </b> 
+				<label for="job_b"> 
+					<img src="/hicode/sysimg/face_smile.jpg" /> 
+					<input type="radio" id="job_b" name="if_renewal" value="1"/>
+				</label> 
+				<label for="job_g"> 
+					<img src="/hicode/sysimg/face_grieved.jpg" /> 
+					<input type="radio" id="job_g" name="if_renewal" value="0"  checked="checked" />
+				</label>
+			</li>
+			<li style="height:80px;">
+				<b style="float: left">备注 : </b>
+				<div name = "dv_money" id="jiao_money">
+					<textarea rows="3" cols="24" id="remarks" ></textarea>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div id="dv_upbottom">
+		<button id="up_sub" type="button">提交</button>
+		<button id="up_res">返回</button>
+	</div>
+	</div>
+	<div class="dv_top" id="dv_top">
+		<button id="index_go" class="for_button">首页</button>
+		<button id="find_user" class="for_button">欢迎:</button>
+	</div>
+	<hr>
+	<div class="dv_title">TMK电话量信息详情<button id="bt_open_TMK">展开<span>▼</span></button></div>
+	<button id="bt_1">添加</button>
+	<div id="dv_table">
+		<table id="tea_tbl" cellspacing="0">
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>姓名</th>
+					<th>年龄</th>
+					<th>性别</th>
+					<th>电话</th>
+					<th>学校</th>
+					<th>意向</th>
+					<th>上门</th>
+					<th>概况</th>
+					<th>备注</th>
+					<th>操作</th>
+					<th>标记</th>
+				</tr>
+			</thead>
+			<tbody id="tbl_body">
+			</tbody>
+		</table>
+	</div>
+	<div id="dv_page">
+		<div id="dv_but"></div>
+	</div>
+</body>
+<script type="text/javascript">
+	$().ready(function() {
+		var bd_hig = document.documentElement.clientHeight;
+  		$("#hidd_mask").css("height",bd_hig+"px");
+  		$("#dv_update").hide();
+  		$("#hidd_mask").hide();
+  		var pagedata = {"page":1};
+  		start_post_TMK(for_btn_TMK,pagedata);
+  		getUserName("dv_top");
+ 		//点击添加按钮
+ 		$("#bt_1").click(add_TMK);
+		// 点击返回消失
+  		$("#up_res").click(function(){
+  			$("#hidd_mask").show().hide(300);
+ 			$("#dv_update").show().hide(300);
+ 		});
+ 		
+ 		// 点击首页按钮
+ 		$("#index_go").click(function(){
+ 			window.location = "/hicode/index.html";
+ 		});
+ 		
+ 		/* 添加学员信息，提交按钮  */
+ 		$("#up_sub").click(up_sub_TMK);
+		
+		//条件筛选
+		var bd_wid = document.documentElement.clientWidth;
+		$("#dv_select").css("left",(bd_wid-1080)/2+"px");
+		
+		
+		
+ 		
+	});
+</script>
+</html>

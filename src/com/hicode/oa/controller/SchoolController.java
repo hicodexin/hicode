@@ -15,8 +15,9 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /**
+ * 电话量
  * 
- * @author Administrator
+ * @author XinPeiXiang 2018-11-26
  *
  */
 @Controller

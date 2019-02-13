@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hicode.oa.dao.PhonesDAO">
+	
+	
+	<sql id="all_column">
+		ph_id,ph_name,ph_age,ph_sex,phone_num,ph_school,ph_tmk,
+  		ph_intention,ph_survey,if_arrival,ph_remarks
+	</sql>
+	
+	<select id="getPhonesByID" parameterType="java.lang.Integer" resultType="Phones">
+		SELECT <include refid="all_column"></include> FROM Phones WHERE ph_id = #{ph_id};
+	</select>
+	
+	<select id="getPhonesByInfo"  resultType="Phones" parameterType="java.util.Map">
+		SELECT <include refid="all_column"></include> FROM Phones LIMIT #{start},#{count};
+	</select>
+	
+	<select id="findThisPhone"  resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT count(1) FROM Phones where  phone_num = #{phone_num};
+	</select>
+	
+	<select id="getPhonesBySomeOption" parameterType="java.util.Map" resultType="Phones">
+	<!-- 
+		ph_name,ph_age,ph_sex,phone_num,ph_school,ph_tmk,
+  		ph_intention,if_arrival
+  	 -->
+		SELECT <include refid="all_column"></include> FROM Phones 
+		WHERE 1=1
+			<if test="ph_name != null">
+				AND ph_name LIKE #{ph_name} 
+			</if>
+			
+			<if test="kai_age != null">
+				AND ph_age  &gt; #{kai_age}
+			</if>
+			
+			<if test="ting_age != null">
+				AND ph_age  &lt; #{ting_age}
+			</if>
+			
+			<if test="ph_sex != null">
+				AND ph_sex = #{ph_sex}
+			</if>
+			
+			<if test="phone_num != null">
+				AND phone_num = #{phone_num}
+			</if>
+			
+			<if test="ph_school != null">
+				AND ph_school = #{ph_school}
+			</if>
+			
+			<if test="ph_tmk != null">
+				AND ph_tmk = #{ph_tmk}
+			</if>
+		
+			<if test="ph_intention != null">
+				AND ph_intention = #{ph_intention}
+			</if>
+			
+		    <if test="if_arrival != null">
+		   		 AND if_arrival = #{if_arrival}
+		    </if>
+		<!--
+		ORDER BY st_time -->
+		limit #{start},#{count};
+	
+	</select>
+	
+		<select id="getPhonesForCountBySomeOption" parameterType="java.util.Map" resultType="java.lang.Integer">
+		<!-- 
+			ph_name,ph_age,ph_sex,phone_num,ph_school,ph_tmk,
+	  		ph_intention,if_arrival
+	  	 -->
+		SELECT count(1) FROM Phones 
+		WHERE 1=1
+			<if test="ph_name != null">
+				AND ph_name LIKE #{ph_name} 
+			</if>
+			
+			<if test="kai_age != null">
+				AND ph_age  &gt; #{kai_age}
+			</if>
+			
+			<if test="ting_age != null">
+				AND ph_age  &lt; #{ting_age}
+			</if>
+			
+			<if test="ph_sex != null">
+				AND ph_sex = #{ph_sex}
+			</if>
+			
+			<if test="phone_num != null">
+				AND phone_num = #{phone_num}
+			</if>
+			
+			<if test="ph_school != null">
+				AND ph_school = #{ph_school}
+			</if>
+			
+			<if test="ph_tmk != null">
+				AND ph_tmk = #{ph_tmk}
+			</if>
+		
+			<if test="ph_intention != null">
+				AND ph_intention = #{ph_intention}
+			</if>
+			
+		    <if test="if_arrival != null">
+		   		 AND if_arrival = #{if_arrival}
+		    </if>
+		    
+	</select>
+	
+	<insert id="do_insertPhones" parameterType="Phones" keyProperty="ph_id">
+		INSERT INTO Phones(
+			ph_name,ph_age,ph_sex,phone_num,ph_school,ph_tmk,
+	  		ph_intention,ph_survey,if_arrival,ph_remarks
+  		) 
+  		VALUES(
+  			#{ph_name},#{ph_age},#{ph_sex},#{phone_num},#{ph_school},#{ph_tmk},
+  			#{ph_intention},#{ph_survey},#{if_arrival},#{ph_remarks}
+  		);
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="do_updatePhones" parameterType="Phones">
+		UPDATE Phones SET
+			ph_name = #{ph_name},ph_age = #{ph_age},ph_sex = #{ph_sex},phone_num = #{phone_num}, 
+			ph_school = #{ph_school},ph_tmk = #{ph_tmk},ph_intention = #{ph_intention},
+			ph_survey = #{ph_survey},if_arrival = #{if_arrival},ph_remarks = #{ph_remarks} 
+		WHERE 
+			ph_id = #{ph_id};
+	</update>
+</mapper>
+
+

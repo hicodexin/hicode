@@ -10,6 +10,34 @@ function for_sel_sf(id, f) {
 	}
 }
 
+/*前台写死数据结果遍历，f:所遍历数组;optionName:选中列表*/
+function for_sel_sf02(id, f, optionName) {
+	$("#" + id).children("option").remove();
+	var str = "<option selected='selected' disabled='disabled'>请选择</option>";
+	$("#" + id).append(str);
+	for (var k = 0; k < f.length; k++) {
+		if ($(f[k]).html() == optionName) {
+			var str = "<option selected='selected' value='" + (k + 1) + "' >" + $(f[k]).html() + "</option>";
+		} else {
+			var str = "<option value='" + (k + 1) + "'>" + $(f[k]).html() + "</option>";
+		}
+
+		$("#" + id).append(str);
+	}
+
+}
+
+function for_sel_Age(id, f) {
+	$("#" + id).children("option").remove();
+	var str = "<option selected='selected' disabled='disabled'>请选择</option>";
+	$("#" + id).append(str);
+	for (var k = 0; k < f; k++) {
+		var str = "<option value='" + k + "'>" + k + "</option>";
+		$("#" + id).append(str);
+	}
+
+}
+
 
 $().ready(function() {
 
@@ -92,7 +120,29 @@ $().ready(function() {
 		sit = setInterval(for_open, 10);
 	});
 
+	//TMK》》》展开
+	$("#bt_open_TMK").click(function() {
 
+		$("#hidd_mask").hide().show(300);
+
+		$("#stu_name").val("");
+		$("#stu_phone").val("");
+
+		$.post("/hicode/school/showSchool.spc", function(c) {
+			if (c.length > 0) {
+				for_sel_sf("stu_school", c);
+			}
+		}, "json");
+
+		$("#sel_yixiang").val("请选择");
+		for_sel_Age("kai_age",21);
+		for_sel_Age("ting_age",21);
+		
+		$("#if_arrival").val("请选择");
+
+		start = -650;
+		sit = setInterval(for_open, 10);
+	});
 	/** ==============================================条件查询data============================================== */
 
 	//试听课条件查询
@@ -134,7 +184,22 @@ $().ready(function() {
 		click_close();
 	});
 
-
+	//试听课条件查询
+	$("#sel_sub_TMK").click(function() {
+		var data = {
+			"page" : 1,
+			"stu_name" : $("#stu_name").val().trim(),
+			"ph_school" : $("#stu_school").val(),
+			"phone_num" : $('#stu_phone').val().trim(),
+			"ph_intention" : $("#sel_yixiang").val(),
+			"if_arrival" : $("#if_arrival").val(),
+			"kai_age" : $("#kai_age").val(),
+			"ting_age" : $("#ting_age").val()
+		};
+		console.log(data);
+		start_post_TMK(for_btn_TMK, data);
+		click_close();
+	});
 
 
 
