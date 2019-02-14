@@ -272,6 +272,7 @@ public class PhonesController {
 		String ph_intention = request.getParameter("update_selyixiang");
 		String gaikuang = request.getParameter("gaikuang");
 		String if_arrival = request.getParameter("if_renewal");
+		
 		String ph_remarks = request.getParameter("remarks");
 
 		Phones phones = new Phones();

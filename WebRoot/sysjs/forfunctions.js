@@ -90,6 +90,21 @@ function for_sel02(id, f, optionName) {
 
 }
 
+/*前台写死数据结果遍历，f:所遍历数组;optionName:选中列表    从0开始*/
+function for_sel03(id, f, optionName) {
+	$("#" + id).children("option").remove();
+	for (var k = 0; k < f.length; k++) {
+		if ($(f[k]).html() == optionName) {
+			var str = "<option selected='selected' value='" + k  + "' >" + $(f[k]).html() + "</option>";
+		} else {
+			var str = "<option value='" + k + "'>" + $(f[k]).html() + "</option>";
+		}
+
+		$("#" + id).append(str);
+	}
+
+}
+
 /** ==============================================锁定按钮============================================== */
 function for_btnSD_usr() {
 	var bts = $("button");
@@ -683,7 +698,7 @@ function for_btn_TMK() {
 					
 					var sel_class = $("#update_selyixiang option");
 
-					for_sel02("update_selyixiang", sel_class, optionName);
+					for_sel03("update_selyixiang", sel_class, optionName);
 					
 					$.post("/hicode/school/showSchool.spc", function(c) {
 						if (c.length > 0) {
@@ -1631,6 +1646,13 @@ function up_sub_TMK() {
 	} else {
 		$("#userName").css("borderColor", "#336699");
 	}
+	
+	if ($("#userAge").val().trim().length < 1) {
+		$("#userAge").css("borderColor", "#f00");
+		return;
+	} else {
+		$("#userAge").css("borderColor", "#336699");
+	}
 
 	var data = {
 		"userName" : $("#userName").val().trim(),
@@ -2537,7 +2559,6 @@ function creat_tb_TMK(back_all, p_dom) {
 		str += "<td name='update_school'>" + back_all[i].school + "</td>";
 //		（0:待确定；1:错号/空号；2:近期上门；3:可邀约上门；4:意向一般；5:无意向；）
 		if(back_all[i].yixiang == 0){
-			
 			str += "<td name='update_selyixiang'>待确定</td>";
 		}else if(back_all[i].yixiang == 1){
 			str += "<td name='update_selyixiang'>错号/空号</td>";
