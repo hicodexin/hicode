@@ -195,6 +195,7 @@ public class PhonesController {
 //		判断该手机号是否存在
 		if(num != null && num>0){
 			obj_arr.put("list_advs", "no");
+			return obj_arr.toString();
 		}
 		
 		//学校
