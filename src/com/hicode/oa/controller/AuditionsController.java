@@ -158,8 +158,12 @@ public class AuditionsController {
 		UserInfo obj = (UserInfo) session.getAttribute("user");
 
 		JSONObject obj_arr = new JSONObject();
-		// 游客没有添加权限
-		if (obj.getUserType().getType_leibie() == 0) {
+		// 添加权限仅限于，普通用户，会员用户，管理员；
+		if (
+				obj.getUserType().getType_leibie() != 1 || 
+				obj.getUserType().getType_leibie() != 2 || 
+				obj.getUserType().getType_leibie() != 3
+			) {
 			obj_arr.put("list_advs", "ok1");
 			return obj_arr.toString();
 		}
@@ -280,11 +284,12 @@ public class AuditionsController {
 		UserInfo obj = (UserInfo) session.getAttribute("user");
 
 		JSONObject obj_arr = new JSONObject();
-		// 游客与普通用户没有修改权限
-		if (obj.getUserType().getType_leibie() == 0) {
-			obj_arr.put("list_advs", "ok1");
-			return obj_arr.toString();
-		} else if (obj.getUserType().getType_leibie() == 1) {
+		// 修改权限：普通用户，会员用户，管理员
+		if (
+				obj.getUserType().getType_leibie() != 1 || 
+				obj.getUserType().getType_leibie() != 2 || 
+				obj.getUserType().getType_leibie() != 3
+			) {
 			obj_arr.put("list_advs", "ok1");
 			return obj_arr.toString();
 		}
