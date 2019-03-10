@@ -160,8 +160,8 @@ public class AuditionsController {
 		JSONObject obj_arr = new JSONObject();
 		// 添加权限仅限于，普通用户，会员用户，管理员；
 		if (
-				obj.getUserType().getType_leibie() != 1 || 
-				obj.getUserType().getType_leibie() != 2 || 
+				obj.getUserType().getType_leibie() != 1 && 
+				obj.getUserType().getType_leibie() != 2 && 
 				obj.getUserType().getType_leibie() != 3
 			) {
 			obj_arr.put("list_advs", "ok1");
@@ -286,8 +286,8 @@ public class AuditionsController {
 		JSONObject obj_arr = new JSONObject();
 		// 修改权限：普通用户，会员用户，管理员
 		if (
-				obj.getUserType().getType_leibie() != 1 || 
-				obj.getUserType().getType_leibie() != 2 || 
+				obj.getUserType().getType_leibie() != 1 && 
+				obj.getUserType().getType_leibie() != 2 && 
 				obj.getUserType().getType_leibie() != 3
 			) {
 			obj_arr.put("list_advs", "ok1");
