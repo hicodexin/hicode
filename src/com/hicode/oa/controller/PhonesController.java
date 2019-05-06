@@ -1,8 +1,5 @@
 package com.hicode.oa.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,11 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hicode.oa.service.PhonesService;
 import com.hicode.oa.service.SchoolService;
-import com.hicode.oa.tool.Adviser;
-import com.hicode.oa.tool.Auditions;
 import com.hicode.oa.tool.Phones;
 import com.hicode.oa.tool.School;
-import com.hicode.oa.tool.Teacher;
 import com.hicode.oa.tool.UserInfo;
 
 import net.sf.json.JSONArray;
@@ -174,9 +168,9 @@ public class PhonesController {
 		UserInfo obj = (UserInfo) session.getAttribute("user");
 
 		JSONObject obj_arr = new JSONObject();
-		// 游客没有添加权限
-		// 只有管理员和TMK具有添加权限
-		if (obj.getUserType().getType_leibie() != 11 && obj.getUserType().getType_leibie() != 3) {
+
+		// 只有TMK具有添加权限
+		if (obj.getUserType().getType_leibie() != 11) {
 			obj_arr.put("list_advs", "ok1");
 			return obj_arr.toString();
 		}
@@ -243,8 +237,8 @@ public class PhonesController {
 		UserInfo obj = (UserInfo) session.getAttribute("user");
 
 		JSONObject obj_arr = new JSONObject();
-		// 只有管理员和TMK具有修改权限
-		if (obj.getUserType().getType_leibie() != 11 && obj.getUserType().getType_leibie() != 3) {
+		// TMK具有修改权限
+		if (obj.getUserType().getType_leibie() != 11) {
 			obj_arr.put("list_advs", "ok1");
 			return obj_arr.toString();
 		}
@@ -323,7 +317,6 @@ public class PhonesController {
 		}else{
 			obj_arr.put("call_back", "ok");
 		}
-		System.out.println(count+"++++++++++++++++++++"+obj_arr.toString());
 		return obj_arr.toString();
 	}
 

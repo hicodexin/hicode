@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>TMK.html</title>
+    <title>VIP_TMK.html</title>
 	
 <meta name="keywords" content="keyword1,keyword2,keyword3">
 <meta name="description" content="this is my page">
 <meta charset="UTF-8">
+
 <style type="text/css">
 		*{
 			margin: 0px;
@@ -29,8 +30,8 @@
 			padding: 3px;
 			margin-left: 6px;
 		}
+		
 	</style>
-
 <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
 <link type="text/css" rel="stylesheet" href="/hicode/syscss/teacher_page.css" />
 <link type="text/css" rel="stylesheet" href="/hicode/syscss/for_date.css" />
@@ -42,6 +43,7 @@
 <script type="text/javascript" src="/hicode/sysjs/forfunctions.js"></script>
 <script type="text/javascript" src="/hicode/sysjs/jeDate.js"></script>
 <script type="text/javascript" src="/hicode/sysjs/select/shaixuan.js"></script>
+
 </head>
 
 <body>
@@ -114,7 +116,7 @@
   		</div>
   		<div class="dvselect_bottom">
   			<div>
-  				<button id="sel_sub_TMK" class="sel_sub">开始筛选</button>
+  				<button id="sel_sub_VIP_TMK" class="sel_sub">开始筛选</button>
   			</div>
   			
   			<div>
@@ -126,7 +128,7 @@
 	<!-- 隐藏  -->
 	<div id="hidd_mask"></div>
 	<!-- 添加与修改 -->
-	<div id="dv_update" style="height:840px;">
+	<!-- <div id="dv_update" style="height:840px;">
 	<div class="dv_title" id="dv_title">添加学生信息</div>
 	<div class="dv_upmain">
 		<ul class="up_ul">
@@ -202,18 +204,18 @@
 		<button id="up_sub" type="button">提交</button>
 		<button id="up_res">返回</button>
 	</div>
-	</div>
-	<div class="dv_top" id="dv_top">
-		<button id="index_go" class="for_button">首页</button>
-		<button id="find_user" class="for_button">欢迎:</button>
+	</div> -->
+	<div class="dv_top" id="dv_top"  style="background-color: #996633">
+		<button id="index_go" class="for_button_vip">首页</button>
+		<button id="find_user" class="for_button_vip">欢迎:</button>
 	</div>
 	<hr>
-	<div class="dv_title">TMK电话量信息详情<button id="bt_open_TMK">展开<span>▼</span></button></div>
-	<button id="bt_1">添加</button>
+	<div class="dv_title_vip">TMK电话量信息详情<button id="bt_open_TMK">展开<span>▼</span></button></div>
+	<!-- <button id="bt_1">添加</button> -->
 	<div id="dv_table">
-		<table id="tea_tbl" cellspacing="0">
+		<table id="tea_tbl_vip" cellspacing="0">
 			<thead>
-				<tr>
+				<tr id="tea_vip">
 					<th>序号</th>
 					<th>姓名</th>
 					<th>年龄</th>
@@ -228,12 +230,12 @@
 					<th>标记</th>
 				</tr>
 			</thead>
-			<tbody id="tbl_body">
+			<tbody id="tbl_body_vip">
 			</tbody>
 		</table>
 	</div>
-	<div id="dv_page">
-		<div id="dv_but"></div>
+	<div id="dv_page_vip">
+		<div id="dv_but_vip"></div>
 	</div>
 </body>
 <script type="text/javascript">
@@ -243,15 +245,16 @@
   		$("#dv_update").hide();
   		$("#hidd_mask").hide();
   		var pagedata = {"page":1};
-  		start_post_TMK(for_btn_TMK,pagedata);
+  		start_post_VIP_TMK(for_btn_VIP_TMK,pagedata);
   		getUserName("dv_top");
  		//点击添加按钮
- 		$("#bt_1").click(add_TMK);
+ 		/* $("#bt_1").click(add_TMK); */
 		// 点击返回消失
-  		$("#up_res").click(function(){
+  		/* $("#up_res").click(function(){
   			$("#hidd_mask").show().hide(300);
  			$("#dv_update").show().hide(300);
- 		});
+ 		}); */
+ 		
  		
  		// 点击首页按钮
  		$("#index_go").click(function(){
@@ -259,7 +262,7 @@
  		});
  		
  		/* 添加学员信息，提交按钮  */
- 		$("#up_sub").click(up_sub_TMK);
+ 		/* $("#up_sub").click(up_sub_TMK); */
 		
 		//条件筛选
 		var bd_wid = document.documentElement.clientWidth;

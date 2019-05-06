@@ -39,7 +39,12 @@ function getUserName(id) {
 			if (a.name) {
 				$("#find_user").html("欢迎 " + a.type + " : " + a.name);
 				$("#find_user").click(function() {});
-				var str = "<button id='user_out' class='for_button'>退出</button>";
+				if(a.type == '超级管理员'){
+					var str = "<button id='user_out' class='for_button_vip'>退出</button>";
+				}else{
+					var str = "<button id='user_out' class='for_button'>退出</button>";
+				}
+				
 				$("#" + id).append(str);
 				$("#user_out").click(userOut);
 			}
@@ -720,6 +725,10 @@ function for_btn_TMK() {
 
 }
 
+/* VIP_TMK>>>修改按钮 */
+function for_btn_VIP_TMK() {
+	/*return alert("对不起，超级管理员不能参与修改。。。。。");*/
+}
 
 /** ==============================================添加按钮============================================== */
 
@@ -2093,6 +2102,44 @@ function start_post_TMK(backFunction,pagedata) {
 
 }
 
+/* VIP_TMK》》》初始化数据 */
+function start_post_VIP_TMK(backFunction,pagedata) {
+	$.post("/hicode/svipPhones/showPhonesByInfo.spc", pagedata, function(a) {
+		if (a) {
+			creat_tb_VIP_TMK(a.list_advs, "#tbl_body_vip");
+			/* 添加页码 */
+			if (a.all_num) {
+				
+				$("#dv_but_vip").children("button").remove();
+				for (var k = 0; k < a.all_num; k++) {
+					var btn = document.createElement("button");
+					$(btn).html(k + 1);
+					$(btn).attr("mypage", (k + 1));
+					if (k == 0) {
+						$(btn).css({
+							"backgroundColor" : "#996633",
+							"color" : "#fff"
+						});
+					}
+					$(btn).click(function() {
+						change_page_VIP_TMK(this,pagedata);
+					});
+
+					$("#dv_but_vip").append(btn);
+				}
+			}
+			//修改按钮赋单击事件
+			backFunction();
+		}
+		var hei = $("#tea_tbl_vip").css("height");
+		hei = hei.substr(0, hei.length - 2);
+		if (hei > 650) {
+			$("#dv_table").css("height", "700px");
+		}
+	}, "json");
+
+}
+
 /** ==============================================待便利的值============================================== */
 
 /* back_all: 待便利的值 ====市场顾问 */
@@ -2640,6 +2687,106 @@ function creat_tb_TMK(back_all, p_dom) {
 	}
 }
 
+/* VIP_TMK >>> back_all: 待便利的值 */
+function creat_tb_VIP_TMK(back_all, p_dom) {
+	$(p_dom).children("tr").remove();
+	for (var i = 0; i < back_all.length; i++) {
+		var tr = document.createElement("tr");
+		var str = "<td>" + (i + 1) + "</td>";
+		str += "<td name='userName'>" + back_all[i].name + "</td>";
+		str += "<td name='userAge'>" + back_all[i].age + "</td>";
+
+		if (back_all[i].sex == 1) {
+			str += "<td><img src='/hicode/sysimg/face_boy.png'/> </td>";
+		} else {
+			str += "<td><img src='/hicode/sysimg/face_girl.png'/></td>";
+		}
+		str += "<td name='phone'>" + back_all[i].phone + "</td>";
+		str += "<td name='update_school'>" + back_all[i].school + "</td>";
+//		（0:待确定；1:错号/空号；2:近期上门；3:可邀约上门；4:意向一般；5:无意向；）
+		if(back_all[i].yixiang == 0){
+			str += "<td name='update_selyixiang'>待确定</td>";
+		}else if(back_all[i].yixiang == 1){
+			str += "<td name='update_selyixiang'>错号/空号</td>";
+			$(tr).css("color", "#b0b0b0");
+		}else if(back_all[i].yixiang == 2){
+			str += "<td name='update_selyixiang'>近期上门</td>";
+		}else if(back_all[i].yixiang == 3){
+			str += "<td name='update_selyixiang'>可邀约上门</td>";
+		}else if(back_all[i].yixiang == 4){
+			str += "<td name='update_selyixiang'>意向一般</td>";
+		}else if(back_all[i].yixiang == 5){
+			str += "<td name='update_selyixiang'>无意向</td>";
+		}else{
+			str += "<td name='update_selyixiang'>待确定</td>";
+		}
+	/*	str += "<td name='gaikuang'>" + back_all[i].gaikuang + "</td>";*/
+		
+		if (back_all[i].if_arrival == 1) {
+			str += "<td><img src='/hicode/sysimg/face_smile.jpg'/> </td>";
+		} else {
+			/*str += "<td><img src='/hicode/sysimg/face_grieved.jpg'/></td>";*/
+			str += "<td> </td>";
+		}
+		
+		$(tr).append(str);
+		
+		var td01 = document.createElement("td");
+		var img01 = document.createElement("img");
+		if(back_all[i].gaikuang != null && back_all[i].gaikuang != ""){
+			$(img01).attr("src","/hicode/sysimg/beizhu/for_yes.png");
+		}else{
+			$(img01).attr("src","/hicode/sysimg/beizhu/for_no.png");
+		}
+		$(img01).attr("name","gaikuang");
+		$(img01).attr("userName",back_all[i].name);
+		$(img01).attr("myfont",back_all[i].gaikuang);
+		img01.onclick = function(){
+			var ss = $(this).attr("userName");
+			var tt = $(this).attr("myfont");
+			if(tt != null && tt != ""){
+				create_remarks(ss,tt);
+			}else{
+				create_remarks(ss,"暂无。。。。。");
+			}
+		};
+		
+		td01.appendChild(img01);
+		tr.appendChild(td01);
+		
+		var td = document.createElement("td");
+		var img = document.createElement("img");
+		if(back_all[i].beizhu != null && back_all[i].beizhu != ""){
+			$(img).attr("src","/hicode/sysimg/beizhu/for_yes.png");
+		}else{
+			$(img).attr("src","/hicode/sysimg/beizhu/for_no.png");
+		}
+		$(img).attr("name","remarks");
+		$(img).attr("userName",back_all[i].name);
+		$(img).attr("myfont",back_all[i].beizhu);
+		img.onclick = function(){
+			var ss = $(this).attr("userName");
+			var tt = $(this).attr("myfont");
+			if(tt != null && tt != ""){
+				create_remarks(ss,tt);
+			}else{
+				create_remarks(ss,"暂无。。。。。");
+			}
+		};
+		
+		td.appendChild(img);
+		tr.appendChild(td);
+		
+		var btid = back_all[i].id;
+		/*var strr = "<td><button id = '" + btid + "' name='" + (i + 1) + "'>修改</button></td>";*/
+		var strr = "<td></td>";
+		strr += "<td><input type='checkbox' value='" + btid + "' /></td>";
+		$(tr).append(strr);
+		$(p_dom).append(tr);
+
+	}
+}
+
 /** ==============================================切换页面============================================== */
 
 /*切换页面*/
@@ -2841,5 +2988,29 @@ function change_page_TMK(this_dom,pagedata) {
 
 		creat_tb_TMK(js_arry.list_advs, "#tbl_body");
 		for_btn_TMK();
+	});
+}
+
+/*切换页面*/
+function change_page_VIP_TMK(this_dom,pagedata) {
+	$("#dv_but_vip button").css({
+		"backgroundColor" : "#fff",
+		"color" : "#996633"
+	});
+	$(this_dom).css({
+		"backgroundColor" : "#996633",
+		"color" : "#fff"
+	});
+	
+	pagedata.page = $(this_dom).attr("mypage");
+	
+	$.post("/hicode/svipPhones/showPhonesByInfo.spc",pagedata, function(a_s) {
+		$("#tbl_body_vip").html(' ');
+
+		var js_arry = eval('(' + a_s + ')');
+
+		creat_tb_VIP_TMK(js_arry.list_advs, "#tbl_body_vip");
+		//修改按钮
+		for_btn_VIP_TMK();
 	});
 }

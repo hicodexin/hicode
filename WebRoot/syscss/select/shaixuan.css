@@ -155,3 +155,28 @@
 	cursor: pointer;
 	border: solid 1px #FFFFFF;
 }
+
+
+.dv_title_vip>button {
+	display: inline-block;
+	width: 120px;
+	height: 40px;
+	outline: none;
+	border: #996633 1px solid;
+	border-radius: 6px;
+	text-align: center;
+	line-height: 40px;
+	font-family: "楷体";
+	font-size: 18px;
+	font-weight: 600;
+	color: #996633;
+	background-color: #FFFFFF;
+	margin-left: 20px;
+}
+
+.dv_title_vip>button:hover {
+	background-color: #996633;
+	color: #fff;
+	cursor: pointer;
+	border: solid 1px #FFFFFF;
+}

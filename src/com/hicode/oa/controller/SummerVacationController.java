@@ -111,7 +111,7 @@ public class SummerVacationController {
 		JSONObject obj_arr = new JSONObject();
 		
 		// 添加权限仅限于：管理员；
-		if ( obj.getUserType().getType_leibie() != 3 ) {
+		if ( obj.getUserType().getType_leibie() != 3 && obj.getUserType().getType_leibie() != 6 ) {
 			obj_arr.put("list_advs", "ok1");
 			return obj_arr.toString();
 		}
@@ -183,7 +183,7 @@ public class SummerVacationController {
 		
 		JSONObject obj_arr = new JSONObject();
 		// 修改权限仅限于：管理员；
-		if ( obj.getUserType().getType_leibie() != 3 ) {
+		if ( obj.getUserType().getType_leibie() != 3 && obj.getUserType().getType_leibie() != 6 ) {
 			obj_arr.put("list_advs", "ok1");
 			return obj_arr.toString();
 		}

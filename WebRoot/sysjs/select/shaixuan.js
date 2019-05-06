@@ -184,7 +184,7 @@ $().ready(function() {
 		click_close();
 	});
 
-	//试听课条件查询
+	//TMK条件查询
 	$("#sel_sub_TMK").click(function() {
 		var data = {
 			"page" : 1,
@@ -200,7 +200,24 @@ $().ready(function() {
 		start_post_TMK(for_btn_TMK, data);
 		click_close();
 	});
-
+	
+	//VIP_TMK条件查询
+	$("#sel_sub_VIP_TMK").click(function() {
+		
+		var data = {
+			"page" : 1,
+			"stu_name" : $("#stu_name").val().trim(),
+			"ph_school" : $("#stu_school").val(),
+			"phone_num" : $('#stu_phone').val().trim(),
+			"ph_intention" : $("#sel_yixiang").val(),
+			"if_arrival" : $("#if_arrival").val(),
+			"kai_age" : $("#kai_age").val(),
+			"ting_age" : $("#ting_age").val()
+		};
+		console.log(data);
+		start_post_VIP_TMK(for_btn_VIP_TMK, data);
+		click_close();
+	});
 
 
 	/** ==============================================关闭============================================== */

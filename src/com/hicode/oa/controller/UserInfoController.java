@@ -50,8 +50,9 @@ public class UserInfoController {
 
 		HttpSession session = request.getSession();
 		UserInfo obj = (UserInfo) session.getAttribute("user");
-		// 非管理员用户
-		if (obj.getUserType().getType_leibie() != 3) {
+		// 非会员用户、管理员用户、超级管理员
+		if (obj.getUserType().getType_leibie() != 3
+				&& obj.getUserType().getType_leibie() != 6) {
 			return "redirect:/Fighting.html";
 		}
 
@@ -258,11 +259,14 @@ public class UserInfoController {
 				case 3:
 					type = "管理员";
 					break;
+				case 6:
+					type = "超级管理员";
+					break;
 				}
 
 				obj.put("type", type);
 
-				if (type.equals("管理员")) {
+				if (type.equals("管理员") || type.equals("超级管理员")) {
 					obj.put("mger", "yes");
 				}
 

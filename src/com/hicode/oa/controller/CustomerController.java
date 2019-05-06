@@ -26,7 +26,11 @@ import com.hicode.oa.tool.UserInfo;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-
+/**
+ * 报名学员信息
+ * @author XinPeiXiang
+ *
+ */
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
@@ -39,8 +43,12 @@ public class CustomerController {
 		
 		HttpSession session = request.getSession();
 		UserInfo obj = (UserInfo) session.getAttribute("user");
-		// 非会员用户、管理员用户
-		if (obj.getUserType().getType_leibie() != 3 && obj.getUserType().getType_leibie() != 2) {
+		// 非会员用户、管理员用户、超级管理员
+		if (
+				obj.getUserType().getType_leibie() != 3 && 
+				obj.getUserType().getType_leibie() != 2 && 
+				obj.getUserType().getType_leibie() != 6
+				) {
 			return "redirect:/Fighting.html";
 		}
 		return "/WEB-INF/VisitorsPage/Customer.html";
@@ -158,7 +166,7 @@ public class CustomerController {
 
 		JSONObject obj_arr = new JSONObject();
 		// 只有管理员具有添加权限
-		if (obj.getUserType().getType_leibie() != 3) {
+		if (obj.getUserType().getType_leibie() != 3 && obj.getUserType().getType_leibie() != 6) {
 			obj_arr.put("list_advs", "ok1");
 			return obj_arr.toString();
 		}
@@ -230,7 +238,7 @@ public class CustomerController {
 
 		JSONObject obj_arr = new JSONObject();
 		// 只有管理员具有修改权限
-		if (obj.getUserType().getType_leibie() != 3) {
+		if (obj.getUserType().getType_leibie() != 3 && obj.getUserType().getType_leibie() != 6) {
 			obj_arr.put("list_advs", "ok1");
 			return obj_arr.toString();
 		}

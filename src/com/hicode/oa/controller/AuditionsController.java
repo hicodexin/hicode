@@ -42,7 +42,14 @@ public class AuditionsController {
 
 	@RequestMapping("/to_login")
 	public String login(HttpServletRequest request) {
-		System.out.println("-------auditions------------");
+		
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+		// 非会员用户、管理员用户、超级管理员
+		if (obj.getUserType().getType_leibie() != 3 && obj.getUserType().getType_leibie() != 2
+				&& obj.getUserType().getType_leibie() != 6) {
+			return "redirect:/Fighting.html";
+		}
 		return "/WEB-INF/VisitorsPage/Auditions.html";
 	}
 
@@ -158,11 +165,12 @@ public class AuditionsController {
 		UserInfo obj = (UserInfo) session.getAttribute("user");
 
 		JSONObject obj_arr = new JSONObject();
-		// 添加权限仅限于，普通用户，会员用户，管理员；
+		// 添加权限仅限于，普通用户，会员用户，管理员，超级管理员；
 		if (
 				obj.getUserType().getType_leibie() != 1 && 
 				obj.getUserType().getType_leibie() != 2 && 
-				obj.getUserType().getType_leibie() != 3
+				obj.getUserType().getType_leibie() != 3 && 
+				obj.getUserType().getType_leibie() != 6
 			) {
 			obj_arr.put("list_advs", "ok1");
 			return obj_arr.toString();
@@ -288,7 +296,8 @@ public class AuditionsController {
 		if (
 				obj.getUserType().getType_leibie() != 1 && 
 				obj.getUserType().getType_leibie() != 2 && 
-				obj.getUserType().getType_leibie() != 3
+				obj.getUserType().getType_leibie() != 3 && 
+				obj.getUserType().getType_leibie() != 6
 			) {
 			obj_arr.put("list_advs", "ok1");
 			return obj_arr.toString();

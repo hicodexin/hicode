@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>index.html</title>
+<title>super_index.html</title>
 
 <meta name="keywords" content="keyword1,keyword2,keyword3">
 <meta name="description" content="this is my page">
@@ -19,8 +19,9 @@ a {
 	display: inline-block;
 	width: 200px;
 	height: 300px;
-	background-color: #336699;
-	color: #fff;
+	/* background-color: #336699; */
+	border:1px solid #996633;
+	color: #996633;
 	text-align: center;
 	line-height: 300px;
 	margin: 20px;
@@ -30,8 +31,9 @@ a {
 }
 
 a:HOVER {
-	background-color: orange;
-	box-shadow: 5px 5px 15px #f00;
+	/* background-color: orange; */
+	font-weight:600;
+	box-shadow: 5px 5px 15px #996633;
 }
 
 #dv_show {
@@ -43,7 +45,8 @@ a:HOVER {
 .dv_more {
 	width: 200px;
 	height: 300px;
-	background-color: #336699;
+	/* background-color: #336699; */
+	border:1px solid #996633;
 	margin: 20px;
 	border-radius: 6px;
 	float: left;
@@ -51,8 +54,8 @@ a:HOVER {
 
 .dv_more:HOVER {
 	cursor: pointer;
-	background-color: orange;
-	box-shadow: 5px 5px 15px #f00;
+	/* background-color: orange; */
+	box-shadow: 5px 5px 15px #996633;
 }
 
 .dv_more>div {
@@ -78,20 +81,19 @@ a:HOVER {
 
 <body bgColor="#E0E0E0" style="overflow-x: hidden;">
 
-	<div class="dv_top" id="dv_top">
-		<button id="find_user" class="for_button" style="margin-left: 70%;">欢迎:</button>
+	<div class="dv_top" id="dv_top" style="background-color: #996633">
+		<button id="index_go" class="for_button_vip">首页</button>
+		<button id="find_user" class="for_button_vip">欢迎:</button>
 	</div>
 	<hr>
-	<div class="dv_title">欢迎来到HICODE管理后台</div>
+	<div class="dv_title" style="color: #996633">超级管理员专区</div>
 	<br>
 	<div id="dv_show">
-		<a href="/hicode/auditions/to_login.spc">试听课展示</a> 
-		<a href="/hicode/customer/to_login.spc">报名学员</a> 
-		<a href="/hicode/deposit/to_login.spc">订金详情</a> 
-		<a href="/hicode/winterVacation/to_login.spc">寒假班详情</a> 
-		<a href="/hicode/summerVacation/to_login.spc">暑假班详情</a> 
-		<a href="/hicode/phones/to_login.spc">TMK电话量</a> 
-		<a href="/hicode/svipPhones/to_login.spc">超级管理员</a> 
+		<a href="/hicode/svipPhones/openSomeTMKList.spc?name=TMK001">范梦珂</a> 
+		<a href="/hicode/svipPhones/openSomeTMKList.spc?name=TMK002">杨堃</a> 
+		<a href="/hicode/svipPhones/openSomeTMKList.spc?name=TMK003">TMK003</a> 
+		<a href="/hicode/svipPhones/openSomeTMKList.spc?name=TMK004">TMK004</a> 
+		<a href="/hicode/svipPhones/openSomeTMKList.spc?name=TMK005">赵雅倩</a> 
 		<div id="dv_more" class="dv_more">
 			<div></div>
 		</div>
@@ -100,11 +102,7 @@ a:HOVER {
 		<div id="back_go" class="dv_more">
 			<div style="background-image: url(/hicode/sysimg/index/for_back.png);"></div>
 		</div>
-		<a href="subject/to_login.spc">课程类别</a> 
-		<a href="/hicode/teacher/to_login.spc">展示老师</a> 
-		<a href="/hicode/adviser/to_login.spc">顾问展示</a> 
-		<a href="/hicode/UserInfo/to_login.spc">登录展示</a> 
-		<a href="#" onclick='alert("未完待续。。。")'>学校</a>
+		<a href="#" onclick='alert("未完待续。。。")'>未完待续</a> 
 	</div>
 </body>
 <script type="text/javascript">
@@ -120,6 +118,11 @@ a:HOVER {
 		window.setTimeout(function() {
 			getUserName("dv_top");
 		}, 500);
+		
+		// 点击首页按钮
+ 		$("#index_go").click(function(){
+ 			window.location = "/hicode/index.html";
+ 		});
 
 		/*下一页 鼠标事件*/
 		$("#dv_more").mouseover(function() {
