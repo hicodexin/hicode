@@ -730,6 +730,79 @@ function for_btn_VIP_TMK() {
 	/*return alert("对不起，超级管理员不能参与修改。。。。。");*/
 }
 
+/* 跟踪详情>>>修改按钮 */
+function for_btn_sig() {
+	var bts = $("button");
+	var revise = new Array();
+	if (bts.length > 0) {
+		for (var i = 0, j = 0; i < bts.length; i++) {
+			if ($(bts[i]).html() == "修改") {
+				revise[j] = bts[i];
+				j++;
+			}
+		}
+	}
+
+	if (revise.length > 0) {
+		for (var k = 0; k < revise.length; k++) {
+			(function() {
+				var t = k;
+				$(revise[t]).click(function() {
+					$("#hidd_mask").hide().show(300);
+					$("#dv_update").hide().show(300);
+					$("#dv_title").html("修改学员跟踪信息");
+					$("#tea_list").val($(this).attr("name"));
+					$("#tea_list").attr("name", $(this).attr("id"));
+					
+					$.post("/hicode/auditions/showAuditions.spc", function(c) {
+						if (c.length > 0) {
+							var stu_name = $("[name='userName']:eq(" + t + ")").html();
+							for_sel("student_sel", c, stu_name);
+							$("#student_name").val(stu_name);
+						}
+						window.setTimeout(function() {
+							$('.chosen-select').chosen();
+							$('.chosen-container')[0].style.width = "250px";
+							$(".chosen-single span").html(stu_name);
+						}, 500);
+					}, "json");
+					
+					$("#stname_li01").css("display","none");
+					$("#stname_li02").css("display","block");
+					$("#student_name").val(stu_name);
+					
+					var optionName01 = $("[name='fenlei']:eq(" + t + ")").html();
+					var sel_leibie = $("#leibie_sel option");
+					for_sel03("leibie_sel", sel_leibie, optionName01);
+					
+					var optionName02 = $("[name='if_signup']:eq(" + t + ")").attr("value");
+					var sel_qiandan = $("#qiandan_sel option");
+					for_sel03("qiandan_sel", sel_qiandan, optionName02);
+					
+					$.post("/hicode/adviser/showAdviser.spc", function(f) {
+						if (f.length > 0) {
+							var name = $("[name='firstPeople']:eq(" + t + ")").html();
+							for_sel("adviser_sel", f,name);
+							$("#adviser_sel").attr("disabled","disabled");
+						}
+					}, "json");
+					
+					$("#dang_tian").val($("[name='firstRemark']:eq(" + t + ")").attr("manzi01"));
+					
+					$("#first_time").val($("[name='firstRemark']:eq(" + t + ")").attr("myfont01"));
+					$("#second_time").val($("[name='firstRemark']:eq(" + t + ")").attr("myfont02"));
+					$("#third_time").val($("[name='firstRemark']:eq(" + t + ")").attr("myfont03"));
+					
+					$("#up_sub").html("提交");
+				});
+
+			})();
+
+		}
+	}
+
+}
+
 /** ==============================================添加按钮============================================== */
 
 /* 试听课>>>添加按钮 */
@@ -995,6 +1068,48 @@ function add_TMK() {
 
 }
 
+/**
+ * 跟踪细则>>>添加按钮
+ */
+function add_sig() {
+	$("#hidd_mask").hide().show(300);
+	$("#dv_update").hide().show(300);
+	var len = $("#tea_tbl tbody tr").length;
+	$("#tea_list").val(len + 1);
+	$("#dv_title").html("添加跟踪信息");
+	$("#up_sub").html("添加");
+	$("#userName").val("");
+	$("#dang_tian").val("");
+	$("#first_time").val("");
+	$("#second_time").val("");
+	$("#third_time").val("");
+
+	var sel_leibie = $("#leibie_sel option");
+	for_sel03("leibie_sel", sel_leibie, "两周内可签单");
+	var sel_qiandan = $("#qiandan_sel option");
+	for_sel03("qiandan_sel", sel_qiandan, "未报名");
+
+	$("#stname_li02").css("display","none");
+	$("#stname_li01").css("display","block");
+	$.post("/hicode/auditions/showAuditions.spc", function(c) {
+		if (c.length > 0) {
+			for_sel("student_sel", c);
+		}
+		
+		window.setTimeout(function() {
+			$('.chosen-select').chosen();
+			$('.chosen-container')[0].style.width = "250px";
+		}, 1000);
+	}, "json");
+	
+	$.post("/hicode/adviser/showAdviser.spc", function(f) {
+		if (f.length > 0) {
+			for_sel("adviser_sel", f);
+			$("#adviser_sel").removeAttr("disabled");
+		}
+	}, "json");
+
+}
 
 /** ==============================================提交按钮============================================== */
 
@@ -1722,8 +1837,83 @@ function up_sub_TMK() {
 
 
 	}
-	
-	
+
+}
+
+/*跟单详情》》》提交按钮*/
+function up_sub_sig() {
+	if ($("#dang_tian").val().length > 200) {
+		$("#dang_tian").css("borderColor", "#f00");
+		return;
+	} else {
+		$("#dang_tian").css("borderColor", "#336699");
+	}
+
+	var ss = $(".chosen-single span").html();
+	var yy = $("#student_sel option");
+	for (var i = 0; i < yy.length; i++) {
+		if ($(yy[i]).html() == ss) {
+			ss = $(yy[i]).val();
+			break;
+		}
+	}
+
+	var data = {
+		"userName" : ss,
+		"leibie_sel" : $('#leibie_sel').val(),
+		"qiandan_sel" : $('#qiandan_sel').val(),
+		"adviser_sel" : $("#adviser_sel").val(),
+		"dang_tian" : $("#dang_tian").val(),
+		"first_time" : $("#first_time").val(),
+		"second_time" : $("#second_time").val(),
+		"third_time" : $("#third_time").val(),
+	};
+	console.log(data);
+
+	var content = $(this).html();
+	if (content == "添加") {
+		$.post("/hicode/signing/do_insertSigning.spc", data, function(e) {
+			$("#hidd_mask").hide().hide(300);
+			$("#dv_update").show().hide(300);
+			if (e.list_advs == 'ok') {
+				alert("添加成功");
+				$("#tbl_body").children("tr").remove();
+				var pagedata = {"page":1};
+				start_post_sig(for_btn_sig,pagedata);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
+			}else if (e.list_advs == 'ok2') {
+				alert("对不起,该学员信息已被分派。。。。");
+			} else {
+				alert("添加失败,请联系管理员。。。。");
+			}
+
+		}, "json");
+
+	} else if (content == "提交") {
+		if (!window.confirm("是否确定要修改的内容？？？？")) {
+			return;
+		}
+		data.id = $("#tea_list").attr("name");
+		data.if_done = $('input:radio[name="if_done"]:checked').val();
+		data.if_refund = $('input:radio[name="if_refund"]:checked').val();
+		
+		$.post("/hicode/customer/do_updateCustomer.spc", data, function(e) {
+			$("#hidd_mask").hide().hide(300);
+			$("#dv_update").show().hide(300);
+			if (e.list_advs == 'ok') {
+				alert("修改成功");
+				$("#tbl_body").children("tr").remove();
+				var pagedata = {"page":1};
+				start_post_cus(for_btn_cus,pagedata);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
+			} else {
+				alert("修改失败,请联系管理员。。。。");
+			}
+
+		}, "json");
+	}
 
 }
 
@@ -2140,6 +2330,44 @@ function start_post_VIP_TMK(backFunction,pagedata) {
 
 }
 
+/* 市场跟单》》》初始化数据 */
+function start_post_sig(backFunction,pagedata) {
+	$.post("/hicode/signing/showSigningByInfo.spc", pagedata, function(a) {
+		if (a) {
+			creat_tb_sig(a.list_advs, "#tbl_body");
+			/* 添加页码 */
+			if (a.all_num) {
+				$("#dv_but").children("button").remove();
+				for (var k = 0; k < a.all_num; k++) {
+					var btn = document.createElement("button");
+					$(btn).html(k + 1);
+					$(btn).attr("mypage", (k + 1));
+					if (k == 0) {
+						$(btn).css({
+							"backgroundColor" : "#336699",
+							"color" : "#fff"
+						});
+					}
+					$(btn).click(function() {
+						change_page_sig(this,pagedata);
+					});
+
+					$("#dv_but").append(btn);
+				}
+				/*$("#bt_end").attr("mypage", a.all_num);*/
+			}
+			//修改按钮赋单击事件
+			backFunction();
+		}
+		var hei = $("#tea_tbl").css("height");
+		hei = hei.substr(0, hei.length - 2);
+		if (hei > 650) {
+			$("#dv_table").css("height", "700px");
+		}
+
+	}, "json");
+
+}
 /** ==============================================待便利的值============================================== */
 
 /* back_all: 待便利的值 ====市场顾问 */
@@ -2254,7 +2482,7 @@ function creat_tb_aud(back_all, p_dom) {
 }
 
 
-/* back_all: 待便利的值 */
+/* 报名学员》》待便利的值 */
 function creat_tb_cus(back_all, p_dom) {
 	$(p_dom).children("tr").remove();
 	for (var i = 0; i < back_all.length; i++) {
@@ -2786,6 +3014,90 @@ function creat_tb_VIP_TMK(back_all, p_dom) {
 
 	}
 }
+/* 市场跟单》》back_all: 待便利的值 */
+function creat_tb_sig(back_all, p_dom) {
+	$(p_dom).children("tr").remove();
+	for (var i = 0; i < back_all.length; i++) {
+		var tr = document.createElement("tr");
+		var str = "<td>" + (i + 1) + "</td>";
+		str += "<td name='userName'>" + back_all[i].name + "</td>";
+		str += "<td name='school'>" + back_all[i].school + "</td>";
+		str += "<td name='nianji'>"+back_all[i].nianji+"</td>";
+		str += "<td name='phone'>"+back_all[i].phone+"</td>";
+		
+		//用户分类（1.两周内可签单；2.一个月内可签单；3.需要长期跟踪；4.无意向）
+		if (back_all[i].fenlei == 1) { 
+			str += "<td name='fenlei'>两周内可签单</td>";
+		} else if(back_all[i].fenlei == 2){
+			str += "<td name='fenlei'>一个月内可签单</td>";
+		}else if(back_all[i].fenlei == 3){
+			str += "<td name='fenlei'>需要长期跟踪</td>";
+		}else{
+			str += "<td name='fenlei'>无意向</td>";
+		}
+		
+		//是否报名（0:未报名；1:已报名；2:死单）
+		if (back_all[i].if_signup == 1) {
+			str += "<td name='if_signup' value='已报名'> <img src='/hicode/sysimg/face_smile.jpg' /> </td>";
+		} else if(back_all[i].if_signup == 2){
+			str += "<td name='if_signup' value='死单'> <img src='/hicode/sysimg/face_grieved.jpg' /> </td>";
+		}else{
+			str += "<td name='if_signup' value='未报名'>  </td>";
+		}
+		
+		str += "<td name='firstPeople'>"+back_all[i].firstPeople+"</td>";
+		str += "<td name='nowPeople'>"+back_all[i].nowPeople+"</td>";
+		str += "<td name='begin_time'>"+timestampToTime(back_all[i].begin_time.time)+"</td>";
+		
+		$(tr).append(str);
+		var td = document.createElement("td");
+		var img = document.createElement("img");
+		if(back_all[i].firstRemark != null && back_all[i].firstRemark != ""){
+			$(img).attr("src","/hicode/sysimg/beizhu/for_yes.png");
+		}else{
+			$(img).attr("src","/hicode/sysimg/beizhu/for_no.png");
+		}
+		
+		$(img).attr("name","firstRemark");
+		$(img).attr("userName",back_all[i].name);
+		
+		var mianzi = "&nbsp;&nbsp;&nbsp;" + back_all[i].firstRemark;
+		$(img).attr("manzi",mianzi);
+		$(img).attr("manzi01",back_all[i].firstRemark);
+		
+		var zhuizong = "&nbsp;&nbsp;&nbsp;1)" + back_all[i].zhuizong_01+
+						"<br/>&nbsp;&nbsp;&nbsp;2)" + back_all[i].zhuizong_02+
+						"<br/>&nbsp;&nbsp;&nbsp;3)" + back_all[i].zhuizong_03;
+		
+		$(img).attr("myfont",zhuizong);
+		
+		$(img).attr("myfont01",back_all[i].zhuizong_01);
+		$(img).attr("myfont02",back_all[i].zhuizong_02);
+		$(img).attr("myfont03",back_all[i].zhuizong_03);
+		
+		img.onclick = function(){
+			var ss = $(this).attr("userName");
+			var tt = $(this).attr("manzi");
+			var ff = $(this).attr("myfont");
+			if(tt != null && tt != ""){
+				create_GenZongXiZe(ss,tt,ff);
+			}else{
+				create_GenZongXiZe(ss,"暂无。。。。。",ff);
+			}
+		};
+		
+		td.appendChild(img);
+		tr.appendChild(td);
+		
+		var btid = back_all[i].id;
+		var strr = "<td><button id = '" + btid + "' name='" + (i + 1) + "'>修改</button></td>";
+		strr += "<td><input type='checkbox' value='" + btid + "' /></td>";
+		$(tr).append(strr);
+		$(p_dom).append(tr);
+
+	}
+
+}
 
 /** ==============================================切换页面============================================== */
 
@@ -2881,7 +3193,7 @@ function change_page_sub(this_dom) {
 	});
 }
 
-/*切换页面*/
+/*报名学员》》》切换页面*/
 function change_page_cus(this_dom,pagedata) {
 	$("#dv_but button").css({
 		"backgroundColor" : "#fff",
@@ -3012,5 +3324,26 @@ function change_page_VIP_TMK(this_dom,pagedata) {
 		creat_tb_VIP_TMK(js_arry.list_advs, "#tbl_body_vip");
 		//修改按钮
 		for_btn_VIP_TMK();
+	});
+}
+
+/*报名学员》》》切换页面*/
+function change_page_sig(this_dom,pagedata) {
+	$("#dv_but button").css({
+		"backgroundColor" : "#fff",
+		"color" : "#336699"
+	});
+	$(this_dom).css({
+		"backgroundColor" : "#336699",
+		"color" : "#fff"
+	});
+	
+	pagedata.page = $(this_dom).attr("mypage");
+
+	$.post("/hicode/signing/showSigningByInfo.spc",pagedata, function(a_s) {
+		$("#tbl_body").html(' ');
+		var js_arry = eval('(' + a_s + ')');
+		creat_tb_sig(js_arry.list_advs, "#tbl_body");
+		for_btn_sig();
 	});
 }

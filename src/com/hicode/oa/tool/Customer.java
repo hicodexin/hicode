@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * 签约客户详细信息
  * 
- * @author xinpeixiang
+ * @author XinPeiXiang
  * @date 2018-10-19
  */
 public class Customer implements Serializable {

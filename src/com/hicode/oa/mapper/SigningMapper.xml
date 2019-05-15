@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hicode.oa.dao.SigningDAO">
+	<resultMap id="getSigning_oop" type="Signing">
+		<association property="auditions" column="au_id" select="com.hicode.oa.dao.AuditionsDAO.getAuditionsByID">
+		</association>
+		<association property="adviser" column="adv_id" select="com.hicode.oa.dao.AdviserDAO.getAdviserByID">
+		</association> 
+		<association property="adviser_now" column="adv_now_id" select="com.hicode.oa.dao.AdviserDAO.getAdviserByID">
+		</association> 
+	</resultMap>
+	
+	<sql id="all_column">
+		 sig_id,au_id,situation,category,tracking_one,tracking_two,tracking_three,if_signup,adv_id,adv_now_id,history
+	</sql>
+	
+	<select id="getSigningByID" parameterType="java.lang.Integer" resultMap="getSigning_oop">
+		select <include refid="all_column"></include> from signing where sig_id = #{sig_id};
+	</select>
+	
+	<select id="getSigningAll" parameterType="java.util.Map" resultMap="getSigning_oop">
+		select <include refid="all_column"></include> from signing limit #{start},#{count};
+	</select>
+	<!-- 获取表中数据条数 -->
+	<select id="getSigningForCount" resultType="java.lang.Integer">
+		select count(1) from signing;
+	</select>
+	
+	<select id="getSigningBySomeOption" parameterType="java.util.Map" resultMap="getSigning_oop">
+
+		SELECT <include refid="all_column"></include> FROM signing 
+		WHERE 1=1
+		<!-- 
+			sig_id,au_id,situation,category,tracking_one,tracking_two,tracking_three,if_signup,adv_id,history
+			stu_name,stu_school,stu_class,phone,category ,if_signup,adv_id,adv_now_id
+		-->
+		<if test="stu_name != null">
+			AND au_id in
+				(SELECT t2.au_id FROM auditions t2 WHERE t2.st_name LIKE #{stu_name} )
+		</if>
+		
+		<if test="stu_school != null">
+			AND au_id in
+				(SELECT t3.au_id FROM auditions t3 JOIN school t4 ON t3.sch_id = t4.sch_id  WHERE t3.sch_id =#{stu_school} )
+		</if>
+		
+		<if test="stu_class != null">
+			AND au_id in
+				(SELECT t6.au_id FROM auditions t6 WHERE t6.st_class = #{st_class} )
+		</if>
+		
+		<if test="phone != null">
+			AND au_id in
+				(SELECT t5.au_id FROM auditions t5 WHERE t5.phone = #{phone} )
+		</if>
+		
+		<if test="if_signup != null">
+			AND if_signup = #{if_signup}
+		</if>
+		
+		<!-- 客户类型 -->
+		<if test="category != null">
+			AND category = #{category}
+		</if>
+		
+		<if test="adv_id != null">
+			AND adv_id = #{adv_id}
+		</if>
+		
+		<if test="adv_now_id != null">
+			AND adv_now_id = #{adv_now_id}
+		</if>
+		
+		limit #{start},#{count};
+	</select>
+	 
+	<select id="getSigningForCountBySomeOption" parameterType="java.util.Map"  resultType="java.lang.Integer">
+
+		SELECT count(1) FROM signing 
+		WHERE 1=1
+		<if test="stu_name != null">
+			AND au_id in
+				(SELECT t2.au_id FROM auditions t2 WHERE t2.st_name LIKE #{stu_name} )
+		</if>
+		
+		<if test="stu_school != null">
+			AND au_id in
+				(SELECT t3.au_id FROM auditions t3 JOIN school t4 ON t3.sch_id = t4.sch_id  WHERE t3.sch_id =#{stu_school} )
+		</if>
+		
+		<if test="stu_class != null">
+			AND au_id in
+				(SELECT t6.au_id FROM auditions t6 WHERE t6.st_class = #{st_class} )
+		</if>
+		
+		<if test="phone != null">
+			AND au_id in
+				(SELECT t5.au_id FROM auditions t5 WHERE t5.phone = #{phone} )
+		</if>
+		
+		<if test="if_signup != null">
+			AND if_signup = #{if_signup}
+		</if>
+		
+		<!-- 客户类型 -->
+		<if test="category != null">
+			AND category = #{category}
+		</if>
+		
+		<if test="adv_id != null">
+			AND adv_id = #{adv_id}
+		</if>
+		
+		<if test="adv_now_id != null">
+			AND adv_now_id = #{adv_now_id}
+		</if>
+		
+		limit #{start},#{count};
+	</select>
+	<!-- 通过试听学员的id查看是否存在该学生信息 -->
+	<select id="getSigningBy_AuditionsID" parameterType="java.lang.Integer"  resultType="java.lang.Integer">
+		SELECT count(1) FROM signing WHERE au_id=#{au_id};
+	</select>
+	
+	<!-- 添加签单学员 -->
+	<insert id="do_insertSigning" parameterType="Signing" keyProperty="sig_id">
+	<!-- sig_id,au_id,situation,category,tracking_one,tracking_two,tracking_three,if_signup,adv_id,adv_now_id,history -->
+		insert into signing
+			(au_id,situation,category,tracking_one,tracking_two,tracking_three,if_signup,adv_id,adv_now_id,history) 
+		values(
+				#{auditions.au_id},
+				#{situation},
+				#{category},
+				#{tracking_one},
+				#{tracking_two},
+				#{tracking_three},
+				#{if_signup},
+				#{adviser.adv_id},
+				#{adviser_now.adv_id},
+				#{history}
+			);
+	</insert>
+	
+	<update id="do_updateSigning" parameterType="Signing" >
+		update signing set 
+			au_id=#{auditions.au_id},situation=#{situation},category=#{category},
+			tracking_one=#{tracking_one},tracking_two=#{tracking_two},tracking_three=#{tracking_three},
+			if_signup=#{if_signup},adv_id=#{adviser.adv_id},history=#{history}
+		where sig_id=#{sig_id};
+	</update>
+	
+	<!-- 修改交接记录 -->
+	<update id="do_updateSigningHistory" parameterType="Signing" >
+		update customer set 
+			history=#{history}
+		where sig_id=#{sig_id};
+	</update>
+	
+	
+	
+</mapper>
+
+

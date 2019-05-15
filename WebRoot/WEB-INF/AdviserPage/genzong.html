@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>genzong.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+<style type="text/css">
+	#student_sel_chosen{
+		width: 260px;
+	}
+	[name='dv_money']{
+		width: 245px; 
+		height: 75px;
+		background-color:#fff; 
+		display: inline-block;
+		border: solid 1px #336699;
+		border-radius: 6px;
+		margin-left: 4px;
+	}
+	#remarks {
+		float: left; 
+		outline:none;
+		border:none;
+		font-size: 18px;
+		border-radius: 6px;
+		padding: 3px;
+		margin-left: 6px;
+	}
+	textarea{
+		float: left; 
+		outline:none;
+		border:none;
+		font-size: 18px;
+		border-radius: 6px;
+		padding: 3px;
+		margin-left: 6px;
+	}
+</style>
+
+<link type="text/css" rel="stylesheet" href="/hicode/syscss/teacher_page.css" />
+<link type="text/css" rel="stylesheet" href="/hicode/syscss/for_date.css" />
+<link rel="stylesheet" href="/hicode/syscss/bootstrap-chosen.css">
+<link type="text/css" rel="stylesheet" href="/hicode/syscss/beizhu.css" />
+<link type="text/css" rel="stylesheet" href="/hicode/syscss/select/shaixuan.css" />
+
+<script type="text/javascript" src="/hicode/sysjs/jquery.min.js"></script>
+<script type="text/javascript" src="/hicode/sysjs/beizhu/remarks.js"></script>
+<script type="text/javascript" src="/hicode/sysjs/forfunctions.js"></script>
+<script type="text/javascript" src="/hicode/sysjs/jeDate.js"></script>
+<script src="/hicode/sysjs/chosen.jquery.js"></script>
+<script type="text/javascript" src="/hicode/sysjs/select/shaixuan.js"></script>
+
+
+</head>
+
+<body>
+	<!-- 查询 -->
+	<div id="dv_select">
+  		<div class="dvselect_title">请填入查询条件</div>
+  		<div class="dvselect_main">
+  			<div class="main_left">
+  				<ul id="left_ul">
+  					<li>
+  						<b>姓名:</b>
+  						<input type="text" id="stu_name"  placeholder="请输入"/>
+  					</li>
+  					<li>
+  						<b>课程:</b>
+	  					<select id="stu_subject"> </select>
+  					</li>
+  					<li>
+  						<b>课时:</b>
+  						<input type="text" id="stu_period"  placeholder="请输入"/>
+  					</li>
+  					<li>
+  						<b>授课老师:</b>
+  						<select id="stu_teacher"></select>
+  					</li>
+  					<li>
+  						<b>待定 : </b> 
+						<input type="text" disabled="disabled"/>
+  					</li>
+  				</ul>
+  			</div>
+  			<div class="main_right">
+  				<ul id="left_ul">
+  					<li>
+  						<b>开始时间:</b>
+  						<input type="text" id="kai_time"  readonly="readonly" placeholder="请输入"/>
+  					</li>
+  					<li>
+  						<b>截止时间:</b>
+  						<input type="text" id="ting_time"  readonly="readonly" placeholder="请输入"/>
+  					</li>
+  					<li>
+  						<b>签单顾问:</b>
+  						<select id="qian_gu"></select>
+  					</li>
+  					<li>
+  						<b>续费:</b>
+  						<select id="if_xufei">
+  							<option disabled="disabled" selected="selected" value="-1">请选择</option>
+  							<option value="1">已续费</option>
+  							<option value="0">未续费</option>
+  						</select>
+  					</li>
+  					<li>
+  						<b>待续:</b>
+  						<input type="text" disabled="disabled"/>
+  					</li>
+  				</ul>
+  			</div>
+  		</div>
+  		<div class="dvselect_bottom">
+  			<div>
+  				<button id="sel_sub_cus" class="sel_sub">开始筛选</button>
+  			</div>
+  			
+  			<div>
+  				<button id="sel_res" class="sel_res">返回</button>
+  			</div>
+			
+  		</div>
+  	</div>
+	<!-- 隐藏  -->
+	<div id="hidd_mask"></div>
+	<div id="dv_update" style="height: 830px">
+		<div class="dv_title" id="dv_title">添加学生信息</div>
+		<div class="dv_upmain">
+			<ul class="up_ul">
+				<li><b>序号 : </b> <input type="text" id="tea_list" value=""disabled="disabled" /></li>
+				<li id="stname_li01">
+					<b>学生姓名: </b> 
+					<select id="student_sel" data-placeholder="请选择" 
+							style="width: 248px;border: solid 1px #336699;border-radius: 6px;" 
+							class="chosen-select" tabindex="2" >
+					</select>
+				</li>
+				<li id="stname_li02" style="display: none">
+					<b>学生姓名: </b> 
+					<input type="text" id="student_name" value=""disabled="disabled" />
+				</li>
+				<li>
+					<b>客户类别 : </b>
+					<select id="leibie_sel">
+						<option value="1">两周内可签单</option>
+						<option value="2">一个月内可签单</option>
+						<option value="3">需要长期跟踪</option>
+						<option value="4">无意向</option>
+					</select>
+				</li>
+				<li>
+					<b>签单/死单 : </b> 
+					<select id="qiandan_sel">
+						<option value="0">未报名</option>
+						<option value="1">已报名</option>
+						<option value="2">死单</option>
+					</select>
+				</li>
+				<li>
+					<b>第一接单人 : </b> 
+					<select id="adviser_sel"></select>
+				</li>
+				<li style="height: 80px">
+					<b style="float: left">当天面资 : </b>
+					<div name = "dv_money" id="mianzi01">
+						<textarea rows="3" cols="24" id="dang_tian" ></textarea>
+					</div>
+				</li>
+				<li style="height: 80px">
+					<b style="float: left">第一次跟踪 : </b>
+					<div name = "dv_money" id="mianzi02">
+						<textarea rows="3" cols="24" id="first_time" ></textarea>
+					</div>
+				</li>
+				<li style="height: 80px">
+					<b style="float: left">第二次跟踪: </b>
+					<div name = "dv_money" id="mianzi03">
+						<textarea rows="3" cols="24" id="second_time" ></textarea>
+					</div>
+				</li>
+				<li style="height: 80px">
+					<b style="float: left">第三次跟踪: </b>
+					<div name = "dv_money" id="mianzi04">
+						<textarea rows="3" cols="24" id="third_time" ></textarea>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div id="dv_upbottom">
+			<button id="up_sub">提交</button>
+			<button id="up_res">返回</button>
+		</div>
+	</div>
+
+	<div class="dv_top" id="dv_top">
+		<button id="index_go" class="for_button">首页</button>
+		<button id="find_user" class="for_button">欢迎:</button>
+	</div>
+	<hr>
+	<div class="dv_title">市场跟踪细则<button id="bt_open_cus">展开<span>▼</span></button></div>
+	<button id="bt_1">添加</button>
+	<div id="dv_table">
+		<table id="tea_tbl" cellspacing="0">
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>学生姓名</th>
+					<th>学校</th>
+					<th>年级</th>
+					<th>电话</th>
+					<th>客户类别</th>
+					<th>签单/死单</th>
+					<th>第一接单人</th>
+					<th>当前接单人</th>
+					<th>接单时间</th>
+					<th>追踪记录</th>
+					<th>操作</th>
+					<th>标记</th>
+				</tr>
+			</thead>
+			<tbody id="tbl_body">
+			</tbody>
+		</table>
+	</div>
+	<div id="dv_page">
+		<!-- <button id="bt_first" mypage="1">首页</button> -->
+		<div id="dv_but"></div>
+		<!-- <button id="bt_end">尾页</button> -->
+	</div>
+</body>
+<script type="text/javascript">
+	$().ready(function() {
+		
+		var bd_hig = document.documentElement.clientHeight;
+  		$("#hidd_mask").css("height",bd_hig+"px");
+  		$("#dv_update").hide();
+  		$("#hidd_mask").hide();
+  		
+  		var pagedata = {"page":1};
+  		start_post_sig(for_btn_sig,pagedata);
+  		getUserName("dv_top");
+  		
+ 		//点击添加按钮
+ 		$("#bt_1").click(add_sig);
+ 		
+ 		/* 添加学员信息，提交按钮  */
+ 		$("#up_sub").click(up_sub_sig);
+ 		
+ 		// 点击首页按钮
+ 		$("#index_go").click(function(){
+ 			window.location = "/hicode/index.html";
+ 		});
+ 		
+	/* 	// 日历插件
+		jeDate({
+			dateCell : "#first_time",
+			//format : "YYYY-MM-DD",
+			isinitVal : true,
+			isTime : true, //isClear:false,
+			minDate : "1014-09-19 00:00:00"
+		}) ;
+		jeDate({
+			dateCell : "#kai_time",
+			format : "YYYY-MM-DD", 
+			isinitVal : true,
+			isTime : false, // 
+			isClear:true,
+			minDate : "1014-09-19 00:00:00"
+		}) ;
+		 */
+		//条件筛选
+		var bd_wid = document.documentElement.clientWidth;
+		$("#dv_select").css("left",(bd_wid-1080)/2+"px");
+		jeDate({
+			dateCell : "#ting_time",
+			format : "YYYY-MM-DD", 
+			isinitVal : true,
+			isTime : false, // isClear:true,
+			minDate : "1014-09-19 00:00:00"
+		}) ;
+		// 点击返回消失
+  		$("#up_res").click(function(){
+  			$("#hidd_mask").hide().hide(300);
+ 			$("#dv_update").show().hide(300);
+ 		});
+ 		
+	});
+</script>
+</html>
+
