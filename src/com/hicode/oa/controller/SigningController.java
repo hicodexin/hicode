@@ -1,6 +1,5 @@
 package com.hicode.oa.controller;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,10 +19,7 @@ import com.hicode.oa.service.AdviserService;
 import com.hicode.oa.service.SigningService;
 import com.hicode.oa.tool.Adviser;
 import com.hicode.oa.tool.Auditions;
-import com.hicode.oa.tool.Customer;
 import com.hicode.oa.tool.Signing;
-import com.hicode.oa.tool.Subject;
-import com.hicode.oa.tool.Teacher;
 import com.hicode.oa.tool.UserInfo;
 
 import net.sf.json.JSONArray;
@@ -50,14 +46,11 @@ public class SigningController {
 		
 		HttpSession session = request.getSession();
 		UserInfo obj = (UserInfo) session.getAttribute("user");
-		// 非会员用户、管理员用户、超级管理员
-		if (
-				obj.getUserType().getType_leibie() != 3 && 
-				obj.getUserType().getType_leibie() != 2 && 
-				obj.getUserType().getType_leibie() != 6
-				) {
+		// 非课程顾问
+		if (obj.getUserType().getType_leibie() != 5) {
 			return "redirect:/Fighting.html";
 		}
+		
 		return "/WEB-INF/AdviserPage/genzong.html";
 	}
 
@@ -99,18 +92,27 @@ public class SigningController {
 			map.put("if_signup", if_signup);
 		}
 		
-		//第一接单人
+		/*//第一接单人
 		String adv_id = request.getParameter("adv_id");
 		if (adv_id != null & adv_id != "") {
 			map.put("adv_id", adv_id);
 		}
-		
-		//第一接单人
+		*/
+	/*	//当前接单人
 		String adv_now_id = request.getParameter("adv_now_id");
 		if (adv_now_id != null & adv_now_id != "") {
 			map.put("adv_now_id", adv_now_id);
 		}
-
+		*/
+		//当前接单人
+		HttpSession session = request.getSession();
+		UserInfo obj_user = (UserInfo) session.getAttribute("user");
+		if (obj_user == null ||obj_user.getUserType().getType_leibie() != 5) {
+			return null;
+		}
+		String adv_now_id = obj_user.getUser_name();
+		map.put("adv_now_id", adv_now_id);
+		
 		// 页码
 		String page = request.getParameter("page");
 		// 开始数字

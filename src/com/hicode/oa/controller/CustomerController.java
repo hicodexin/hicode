@@ -43,10 +43,11 @@ public class CustomerController {
 		
 		HttpSession session = request.getSession();
 		UserInfo obj = (UserInfo) session.getAttribute("user");
-		// 非会员用户、管理员用户、超级管理员
+		// 非会员用户、管理员用户、超级管理员、课程顾问
 		if (
 				obj.getUserType().getType_leibie() != 3 && 
 				obj.getUserType().getType_leibie() != 2 && 
+				obj.getUserType().getType_leibie() != 5 && 
 				obj.getUserType().getType_leibie() != 6
 				) {
 			return "redirect:/Fighting.html";

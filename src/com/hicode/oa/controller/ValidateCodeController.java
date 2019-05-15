@@ -22,7 +22,6 @@ import net.sf.json.JSONObject;
 
 /**
  * 获取验证码
- * 
  * @author XinPeiXiang 2018-11-30
  *
  */

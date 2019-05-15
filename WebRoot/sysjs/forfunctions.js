@@ -3041,12 +3041,13 @@ function creat_tb_sig(back_all, p_dom) {
 			str += "<td name='if_signup' value='已报名'> <img src='/hicode/sysimg/face_smile.jpg' /> </td>";
 		} else if(back_all[i].if_signup == 2){
 			str += "<td name='if_signup' value='死单'> <img src='/hicode/sysimg/face_grieved.jpg' /> </td>";
+			$(tr).css("color", "#b0b0b0");
 		}else{
 			str += "<td name='if_signup' value='未报名'>  </td>";
 		}
 		
 		str += "<td name='firstPeople'>"+back_all[i].firstPeople+"</td>";
-		str += "<td name='nowPeople'>"+back_all[i].nowPeople+"</td>";
+		/*str += "<td name='nowPeople'>"+back_all[i].nowPeople+"</td>";*/
 		str += "<td name='begin_time'>"+timestampToTime(back_all[i].begin_time.time)+"</td>";
 		
 		$(tr).append(str);
