@@ -110,6 +110,21 @@ function for_sel03(id, f, optionName) {
 
 }
 
+/*通过ajax后台访问所得结果遍历,仅针对于课程顾问，筛选掉非顾问：自主上门。。。*/
+function for_adviser_sel(id, f, optionName) {
+	$("#" + id).children("option").remove();
+	for (var i = 0; i < f.length; i++) {
+		if (f[i].name == "自然上门" || f[i].name == "口碑介绍" || f[i].name == "活动上门"||f[i].name == optionName) {
+			/*var str = "<option selected='selected' value=" + f[i].id + ">" + f[i].name + "</option>";*/
+		} else {
+			var str = "<option value=" + f[i].id + ">" + f[i].name + "</option>";
+		}
+
+		$("#" + id).append(str);
+	}
+
+}
+
 /** ==============================================锁定按钮============================================== */
 function for_btnSD_usr() {
 	var bts = $("button");
@@ -769,11 +784,11 @@ function for_btn_sig() {
 					
 					$("#stname_li01").css("display","none");
 					$("#stname_li02").css("display","block");
-					$("#student_name").val(stu_name);
+					
 					
 					var optionName01 = $("[name='fenlei']:eq(" + t + ")").html();
 					var sel_leibie = $("#leibie_sel option");
-					for_sel03("leibie_sel", sel_leibie, optionName01);
+					for_sel02("leibie_sel", sel_leibie, optionName01);
 					
 					var optionName02 = $("[name='if_signup']:eq(" + t + ")").attr("value");
 					var sel_qiandan = $("#qiandan_sel option");
@@ -794,6 +809,50 @@ function for_btn_sig() {
 					$("#third_time").val($("[name='firstRemark']:eq(" + t + ")").attr("myfont03"));
 					
 					$("#up_sub").html("提交");
+				});
+
+			})();
+
+		}
+	}
+
+}
+/* VIP_修改负责人>>>修改按钮 */
+function for_btn_VIP_sig() {
+	var bts = $("button");
+	var revise = new Array();
+	if (bts.length > 0) {
+		for (var i = 0, j = 0; i < bts.length; i++) {
+			if ($(bts[i]).html() == "修改") {
+				revise[j] = bts[i];
+				j++;
+			}
+		}
+	}
+
+	if (revise.length > 0) {
+		for (var k = 0; k < revise.length; k++) {
+			(function() {
+				var t = k;
+				$(revise[t]).click(function() {
+					$("#hidd_mask").hide().show(300);
+					$("#choise_adv").hide().show(300);
+					//将该信息的id，赋值给提交按钮，的属性name
+					$("#choise_yes").attr("name", $(this).attr("id"));
+					
+					var stu_name = $("[name='userName']:eq(" + t + ")").html();
+					$("#kehu_name").html(stu_name);
+					
+					var name = $("[name='nowPeople']:eq(" + t + ")").html();
+					$("#now_fuzeren").html(name);
+					
+					$.post("/hicode/adviser/showAdviser.spc", function(f) {
+						if (f.length > 0) {
+							var name = $("[name='nowPeople']:eq(" + t + ")").html();
+							for_adviser_sel("new_fuzeren_sel", f,name);
+						}
+					}, "json");
+					
 				});
 
 			})();
@@ -1840,80 +1899,36 @@ function up_sub_TMK() {
 
 }
 
-/*跟单详情》》》提交按钮*/
-function up_sub_sig() {
-	if ($("#dang_tian").val().length > 200) {
-		$("#dang_tian").css("borderColor", "#f00");
-		return;
-	} else {
-		$("#dang_tian").css("borderColor", "#336699");
-	}
-
-	var ss = $(".chosen-single span").html();
-	var yy = $("#student_sel option");
-	for (var i = 0; i < yy.length; i++) {
-		if ($(yy[i]).html() == ss) {
-			ss = $(yy[i]).val();
-			break;
-		}
-	}
+/*跟单详情_修改顾问》》》提交按钮*/
+function up_sub_VIP_sig() {
 
 	var data = {
-		"userName" : ss,
-		"leibie_sel" : $('#leibie_sel').val(),
-		"qiandan_sel" : $('#qiandan_sel').val(),
-		"adviser_sel" : $("#adviser_sel").val(),
-		"dang_tian" : $("#dang_tian").val(),
-		"first_time" : $("#first_time").val(),
-		"second_time" : $("#second_time").val(),
-		"third_time" : $("#third_time").val(),
+		"id":$("#choise_yes").attr("name"),
+		"adviser_sel" : $("#new_fuzeren_sel").val(),
+		"adviser_name" : $("#new_fuzeren_sel option:selected").html()
 	};
 	console.log(data);
 
 	var content = $(this).html();
-	if (content == "添加") {
-		$.post("/hicode/signing/do_insertSigning.spc", data, function(e) {
-			$("#hidd_mask").hide().hide(300);
-			$("#dv_update").show().hide(300);
-			if (e.list_advs == 'ok') {
-				alert("添加成功");
-				$("#tbl_body").children("tr").remove();
-				var pagedata = {"page":1};
-				start_post_sig(for_btn_sig,pagedata);
-			}else if (e.list_advs == 'ok1') {
-				alert("对不起,权限不足。。。。");
-			}else if (e.list_advs == 'ok2') {
-				alert("对不起,该学员信息已被分派。。。。");
-			} else {
-				alert("添加失败,请联系管理员。。。。");
-			}
-
-		}, "json");
-
-	} else if (content == "提交") {
-		if (!window.confirm("是否确定要修改的内容？？？？")) {
-			return;
-		}
-		data.id = $("#tea_list").attr("name");
-		data.if_done = $('input:radio[name="if_done"]:checked').val();
-		data.if_refund = $('input:radio[name="if_refund"]:checked').val();
-		
-		$.post("/hicode/customer/do_updateCustomer.spc", data, function(e) {
-			$("#hidd_mask").hide().hide(300);
-			$("#dv_update").show().hide(300);
-			if (e.list_advs == 'ok') {
-				alert("修改成功");
-				$("#tbl_body").children("tr").remove();
-				var pagedata = {"page":1};
-				start_post_cus(for_btn_cus,pagedata);
-			}else if (e.list_advs == 'ok1') {
-				alert("对不起,权限不足。。。。");
-			} else {
-				alert("修改失败,请联系管理员。。。。");
-			}
-
-		}, "json");
+	if (!window.confirm("是否确定要修改的内容？？？？")) {
+		return;
 	}
+	
+	$.post("/hicode/svipSigning/do_updateAdviserForSigning.spc", data, function(e) {
+		$("#hidd_mask").hide().hide(300);
+		$("#choise_adv").show().hide(300);
+		if (e.list_advs == 'ok') {
+			alert("修改成功");
+			$("#tbl_body").children("tr").remove();
+			var pagedata = {"page":1};
+			start_post_VIP_sig(for_btn_VIP_sig,pagedata);
+		}else if (e.list_advs == 'ok1') {
+			alert("对不起,权限不足。。。。");
+		} else {
+			alert("修改失败,请联系管理员。。。。");
+		}
+
+	}, "json");
 
 }
 
@@ -2360,6 +2375,45 @@ function start_post_sig(backFunction,pagedata) {
 			backFunction();
 		}
 		var hei = $("#tea_tbl").css("height");
+		hei = hei.substr(0, hei.length - 2);
+		if (hei > 650) {
+			$("#dv_table").css("height", "700px");
+		}
+
+	}, "json");
+
+}
+
+/* VIP_市场跟单》》》初始化数据 */
+function start_post_VIP_sig(backFunction,pagedata) {
+	$.post("/hicode/svipSigning/showSigningByInfo.spc", pagedata, function(a) {
+		if (a) {
+			creat_tb_VIP_sig(a.list_advs, "#tbl_body_vip");
+			/* 添加页码 */
+			if (a.all_num) {
+				$("#dv_but_vip").children("button").remove();
+				for (var k = 0; k < a.all_num; k++) {
+					var btn = document.createElement("button");
+					$(btn).html(k + 1);
+					$(btn).attr("mypage", (k + 1));
+					if (k == 0) {
+						$(btn).css({
+							"backgroundColor" : "#996633",
+							"color" : "#fff"
+						});
+					}
+					$(btn).click(function() {
+						change_page_sig(this,pagedata);
+					});
+
+					$("#dv_but_vip").append(btn);
+				}
+				/*$("#bt_end").attr("mypage", a.all_num);*/
+			}
+			//修改按钮赋单击事件
+			backFunction();
+		}
+		var hei = $("#tea_tbl_vip").css("height");
 		hei = hei.substr(0, hei.length - 2);
 		if (hei > 650) {
 			$("#dv_table").css("height", "700px");
@@ -3089,6 +3143,125 @@ function creat_tb_sig(back_all, p_dom) {
 		
 		td.appendChild(img);
 		tr.appendChild(td);
+		
+		var btid = back_all[i].id;
+		var strr = "<td><button id = '" + btid + "' name='" + (i + 1) + "'>修改</button></td>";
+		strr += "<td><input type='checkbox' value='" + btid + "' /></td>";
+		$(tr).append(strr);
+		$(p_dom).append(tr);
+
+	}
+
+}
+/* VIP_市场跟单》》back_all: 待便利的值 */
+function creat_tb_VIP_sig(back_all, p_dom) {
+	$(p_dom).children("tr").remove();
+	for (var i = 0; i < back_all.length; i++) {
+		var tr = document.createElement("tr");
+		var str = "<td>" + (i + 1) + "</td>";
+		str += "<td name='userName'>" + back_all[i].name + "</td>";
+		str += "<td name='school'>" + back_all[i].school + "</td>";
+		str += "<td name='nianji'>"+back_all[i].nianji+"</td>";
+		str += "<td name='phone'>"+back_all[i].phone+"</td>";
+		
+		//用户分类（1.两周内可签单；2.一个月内可签单；3.需要长期跟踪；4.无意向）
+		if (back_all[i].fenlei == 1) { 
+			str += "<td name='fenlei'>两周内可签单</td>";
+		} else if(back_all[i].fenlei == 2){
+			str += "<td name='fenlei'>一个月内可签单</td>";
+		}else if(back_all[i].fenlei == 3){
+			str += "<td name='fenlei'>需要长期跟踪</td>";
+		}else{
+			str += "<td name='fenlei'>无意向</td>";
+		}
+		
+		//是否报名（0:未报名；1:已报名；2:死单）
+		if (back_all[i].if_signup == 1) {
+			str += "<td name='if_signup' value='已报名'> <img src='/hicode/sysimg/face_smile.jpg' /> </td>";
+		} else if(back_all[i].if_signup == 2){
+			str += "<td name='if_signup' value='死单'> <img src='/hicode/sysimg/face_grieved.jpg' /> </td>";
+			$(tr).css("color", "#b0b0b0");
+		}else{
+			str += "<td name='if_signup' value='未报名'>  </td>";
+		}
+		
+		str += "<td name='firstPeople'>"+back_all[i].firstPeople+"</td>";
+		str += "<td name='nowPeople'>"+back_all[i].nowPeople+"</td>";
+		str += "<td name='begin_time'>"+timestampToTime(back_all[i].begin_time.time)+"</td>";
+		
+		$(tr).append(str);
+		
+		var td = document.createElement("td");
+		var img = document.createElement("img");
+		if(back_all[i].firstRemark != null && back_all[i].firstRemark != ""){
+			$(img).attr("src","/hicode/sysimg/beizhu/for_yes.png");
+		}else{
+			$(img).attr("src","/hicode/sysimg/beizhu/for_no.png");
+		}
+		
+		$(img).attr("name","firstRemark");
+		$(img).attr("userName",back_all[i].name);
+		
+		var mianzi = "&nbsp;&nbsp;&nbsp;" + back_all[i].firstRemark;
+		$(img).attr("manzi",mianzi);
+		$(img).attr("manzi01",back_all[i].firstRemark);
+		
+		var zhuizong = "&nbsp;&nbsp;&nbsp;1)" + back_all[i].zhuizong_01+
+						"<br/>&nbsp;&nbsp;&nbsp;2)" + back_all[i].zhuizong_02+
+						"<br/>&nbsp;&nbsp;&nbsp;3)" + back_all[i].zhuizong_03;
+		
+		$(img).attr("myfont",zhuizong);
+		
+		$(img).attr("myfont01",back_all[i].zhuizong_01);
+		$(img).attr("myfont02",back_all[i].zhuizong_02);
+		$(img).attr("myfont03",back_all[i].zhuizong_03);
+		
+		img.onclick = function(){
+			var ss = $(this).attr("userName");
+			var tt = $(this).attr("manzi");
+			var ff = $(this).attr("myfont");
+			if(tt != null && tt != ""){
+				create_GenZongXiZe(ss,tt,ff);
+			}else{
+				create_GenZongXiZe(ss,"暂无。。。。。",ff);
+			}
+		};
+		
+		td.appendChild(img);
+		tr.appendChild(td);
+		
+		var td_2 = document.createElement("td");
+		var img_2 = document.createElement("img");
+		if(back_all[i].history != null && back_all[i].history != ""){
+			$(img_2).attr("src","/hicode/sysimg/beizhu/for_yes.png");
+		}else{
+			$(img_2).attr("src","/hicode/sysimg/beizhu/for_no.png");
+		}
+		
+		$(img_2).attr("name","history");
+		$(img_2).attr("userName",back_all[i].name);
+		
+		var str = back_all[i].history;
+		console.log(str);
+		
+		while(str.indexOf('&&&') >= 0){
+			str = str.replace('&&&','<br/>');
+		}
+		
+		$(img_2).attr("myfont",str);
+		
+		img_2.onclick = function(){
+			var ss = $(this).attr("userName");
+			var ff = $(this).attr("myfont");
+			if(ff != null && ff != ""){
+				create_remarks(ss,ff);
+			}else{
+				create_remarks(ss,"暂无。。。。。");
+			}
+		};
+		
+		td_2.appendChild(img_2);
+		tr.appendChild(td_2);
 		
 		var btid = back_all[i].id;
 		var strr = "<td><button id = '" + btid + "' name='" + (i + 1) + "'>修改</button></td>";

@@ -146,6 +146,29 @@
 	cursor: pointer;
 }
 
+#bt_vip_1 {
+	width: 90px;
+	height: 40px;
+	background-color: #fff;
+	color: #996633;
+	outline-style: none;
+	position: absolute;
+	top: 90px;
+	left: 75%;
+	border: solid 1px #996633;
+	border-radius: 6px;
+	font-weight: 600;
+	font-size: 18px;
+	font-family: "楷体";
+}
+
+#bt_vip_1:HOVER {
+	background-color: #996633;
+	color: #fff;
+	cursor: pointer;
+}
+
+
 @media ( max-width: 1330px) {
 	#bt_1 {
 		left: 90%;

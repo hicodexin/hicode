@@ -73,6 +73,16 @@ public class SigningDAO extends SysDAO{
 		return selectOne(nameSpace+"getSigningForCountBySomeOption", map);
 	}
 
+	public Integer do_updateAdviserForSigning(Signing signing) {
+		// TODO Auto-generated method stub
+		return update(nameSpace+"do_updateAdviserForSigning",signing);
+	}
+
+	public String getSigningHistoryBy_ID(Integer sig_id) {
+		// TODO Auto-generated method stub
+		return selectOne(nameSpace+"getSigningHistoryBy_ID", sig_id);
+	}
+
 
 	
 	

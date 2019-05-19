@@ -122,6 +122,11 @@
 		SELECT count(1) FROM signing WHERE au_id=#{au_id};
 	</select>
 	
+	<!-- 通过Id 获取该学员的跟进历史记录 -->
+	<select id="getSigningHistoryBy_ID" parameterType="java.lang.Integer" resultType="java.lang.String">
+		SELECT history FROM signing WHERE sig_id=#{sig_id};
+	</select>
+	
 	<!-- 添加签单学员 -->
 	<insert id="do_insertSigning" parameterType="Signing" keyProperty="sig_id">
 	<!-- sig_id,au_id,situation,category,tracking_one,tracking_two,tracking_three,if_signup,adv_id,adv_now_id,history -->
@@ -143,19 +148,26 @@
 	
 	<update id="do_updateSigning" parameterType="Signing" >
 		update signing set 
-			au_id=#{auditions.au_id},situation=#{situation},category=#{category},
+			situation=#{situation},category=#{category},
 			tracking_one=#{tracking_one},tracking_two=#{tracking_two},tracking_three=#{tracking_three},
-			if_signup=#{if_signup},adv_id=#{adviser.adv_id},history=#{history}
+			if_signup=#{if_signup},history=#{history}
 		where sig_id=#{sig_id};
 	</update>
 	
 	<!-- 修改交接记录 -->
 	<update id="do_updateSigningHistory" parameterType="Signing" >
-		update customer set 
+		update signing set 
 			history=#{history}
 		where sig_id=#{sig_id};
 	</update>
 	
+	<!-- 修改学生的跟进顾问+交接记录 -->
+	<update id="do_updateAdviserForSigning" parameterType="Signing">
+		update signing set 
+			adv_now_id=#{adviser_now.adv_id},
+			history=#{history}
+		where sig_id=#{sig_id};
+	</update>
 	
 	
 </mapper>

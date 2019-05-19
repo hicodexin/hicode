@@ -76,5 +76,17 @@ public class SigningServiceImpl implements SigningService{
 		return signingDAO.getSigningForCountBySomeOption(map);
 	}
 
+	@Override
+	public Integer do_updateAdviserForSigning(Signing signing) {
+		// TODO Auto-generated method stub
+		return signingDAO.do_updateAdviserForSigning(signing);
+	}
+
+	@Override
+	public String getSigningHistoryBy_ID(Integer sig_id) {
+		// TODO Auto-generated method stub
+		return signingDAO.getSigningHistoryBy_ID(sig_id);
+	}
+
 	
 }

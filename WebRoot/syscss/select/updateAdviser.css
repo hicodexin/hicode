@@ -1,0 +1,116 @@
+.choise {
+	width: 860px;
+	height: 400px;
+	background-color: #fff;
+	border: solid #996633 1px;
+	border-radius: 9px;
+	position: absolute;
+	z-index: 9;
+	top: 100px;
+	left: 500px;
+}
+.dv_font{
+	line-height: 50px;
+	text-align: center;
+	font-family: "楷体";
+	font-size: 25px;
+	font-weight: 600;
+	color: #996633;
+}
+.dv_advtitle{
+	width: 100%;
+	height: 70px;
+	border-bottom: solid #996633 1px;
+	font-size: 35px;
+	line-height: 70px;
+	margin-bottom:10px ;
+}
+.dv_main{
+	width: 100%;
+	height: 220px;
+	/*background-color: #f0f0ff;*/
+}
+.choise_left{
+	width: 280px;
+	height: 120px;
+	float: left;
+	border-radius: 9px;
+	margin-left: 50px;
+	margin-top: 30px;
+}
+.choise_center{
+	width: 200px;
+	height: 120px;
+	float: left;
+	margin-top: 30px;
+	line-height: 195px;
+	font-size: 25px;
+	text-align: center;
+	color: #996633;
+}
+.choise_right{
+	width: 280px;
+	height: 120px;
+	float: left;
+	margin-top: 30px;
+	border-radius: 9px;
+}
+.left_title{
+	width: 280px;
+	height: 70px;
+	float: left;
+}
+.left_adv{
+	float: left;
+}
+.adv_sel{
+	width: 280px;
+	height: 50px;
+	border-radius: 9px;
+	outline-style: none;
+	line-height: 50px;
+	text-align: center;
+	font-family: "楷体";
+	font-size: 25px;
+	color: #996633;
+	padding-left: 10px;
+}
+.choise_bottom {
+	height: 90px;
+}
+
+.choise_bottom>div {
+	width: 49%;
+	float: left;
+}
+
+.choise_bottom button {
+	color: #996633;
+	width: 100px;
+	height: 40px;
+	border-radius: 6px;
+	outline-style: none;
+	display: block;
+	font-family: "楷体";
+	font-weight:600;
+	font-size: 18px;
+	border: solid 1px #996633;
+	background-color: #FFFFFF;
+}
+
+.choise_bottom button:hover {
+	background-color: #996633;
+	color: #fff;
+	font-weight: 600;
+	cursor: pointer;
+	border: solid 1px #996633;
+}
+
+.choise_yes {
+	float: right;
+	margin-right: 40px;
+}
+
+.choise_back {
+	margin-left: 40px;
+}

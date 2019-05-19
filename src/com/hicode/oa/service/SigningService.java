@@ -20,6 +20,13 @@ public interface SigningService {
 	public Signing getSigningByID(Integer sig_id);
 	
 	public List<Signing> getSigningAll(Integer start, Integer count);
+	
+	/**
+	 * 通过Id 获取该学员的跟进历史记录 
+	 * @param sig_id
+	 * @return
+	 */
+	public String getSigningHistoryBy_ID(Integer sig_id);
 
 	/**
 	 * 通过试听学员的id查看是否存在该学生信息
@@ -42,6 +49,13 @@ public interface SigningService {
 	public Integer do_insertSigning(Signing signing);
 
 	public Integer do_updateSigning(Signing signing);
+	
+	/**
+	 * 修改学生的跟进顾问
+	 * @param adv_id
+	 * @return
+	 */
+	public Integer do_updateAdviserForSigning(Signing signing);
 	
 	/**
 	 *  修改交接记录 

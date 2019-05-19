@@ -1,4 +1,4 @@
-package com.hicode.oa.controller;
+package com.hicode.oa.superVIP.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +31,7 @@ import net.sf.json.JSONObject;
  */
 @Controller
 @RequestMapping("/svipPhones")
-public class SuperVIPController {
+public class SuperVIP_PhonesController {
 	
 	@Autowired
 	private PhonesService phonesService;
@@ -67,7 +67,6 @@ public class SuperVIPController {
 		if (tmk_name != null & tmk_name != "") {
 			session.setAttribute("tmk_name", tmk_name);
 		}
-		System.out.println("tmk_name==============="+tmk_name);
 		return "/WEB-INF/SuperVIP/VIP_TMK.html";
 	}
 	
