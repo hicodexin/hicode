@@ -1899,6 +1899,79 @@ function up_sub_TMK() {
 
 }
 
+/*跟单详情》》》提交按钮*/
+function up_sub_sig() {
+	if ($("#dang_tian").val().length > 200) {
+		$("#dang_tian").css("borderColor", "#f00");
+		return;
+	} else {
+		$("#dang_tian").css("borderColor", "#336699");
+	}
+
+	var ss = $(".chosen-single span").html();
+	var yy = $("#student_sel option");
+	for (var i = 0; i < yy.length; i++) {
+		if ($(yy[i]).html() == ss) {
+			ss = $(yy[i]).val();
+			break;
+		}
+	}
+
+	var data = {
+		"userName" : ss,
+		"leibie_sel" : $('#leibie_sel').val(),
+		"qiandan_sel" : $('#qiandan_sel').val(),
+		"adviser_sel" : $("#adviser_sel").val(),
+		"dang_tian" : $("#dang_tian").val(),
+		"first_time" : $("#first_time").val(),
+		"second_time" : $("#second_time").val(),
+		"third_time" : $("#third_time").val(),
+	};
+
+	var content = $(this).html();
+	if (content == "添加") {
+		$.post("/hicode/signing/do_insertSigning.spc", data, function(e) {
+			$("#hidd_mask").hide().hide(300);
+			$("#dv_update").show().hide(300);
+			if (e.list_advs == 'ok') {
+				alert("添加成功");
+				$("#tbl_body").children("tr").remove();
+				var pagedata = {"page":1};
+				start_post_sig(for_btn_sig,pagedata);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
+			}else if (e.list_advs == 'ok2') {
+				alert("对不起,该学员信息已被分派。。。。");
+			} else {
+				alert("添加失败,请联系管理员。。。。");
+			}
+
+		}, "json");
+
+	} else if (content == "提交") {
+		if (!window.confirm("是否确定要修改的内容？？？？")) {
+			return;
+		}
+		data.id = $("#tea_list").attr("name");
+		$.post("/hicode/signing/do_updateSigning.spc", data, function(e) {
+			$("#hidd_mask").hide().hide(300);
+			$("#dv_update").show().hide(300);
+			if (e.list_advs == 'ok') {
+				alert("修改成功");
+				$("#tbl_body").children("tr").remove();
+				var pagedata = {"page":1};
+				start_post_sig(for_btn_sig,pagedata);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
+			} else {
+				alert("修改失败,请联系管理员。。。。");
+			}
+
+		}, "json");
+	}
+
+}
+
 /*跟单详情_修改顾问》》》提交按钮*/
 function up_sub_VIP_sig() {
 

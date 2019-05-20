@@ -266,15 +266,11 @@ public class SigningController {
 			return obj_arr.toString();
 		}
 		String sig_id = request.getParameter("id");
-//		String aud_id = request.getParameter("userName");
 		String leibie_sel = request.getParameter("leibie_sel");
 		String qiandan_sel = request.getParameter("qiandan_sel");
 		
 		
 		String adviser_sel = request.getParameter("adviser_sel");
-		/*Adviser adviser = new Adviser();
-		adviser.setAdv_id(adviser_sel);*/
-		
 		
 		String dang_tian = request.getParameter("dang_tian");
 		String first_time = request.getParameter("first_time");
@@ -286,17 +282,6 @@ public class SigningController {
 		Signing signing = new Signing();
 		
 		
-//		Integer num = signingService.getSigningBy_AuditionsID(Integer.valueOf(aud_id));
-//		//该学员信息已存在
-//		if(num>0){
-//			obj_arr.put("list_advs", "ok2");
-//			return obj_arr.toString();
-//		}
-		
-//		Auditions auditions = new Auditions();
-//		auditions.setAu_id(Integer.valueOf(aud_id));
-		
-//		signing.setAuditions(auditions);
 		signing.setSig_id(Integer.valueOf(sig_id));
 		signing.setSituation(dang_tian);//面资当天
 		signing.setCategory(Integer.valueOf(leibie_sel));//用户分类
@@ -304,10 +289,6 @@ public class SigningController {
 		signing.setTracking_one(first_time);
 		signing.setTracking_two(second_time);
 		signing.setTracking_three(third_time);
-		/*
-		signing.setAdviser(adviser);
-		signing.setAdviser_now(adviser);
-		*/
 		
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String d = sf.format(new Date());
