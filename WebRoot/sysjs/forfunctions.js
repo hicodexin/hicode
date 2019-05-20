@@ -80,7 +80,7 @@ function for_sel(id, f, optionName) {
 	}
 
 }
-/*前台写死数据结果遍历，f:所遍历数组;optionName:选中列表*/
+/*前台写死数据结果遍历，f:所遍历数组;optionName:选中列表     从1开始*/
 function for_sel02(id, f, optionName) {
 	$("#" + id).children("option").remove();
 	for (var k = 0; k < f.length; k++) {
@@ -122,7 +122,6 @@ function for_adviser_sel(id, f, optionName) {
 
 		$("#" + id).append(str);
 	}
-
 }
 
 /** ==============================================锁定按钮============================================== */
@@ -1144,7 +1143,7 @@ function add_sig() {
 	$("#third_time").val("");
 
 	var sel_leibie = $("#leibie_sel option");
-	for_sel03("leibie_sel", sel_leibie, "两周内可签单");
+	for_sel02("leibie_sel", sel_leibie, "两周内可签单");
 	var sel_qiandan = $("#qiandan_sel option");
 	for_sel03("qiandan_sel", sel_qiandan, "未报名");
 
@@ -1848,7 +1847,6 @@ function up_sub_TMK() {
 		"if_renewal" : $('input:radio[name="if_renewal"]:checked').val(),
 		"remarks" : $("#remarks").val()
 	};
-	console.log(data);
 	var content = $(this).html();
 	if (content == "添加") {
 		$.post("/hicode/phones/do_insertPhones.spc", data, function(e) {

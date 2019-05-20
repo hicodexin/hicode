@@ -36,7 +36,6 @@ public class TeacherController {
 
 	@RequestMapping("/to_login")
 	public String login(HttpServletRequest request) {
-		System.out.println("--------------------");
 		HttpSession session = request.getSession();
 		UserInfo obj = (UserInfo) session.getAttribute("user");
 		// 非会员用户、管理员用户、超级管理员

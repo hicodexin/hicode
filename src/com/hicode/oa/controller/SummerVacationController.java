@@ -15,15 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hicode.oa.service.SummerVacationService;
-import com.hicode.oa.service.WinterVacationService;
-import com.hicode.oa.tool.Adviser;
 import com.hicode.oa.tool.Auditions;
-import com.hicode.oa.tool.Customer;
 import com.hicode.oa.tool.Subject;
 import com.hicode.oa.tool.SummerVacation;
 import com.hicode.oa.tool.Teacher;
 import com.hicode.oa.tool.UserInfo;
-import com.hicode.oa.tool.WinterVacation;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;

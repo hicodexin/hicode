@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hicode.oa.service.SubjectService;
-import com.hicode.oa.tool.Adviser;
 import com.hicode.oa.tool.Subject;
 import com.hicode.oa.tool.UserInfo;
 
@@ -28,7 +27,6 @@ public class SubjectController {
 
 	@RequestMapping("/to_login")
 	public String login(HttpServletRequest request) {
-		System.out.println("-------subject-------------");
 		return "/WEB-INF/VisitorsPage/Subject.html";
 	}
 

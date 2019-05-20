@@ -196,7 +196,6 @@ public class SigningController {
 		String leibie_sel = request.getParameter("leibie_sel");
 		String qiandan_sel = request.getParameter("qiandan_sel");
 		
-		
 		String adviser_sel = request.getParameter("adviser_sel");
 		Adviser adviser = new Adviser();
 		adviser.setAdv_id(adviser_sel);
