@@ -70,7 +70,7 @@
 		<if test="adv_now_id != null">
 			AND adv_now_id = #{adv_now_id}
 		</if>
-		
+		ORDER BY au_id
 		limit #{start},#{count};
 	</select>
 	 

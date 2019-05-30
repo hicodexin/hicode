@@ -92,18 +92,6 @@ public class SigningController {
 			map.put("if_signup", if_signup);
 		}
 		
-		/*//第一接单人
-		String adv_id = request.getParameter("adv_id");
-		if (adv_id != null & adv_id != "") {
-			map.put("adv_id", adv_id);
-		}
-		*/
-	/*	//当前接单人
-		String adv_now_id = request.getParameter("adv_now_id");
-		if (adv_now_id != null & adv_now_id != "") {
-			map.put("adv_now_id", adv_now_id);
-		}
-		*/
 		//当前接单人
 		HttpSession session = request.getSession();
 		UserInfo obj_user = (UserInfo) session.getAttribute("user");
@@ -136,6 +124,11 @@ public class SigningController {
 		JSONArray objs = new JSONArray();
 
 		for (Signing adv1 : advs) {
+			
+			//一旦报名，则不再展示该学员的信息
+			/*if(adv1.getIf_signup() == 1){
+				continue;
+			}*/
 			JSONObject obj = new JSONObject();
 			obj.put("id", adv1.getSig_id());
 			obj.put("name", adv1.getAuditions().getSt_name());

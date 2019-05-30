@@ -61,6 +61,10 @@
 			<if test="qian_gu != null">
 				AND adv_id = #{qian_gu}
 			</if>
+			<!-- 当前学期是否已经结束(1:是；0:否) -->
+			<if test="if_done != null">
+				AND if_done = #{if_done}
+			</if>
 			
 			<if test="if_xufei != null">
 				AND if_renewal = #{if_xufei}
@@ -101,6 +105,10 @@
 			
 			<if test="qian_gu != null">
 				AND adv_id = #{qian_gu}
+			</if>
+			<!-- 当前学期是否已经结束(1:是；0:否) -->
+			<if test="if_done != null">
+				AND if_done = #{if_done}
 			</if>
 			
 			<if test="if_xufei != null">

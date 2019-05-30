@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>genzong.html</title>
+    <title>Customer_finish.html</title>
 	
     <meta name="keywords" content="keyword1,keyword2,keyword3">
     <meta name="description" content="this is my page">
@@ -28,103 +28,18 @@
 		padding: 3px;
 		margin-left: 6px;
 	}
-	textarea{
-		float: left; 
-		outline:none;
-		border:none;
-		font-size: 18px;
-		border-radius: 6px;
-		padding: 3px;
-		margin-left: 6px;
-	}
-	.choise {
-		width: 860px;
-		height: 260px;
-		background-color: #fff;
-		border: solid #996633 1px;
-		border-radius: 9px;
-		position: absolute;
-		top: 100px;
-		left: 500px;
-	}
-	.dv_font{
-		line-height: 50px;
-		text-align: center;
-		font-family: "楷体";
-		font-size: 25px;
-		font-weight: 600;
-		color: #996633;
-	}
-	.dv_advtitle{
-		width: 100%;
-		height: 70px;
-		border-bottom: solid #996633 1px;
-		font-size: 35px;
-		line-height: 70px;
-		margin-bottom:10px ;
-	}
-	.dv_main{
-		width: 100%;
-		height: 500px;
-	}
-	.choise_left{
-		width: 280px;
-		height: 120px;
-		float: left;
-		border-radius: 9px;
-		margin-left: 50px;
-		margin-top: 30px;
-	}
-	.choise_center{
-		width: 200px;
-		height: 120px;
-		float: left;
-		margin-top: 30px;
-		line-height: 150px;
-		font-size: 25px;
-		text-align: center;
-		color: #996633;
-	}
-	.choise_right{
-		width: 280px;
-		height: 120px;
-		float: left;
-		margin-top: 30px;
-		border-radius: 9px;
-	}
-	.left_title{
-		width: 280px;
-		height: 50px;
-		float: left;
-	}
-	.left_adv{
-		float: left;
-	}
-	.adv_sel{
-		width: 280px;
-		height: 50px;
-		border-radius: 9px;
-		outline-style: none;
-		line-height: 50px;
-		text-align: center;
-		font-family: "楷体";
-		font-size: 25px;
-		color: #996633;
-		padding-left: 10px;
-	}
 </style>
 
+<!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
 <link type="text/css" rel="stylesheet" href="/hicode/syscss/teacher_page.css" />
 <link type="text/css" rel="stylesheet" href="/hicode/syscss/for_date.css" />
 <link rel="stylesheet" href="/hicode/syscss/bootstrap-chosen.css">
 <link type="text/css" rel="stylesheet" href="/hicode/syscss/beizhu.css" />
 <link type="text/css" rel="stylesheet" href="/hicode/syscss/select/shaixuan.css" />
-<link type="text/css" rel="stylesheet" href="/hicode/syscss/select/updateAdviser.css" />
 
 <script type="text/javascript" src="/hicode/sysjs/jquery.min.js"></script>
 <script type="text/javascript" src="/hicode/sysjs/beizhu/remarks.js"></script>
 <script type="text/javascript" src="/hicode/sysjs/forfunctions.js"></script>
-<script type="text/javascript" src="/hicode/sysjs/SuperVIP.js"></script>
 <script type="text/javascript" src="/hicode/sysjs/jeDate.js"></script>
 <script src="/hicode/sysjs/chosen.jquery.js"></script>
 <script type="text/javascript" src="/hicode/sysjs/select/shaixuan.js"></script>
@@ -202,69 +117,41 @@
   		</div>
   	</div>
 	<!-- 隐藏  -->
-	<div id="hidd_mask"></div>
-	<div class="choise" id="choise_adv">
-		<div class="dv_font dv_advtitle">更换客户:&nbsp;<u id="kehu_name">黄康尧</u>&nbsp;负责人</div>
-		<div class="dv_main">
-			<div class="choise_left">
-				<div class="left_title dv_font">当前负责人</div>
-				<div id="left_adv" class="left_adv adv_sel" style="padding: 0px;border: solid 1px #996633;">
-					<span id="now_fuzeren">张三</span>
-				 </div>
-			</div>
-			<div class="choise_center">
-				》》》》》》
-			</div>
-			<div class="choise_right">
-				<div class="left_title dv_font">新负责人</div>
-				<div class="left_adv">
-					<select class="adv_sel" id="new_fuzeren_sel"></select>
-				</div>
-			</div>
-			
-		</div>
-		<div class="choise_bottom">
-  			<div>
-  				<button id="choise_yes" class="choise_yes">确定</button>
-  			</div>
-  			<div>
-  				<button id="choise_back" class="choise_back">返回</button>
-  			</div>
-  		</div>
-	</div>
-
-	<div class="dv_top" id="dv_top" style="background-color: #996633">
-		<button id="index_go" class="for_button_vip">首页</button>
-		<button id="find_user" class="for_button_vip">欢迎:</button>
+	<div class="dv_top" id="dv_top">
+		<button id="index_go" class="for_button">首页</button>
+		<button id="find_user" class="for_button">欢迎:</button>
 	</div>
 	<hr>
-	<div class="dv_title_vip">市场跟踪细则<button id="bt_open_cus">展开<span>▼</span></button></div>
+	<div class="dv_title">报名信息详情<button id="bt_open_cus">展开<span>▼</span></button></div>
 	<div id="dv_table">
-		<table id="tea_tbl_vip" cellspacing="0">
+		<table id="tea_tbl" cellspacing="0">
 			<thead>
-				<tr id="tea_vip">
+				<tr>
 					<th>序号</th>
 					<th>学生姓名</th>
-					<th>学校</th>
-					<th>年级</th>
-					<th>电话</th>
-					<th>客户类别</th>
-					<th>签单/死单</th>
-					<th>第一接单人</th>
-					<th>当前接单人</th>
-					<th>接单时间</th>
-					<th>追踪记录</th>
-					<th>交接历程</th>
-					<th>操作</th>
+					<th>课程</th>
+					<th>课时</th>
+					<th>金额</th>
+					<th>赠送课时</th>
+					<th>老师</th>
+					<th>开课时间</th>
+					<th>签单顾问</th>
+					<th>学期结束</th>
+					<th>续费</th>
+					<th>退费</th>
+					<th>备注</th>
+					<!-- <th>操作</th> -->
 					<th>标记</th>
 				</tr>
 			</thead>
-			<tbody id="tbl_body_vip">
+			<tbody id="tbl_body">
 			</tbody>
 		</table>
 	</div>
-	<div id="dv_page_vip">
-		<div id="dv_but_vip"></div>
+	<div id="dv_page">
+		<!-- <button id="bt_first" mypage="1">首页</button> -->
+		<div id="dv_but"></div>
+		<!-- <button id="bt_end">尾页</button> -->
 	</div>
 </body>
 <script type="text/javascript">
@@ -272,23 +159,25 @@
 		
 		var bd_hig = document.documentElement.clientHeight;
   		$("#hidd_mask").css("height",bd_hig+"px");
-  		$("#choise_adv").hide();
+  		$("#dv_update").hide();
   		$("#hidd_mask").hide();
   		
   		var pagedata = {"page":1};
-  		
-  		start_post_VIP_sig(for_btn_VIP_sig,pagedata);
+  		start_post_cus_done(for_btn_cus_done,pagedata);
   		getUserName("dv_top");
+  		
+ 		//点击添加按钮
+ 		//$("#bt_1").click(add_cus);
  		
  		/* 添加学员信息，提交按钮  */
- 		$("#choise_yes").click(up_sub_VIP_sig);
+ 		//$("#up_sub").click(up_sub_cus);
  		
  		// 点击首页按钮
  		$("#index_go").click(function(){
  			window.location = "/hicode/index.html";
  		});
  		
-	/* 	// 日历插件
+		// 日历插件
 		jeDate({
 			dateCell : "#first_time",
 			//format : "YYYY-MM-DD",
@@ -304,11 +193,10 @@
 			isClear:true,
 			minDate : "1014-09-19 00:00:00"
 		}) ;
-		 */
+		
 		//条件筛选
 		var bd_wid = document.documentElement.clientWidth;
 		$("#dv_select").css("left",(bd_wid-1080)/2+"px");
-		$("#choise_adv").css("left",(bd_wid-860)/2+"px");
 		jeDate({
 			dateCell : "#ting_time",
 			format : "YYYY-MM-DD", 
@@ -317,12 +205,12 @@
 			minDate : "1014-09-19 00:00:00"
 		}) ;
 		// 点击返回消失
-  		$("#choise_back").click(function(){
+  		$("#up_res").click(function(){
   			$("#hidd_mask").hide().hide(300);
- 			$("#choise_adv").show().hide(300);
+ 			$("#dv_update").show().hide(300);
  		});
  		
 	});
 </script>
 </html>
-
+    
