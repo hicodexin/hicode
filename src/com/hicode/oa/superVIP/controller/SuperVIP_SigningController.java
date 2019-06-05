@@ -133,10 +133,6 @@ public class SuperVIP_SigningController {
 		JSONArray objs = new JSONArray();
 
 		for (Signing adv1 : advs) {
-			//一旦报名，则不再展示该学员的信息
-			if(adv1.getIf_signup() == 1){
-				continue;
-			}
 			JSONObject obj = new JSONObject();
 			obj.put("id", adv1.getSig_id());
 			obj.put("name", adv1.getAuditions().getSt_name());

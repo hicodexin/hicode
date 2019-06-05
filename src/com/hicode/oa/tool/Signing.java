@@ -56,6 +56,11 @@ public class Signing implements Serializable{
 	private Adviser adviser_now;
 	
 	/**
+	 * 最终接单人
+	 */
+	private Adviser adv_success_id;
+	
+	/**
 	 * 交接历史
 	 */
 	private String history;
@@ -147,14 +152,23 @@ public class Signing implements Serializable{
 	public void setHistory(String history) {
 		this.history = history;
 	}
+	
+	public Adviser getAdv_success_id() {
+		return adv_success_id;
+	}
+
+	public void setAdv_success_id(Adviser adv_success_id) {
+		this.adv_success_id = adv_success_id;
+	}
 
 	@Override
 	public String toString() {
 		return "Signing [sig_id=" + sig_id + ", auditions=" + auditions + ", situation=" + situation + ", category="
 				+ category + ", tracking_one=" + tracking_one + ", tracking_two=" + tracking_two + ", tracking_three="
 				+ tracking_three + ", if_signup=" + if_signup + ", adviser=" + adviser + ", adviser_now=" + adviser_now
-				+ ", history=" + history + "]";
+				+ ", adv_success_id=" + adv_success_id + ", history=" + history + "]";
 	}
+
 
 	
 

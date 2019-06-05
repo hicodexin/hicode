@@ -144,18 +144,6 @@
   						<input type="text" id="stu_name"  placeholder="请输入"/>
   					</li>
   					<li>
-  						<b>课程:</b>
-	  					<select id="stu_subject"> </select>
-  					</li>
-  					<li>
-  						<b>课时:</b>
-  						<input type="text" id="stu_period"  placeholder="请输入"/>
-  					</li>
-  					<li>
-  						<b>授课老师:</b>
-  						<select id="stu_teacher"></select>
-  					</li>
-  					<li>
   						<b>待定 : </b> 
 						<input type="text" disabled="disabled"/>
   					</li>
@@ -164,24 +152,8 @@
   			<div class="main_right">
   				<ul id="left_ul">
   					<li>
-  						<b>开始时间:</b>
-  						<input type="text" id="kai_time"  readonly="readonly" placeholder="请输入"/>
-  					</li>
-  					<li>
-  						<b>截止时间:</b>
-  						<input type="text" id="ting_time"  readonly="readonly" placeholder="请输入"/>
-  					</li>
-  					<li>
-  						<b>签单顾问:</b>
-  						<select id="qian_gu"></select>
-  					</li>
-  					<li>
-  						<b>续费:</b>
-  						<select id="if_xufei">
-  							<option disabled="disabled" selected="selected" value="-1">请选择</option>
-  							<option value="1">已续费</option>
-  							<option value="0">未续费</option>
-  						</select>
+  						<b>手机:</b>
+  						<input type="text" id="stu_phone"  placeholder="请输入"/>
   					</li>
   					<li>
   						<b>待续:</b>
@@ -192,7 +164,7 @@
   		</div>
   		<div class="dvselect_bottom">
   			<div>
-  				<button id="sel_sub_cus" class="sel_sub">开始筛选</button>
+  				<button id="sel_sub_VIP_ADV" class="sel_sub">开始筛选</button>
   			</div>
   			
   			<div>
@@ -238,7 +210,11 @@
 		<button id="find_user" class="for_button_vip">欢迎:</button>
 	</div>
 	<hr>
-	<div class="dv_title_vip">市场跟踪细则<button id="bt_open_cus">展开<span>▼</span></button></div>
+	<div class="dv_title_vip">
+		<button id="give_up" style="margin-left: -20px">已放弃</button>
+		市场跟踪细则
+		<button id="bt_open_VIP_ADV">展开<span>▼</span></button>
+	</div>
 	<div id="dv_table">
 		<table id="tea_tbl_vip" cellspacing="0">
 			<thead>
@@ -275,10 +251,22 @@
   		$("#choise_adv").hide();
   		$("#hidd_mask").hide();
   		
-  		var pagedata = {"page":1};
+  		var pagedata = {"page":1,"if_signup":0};
   		
   		start_post_VIP_sig(for_btn_VIP_sig,pagedata);
   		getUserName("dv_top");
+ 		
+ 		$("#give_up").click(function(){
+  			if($(this).html() == "已放弃"){
+  				var data = { "page" : 1, "if_signup":"2" };
+				start_post_VIP_sig(for_btn_VIP_sig,data);
+				$(this).html("未签单");
+  			}else{
+  				var data = { "page" : 1, "if_signup":"0" };
+				start_post_VIP_sig(for_btn_VIP_sig,data);
+				$(this).html("已放弃");
+  			}
+  		});
  		
  		/* 添加学员信息，提交按钮  */
  		$("#choise_yes").click(up_sub_VIP_sig);
@@ -287,35 +275,17 @@
  		$("#index_go").click(function(){
  			window.location = "/hicode/index.html";
  		});
- 		
-	/* 	// 日历插件
-		jeDate({
-			dateCell : "#first_time",
-			//format : "YYYY-MM-DD",
-			isinitVal : true,
-			isTime : true, //isClear:false,
-			minDate : "1014-09-19 00:00:00"
-		}) ;
-		jeDate({
-			dateCell : "#kai_time",
-			format : "YYYY-MM-DD", 
-			isinitVal : true,
-			isTime : false, // 
-			isClear:true,
-			minDate : "1014-09-19 00:00:00"
-		}) ;
-		 */
 		//条件筛选
 		var bd_wid = document.documentElement.clientWidth;
 		$("#dv_select").css("left",(bd_wid-1080)/2+"px");
 		$("#choise_adv").css("left",(bd_wid-860)/2+"px");
-		jeDate({
+	/* 	jeDate({
 			dateCell : "#ting_time",
 			format : "YYYY-MM-DD", 
 			isinitVal : true,
 			isTime : false, // isClear:true,
 			minDate : "1014-09-19 00:00:00"
-		}) ;
+		}) ; */
 		// 点击返回消失
   		$("#choise_back").click(function(){
   			$("#hidd_mask").hide().hide(300);

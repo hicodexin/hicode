@@ -1891,7 +1891,7 @@ function up_sub_sig() {
 			if (e.list_advs == 'ok') {
 				alert("添加成功");
 				$("#tbl_body").children("tr").remove();
-				var pagedata = {"page":1};
+				var pagedata = {"page":1,"if_signup":0};
 				start_post_sig(for_btn_sig,pagedata);
 			}else if (e.list_advs == 'ok1') {
 				alert("对不起,权限不足。。。。");
@@ -1914,7 +1914,7 @@ function up_sub_sig() {
 			if (e.list_advs == 'ok') {
 				alert("修改成功");
 				$("#tbl_body").children("tr").remove();
-				var pagedata = {"page":1};
+				var pagedata = {"page":1,"if_signup":0};
 				start_post_sig(for_btn_sig,pagedata);
 			}else if (e.list_advs == 'ok1') {
 				alert("对不起,权限不足。。。。");
@@ -2346,6 +2346,7 @@ function start_post_TMK(backFunction,pagedata) {
 
 /* 市场跟单》》》初始化数据 */
 function start_post_sig(backFunction,pagedata) {
+	
 	$.post("/hicode/signing/showSigningByInfo.spc", pagedata, function(a) {
 		if (a) {
 			creat_tb_sig(a.list_advs, "#tbl_body");
@@ -2382,7 +2383,6 @@ function start_post_sig(backFunction,pagedata) {
 	}, "json");
 
 }
-
 
 /** ==============================================待便利的值============================================== */
 
@@ -3016,7 +3016,12 @@ function creat_tb_sig(back_all, p_dom) {
 		str += "<td name='userName'>" + back_all[i].name + "</td>";
 		str += "<td name='school'>" + back_all[i].school + "</td>";
 		str += "<td name='nianji'>"+back_all[i].nianji+"</td>";
-		str += "<td name='phone'>"+back_all[i].phone+"</td>";
+		
+		if (back_all[i].if_signup == 1) {
+			str += "<td>-*-*-*-*-</td>";
+		}else{
+			str += "<td name='phone'>"+back_all[i].phone+"</td>";
+		}
 		
 		//用户分类（1.两周内可签单；2.一个月内可签单；3.需要长期跟踪；4.无意向）
 		if (back_all[i].fenlei == 1) { 
@@ -3039,7 +3044,12 @@ function creat_tb_sig(back_all, p_dom) {
 			str += "<td name='if_signup' value='未报名'>  </td>";
 		}
 		
-		str += "<td name='firstPeople'>"+back_all[i].firstPeople+"</td>";
+		if (back_all[i].if_signup == 1) {
+			str += "<td >"+back_all[i].successPeople+"</td>";
+		}else{
+			str += "<td name='firstPeople'>"+back_all[i].firstPeople+"</td>";
+		}
+		
 		/*str += "<td name='nowPeople'>"+back_all[i].nowPeople+"</td>";*/
 		str += "<td name='begin_time'>"+timestampToTime(back_all[i].begin_time.time)+"</td>";
 		
@@ -3083,12 +3093,16 @@ function creat_tb_sig(back_all, p_dom) {
 		td.appendChild(img);
 		tr.appendChild(td);
 		
-		var btid = back_all[i].id;
-		var strr = "<td><button id = '" + btid + "' name='" + (i + 1) + "'>修改</button></td>";
+		var strr = "<td> </td>";
+		
+		if(back_all[i].if_signup != 1){
+			var btid = back_all[i].id;
+			strr = "<td><button id = '" + btid + "' name='" + (i + 1) + "'>修改</button></td>";
+		}
 		strr += "<td><input type='checkbox' value='" + btid + "' /></td>";
 		$(tr).append(strr);
 		$(p_dom).append(tr);
-
+		
 	}
 
 }
@@ -3331,6 +3345,10 @@ function change_page_sig(this_dom,pagedata) {
 	});
 	
 	pagedata.page = $(this_dom).attr("mypage");
+	
+	console.log("pagedata=====fanye");
+
+	console.log(pagedata);
 
 	$.post("/hicode/signing/showSigningByInfo.spc",pagedata, function(a_s) {
 		$("#tbl_body").html(' ');

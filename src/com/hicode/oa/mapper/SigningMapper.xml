@@ -8,10 +8,13 @@
 		</association> 
 		<association property="adviser_now" column="adv_now_id" select="com.hicode.oa.dao.AdviserDAO.getAdviserByID">
 		</association> 
+		<association property="adv_success_id" column="adv_success_id" select="com.hicode.oa.dao.AdviserDAO.getAdviserByID">
+		</association> 
 	</resultMap>
 	
 	<sql id="all_column">
-		 sig_id,au_id,situation,category,tracking_one,tracking_two,tracking_three,if_signup,adv_id,adv_now_id,history
+		 sig_id,au_id,situation,category,tracking_one,tracking_two,
+		 tracking_three,if_signup,adv_id,adv_now_id,adv_success_id,history
 	</sql>
 	
 	<select id="getSigningByID" parameterType="java.lang.Integer" resultMap="getSigning_oop">
@@ -32,7 +35,7 @@
 		WHERE 1=1
 		<!-- 
 			sig_id,au_id,situation,category,tracking_one,tracking_two,tracking_three,if_signup,adv_id,history
-			stu_name,stu_school,stu_class,phone,category ,if_signup,adv_id,adv_now_id
+			stu_name,stu_school,stu_class,phone,category ,if_signup,adv_id,adv_now_id,
 		-->
 		<if test="stu_name != null">
 			AND au_id in
@@ -69,6 +72,9 @@
 		
 		<if test="adv_now_id != null">
 			AND adv_now_id = #{adv_now_id}
+		</if>
+		<if test="adv_success_id != null">
+			AND adv_success_id = #{adv_success_id}
 		</if>
 		ORDER BY au_id
 		limit #{start},#{count};
@@ -114,7 +120,9 @@
 		<if test="adv_now_id != null">
 			AND adv_now_id = #{adv_now_id}
 		</if>
-		
+		<if test="adv_success_id != null">
+			AND adv_success_id = #{adv_success_id}
+		</if>
 		limit #{start},#{count};
 	</select>
 	<!-- 通过试听学员的id查看是否存在该学生信息 -->
@@ -131,7 +139,7 @@
 	<insert id="do_insertSigning" parameterType="Signing" keyProperty="sig_id">
 	<!-- sig_id,au_id,situation,category,tracking_one,tracking_two,tracking_three,if_signup,adv_id,adv_now_id,history -->
 		insert into signing
-			(au_id,situation,category,tracking_one,tracking_two,tracking_three,if_signup,adv_id,adv_now_id,history) 
+			(au_id,situation,category,tracking_one,tracking_two,tracking_three,if_signup,adv_id,adv_now_id,adv_success_id,history) 
 		values(
 				#{auditions.au_id},
 				#{situation},
@@ -142,6 +150,7 @@
 				#{if_signup},
 				#{adviser.adv_id},
 				#{adviser_now.adv_id},
+				#{adv_success_id.adv_id},
 				#{history}
 			);
 	</insert>
@@ -150,7 +159,7 @@
 		update signing set 
 			situation=#{situation},category=#{category},
 			tracking_one=#{tracking_one},tracking_two=#{tracking_two},tracking_three=#{tracking_three},
-			if_signup=#{if_signup},history=#{history}
+			if_signup=#{if_signup},adv_success_id=#{adv_success_id.adv_id},history=#{history}
 		where sig_id=#{sig_id};
 	</update>
 	

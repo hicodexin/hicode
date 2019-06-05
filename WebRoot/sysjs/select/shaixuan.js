@@ -143,6 +143,50 @@ $().ready(function() {
 		start = -650;
 		sit = setInterval(for_open, 10);
 	});
+	
+	//顾问签单成功》》》展开
+	$("#bt_open_advSuccess").click(function() {
+
+		$("#hidd_mask").hide().show(300);
+
+		$("#stu_name").val("");
+		$.post("/hicode/adviser/showAdviser.spc", function(f) {
+			if (f.length > 0) {
+				for_sel_sf("qian_gu", f);
+			}
+		}, "json");
+		start = -650;
+		sit = setInterval(for_open, 10);
+	});
+	
+	//顾问跟单》》》展开
+	$("#bt_open_sig").click(function() {
+
+		$("#hidd_mask").hide().show(300);
+
+		$("#stu_name").val("");
+		$("#stu_phone").val("");
+
+		$.post("/hicode/school/showSchool.spc", function(c) {
+			if (c.length > 0) {
+				for_sel_sf("stu_school", c);
+			}
+		}, "json");
+
+		start = -650;
+		sit = setInterval(for_open, 10);
+	});	
+	//VIP_顾问跟单》》》展开
+	$("#bt_open_VIP_ADV").click(function() {
+
+		$("#hidd_mask").hide().show(300);
+
+		$("#stu_name").val("");
+		$("#stu_phone").val("");
+		start = -650;
+		sit = setInterval(for_open, 10);
+	});
+	
 	/** ==============================================条件查询data============================================== */
 
 	//试听课条件查询
@@ -160,7 +204,7 @@ $().ready(function() {
 			"qian_gu" : $('#qian_gu').val()
 		};
 
-		console.log(data);
+		/*console.log(data);*/
 		start_post_aud(for_btn_aud, data);
 		click_close();
 	});
@@ -179,7 +223,6 @@ $().ready(function() {
 			"qian_gu" : $('#qian_gu').val()
 		};
 
-		console.log(data);
 		start_post_cus(for_btn_cus, data);
 		click_close();
 	});
@@ -196,7 +239,6 @@ $().ready(function() {
 			"kai_age" : $("#kai_age").val(),
 			"ting_age" : $("#ting_age").val()
 		};
-		console.log(data);
 		start_post_TMK(for_btn_TMK, data);
 		click_close();
 	});
@@ -214,12 +256,53 @@ $().ready(function() {
 			"kai_age" : $("#kai_age").val(),
 			"ting_age" : $("#ting_age").val()
 		};
-		console.log(data);
+//		console.log(data);
 		start_post_VIP_TMK(for_btn_VIP_TMK, data);
 		click_close();
 	});
-
-
+	
+	//市场签单成功_条件查询
+	$("#sel_sub_advSuccess").click(function() {
+		
+		var data = {
+			"page" : 1,
+			"stu_name" : $("#stu_name").val().trim(),
+			"qian_gu" : $('#qian_gu').val(),
+			"if_signup":1
+			
+		};
+//		console.log(data);
+		start_post_sig(for_btn_sig,data);
+		click_close();
+	});
+	
+	//市场跟单_条件查询
+	$("#sel_sub_sig").click(function() {
+		
+		var data = {
+			"page" : 1,
+			"stu_name" : $("#stu_name").val().trim(),
+			"phone" : $('#stu_phone').val(),
+			"stu_school" : $('#stu_school').val()
+		};
+//		console.log(data);
+		start_post_sig(for_btn_sig,data);
+		click_close();
+	});
+	
+	
+	//VIP_市场跟单_条件查询
+	$("#sel_sub_VIP_ADV").click(function() {
+		
+		var data = {
+			"page" : 1,
+			"stu_name" : $("#stu_name").val().trim(),
+			"phone" : $('#stu_phone').val()
+		};
+		console.log(data);
+		start_post_VIP_sig(for_btn_VIP_sig,data);
+		click_close();
+	});
 	/** ==============================================关闭============================================== */
 
 	//关闭

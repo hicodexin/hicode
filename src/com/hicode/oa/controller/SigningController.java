@@ -53,6 +53,23 @@ public class SigningController {
 		
 		return "/WEB-INF/AdviserPage/genzong.html";
 	}
+	
+	@RequestMapping("/login_done")
+	public String login_done(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+		// 非课程顾问
+		if (
+				obj.getUserType().getType_leibie() != 5 && 
+				obj.getUserType().getType_leibie() != 6
+				) {
+			
+			return "redirect:/Fighting.html";
+		}
+		
+		return "/WEB-INF/AdviserPage/genzong_success.html";
+	}
 
 	@ResponseBody
 	@RequestMapping(value = "/showSigningByInfo", method = RequestMethod.POST)
@@ -86,20 +103,35 @@ public class SigningController {
 		if (category != null & category != "") {
 			map.put("category", category);
 		}
-		//是否报名
-		String if_signup = request.getParameter("if_signup");
-		if (if_signup != null & if_signup != "") {
-			map.put("if_signup", if_signup);
-		}
 		
 		//当前接单人
 		HttpSession session = request.getSession();
 		UserInfo obj_user = (UserInfo) session.getAttribute("user");
-		if (obj_user == null ||obj_user.getUserType().getType_leibie() != 5) {
+		if (
+				obj_user == null ||
+				(obj_user.getUserType().getType_leibie() != 5 && 
+				obj_user.getUserType().getType_leibie() != 6)
+				) {
 			return null;
 		}
 		String adv_now_id = obj_user.getUser_name();
 		map.put("adv_now_id", adv_now_id);
+		
+		//是否报名
+		String if_signup = request.getParameter("if_signup");
+		if (if_signup != null & if_signup != "") {
+			map.put("if_signup", if_signup);
+			//看签单成功的，不需要只看自己的
+			if(if_signup.equals("1")){
+				map.remove("adv_now_id");
+			}
+		}
+		
+		//最终签单顾问
+		String qian_gu = request.getParameter("qian_gu");
+		if (qian_gu != null & qian_gu != "") {
+			map.put("adv_success_id", qian_gu);
+		}
 		
 		// 页码
 		String page = request.getParameter("page");
@@ -118,17 +150,13 @@ public class SigningController {
 		map.put("count", num);
 
 		JSONObject obj_arr = new JSONObject();
-
+		
 		List<Signing> advs = signingService.getSigningBySomeOption(map);
 
 		JSONArray objs = new JSONArray();
 
 		for (Signing adv1 : advs) {
 			
-			//一旦报名，则不再展示该学员的信息
-			/*if(adv1.getIf_signup() == 1){
-				continue;
-			}*/
 			JSONObject obj = new JSONObject();
 			obj.put("id", adv1.getSig_id());
 			obj.put("name", adv1.getAuditions().getSt_name());
@@ -148,6 +176,7 @@ public class SigningController {
 			obj.put("if_signup", adv1.getIf_signup());//是否报名（0:未报名；1:已报名；2:死单）
 			obj.put("firstPeople", adv1.getAdviser().getAdv_name());//第一接单人
 			obj.put("nowPeople", adv1.getAdviser_now().getAdv_name());//当前接单人
+			obj.put("successPeople", adv1.getAdv_success_id().getAdv_name());//最终签单人
 			objs.add(obj);
 		}
 		obj_arr.put("list_advs", objs);
@@ -163,6 +192,7 @@ public class SigningController {
 		}
 		return obj_arr.toString();
 	}
+	
 
 
 	/**
@@ -218,6 +248,11 @@ public class SigningController {
 		signing.setSituation(dang_tian);//面资当天
 		signing.setCategory(Integer.valueOf(leibie_sel));//用户分类
 		signing.setIf_signup(Integer.valueOf(qiandan_sel));//签单/死单
+		if(qiandan_sel != null && qiandan_sel.equals("1")){//以报名
+			Adviser adviser_success = new Adviser();
+			adviser_success.setAdv_id(adviser_sel);
+			signing.setAdv_success_id(adviser_success);
+		}
 		signing.setTracking_one(first_time);
 		signing.setTracking_two(second_time);
 		signing.setTracking_three(third_time);
@@ -281,6 +316,12 @@ public class SigningController {
 		signing.setTracking_one(first_time);
 		signing.setTracking_two(second_time);
 		signing.setTracking_three(third_time);
+		
+		if(qiandan_sel != null && qiandan_sel.equals("1")){//以报名
+			Adviser adviser_success = new Adviser();
+			adviser_success.setAdv_id(adviser_sel);
+			signing.setAdv_success_id(adviser_success);
+		}
 		
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String d = sf.format(new Date());
