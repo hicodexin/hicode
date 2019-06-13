@@ -176,7 +176,10 @@ public class SigningController {
 			obj.put("if_signup", adv1.getIf_signup());//是否报名（0:未报名；1:已报名；2:死单）
 			obj.put("firstPeople", adv1.getAdviser().getAdv_name());//第一接单人
 			obj.put("nowPeople", adv1.getAdviser_now().getAdv_name());//当前接单人
-			obj.put("successPeople", adv1.getAdv_success_id().getAdv_name());//最终签单人
+			if(adv1.getIf_signup().equals("1")){ //只有已报名的才存在最终签单人
+				obj.put("successPeople", adv1.getAdv_success_id().getAdv_name());//最终签单人
+			}
+			
 			objs.add(obj);
 		}
 		obj_arr.put("list_advs", objs);
@@ -248,6 +251,7 @@ public class SigningController {
 		signing.setSituation(dang_tian);//面资当天
 		signing.setCategory(Integer.valueOf(leibie_sel));//用户分类
 		signing.setIf_signup(Integer.valueOf(qiandan_sel));//签单/死单
+		System.out.println(signing);
 		if(qiandan_sel != null && qiandan_sel.equals("1")){//以报名
 			Adviser adviser_success = new Adviser();
 			adviser_success.setAdv_id(adviser_sel);
@@ -263,6 +267,8 @@ public class SigningController {
 		String d = sf.format(new Date());
 		Adviser adviser2 = adviserService.getAdviserByID(adviser_sel);
 		signing.setHistory(d+" : "+adviser2.getAdv_name());
+		
+		System.out.println(signing);
 		
 		Integer count = signingService.do_insertSigning(signing);
 		if (count > 0) {
