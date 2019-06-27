@@ -3017,11 +3017,13 @@ function creat_tb_sig(back_all, p_dom) {
 		str += "<td name='school'>" + back_all[i].school + "</td>";
 		str += "<td name='nianji'>"+back_all[i].nianji+"</td>";
 		
-		if (back_all[i].if_signup == 1) {
+		/*if (back_all[i].if_signup == 1) {
 			str += "<td>-*-*-*-*-</td>";
 		}else{
 			str += "<td name='phone'>"+back_all[i].phone+"</td>";
-		}
+		}*/
+		
+		str += "<td name='phone'>"+back_all[i].phone+"</td>";
 		
 		//用户分类（1.两周内可签单；2.一个月内可签单；3.需要长期跟踪；4.无意向）
 		if (back_all[i].fenlei == 1) { 

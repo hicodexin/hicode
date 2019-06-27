@@ -146,10 +146,10 @@ public class SuperVIP_PhonesController {
 		// 开始数字
 		Integer start = 0;
 		// 每页显示条数
-		Integer num = 100;
+		Integer num = 300;
 
 		if (page != null) {
-			start = (Integer.valueOf(page) - 1) * 100;
+			start = (Integer.valueOf(page) - 1) * 300;
 		}
 
 		Integer all_num = null;
@@ -188,7 +188,7 @@ public class SuperVIP_PhonesController {
 			all_num = phonesService.getPhonesForCountBySomeOption(map);
 
 			if (all_num != null) {
-				all_num = (all_num % 100 == 0) ? (all_num / 100) : (all_num / 100 + 1);
+				all_num = (all_num % 300 == 0) ? (all_num / 300) : (all_num / 300 + 1);
 			}
 			obj_arr.put("all_num", all_num);
 		}

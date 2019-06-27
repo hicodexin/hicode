@@ -24,7 +24,7 @@ import net.sf.json.JSONObject;
 /**
  * 讲师管理应用控制层
  * 
- * @author xinpeixiang
+ * @author XinPeiXiang
  * @date 2018-10-22
  */
 @Controller

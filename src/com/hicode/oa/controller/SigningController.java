@@ -176,7 +176,7 @@ public class SigningController {
 			obj.put("if_signup", adv1.getIf_signup());//是否报名（0:未报名；1:已报名；2:死单）
 			obj.put("firstPeople", adv1.getAdviser().getAdv_name());//第一接单人
 			obj.put("nowPeople", adv1.getAdviser_now().getAdv_name());//当前接单人
-			if(adv1.getIf_signup().equals("1")){ //只有已报名的才存在最终签单人
+			if(null != adv1.getIf_signup() && adv1.getIf_signup() == 1){ //只有已报名的才存在最终签单人
 				obj.put("successPeople", adv1.getAdv_success_id().getAdv_name());//最终签单人
 			}
 			
