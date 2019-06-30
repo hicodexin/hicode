@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>排课表</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+    <style type="text/css">
+		*{
+			margin: 0px;
+			padding: 0px;
+		}
+		#hidd_mask{
+			background-color: #D0D0D0;
+			opacity: 0.5;
+			width:100%;
+			position: absolute;
+			z-index: 6;
+		}
+		.dv_top {
+			height: 50px;
+			background-color: #336699;
+		}
+		.for_button{
+			outline-style: none;
+			border: 1px #fff solid;
+			background-color: #336699;
+			color: #fff;
+			display: inline-block;
+			margin-top: 10px;
+			float: left;
+			border-radius: 6px;
+			font-size: 16px;
+			font-family: "楷体";
+			font-weight: 600;
+			padding: 5px;
+		}
+		.for_button:HOVER {
+			cursor: pointer;
+			border: 1px #336699 solid;
+			background-color: #fff;
+			color: #336699;
+		}
+		#index_go {
+			margin-left: 15%;
+			width: 65px;
+			height: 30px;
+		}
+		
+		#find_user {
+			margin-left: 55%;
+			padding: 5px;
+		}
+		
+		@media ( max-width: 1330px) {
+			#find_user {
+				margin-left: 40%;
+				padding: 5px;
+			}
+		}
+		
+		@media ( max-width: 800px) {
+			#find_user {
+				margin-left: 100px;
+				padding: 5px;
+			}
+		}
+		
+		#user_out{
+			margin-left: 10px;
+			width: 65px;
+			height: 30px;
+		}
+		
+		.dv_title {
+			height: 90px;
+			color: #336699;
+			font-family: "楷体";
+			font-size: 40px;
+			font-weight: 700;
+			text-align: center;
+			line-height: 90px;
+		}
+		#bt_1 {
+			width: 90px;
+			height: 40px;
+			background-color: #fff;
+			color: #336699;
+			outline-style: none;
+			position: absolute;
+			top: 90px;
+			left: 75%;
+			border: solid 1px #336699;
+			border-radius: 6px;
+			font-weight: 600;
+			font-size: 18px;
+			font-family: "楷体";
+		}
+		
+		#bt_1:HOVER {
+			background-color: #336699;
+			color: #fff;
+			cursor: pointer;
+		}
+		@media ( max-width: 1330px) {
+			#bt_1 {
+				left: 90%;
+			}
+		}
+		#dv_table {
+			height:1000px;
+			width:100%;
+			overflow: auto;
+		}
+		#tea_tbl {
+			margin: auto;
+			width: 80%;
+		}
+		
+		@media ( max-width: 1630px) {
+			#tea_tbl {
+				margin: auto;
+				width: 1400px;
+			}
+		}
+		
+		@media ( max-width: 1430px) {
+			#tea_tbl {
+				margin: auto;
+				width: 1200px;
+			}
+		}
+		#tea_tbl thead tr th {
+			height: 60px;
+			background-color: #5B9BD5;
+			color: #fff;
+			font-family: "楷体";
+			font-size: 20px;
+			border-right: 1px solid #fff; 
+		}
+		#sch_tbody td{
+			border-bottom: 1px solid #5B9BD5;
+			height: 40px;
+			text-align: center;
+			border-right: 1px solid #5B9BD5;
+		}
+		.td_border{
+			/* border-left: 1px solid #5B9BD5; */
+			border-right: 1px solid #5B9BD5;
+		}
+		
+		[ name="tea01"]>td{
+			background-color: #F2F2F2;
+		}
+		[ name="tea02"]>td{
+			background-color: #DDEBF7;
+		}
+		[ name="tea03"]>td{
+			background-color: #E2EFDA;
+		}
+	</style>
+    
+    <link type="text/css" rel="stylesheet" href="/hicode/syscss/select/shaixuan.css" />
+	<script type="text/javascript" src="/hicode/sysjs/jquery.min.js"></script>
+  </head>
+  
+  <body>
+    <div class="dv_top" id="dv_top">
+		<button id="index_go" class="for_button">首页</button>
+		<button id="find_user" class="for_button">欢迎:</button>
+	</div>
+	<hr>
+	<div class="dv_title">
+		<!-- <button id="give_up" style="margin-left: -20px">下午</button> -->
+			课程安排
+		<!-- <button id="bt_open_sig">展开<span>▼</span></button> -->
+	</div>
+	<!-- <button id="bt_1">添加</button> -->
+	
+	<div id="dv_table">
+		<table id="tea_tbl" cellspacing="0">
+			<thead>
+				<tr >
+					<th colspan="2">时间</th>
+					<th>任课老师</th>
+					<th>星期一</th>
+					<th>星期四</th>
+					<th>星期五</th>
+					<th>星期六</th>
+					<th style="border-right: 1px solid #5B9BD5;">星期日</th>
+				</tr>
+			</thead>
+			<tbody id="sch_tbody">
+				<tr name="tea01">
+					<td rowspan="6" style="background-color: #5B9BD5;color: #fff;text-align: center;">上午</td>
+					<td rowspan="3" class="td_border">10:00---11:00</td>
+					<td >辛培祥</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea02" >
+					<td>梁国强</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea03" >
+					<td>郑兆彬</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>赵奕锟</td>
+					<td>郑好</td>
+				</tr>
+				<tr name="tea01" >
+					<td rowspan="3" class="td_border">10:00---12:00</td>
+					<td>辛培祥</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>王少白、宁达</td>
+					<td></td>
+				</tr>
+				<tr name="tea02" >
+					
+					<td>梁国强</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>赵峻溪、刘怡晨</td>
+					<td>宋佳、孙博文、李冬晨</td>
+				</tr>
+				<tr name="tea03" >
+					
+					<td>郑兆彬</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea01">
+					<td rowspan="15" style="background-color: #E2EFDA;color: #5B9BD5;text-align: center;">下午</td>
+					<td rowspan="3" class="td_border">13:30---15:30</td>
+					<td>辛培祥</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>陈可奇</td>
+					<td></td>
+				</tr>
+				<tr name="tea02">
+					
+					<td>梁国强</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>陈兆嵩、陈家毅、王盛、刘文硕、陈星燃</td>
+					<td>宋睿洁</td>
+				</tr>
+				<tr name="tea03">
+					
+					<td>郑兆彬</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea01">
+					
+					<td rowspan="3" class="td_border">14:30---15:30</td>
+					<td>辛培祥</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea02">
+					
+					<td>梁国强</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea03">
+					
+					<td>郑兆彬</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>赵奕锟</td>
+				</tr>
+				<tr name="tea01">
+					
+					<td rowspan="3" class="td_border">15:30---17:30</td>
+					<td>辛培祥</td>
+					<td></td>
+					<td></td>
+					<td>张睿轩</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea02">
+					
+					<td>梁国强</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea03">
+					
+					<td>郑兆彬</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>庞苏素</td>
+					<td>王佰劼</td>
+				</tr>
+				<tr name="tea01">
+					
+					<td rowspan="3" class="td_border">16:00---18:00</td>
+					<td>辛培祥</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea02">
+					
+					<td>梁国强</td>
+					<td>于涵</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>陈昊琦</td>
+				</tr>
+				<tr name="tea03">
+					
+					<td>郑兆彬</td>
+					<td>柳皓天、罗木夕</td>
+					<td></td>
+					<td>崔洁、李曜杰</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea01">
+					
+					<td rowspan="3" class="td_border">16:30---18:30</td>
+					<td>辛培祥</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea02">
+					
+					<td>梁国强</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>马懿鹭</td>
+					<td></td>
+				</tr>
+				<tr name="tea03">
+					
+					<td>郑兆彬</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		<table>
+			
+		</table>
+	</div>
+<!-- 	<div id="dv_page">
+		<button id="bt_first" mypage="1">首页</button>
+		<div id="dv_but"></div>
+		<button id="bt_end">尾页</button>
+	</div> -->
+  </body>
+</html>
