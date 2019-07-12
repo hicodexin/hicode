@@ -35,7 +35,50 @@ public class SchedulingController {
 		*/
 		return "/WEB-INF/TeacherPage/Scheduling.html";
 	}
+	@RequestMapping("/login_ShuJiaBan")
+	public String login_ShuJiaBan(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+		
+		return "/WEB-INF/TeacherPage/ShuJiaBan.html";
+	}
 	
+	@RequestMapping("/login_ShuJiaBanXia")
+	public String login_ShuJiaBanXia(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+		
+		return "/WEB-INF/TeacherPage/ShuJiaBan_xia.html";
+	}
+	
+	@RequestMapping("/login_JiXunYing")
+	public String login_JiXunYing(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+		
+		return "/WEB-INF/TeacherPage/JiXunYing.html";
+	}
+	
+	@RequestMapping("/login_ShuJiaBan_201908")
+	public String login_ShuJiaBan_201908(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+		
+		return "/WEB-INF/TeacherPage/ShuJiaBan_201908.html";
+	}
+	
+	@RequestMapping("/login_ShuJiaBan_201909_xia")
+	public String login_ShuJiaBan_201909_xia(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+		
+		return "/WEB-INF/TeacherPage/ShuJiaBan_201909_xia.html";
+	}
 }
 
 

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>8月暑假班课程表</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+    <link type="text/css" rel="stylesheet" href="/hicode/syscss/select/shaixuan.css" />
+    <link type="text/css" rel="stylesheet" href="/hicode/syscss/kechengbiao.css" />
+	<script type="text/javascript" src="/hicode/sysjs/jquery.min.js"></script>
+    <style type="text/css">
+		*{
+			margin: 0px;
+			padding: 0px;
+		}
+		#hidd_mask{
+			background-color: #D0D0D0;
+			opacity: 0.5;
+			width:100%;
+			position: absolute;
+			z-index: 6;
+		}
+		#tea_tbl thead tr th {
+			height: 60px;
+			background-color: #F8931D;
+			color: #fff;
+			font-family: "楷体";
+			font-size: 24px;
+			border-right: 1px solid #fff;
+		}
+		
+		#sch_tbody td {
+			border:0px;
+			border-top: 1px solid #fff;
+			height: 40px;
+			text-align: center;
+			border-right: 1px solid #fff;
+		}
+		
+		.td_border {
+			/* border-left: 1px solid #5B9BD5; */
+			border-right: 1px solid #5B9BD5;
+		}
+		
+		[name="tea01"]>td {
+			background-color: #FFCA08;
+		}
+		
+		[name="tea02"]>td {
+			background-color: #E2EFDA;
+		}
+	</style>
+    
+    
+  </head>
+  
+  <body>
+    <div class="dv_top" id="dv_top">
+		<button id="index_go" class="for_button">首页</button>
+		<button id="find_user" class="for_button">欢迎:</button>
+	</div>
+	<hr>
+	<div class="dv_title">
+		<!-- <button id="give_up" style="margin-left: -20px">下午</button> -->
+			课程安排
+		<!-- <button id="bt_open_sig">展开<span>▼</span></button> -->
+	</div>
+	<!-- <button id="bt_1">添加</button> -->
+	
+	<div id="dv_table">
+		<table id="tea_tbl" cellspacing="0">
+			<thead>
+				<tr >
+					<th>时间</th>
+					<th>年级</th>
+					<th>人数</th>
+					<th>年级</th>
+					<th>姓名</th>
+					<th>电话</th>
+					<th style="border-right: 1px solid #fff;">市场</th>
+				</tr>
+			</thead>
+			<tbody id="sch_tbody">
+				<tr name="tea01">
+					<td rowspan="18" style="width:240px;font-size:20px; background-color: #F8931D;color: #fff;text-align: center;">
+						上午班9:00-11:00
+					</td>
+					<td rowspan="8">1--3年级</td>
+					<td>1</td>
+					<td>一</td>
+					<td>张心月</td>
+					<td>15964943678</td>
+					<td>许永贺</td>
+				</tr>
+				<tr name="tea01">
+					<td>2</td>
+					<td>一</td>
+					<td>刘冠泽</td>
+					<td>13678859128</td>
+					<td>许永贺</td>
+				</tr>
+				<tr name="tea01">
+					<td>3</td>
+					<td>一</td>
+					<td>魏子鸣</td>
+					<td>13255563434</td>
+					<td>范梦珂</td>
+				</tr>
+				<tr name="tea01">
+					<td>4</td>
+					<td>二</td>
+					<td>王可心</td>
+					<td>15621128191</td>
+					<td>范梦珂</td>
+				</tr>
+				<tr name="tea01">
+					<td>5</td>
+					<td>二</td>
+					<td>丁子宸</td>
+					<td>18678985639</td>
+					<td>王杉杉</td>
+				</tr>
+				<tr name="tea01">
+					<td>6</td>
+					<td>二</td>
+					<td>张蓝心</td>
+					<td>15318713687</td>
+					<td>杨堃</td>
+				</tr>
+				<tr name="tea01">
+					<td>7</td>
+					<td>三</td>
+					<td>杜晶瑄</td>
+					<td>13395322170</td>
+					<td>姚兵</td>
+				</tr>
+				<tr name="tea01">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea02">
+					<td rowspan="10">4--6年级</td>
+					<td>1</td>
+					<td>四</td>
+					<td>张心怡</td>
+					<td>15063000963</td>
+					<td>许永贺</td>
+				</tr>
+				<tr name="tea02">
+					<td>2</td>
+					<td>五</td>
+					<td>申三奇</td>
+					<td>1385320857</td>
+					<td>范梦柯</td>
+				</tr>
+				<tr name="tea02">
+					<td>3</td>
+					<td>五</td>
+					<td>王明国</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea02">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea02">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea02">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea02">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea02">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea02">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea02">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				
+			</tbody>
+		</table>
+		
+	</div>
+  </body>
+   <script type="text/javascript">
+  	$().ready(function(){
+  		// 点击首页按钮
+ 		$("#index_go").click(function(){
+ 			window.location = "/hicode/index.html";
+ 		});
+ 		
+ 		getUserName("dv_top");
+ 		
+  		/**
+		 * 获取登陆用户名
+		 */
+		function getUserName(id) {
+			$.post("/hicode/UserInfo/getUserName.jsp", function(a) {
+				$("#" + id).children("#user_out").remove();
+				if (a) {
+					if (a.ok == "okk") {
+						$("#find_user").html("请登陆");
+						$("#find_user").click(function() {
+							window.location = "/hicode/welcome.html";
+						});
+					}
+		
+					if (a.name) {
+						$("#find_user").html("欢迎 " + a.type + " : " + a.name);
+						$("#find_user").click(function() {});
+						
+						var str = "<button id='user_out' class='for_button'>退出</button>";
+						
+						$("#" + id).append(str);
+						$("#user_out").click(userOut);
+					}
+				}
+		
+			}, "json");
+		
+		}
+		
+		/**
+		 * 退出登录
+		 */
+		function userOut() {
+			$.post("/hicode/UserInfo/logOut.spc", function(a) {
+				if (a.ok == "okk") {
+					alert("谢谢使用，再见。。。。。");
+					window.location = "/hicode/welcome.html";
+				}
+			}, "json");
+		}
+				
+		
+  	});
+  </script>
+</html>
