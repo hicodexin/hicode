@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>排课表</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+    <style type="text/css">
+		*{
+			margin: 0px;
+			padding: 0px;
+		}
+		#hidd_mask{
+			background-color: #D0D0D0;
+			opacity: 0.5;
+			width:100%;
+			position: absolute;
+			z-index: 6;
+		}
+	</style>
+    
+    <link type="text/css" rel="stylesheet" href="/hicode/syscss/select/shaixuan.css" />
+    <link type="text/css" rel="stylesheet" href="/hicode/syscss/kechengbiao.css" />
+	<script type="text/javascript" src="/hicode/sysjs/jquery.min.js"></script>
+  </head>
+  
+  <body>
+    <div class="dv_top" id="dv_top">
+		<button id="index_go" class="for_button">首页</button>
+		<button id="find_user" class="for_button">欢迎:</button>
+	</div>
+	<hr>
+	<div class="dv_title">
+		<button id="give_up" style="margin-left: -20px">暑假班排班</button> 
+		
+			课程安排
+		<!-- <button id="bt_open_sig">展开<span>▼</span></button> -->
+	</div>
+	<!-- <button id="bt_1">添加</button> -->
+	
+	<div id="dv_table">
+		<table id="tea_tbl" cellspacing="0">
+			<thead>
+				<tr >
+					<th colspan="2">时间</th>
+					<th>任课老师</th>
+					<th>星期一</th>
+					<th>星期二</th>
+					<th>星期五</th>
+					<th>星期六</th>
+					<th style="border-right: 1px solid #5B9BD5;">星期日</th>
+				</tr>
+			</thead>
+			<tbody id="sch_tbody">
+				<tr name="tea01">
+					<td rowspan="20" style="background-color: #E2EFDA;color: #5B9BD5;text-align: center;">下午</td>
+					<td rowspan="4" class="td_border">13:30---15:30</td>
+					<td>辛培祥</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>陈可奇</td>
+					<td></td>
+				</tr>
+				<tr name="tea02">
+					
+					<td>梁国强</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>陈兆嵩、陈家毅、王盛、刘文硕、陈星燃</td>
+					<td>宋睿洁</td>
+				</tr>
+				<tr name="tea03">
+					
+					<td>郑兆彬</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea04" >
+					<td>李盈庆</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea01">
+					
+					<td rowspan="4" class="td_border">14:30---15:30</td>
+					<td>辛培祥</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea02">
+					
+					<td>梁国强</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea03">
+					
+					<td>郑兆彬</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>赵奕锟</td>
+				</tr>
+				<tr name="tea04" >
+				
+					<td>李盈庆</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea01">
+					
+					<td rowspan="4" class="td_border">15:30---17:30</td>
+					<td>辛培祥</td>
+					<td></td>
+					<td>黄康尧</td>
+					<td>张睿轩</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea02">
+					
+					<td>梁国强</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea03">
+					
+					<td>郑兆彬</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>庞苏素</td>
+					<td>王佰劼</td>
+				</tr>
+				<tr name="tea04" >
+				
+					<td>李盈庆</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea01">
+					
+					<td rowspan="4" class="td_border">16:00---18:00</td>
+					<td>辛培祥</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea02">
+					
+					<td>梁国强</td>
+					<td>于涵</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>陈昊琦</td>
+				</tr>
+				<tr name="tea03">
+					
+					<td>郑兆彬</td>
+					<td>柳皓天、罗木夕</td>
+					<td></td>
+					<td>崔洁、李曜杰</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea04" >
+				
+					<td>李盈庆</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea01">
+					
+					<td rowspan="4" class="td_border">16:30---18:30</td>
+					<td>辛培祥</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea02">
+					
+					<td>梁国强</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>马懿鹭</td>
+					<td></td>
+				</tr>
+				<tr name="tea03">
+					
+					<td>郑兆彬</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr name="tea04" >
+				
+					<td>李盈庆</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		<table>
+			
+		</table>
+	</div>
+<!-- 	<div id="dv_page">
+		<button id="bt_first" mypage="1">首页</button>
+		<div id="dv_but"></div>
+		<button id="bt_end">尾页</button>
+	</div> -->
+  </body>
+   <script type="text/javascript">
+  	$().ready(function(){
+  		// 点击首页按钮
+ 		$("#index_go").click(function(){
+ 			window.location = "/hicode/index.html";
+ 		});
+ 		
+ 		getUserName("dv_top");
+ 		
+  		/**
+		 * 获取登陆用户名
+		 */
+		function getUserName(id) {
+			$.post("/hicode/UserInfo/getUserName.jsp", function(a) {
+				$("#" + id).children("#user_out").remove();
+				if (a) {
+					if (a.ok == "okk") {
+						$("#find_user").html("请登陆");
+						$("#find_user").click(function() {
+							window.location = "/hicode/welcome.html";
+						});
+					}
+		
+					if (a.name) {
+						$("#find_user").html("欢迎 " + a.type + " : " + a.name);
+						$("#find_user").click(function() {});
+						
+						var str = "<button id='user_out' class='for_button'>退出</button>";
+						
+						$("#" + id).append(str);
+						$("#user_out").click(userOut);
+					}
+				}
+		
+			}, "json");
+		
+		}
+		
+		/**
+		 * 退出登录
+		 */
+		function userOut() {
+			$.post("/hicode/UserInfo/logOut.spc", function(a) {
+				if (a.ok == "okk") {
+					alert("谢谢使用，再见。。。。。");
+					window.location = "/hicode/welcome.html";
+				}
+			}, "json");
+		}
+				
+		
+  	});
+  </script>
+</html>

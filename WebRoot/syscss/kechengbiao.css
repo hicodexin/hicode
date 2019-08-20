@@ -152,6 +152,10 @@
 	background-color: #E2EFDA;
 }
 
+[name="tea04"]>td {
+	background-color: #E0E2B5;
+}
+
 .for_button{
 	outline-style: none;
 	border: 1px #fff solid;

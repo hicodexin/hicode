@@ -18,8 +18,13 @@ import com.hicode.oa.tool.UserInfo;
 @RequestMapping("/scheduling")
 public class SchedulingController {
 	
-	@RequestMapping("/to_login")
-	public String login(HttpServletRequest request) {
+	/**
+	 * 正课上午班
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/login_Scheduling_am")
+	public String login_ZhengKe_AM(HttpServletRequest request) {
 		
 		HttpSession session = request.getSession();
 		UserInfo obj = (UserInfo) session.getAttribute("user");
@@ -33,7 +38,30 @@ public class SchedulingController {
 			return "redirect:/Fighting.html";
 		}
 		*/
-		return "/WEB-INF/TeacherPage/Scheduling.html";
+		return "/WEB-INF/TeacherPage/Scheduling_am.html";
+	}
+	
+	/**
+	 * 正课下午班
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/login_Scheduling_pm")
+	public String login_ZhengKe_PM(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+		// 非课程顾问、非会员用户、管理员用户、超级管理员
+		/*if (
+				obj.getUserType().getType_leibie() != 5 &&
+				obj.getUserType().getType_leibie() != 3 && 
+				obj.getUserType().getType_leibie() != 2 &&
+				obj.getUserType().getType_leibie() != 6
+			) {
+			return "redirect:/Fighting.html";
+		}
+		*/
+		return "/WEB-INF/TeacherPage/Scheduling_pm.html";
 	}
 	@RequestMapping("/login_ShuJiaBan")
 	public String login_ShuJiaBan(HttpServletRequest request) {
