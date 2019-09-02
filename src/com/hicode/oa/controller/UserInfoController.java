@@ -241,26 +241,37 @@ public class UserInfoController {
 				JSONObject obj = new JSONObject();
 
 				obj.put("name", s);
-				UserInfo info = (UserInfo) userOnline.get(s).getAttribute("user");
+				UserInfo info = null;
+				try{
+					info = (UserInfo) userOnline.get(s).getAttribute("user");
+				}catch(IllegalStateException e){
+					System.out.println("==================Session 失效==================");
+					continue;
+				}
 
 				String type = "游客";
 
-				switch (info.getUserType().getType_leibie()) {
-				case 0:
-					type = "游客";
-					break;
-				case 1:
-					type = "普通用户";
-					break;
-				case 2:
-					type = "会员用户";
-					break;
-				case 3:
-					type = "管理员";
-					break;
-				case 6:
-					type = "超级管理员";
-					break;
+				if(info != null){
+					switch (info.getUserType().getType_leibie()) {
+					case 0:
+						type = "游客";
+						break;
+					case 1:
+						type = "普通用户";
+						break;
+					case 2:
+						type = "会员用户";
+						break;
+					case 3:
+						type = "管理员";
+						break;
+					case 6:
+						type = "超级管理员";
+						break;
+					}
+					
+				}else{
+					System.out.println("==================没有获得用户信息==================");
 				}
 
 				obj.put("type", type);

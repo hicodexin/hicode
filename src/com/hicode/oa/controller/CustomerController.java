@@ -156,7 +156,7 @@ public class CustomerController {
 		}
 		obj_arr.put("list_advs", objs);
 		
-		if (page.equals("1")) {
+		if (page != null && page.equals("1")) {
 
 			all_num = customerService.getCustomerForCountBySomeOption(map);
 
