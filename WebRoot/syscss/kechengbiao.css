@@ -133,6 +133,8 @@
 	height: 40px;
 	text-align: center;
 	border-right: 1px solid #5B9BD5;
+	font-family: "楷体";
+	font-size: 18px;
 }
 
 .td_border {
