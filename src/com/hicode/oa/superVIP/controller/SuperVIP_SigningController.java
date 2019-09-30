@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,8 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hicode.oa.service.AdviserService;
 import com.hicode.oa.service.SigningService;
+import com.hicode.oa.service.UserInfoService;
 import com.hicode.oa.tool.Adviser;
 import com.hicode.oa.tool.Signing;
+import com.hicode.oa.tool.SymmetricEncoder;
 import com.hicode.oa.tool.UserInfo;
 
 import net.sf.json.JSONArray;
@@ -38,8 +41,52 @@ public class SuperVIP_SigningController {
 	private SigningService signingService;
 	@Autowired
 	private AdviserService adviserService;
+	@Autowired
+	private UserInfoService userInfoService;
 	
 
+	@ResponseBody
+	@RequestMapping(value = "/postUrl" , method = RequestMethod.POST)
+	public String postUrl(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+		// 非超级管理员
+		if (obj.getUserType().getType_leibie() != 6) {
+			return "redirect:/Fighting.html";
+		}
+		
+		JSONObject obj_arr = new JSONObject();
+		
+		JSONArray jsar = new JSONArray();
+		
+		String uid = null;
+		for(int i=15;i<=24;i++){
+			JSONObject jsob = new JSONObject();
+			uid = "us_10"+i;
+			UserInfo userInfo = userInfoService.getUserInfoByID(uid);
+			if(userInfo == null ){ 
+				continue;
+			}
+			String remark =	userInfo.getRemarks();
+			if(remark==null || remark == ""){
+				remark = userInfo.getUser_name();
+			}
+//			System.out.println("用户id：" + uid);
+			String date = new SimpleDateFormat("yyyy+MM+dd").format(new Date());
+			String key = UUID.randomUUID().toString() + "@" + uid + "@" + date + "@"+SymmetricEncoder.getSymbol();
+//			System.out.println(key);
+			String encodedKey = SymmetricEncoder.invokeEncryptEncode(key);
+//			System.out.println("加密后的秘钥：" + encodedKey);
+			String url01 = "/hicode/svipSigning/openSomeADVList.spc?name=";
+			jsob.put("urls", url01+encodedKey);
+			jsob.put("beizhu", remark);
+			jsar.add(jsob);
+		}
+		obj_arr.put("giveUrl", jsar);
+		return obj_arr.toString();
+	}
+	
 	@RequestMapping("/openSomeADVList")
 	public String openSomeTMKList(HttpServletRequest request) {
 		
@@ -52,6 +99,27 @@ public class SuperVIP_SigningController {
 		
 		String adv_name = request.getParameter("name");
 		if (adv_name != null & adv_name != "") {
+			
+			String encodedKey = adv_name;
+			String key1 = null;
+			try{
+				key1 = SymmetricEncoder.invokeDecryptEncode(encodedKey);
+			}catch(Exception e){
+				return "redirect:/Fighting.html";
+			}
+			
+			if(key1 == null){
+				return "redirect:/Fighting.html";
+			}
+//			System.out.println("解密后的秘钥：" + key1);
+//			System.out.println("用户id为：" + key1.split("@")[1]);
+			
+			String user_id = key1.split("@")[1];
+			UserInfo info = userInfoService.getUserInfoByID(user_id);
+			if(info == null){
+				return "redirect:/Fighting.html";
+			}
+			adv_name = info.getUser_name();
 			session.setAttribute("adv_name", adv_name);
 		}
 		return "/WEB-INF/SuperVIP/VIP_ADV.html";
@@ -203,7 +271,8 @@ public class SuperVIP_SigningController {
 		
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String d = sf.format(new Date());
-		signing.setHistory(history+"&&&"+d+" : "+adviser_name);
+		//之前的历史记录+此刻的记录+修改人姓名
+		signing.setHistory(history+"&&&"+d+" 转给 : "+adviser_name+"---由"+obj.getUser_name()+"修改");
 		
 		Integer count = signingService.do_updateAdviserForSigning(signing);
 		

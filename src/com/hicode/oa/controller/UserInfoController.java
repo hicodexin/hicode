@@ -1,5 +1,6 @@
   package com.hicode.oa.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hicode.oa.service.CheckLoginService;
 import com.hicode.oa.service.LogInfoService;
 import com.hicode.oa.service.UserInfoService;
+import com.hicode.oa.tool.CheckLogin;
 import com.hicode.oa.tool.LogInfo;
 import com.hicode.oa.tool.UserInfo;
 import com.hicode.oa.tool.UserState;
@@ -40,6 +43,8 @@ public class UserInfoController {
 
 	@Autowired
 	private LogInfoService logInfoService;
+	@Autowired
+	private CheckLoginService checkLoginService;
 
 	/**
 	 * 
@@ -71,34 +76,96 @@ public class UserInfoController {
 		String ufname = request.getParameter("ufname");
 		String ufpass = request.getParameter("ufpass");
 
-		List<UserInfo> uf_list = UserInfoService.getUserInfoByName(ufname);
-
+		List<UserInfo> uf_list = null;
 		JSONObject obj = new JSONObject();
 		LogInfo info = new LogInfo();
-
+		String ip = null;
+		
 		try {
+			ip = getIpAddr(request);
+			uf_list = UserInfoService.getUserInfoByName(ufname);
+			CheckLogin checkLogin = checkLoginService.getCheckLoginByIP(ip);
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String d = sf.format(new Date());
+			// 若存在此ip，则判断是否被锁定和禁用
+			if(checkLogin != null){
+				if(checkLogin.getCheck_stateid() != 1){
+					obj.put("call_back", "该用户已被锁定，请联系管理员。。。。");
+					info.setLog_success(0);
+					info.setLog_remarks("该用户已被锁定");
+					return obj.toString();
+				}
+				if(checkLogin.getFalse_num() > 2){
+					obj.put("call_back", "该用户已被锁定，请联系管理员。。。。");
+					info.setLog_success(0);
+					info.setLog_remarks("三次登录失败，该用户已被锁定");
+					
+					checkLogin.setCheck_stateid(2);
+					String rm = checkLogin.getRemarks()+d+"三次登录失败，该IP已被锁定&&";
+					checkLogin.setRemarks(rm);
+					checkLogin.setFalse_num(checkLogin.getFalse_num() + 1);
+					checkLoginService.do_updateCheckLogin(checkLogin);
+					
+					return obj.toString();
+				}
+			}else{
+				checkLogin = new CheckLogin();
+				checkLogin.setCheck_ip(ip);
+				checkLogin.setCheck_stateid(1);
+				checkLogin.setFalse_num(0);
+				String remarks = d+ufname+" 第一次登录&&";
+				checkLogin.setRemarks(remarks);
+				checkLoginService.do_insertCheckLogin(checkLogin);
+			}
+			
 			if (uf_list == null || uf_list.size() == 0) {
 				obj.put("call_back", "该用户并未注册。。。。");
 				info.setLog_success(0);
 				info.setLog_remarks("该用户并未注册");
+				
+				checkLogin.setFalse_num(checkLogin.getFalse_num()+1);
+				String rm = checkLogin.getRemarks()+d+"登录失败，用户 "+ufname+" 不存在&&";
+				checkLogin.setRemarks(rm);
+				checkLoginService.do_updateCheckLogin(checkLogin);
+				
 				return obj.toString();
 			}
 			if (!uf_list.get(0).getUser_pwd().equals(ufpass)) {
 				obj.put("call_back", "用户名密码不匹配。。。。");
 				info.setLog_success(0);
 				info.setLog_remarks("用户名密码不匹配");
+				
+				checkLogin.setFalse_num(checkLogin.getFalse_num()+1);
+				String rm = checkLogin.getRemarks()+d+ufname+" 密码错误&&";
+				checkLogin.setRemarks(rm);
+				checkLoginService.do_updateCheckLogin(checkLogin);
+				
 				return obj.toString();
 			}
 			if (uf_list.get(0).getUserState().getState_id() == 2) {
 				obj.put("call_back", "该账户已被锁定。。。。");
 				info.setLog_success(0);
 				info.setLog_remarks("该账户已被锁定");
+				
+				checkLogin.setFalse_num(checkLogin.getFalse_num()+1);
+				checkLogin.setCheck_stateid(2);
+				String rm = checkLogin.getRemarks()+d+"账号 "+ufname+" 已被锁定&&";
+				checkLogin.setRemarks(rm);
+				checkLoginService.do_updateCheckLogin(checkLogin);
+				
 				return obj.toString();
 			}
 			if (uf_list.get(0).getUserState().getState_id() == 3) {
 				obj.put("call_back", "该账户已被废弃。。。。");
 				info.setLog_success(0);
 				info.setLog_remarks("该账户已被废弃");
+				
+				checkLogin.setFalse_num(checkLogin.getFalse_num()+1);
+				checkLogin.setCheck_stateid(3);
+				String rm = checkLogin.getRemarks()+d+"账号 "+ufname+" 已被废弃&&";
+				checkLogin.setRemarks(rm);
+				checkLoginService.do_updateCheckLogin(checkLogin);
+				
 				return obj.toString();
 			}
 
@@ -124,9 +191,15 @@ public class UserInfoController {
 			userOnline.put(ufname, session);
 			info.setLog_success(1);
 			info.setLog_remarks("登陆成功");
+			
+			checkLogin.setFalse_num(0);
+			String rm = checkLogin.getRemarks()+d+ufname+"登录成功&&";
+			checkLogin.setRemarks(rm);
+			checkLoginService.do_updateCheckLogin(checkLogin);
+			
 			obj.put("call_back", "ok");
 		} finally {
-			String ip = getIpAddr(request);
+			ip = getIpAddr(request);
 			info.setLog_ip(ip);
 			info.setLog_time(new Date());
 
@@ -134,7 +207,7 @@ public class UserInfoController {
 				info.setUserInfo(uf_list.get(0));
 			} else {
 				UserInfo us = new UserInfo();
-				us.setUser_id("u_1000");
+				us.setUser_id(ufname);
 				info.setUserInfo(us);
 			}
 

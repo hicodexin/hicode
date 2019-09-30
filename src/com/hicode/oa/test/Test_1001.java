@@ -13,12 +13,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.hicode.oa.dao.AuditionsDAO;
 import com.hicode.oa.dao.UserInfoDAO;
 import com.hicode.oa.dao.UserStateDAO;
 import com.hicode.oa.dao.UserTypeDAO;
 import com.hicode.oa.dao.ValidateCodeDAO;
 import com.hicode.oa.service.TeacherService;
 import com.hicode.oa.service.ValidateCodeService;
+import com.hicode.oa.tool.Adviser;
+import com.hicode.oa.tool.Auditions;
+import com.hicode.oa.tool.School;
 import com.hicode.oa.tool.Teacher;
 import com.hicode.oa.tool.UserInfo;
 import com.hicode.oa.tool.UserState;
@@ -26,6 +30,30 @@ import com.hicode.oa.tool.UserType;
 import com.hicode.oa.tool.ValidateCode;
 
 public class Test_1001 {
+	
+	@Ignore
+	@Test
+	public void Teat_1008() {
+		
+		ApplicationContext app = new ClassPathXmlApplicationContext("applicationContext.xml");
+		SqlSessionFactory ss = (SqlSessionFactory) app.getBean("sqlSessionFactory");
+		AuditionsDAO dao = new AuditionsDAO(ss);
+		Auditions aud1 = new Auditions();
+//		aud1.setSt_time(st_time);
+//		aud1.setSt_name(st_name);
+//		aud1.setSt_sex(st_sex);
+//		aud1.setSt_class(st_class);
+//		aud1.setSchool(new School().setSch_id(sch_id));
+//		aud1.setPhone(phone);
+//		aud1.setTeacher(new Teacher().setT_id(t_id));
+//		aud1.setAdviser(new Adviser().setAdv_id(adv_id));
+//		aud1.setAdviser2(new Adviser().setAdv_id());
+//		aud1.setRemarks(remarks);
+//		
+		dao.do_insertAuditions(aud1);
+		
+		
+	}
 	
 	
 	@Test
@@ -146,7 +174,7 @@ public class Test_1001 {
 		ApplicationContext app = new ClassPathXmlApplicationContext("applicationContext.xml");
 		SqlSessionFactory ss = (SqlSessionFactory) app.getBean("sqlSessionFactory");
 		ValidateCodeDAO dao = new ValidateCodeDAO(ss);
-		for(int i=0;i<42;i++){
+		for(int i=0;i<58;i++){
 
 			ValidateCode code = new ValidateCode();
 			code.setCode_img("bg_img ("+(i+1)+").jpg");

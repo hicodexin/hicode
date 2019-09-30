@@ -181,8 +181,8 @@
 						<div class="row margin">
 							<div class="input-field col s12">
 								<i class="mdi-action-lock-outline prefix"></i>
-								<input id="password" type="password"  style="color:#fff" >
-								<label for="password">Password</label>
+								<input id="password" type="password" style="color:#fff" >
+								<label  id="sp2" for="password">Password</label>
 							</div>
 						</div>
 						<div class="row">
@@ -211,6 +211,9 @@
 </body>
 <script type="text/javascript">
 	$().ready(function(){
+		
+//		alert("系统正在升级维护中。。。。");
+//		return;
 		
 		getCode();
 		
@@ -247,6 +250,13 @@
 				getCode();
 				return;
 			}
+			if($("#password").val() == "" || $("#password").val()==null){
+				$("#sp2").html("密码不能为空");
+				$("#sp2").css("color","red");
+				$("#password").css("borderColor","red");
+				getCode();
+				return;
+			}
 			var img_arry = new Array();
 			img_arry = $("#dvrow_img>img");
 			
@@ -269,10 +279,10 @@
 						$.post("/hicode/UserInfo/getUserAndPass.jsp",data,function(a) {
 							$("#sp1").html();
 							if(a){
-								console.log(a);
+//								console.log(a);
 								if(a.call_back != "ok"){
-									console.log(a.call_back);
-									console.log("--------------------");
+//									console.log(a.call_back);
+//									console.log("--------------------");
 									$("#sp1").html(a.call_back);
 									$("#sp1").css("color","red");
 									$("#email").css("borderColor","red");
@@ -296,7 +306,7 @@
 		 function getCode() {
 			$.post("/hicode/validateCode/getValidateCode.jsp",function(code) {
 			
-				console.log(code);
+//				console.log(code);
 				$("#dvrow_img").html("");
 				
 				for (var i=0;i<code.length;i++) {

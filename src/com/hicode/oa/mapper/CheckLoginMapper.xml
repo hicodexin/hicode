@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hicode.oa.dao.CheckLoginDAO">
+
+	<sql id="all_column">
+		check_id,check_ip,check_stateid,false_num,remarks
+	</sql>
+	<!-- 添加登录IP信息 -->
+	<insert id="do_insertCheckLogin" parameterType="CheckLogin"
+		keyProperty="check_id">
+		insert into CheckLogin
+		(check_ip,check_stateid,false_num,remarks)
+		values
+		(#{check_ip},#{check_stateid},#{false_num},#{remarks});
+
+	</insert>
+	<!-- 根据Ip查询该用户信息-->
+	<select id="getCheckLoginByIP" parameterType="java.lang.String"
+		resultType="CheckLogin">
+		select
+		<include refid="all_column"></include>
+		from CheckLogin
+		where
+		check_ip = #{check_ip};
+	</select>
+
+	<!-- 修改该ip的信息 -->
+	<update id="do_updateCheckLogin" parameterType="CheckLogin">
+		update CheckLogin set 
+			check_stateid=#{check_stateid},
+			false_num=#{false_num},
+			remarks=#{remarks}
+		where
+		check_ip=#{check_ip};
+	</update>
+	
+</mapper>

@@ -5,7 +5,7 @@ import java.util.Date;
 
 /**
  * 讲师
- * @author xinpeixiang 
+ * @author XinPeiXiang 
  * @date 2018-10-19
  */
 public class Teacher  implements Serializable{

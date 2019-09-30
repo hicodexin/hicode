@@ -15,7 +15,7 @@
 	</resultMap>
 
 	<sql id="all_column">
-		user_id,user_name,user_pwd,state_id,type_id,create_date
+		user_id,user_name,user_pwd,state_id,type_id,create_date,remarks
 	</sql>
 
 	<select id="getUserInfoByID" parameterType="java.lang.String"
@@ -42,16 +42,17 @@
 	<insert id="do_insertUserInfo" parameterType="UserInfo">
 		insert into
 		userInfo
-		(user_id,user_name,user_pwd,state_id,type_id,create_date)
+		(user_id,user_name,user_pwd,state_id,type_id,create_date,remarks)
 		values
-		(#{user_id},#{user_name},#{user_pwd},#{userState.state_id},#{userType.type_id},#{create_date});
+		(#{user_id},#{user_name},#{user_pwd},#{userState.state_id},#{userType.type_id},#{create_date},#{remarks});
 	</insert>
 
 	<update id="do_updateUserInfo" parameterType="UserInfo">
 		update userInfo set
 		user_name =#{user_name}, user_pwd =#{user_pwd}, state_id
 		=#{userState.state_id},
-		type_id =#{userType.type_id}, create_date =#{create_date}
+		type_id =#{userType.type_id}, create_date =#{create_date},
+		remarks = #{remarks}
 		where user_id =#{user_id};
 	</update>
 

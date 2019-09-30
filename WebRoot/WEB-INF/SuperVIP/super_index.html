@@ -89,11 +89,6 @@ a:HOVER {
 	<div class="dv_title" style="color: #996633">超级管理员专区</div>
 	<br>
 	<div id="dv_show">
-		<a href="/hicode/svipPhones/openSomeTMKList.spc?name=TMK001">范梦珂</a> 
-		<a href="/hicode/svipPhones/openSomeTMKList.spc?name=TMK002">杨堃</a> 
-		<a href="/hicode/svipPhones/openSomeTMKList.spc?name=TMK003">TMK003</a> 
-		<a href="/hicode/svipPhones/openSomeTMKList.spc?name=TMK004">TMK004</a> 
-		<a href="/hicode/svipPhones/openSomeTMKList.spc?name=TMK005">赵雅倩</a> 
 		<div id="dv_more" class="dv_more">
 			<div></div>
 		</div>
@@ -102,10 +97,7 @@ a:HOVER {
 		<div id="back_go" class="dv_more">
 			<div style="background-image: url(/hicode/sysimg/index/for_back.png);"></div>
 		</div>
-		<a href="/hicode/svipSigning/openSomeADVList.spc?name=adv_1001">孙震岳</a> 
-		<a href="/hicode/svipSigning/openSomeADVList.spc?name=adv_1005">许永贺</a> 
-		<a href="/hicode/svipSigning/openSomeADVList.spc?name=adv_1007">王杉杉</a> 
-		<a href="#" onclick='alert("未完待续。。。")'>未完待续</a> 
+		
 	</div>
 </body>
 <script type="text/javascript">
@@ -121,6 +113,28 @@ a:HOVER {
 		window.setTimeout(function() {
 			getUserName("dv_top");
 		}, 500);
+		
+		$.post("/hicode/svipPhones/postUrl.spc", function(f) {
+				if (f.giveUrl.length > 0) {
+					for(var i=0;i<f.giveUrl.length;i++){
+						var tmk_a = document.createElement("a");
+						$(tmk_a).html(f.giveUrl[i].beizhu);
+						$(tmk_a).attr("href",f.giveUrl[i].urls);
+						$("#dv_show").append(tmk_a);
+					}
+				}
+			}, "json");
+			$.post("/hicode/svipSigning/postUrl.spc", function(f) {
+				if (f.giveUrl.length > 0) {
+					for(var i=0;i<f.giveUrl.length;i++){
+						var adv_a = document.createElement("a");
+						$(adv_a).html(f.giveUrl[i].beizhu);
+						$(adv_a).attr("href",f.giveUrl[i].urls);
+						$("#dv_show2").append(adv_a);
+					}
+				}
+			}, "json");
+		
 		
 		// 点击首页按钮
  		$("#index_go").click(function(){

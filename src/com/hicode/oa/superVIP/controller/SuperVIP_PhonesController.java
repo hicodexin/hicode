@@ -1,8 +1,11 @@
 package com.hicode.oa.superVIP.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,6 +21,7 @@ import com.hicode.oa.service.SchoolService;
 import com.hicode.oa.service.UserInfoService;
 import com.hicode.oa.tool.Phones;
 import com.hicode.oa.tool.School;
+import com.hicode.oa.tool.SymmetricEncoder;
 import com.hicode.oa.tool.UserInfo;
 
 import net.sf.json.JSONArray;
@@ -53,6 +57,53 @@ public class SuperVIP_PhonesController {
 		return "/WEB-INF/SuperVIP/super_index.html";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/postUrl" , method = RequestMethod.POST)
+	public String postUrl(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+		// 非超级管理员
+		if (obj.getUserType().getType_leibie() != 6) {
+			return "redirect:/Fighting.html";
+		}
+		
+		JSONObject obj_arr = new JSONObject();
+		
+		JSONArray jsar = new JSONArray();
+		
+		String uid = null;
+		for(int i=5;i<=14;i++){
+			JSONObject jsob = new JSONObject();
+			if(i<10){
+				uid = "us_100"+i;
+			}else{
+				uid = "us_10"+i;
+			}
+			UserInfo userInfo = userInfoService.getUserInfoByID(uid);
+			if(userInfo == null ){
+				continue;
+			}
+			
+			String remark =	userInfo.getRemarks();
+			if(remark==null || remark == ""){
+				remark = userInfo.getUser_name();
+			}
+//			System.out.println("用户id：" + uid);
+			String date = new SimpleDateFormat("yyyy+MM+dd").format(new Date());
+			String key = UUID.randomUUID().toString() + "@" + uid + "@" + date + "@"+SymmetricEncoder.getSymbol();
+//			System.out.println(key);
+			String encodedKey = SymmetricEncoder.invokeEncryptEncode(key);
+//			System.out.println("加密后的秘钥：" + encodedKey);
+			String url01 = "/hicode/svipPhones/openSomeTMKList.spc?name=";
+			jsob.put("urls", url01+encodedKey);
+			jsob.put("beizhu", remark);
+			jsar.add(jsob);
+		}
+		obj_arr.put("giveUrl", jsar);
+		return obj_arr.toString();
+	}
+	
 	@RequestMapping("/openSomeTMKList")
 	public String openSomeTMKList(HttpServletRequest request) {
 		
@@ -65,6 +116,23 @@ public class SuperVIP_PhonesController {
 		
 		String tmk_name = request.getParameter("name");
 		if (tmk_name != null & tmk_name != "") {
+			
+			String encodedKey = tmk_name;
+			String key1 = null;
+			try{
+				key1 = SymmetricEncoder.invokeDecryptEncode(encodedKey);
+			}catch(Exception e){
+				return "redirect:/Fighting.html";
+			}
+			
+			if(key1 == null){
+				return "redirect:/Fighting.html";
+			}
+//			System.out.println("解密后的秘钥：" + key1);
+//			System.out.println("用户id为：" + key1.split("@")[1]);
+			
+			tmk_name = key1.split("@")[1];
+			
 			session.setAttribute("tmk_name", tmk_name);
 		}
 		return "/WEB-INF/SuperVIP/VIP_TMK.html";
@@ -130,12 +198,11 @@ public class SuperVIP_PhonesController {
 		}
 		
 		Object tmk_name = session.getAttribute("tmk_name");
+		
 		if (tmk_name != null & tmk_name != "") {
-			List<UserInfo> user_tmk = userInfoService.getUserInfoByName(tmk_name.toString());
-			if(null != user_tmk && user_tmk.size()>0){
-				UserInfo usif = user_tmk.get(0);
-				String ph_tmk = usif.getUser_id();
-				map.put("ph_tmk", ph_tmk);
+			UserInfo user_tmk = userInfoService.getUserInfoByID(tmk_name.toString());
+			if(null != user_tmk){
+				map.put("ph_tmk", tmk_name);
 			}else{
 				System.out.println("TMK id is null....");
 				return null;

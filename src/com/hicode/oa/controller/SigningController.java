@@ -222,7 +222,9 @@ public class SigningController {
 		String leibie_sel = request.getParameter("leibie_sel");
 		String qiandan_sel = request.getParameter("qiandan_sel");
 		
-		String adviser_sel = request.getParameter("adviser_sel");
+//		String adviser_sel = request.getParameter("adviser_sel");
+		
+		String adviser_sel = obj.getUser_id();
 		Adviser adviser = new Adviser();
 		adviser.setAdv_id(adviser_sel);
 		
@@ -266,6 +268,7 @@ public class SigningController {
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String d = sf.format(new Date());
 		Adviser adviser2 = adviserService.getAdviserByID(adviser_sel);
+		
 		signing.setHistory(d+" : "+adviser2.getAdv_name());
 		
 		System.out.println(signing);
@@ -329,10 +332,12 @@ public class SigningController {
 			signing.setAdv_success_id(adviser_success);
 		}
 		
+		String history = signingService.getSigningHistoryBy_ID(Integer.valueOf(sig_id));
+		
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String d = sf.format(new Date());
 		Adviser adviser2 = adviserService.getAdviserByID(adviser_sel);
-		signing.setHistory(d+" : "+adviser2.getAdv_name());
+		signing.setHistory(history+"&&&"+d+" : "+adviser2.getAdv_name()+"--个人修改");
 		Integer count = signingService.do_updateSigning(signing);
 		if (count > 0) {
 			obj_arr.put("list_advs", "ok");

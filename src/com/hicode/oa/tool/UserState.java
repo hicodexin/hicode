@@ -17,7 +17,7 @@ public class UserState implements Serializable {
 	 */
 	private Integer state_id;
 	/**
-	 * 用户状态（0：未锁定；1：已禁用；）
+	 * 用户状态（0：未锁定；1：已禁用；2：被废弃）
 	 */
 	private Integer state_type;
 

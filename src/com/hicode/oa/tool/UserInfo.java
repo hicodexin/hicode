@@ -36,7 +36,12 @@ public class UserInfo implements Serializable {
 	 * 用户创建时间
 	 */
 	private Date create_date;
-
+	
+	/**
+	 * 备注信息 
+	 * */
+	private String remarks;
+	
 	public String getUser_id() {
 		return user_id;
 	}
@@ -84,11 +89,21 @@ public class UserInfo implements Serializable {
 	public void setCreate_date(Date create_date) {
 		this.create_date = create_date;
 	}
+	
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
 
 	@Override
 	public String toString() {
 		return "UserInfo [user_id=" + user_id + ", user_name=" + user_name + ", user_pwd=" + user_pwd + ", userState="
-				+ userState + ", userType=" + userType + ", create_date=" + create_date + "]";
+				+ userState + ", userType=" + userType + ", create_date=" + create_date + ", remarks=" + remarks + "]";
 	}
+	
+	
 
 }

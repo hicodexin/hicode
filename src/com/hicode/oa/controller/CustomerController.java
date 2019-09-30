@@ -301,6 +301,7 @@ public class CustomerController {
 		String giveClass = request.getParameter("giveClass");
 		String if_renewal = request.getParameter("if_renewal");
 
+		
 		String t_id = request.getParameter("the_teacher");
 		String first_time = request.getParameter("first_time");
 
