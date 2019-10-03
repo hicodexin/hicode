@@ -48,5 +48,13 @@ public interface UserInfoService {
 	 * @return
 	 */
 	public Integer do_updateUserInfo(UserInfo userInfo);
+	
+	/**
+	 * 修改用户登录失败信息
+	 * 
+	 * @param userInfo
+	 * @return
+	 */
+	public Integer do_updateUserInfoFalseNum(UserInfo userInfo);
 
 }

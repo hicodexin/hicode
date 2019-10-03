@@ -3348,9 +3348,9 @@ function change_page_sig(this_dom,pagedata) {
 	
 	pagedata.page = $(this_dom).attr("mypage");
 	
-	console.log("pagedata=====fanye");
+//	console.log("pagedata=====fanye");
 
-	console.log(pagedata);
+//	console.log(pagedata);
 
 	$.post("/hicode/signing/showSigningByInfo.spc",pagedata, function(a_s) {
 		$("#tbl_body").html(' ');

@@ -15,7 +15,7 @@
 	</resultMap>
 
 	<sql id="all_column">
-		user_id,user_name,user_pwd,state_id,type_id,create_date,remarks
+		user_id,user_name,user_pwd,state_id,type_id,create_date,remarks,false_num
 	</sql>
 
 	<select id="getUserInfoByID" parameterType="java.lang.String"
@@ -42,9 +42,9 @@
 	<insert id="do_insertUserInfo" parameterType="UserInfo">
 		insert into
 		userInfo
-		(user_id,user_name,user_pwd,state_id,type_id,create_date,remarks)
+		(user_id,user_name,user_pwd,state_id,type_id,create_date,remarks,false_num)
 		values
-		(#{user_id},#{user_name},#{user_pwd},#{userState.state_id},#{userType.type_id},#{create_date},#{remarks});
+		(#{user_id},#{user_name},#{user_pwd},#{userState.state_id},#{userType.type_id},#{create_date},#{remarks},#{false_num});
 	</insert>
 
 	<update id="do_updateUserInfo" parameterType="UserInfo">
@@ -52,7 +52,13 @@
 		user_name =#{user_name}, user_pwd =#{user_pwd}, state_id
 		=#{userState.state_id},
 		type_id =#{userType.type_id}, create_date =#{create_date},
-		remarks = #{remarks}
+		remarks = #{remarks},false_num=#{false_num}
+		where user_id =#{user_id};
+	</update>
+	
+	<update id="do_updateUserInfoFalseNum" parameterType="UserInfo">
+		update userInfo set
+		false_num=#{false_num}
 		where user_id =#{user_id};
 	</update>
 

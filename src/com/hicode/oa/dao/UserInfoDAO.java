@@ -51,5 +51,8 @@ public class UserInfoDAO extends SysDAO {
 	public Integer do_updateUserInfo(UserInfo userInfo) {
 		return update(nameSpace + "do_updateUserInfo", userInfo);
 	}
-
+	
+	public Integer do_updateUserInfoFalseNum(UserInfo userInfo){
+		return update(nameSpace + "do_updateUserInfoFalseNum", userInfo);
+	}
 }

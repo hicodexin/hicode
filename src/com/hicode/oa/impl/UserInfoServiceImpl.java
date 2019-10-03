@@ -45,4 +45,10 @@ public class UserInfoServiceImpl implements UserInfoService {
 		return userInfoDAO.getUserInfoByName(name);
 	}
 
+	@Override
+	public Integer do_updateUserInfoFalseNum(UserInfo userInfo) {
+		// TODO Auto-generated method stub
+		return userInfoDAO.do_updateUserInfoFalseNum(userInfo);
+	}
+
 }

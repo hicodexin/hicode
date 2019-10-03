@@ -75,7 +75,7 @@ public class UserInfoController {
 
 		String ufname = request.getParameter("ufname");
 		String ufpass = request.getParameter("ufpass");
-
+		
 		List<UserInfo> uf_list = null;
 		JSONObject obj = new JSONObject();
 		LogInfo info = new LogInfo();
@@ -83,26 +83,26 @@ public class UserInfoController {
 		
 		try {
 			ip = getIpAddr(request);
-			uf_list = UserInfoService.getUserInfoByName(ufname);
 			CheckLogin checkLogin = checkLoginService.getCheckLoginByIP(ip);
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String d = sf.format(new Date());
-			// 若存在此ip，则判断是否被锁定和禁用
+			
+			// 若存在此IP，则判断是否被锁定和禁用
 			if(checkLogin != null){
 				if(checkLogin.getCheck_stateid() != 1){
 					obj.put("call_back", "该用户已被锁定，请联系管理员。。。。");
 					info.setLog_success(0);
-					info.setLog_remarks("该用户已被锁定");
+					info.setLog_remarks(ip+"该用户已被锁定");
+					
+					checkLogin.setFalse_num(checkLogin.getFalse_num() + 1);
+					checkLoginService.do_updateCheckLogin(checkLogin);
 					return obj.toString();
 				}
 				if(checkLogin.getFalse_num() > 2){
-					obj.put("call_back", "该用户已被锁定，请联系管理员。。。。");
+					obj.put("call_back", "非法操作，该用户已被锁定。。");
 					info.setLog_success(0);
-					info.setLog_remarks("三次登录失败，该用户已被锁定");
-					
+					info.setLog_remarks(ip+"三次登录失败，该用户已被锁定");
 					checkLogin.setCheck_stateid(2);
-					String rm = checkLogin.getRemarks()+d+"三次登录失败，该IP已被锁定&&";
-					checkLogin.setRemarks(rm);
 					checkLogin.setFalse_num(checkLogin.getFalse_num() + 1);
 					checkLoginService.do_updateCheckLogin(checkLogin);
 					
@@ -118,8 +118,17 @@ public class UserInfoController {
 				checkLoginService.do_insertCheckLogin(checkLogin);
 			}
 			
+			if(sql_inj(ufname)){
+				obj.put("call_back", "非法登陆。。");
+				info.setLog_success(0);
+				info.setLog_remarks(ip+"特殊字符");
+				return obj.toString();
+			}
+			
+			uf_list = UserInfoService.getUserInfoByName(ufname);
+			
 			if (uf_list == null || uf_list.size() == 0) {
-				obj.put("call_back", "该用户并未注册。。。。");
+				obj.put("call_back", "非法操作，用户并未注册。。。。");
 				info.setLog_success(0);
 				info.setLog_remarks("该用户并未注册");
 				
@@ -130,27 +139,14 @@ public class UserInfoController {
 				
 				return obj.toString();
 			}
-			if (!uf_list.get(0).getUser_pwd().equals(ufpass)) {
-				obj.put("call_back", "用户名密码不匹配。。。。");
-				info.setLog_success(0);
-				info.setLog_remarks("用户名密码不匹配");
-				
-				checkLogin.setFalse_num(checkLogin.getFalse_num()+1);
-				String rm = checkLogin.getRemarks()+d+ufname+" 密码错误&&";
-				checkLogin.setRemarks(rm);
-				checkLoginService.do_updateCheckLogin(checkLogin);
-				
-				return obj.toString();
-			}
+			
 			if (uf_list.get(0).getUserState().getState_id() == 2) {
 				obj.put("call_back", "该账户已被锁定。。。。");
 				info.setLog_success(0);
-				info.setLog_remarks("该账户已被锁定");
+				info.setLog_remarks(ufname+"该账户已被锁定");
 				
 				checkLogin.setFalse_num(checkLogin.getFalse_num()+1);
 				checkLogin.setCheck_stateid(2);
-				String rm = checkLogin.getRemarks()+d+"账号 "+ufname+" 已被锁定&&";
-				checkLogin.setRemarks(rm);
 				checkLoginService.do_updateCheckLogin(checkLogin);
 				
 				return obj.toString();
@@ -158,17 +154,39 @@ public class UserInfoController {
 			if (uf_list.get(0).getUserState().getState_id() == 3) {
 				obj.put("call_back", "该账户已被废弃。。。。");
 				info.setLog_success(0);
-				info.setLog_remarks("该账户已被废弃");
+				info.setLog_remarks(ufname+"该账户已被废弃");
 				
 				checkLogin.setFalse_num(checkLogin.getFalse_num()+1);
 				checkLogin.setCheck_stateid(3);
-				String rm = checkLogin.getRemarks()+d+"账号 "+ufname+" 已被废弃&&";
-				checkLogin.setRemarks(rm);
 				checkLoginService.do_updateCheckLogin(checkLogin);
 				
 				return obj.toString();
 			}
-
+			
+			if (!uf_list.get(0).getUser_pwd().equals(ufpass)) {
+				obj.put("call_back", "用户名密码不匹配。。。。");
+				info.setLog_success(0);
+				info.setLog_remarks(ufname+"用户名密码不匹配");
+				
+				// 三次密码错误锁定账号
+				UserInfo userInfo = uf_list.get(0);
+				
+				userInfo.setFalse_num(userInfo.getFalse_num()+1);
+				
+				if(userInfo.getFalse_num() > 2){
+					UserState userState = new UserState();
+					userState.setState_id(2);
+					userInfo.setUserState(userState);
+				}
+				UserInfoService.do_updateUserInfo(userInfo);
+				
+				// IP锁+1
+				checkLogin.setFalse_num(checkLogin.getFalse_num()+1);
+				checkLoginService.do_updateCheckLogin(checkLogin);
+				
+				return obj.toString();
+			}
+			
 			HttpSession session = request.getSession();
 
 			ServletContext application = session.getServletContext();
@@ -190,11 +208,9 @@ public class UserInfoController {
 			session.setAttribute("user", uf_list.get(0));
 			userOnline.put(ufname, session);
 			info.setLog_success(1);
-			info.setLog_remarks("登陆成功");
+			info.setLog_remarks(ufname+"登陆成功");
 			
 			checkLogin.setFalse_num(0);
-			String rm = checkLogin.getRemarks()+d+ufname+"登录成功&&";
-			checkLogin.setRemarks(rm);
 			checkLoginService.do_updateCheckLogin(checkLogin);
 			
 			obj.put("call_back", "ok");
@@ -454,6 +470,23 @@ public class UserInfoController {
 			ip = request.getRemoteAddr();
 		}
 		return ip;
+	}
+	
+	public static boolean sql_inj(String str){
+
+		String inj_str = "'|and|exec|insert|select|delete|update|count|*|%|chr|mid|master|truncate|char|declare|;|or|-|+|,";
+
+		//这里的东西还可以自己添加
+		String[] inj_stra=inj_str.split("\\|");
+
+		for (int i=0 ; i < inj_stra.length ; i++ ){
+
+			if (str.indexOf(inj_stra[i])>=0){
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }

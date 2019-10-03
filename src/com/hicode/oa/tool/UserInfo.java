@@ -42,6 +42,8 @@ public class UserInfo implements Serializable {
 	 * */
 	private String remarks;
 	
+	private Integer false_num;
+	
 	public String getUser_id() {
 		return user_id;
 	}
@@ -97,13 +99,22 @@ public class UserInfo implements Serializable {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+	
+	public Integer getFalse_num() {
+		return false_num;
+	}
+
+	public void setFalse_num(Integer false_num) {
+		this.false_num = false_num;
+	}
 
 	@Override
 	public String toString() {
 		return "UserInfo [user_id=" + user_id + ", user_name=" + user_name + ", user_pwd=" + user_pwd + ", userState="
-				+ userState + ", userType=" + userType + ", create_date=" + create_date + ", remarks=" + remarks + "]";
+				+ userState + ", userType=" + userType + ", create_date=" + create_date + ", remarks=" + remarks
+				+ ", false_num=" + false_num + "]";
 	}
-	
+
 	
 
 }
