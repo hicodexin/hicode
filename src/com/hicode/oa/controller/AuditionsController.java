@@ -97,6 +97,12 @@ public class AuditionsController {
 		if (qian_gu != null & qian_gu != "") {
 			map.put("qian_gu", qian_gu);
 		}
+		
+		//是否参加了试听课
+		String if_join = request.getParameter("if_join");
+		if (if_join != null & if_join != "") {
+			map.put("if_join", if_join);
+		}
 
 		// 页码
 		String page = request.getParameter("page");
@@ -138,6 +144,7 @@ public class AuditionsController {
 			obj.put("tea_name", adv1.getTeacher().getT_name());
 			obj.put("adv_name", adv1.getAdviser().getAdv_name());
 			obj.put("adv_name2", adv1.getAdviser2().getAdv_name());
+			obj.put("if_join", adv1.getIf_join());
 			obj.put("beizhu", adv1.getRemarks());
 
 			objs.add(obj);
@@ -172,8 +179,14 @@ public class AuditionsController {
 				obj.getUserType().getType_leibie() != 3 && 
 				obj.getUserType().getType_leibie() != 6
 			) {
-			obj_arr.put("list_advs", "ok1");
-			return obj_arr.toString();
+			if(obj.getUser_name().equals("adv_1005")){
+				//课程顾问中徐永贺可以有试听课的添加和修改权限
+				System.out.println("=========徐永贺账号进行了添加操作=========");
+			}else{
+				obj_arr.put("list_advs", "ok1");
+				
+				return obj_arr.toString();
+			}
 		}
 
 		String st_time = request.getParameter("time_creatDate");
@@ -226,6 +239,7 @@ public class AuditionsController {
 		String t_id = request.getParameter("update_selteas");
 		String adv_id = request.getParameter("update_seladvs");
 		String adv_id2 = request.getParameter("update_seladvs2");
+		String if_join = request.getParameter("update_seljoin");
 		String remarks = request.getParameter("remarks");
 
 		Auditions auditions = new Auditions();
@@ -259,6 +273,7 @@ public class AuditionsController {
 
 		auditions.setAdviser(adviser);
 		auditions.setAdviser2(adviser2);
+		auditions.setIf_join(Integer.valueOf(if_join));
 		auditions.setRemarks(remarks);
 
 		Integer count = auditionsService.do_insertAuditions(auditions);
@@ -299,8 +314,13 @@ public class AuditionsController {
 				obj.getUserType().getType_leibie() != 3 && 
 				obj.getUserType().getType_leibie() != 6
 			) {
-			obj_arr.put("list_advs", "ok1");
-			return obj_arr.toString();
+			if(obj.getUser_name().equals("adv_1005") ){
+				//课程顾问中徐永贺可以有试听课的添加和修改权限
+				System.out.println("=========徐永贺账号进行了修改操作=========");
+			}else{
+				obj_arr.put("list_advs", "ok1");
+				return obj_arr.toString();
+			}
 		}
 
 		String id = request.getParameter("id");
@@ -354,6 +374,7 @@ public class AuditionsController {
 		String t_id = request.getParameter("update_selteas");
 		String adv_id = request.getParameter("update_seladvs");
 		String adv_id2 = request.getParameter("update_seladvs2");
+		String if_join = request.getParameter("update_seljoin");
 		String remarks = request.getParameter("remarks");
 
 		Auditions auditions = new Auditions();
@@ -388,6 +409,7 @@ public class AuditionsController {
 
 		auditions.setAdviser(adviser);
 		auditions.setAdviser2(adviser2);
+		auditions.setIf_join(Integer.valueOf(if_join));
 		auditions.setRemarks(remarks);
 
 		Integer count = auditionsService.do_updateAuditions(auditions);

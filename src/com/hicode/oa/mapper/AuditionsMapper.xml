@@ -18,7 +18,7 @@
 	</resultMap>
 	
 	<sql id="all_column">
-		 au_id, st_time,st_name,st_sex,st_class,sch_id,phone,t_id,adv_id,adv_id2,remarks
+		 au_id, st_time,st_name,st_sex,st_class,sch_id,phone,t_id,adv_id,adv_id2,if_join,remarks
 	</sql>
 	
 	<select id="getAuditionsByID" parameterType="java.lang.Integer" resultMap="getAuditions_oop">
@@ -43,7 +43,7 @@
 	</select>
 	
 	<select id="getAuditionsBySomeOption" parameterType="java.util.Map" resultMap="getAuditions_oop">
-	<!-- stu_name,stu_class,stu_phone,stu_teacher,kai_time,ting_time,yao_gu,qian_gu -->
+	<!-- stu_name,stu_class,stu_phone,stu_teacher,if_join,kai_time,ting_time,yao_gu,qian_gu -->
 		SELECT <include refid="all_column"></include> FROM auditions 
 		WHERE 1=1
 			<if test="stu_name != null">
@@ -74,6 +74,10 @@
 				AND adv_id2 = #{qian_gu}
 			</if>
 			
+			<if test="if_join != null">
+				AND if_join = #{if_join}
+			</if>
+			
 		    <if test="kai_time != null">
 		   		 AND st_time &gt;= #{kai_time}
 		    </if>
@@ -87,7 +91,7 @@
 	</select>
 	
 		<select id="getAuditionsForCountBySomeOption" parameterType="java.util.Map" resultType="java.lang.Integer">
-	<!-- stu_name,stu_class,stu_phone,stu_teacher,kai_time,ting_time,yao_gu,qian_gu -->
+	<!-- stu_name,stu_class,stu_phone,stu_teacher,if_join,kai_time,ting_time,yao_gu,qian_gu -->
 		SELECT count(1) FROM auditions 
 		WHERE 1=1
 			<if test="stu_name != null">
@@ -118,6 +122,10 @@
 				AND adv_id2 = #{qian_gu}
 			</if>
 			
+			<if test="if_join != null">
+				AND if_join = #{if_join}
+			</if>
+			
 		    <if test="kai_time != null">
 		   		 AND st_time &gt;= #{kai_time}
 		    </if>
@@ -135,10 +143,10 @@
 	
 	<insert id="do_insertAuditions" parameterType="Auditions" keyProperty="au_id">
 		insert into auditions 
-			(st_time,st_name,st_sex,st_class,sch_id,phone,t_id,adv_id,adv_id2,remarks)
+			(st_time,st_name,st_sex,st_class,sch_id,phone,t_id,adv_id,adv_id2,if_join,remarks)
 		values
 			(#{st_time},#{st_name},#{st_sex},#{st_class},#{school.sch_id},#{phone},#{teacher.t_id},
-			#{adviser.adv_id},#{adviser2.adv_id},#{remarks});
+			#{adviser.adv_id},#{adviser2.adv_id},#{if_join},#{remarks});
 	
 	</insert>
 	
@@ -146,7 +154,8 @@
 		update auditions set 
 			st_time =#{st_time}, st_name =#{st_name}, st_sex =#{st_sex}, st_class =#{st_class},
 			sch_id = #{school.sch_id}, phone = #{phone},t_id =#{teacher.t_id}, 
-			adv_id =#{adviser.adv_id}, adv_id2 =#{adviser2.adv_id},remarks =#{remarks}
+			adv_id =#{adviser.adv_id}, adv_id2 =#{adviser2.adv_id},
+			if_join = #{if_join}, remarks =#{remarks}
 		 where  au_id =#{au_id};
 	</update>
 	

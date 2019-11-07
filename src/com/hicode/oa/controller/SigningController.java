@@ -224,7 +224,7 @@ public class SigningController {
 		
 //		String adviser_sel = request.getParameter("adviser_sel");
 		
-		String adviser_sel = obj.getUser_id();
+		String adviser_sel = obj.getUser_name();
 		Adviser adviser = new Adviser();
 		adviser.setAdv_id(adviser_sel);
 		

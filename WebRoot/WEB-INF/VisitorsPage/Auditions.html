@@ -127,7 +127,7 @@
 	<!-- 隐藏  -->
 	<div id="hidd_mask"></div>
 	<!-- 添加与修改 -->
-	<div id="dv_update">
+	<div id="dv_update" style="height: 870px">
 	<div class="dv_title" id="dv_title">添加学生信息</div>
 	<div class="dv_upmain">
 		<ul class="up_ul">
@@ -188,6 +188,13 @@
 				</select>
 			</li>
 			<li>
+				<b>参与试听 : </b> 
+				<select id="update_seljoin">
+					<option value="0">未试听</option>
+					<option value="1">已试听</option>
+				</select>
+			</li>
+			<li>
 				<b>邀约顾问: </b> 
 				<select id="update_seladvs"></select>
 			</li>
@@ -203,7 +210,7 @@
 			</li>
 		</ul>
 	</div>
-	<div id="dv_upbottom">
+	<div id="dv_upbottom" style="margin-top: 40px">
 		<button id="up_sub" type="button">提交</button>
 		<button id="up_res">返回</button>
 	</div>
@@ -213,7 +220,11 @@
 		<button id="find_user" class="for_button">欢迎:</button>
 	</div>
 	<hr>
-	<div class="dv_title">试听课信息详情<button id="bt_open_aud">展开<span>▼</span></button></div>
+	<div class="dv_title">
+		<button id="give_up" style="margin-left: -20px">未试听</button>
+		试听课信息详情
+		<button id="bt_open_aud">展开<span>▼</span></button>
+	</div>
 	<button id="bt_1">添加</button>
 	<div id="dv_table">
 		<table id="tea_tbl" cellspacing="0">
@@ -244,11 +255,13 @@
 </body>
 <script type="text/javascript">
 	$().ready(function() {
+	
 		var bd_hig = document.documentElement.clientHeight;
   		$("#hidd_mask").css("height",bd_hig+"px");
   		$("#dv_update").hide();
   		$("#hidd_mask").hide();
-  		var pagedata = {"page":1};
+  		
+  		var pagedata = {"page":1,"if_join":1};
   		start_post_aud(for_btn_aud,pagedata);
   		getUserName("dv_top");
   		//点击添加按钮
@@ -295,7 +308,17 @@
 			minDate : "1014-09-19 00:00:00"
 		}) ;
 		
-		
+		$("#give_up").click(function(){
+  			if($(this).html() == "未试听"){
+  				var data = { "page" : 1, "if_join":"0" };
+				start_post_aud(for_btn_aud,data);
+				$(this).html("已试听");
+  			}else{
+  				var data = { "page" : 1, "if_join":"1" };
+				start_post_aud(for_btn_aud,data);
+				$(this).html("未试听");
+  			}
+  		});
  		
 	});
 </script>

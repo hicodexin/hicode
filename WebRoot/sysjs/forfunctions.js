@@ -235,6 +235,14 @@ function for_btn_aud() {
 
 					for_sel02("update_selclass", sel_class, optionName);
 					
+					var shiTing = "未试听";
+					if($("#give_up").html() == "未试听"){
+						shiTing = "已试听";
+					}
+					var sel_join = $("#update_seljoin option");
+					
+					for_sel03("update_seljoin", sel_join, shiTing);
+					
 					$.post("/hicode/school/showSchool.spc", function(c) {
 						if (c.length > 0) {
 							var name = $("[name='update_school']:eq(" + t + ")").html();
@@ -1157,6 +1165,7 @@ function up_sub_aud() {
 		"update_selclass" : $("#update_selclass").val(),
 		"update_school":$("#update_school").val(),
 		"update_selteas" : $("#update_selteas").val(),
+		"update_seljoin" : $("#update_seljoin").val(),
 		"update_seladvs" : $("#update_seladvs").val(),
 		"update_seladvs2" : $("#update_seladvs2").val(),
 		"remarks" : $("#remarks").val()
@@ -1168,6 +1177,7 @@ function up_sub_aud() {
 			$("#dv_update").show().hide(300);
 			if (e.list_advs == 'ok') {
 				alert("添加成功");
+				$("#give_up").html("未试听");
 				$("#tbl_body").children("tr").remove();
 				var pagedata = {"page":1};
 				start_post_aud(for_btn_aud,pagedata);
@@ -1189,6 +1199,7 @@ function up_sub_aud() {
 			$("#dv_update").show().hide(300);
 			if (e.list_advs == 'ok') {
 				alert("修改成功");
+				$("#give_up").html("未试听");
 				$("#tbl_body").children("tr").remove();
 				var pagedata = {"page":1};
 				start_post_aud(for_btn_aud,pagedata);
@@ -2436,6 +2447,7 @@ function creat_tb(back_all, p_dom) {
 /* back_all: 待便利的值 */
 function creat_tb_aud(back_all, p_dom) {
 	$(p_dom).children("tr").remove();
+	
 	for (var i = 0; i < back_all.length; i++) {
 		var tr = document.createElement("tr");
 		var str = "<td>" + (i + 1) + "</td>";
@@ -2461,6 +2473,11 @@ function creat_tb_aud(back_all, p_dom) {
 		str += "<td name='update_selteas'>" + back_all[i].tea_name + "</td>";
 		str += "<td name='update_seladvs'>" + back_all[i].adv_name + "</td>";
 		str += "<td name='update_seladvs2'>" + back_all[i].adv_name2 + "</td>";
+
+		//对于未试听的学员亮色显示		
+		if(back_all[i].if_join == 0){
+			$(tr).css("color", "#996633");
+		}
 		
 		$(tr).append(str);
 		

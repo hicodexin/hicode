@@ -55,6 +55,10 @@ public class Auditions implements Serializable {
 	 */
 	private Adviser adviser2;
 	/**
+	 * 是否参与试听课（参与1，未参与0）
+	 */
+	private Integer if_join;
+	/**
 	 * 备注
 	 */
 	private String remarks;
@@ -147,11 +151,22 @@ public class Auditions implements Serializable {
 		this.adviser2 = adviser2;
 	}
 
+	public Integer getIf_join() {
+		return if_join;
+	}
+
+	public void setIf_join(Integer if_join) {
+		this.if_join = if_join;
+	}
+
 	@Override
 	public String toString() {
 		return "Auditions [au_id=" + au_id + ", st_time=" + st_time + ", st_name=" + st_name + ", st_sex=" + st_sex
-				+ ", st_class=" + st_class + ", teacher=" + teacher + ", adviser=" + adviser + ", adviser2=" + adviser2
-				+ ", remarks=" + remarks + "]";
+				+ ", st_class=" + st_class + ", school=" + school + ", phone=" + phone + ", teacher=" + teacher
+				+ ", adviser=" + adviser + ", adviser2=" + adviser2 + ", if_join=" + if_join + ", remarks=" + remarks
+				+ "]";
 	}
+	
+	
 
 }
