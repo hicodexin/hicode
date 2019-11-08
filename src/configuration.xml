@@ -38,6 +38,7 @@
  		<typeAlias type="com.hicode.oa.tool.Phones" alias="Phones"/>
  		<typeAlias type="com.hicode.oa.tool.Signing" alias="Signing"/>
  		<typeAlias type="com.hicode.oa.tool.CheckLogin" alias="CheckLogin"/>
+ 		<typeAlias type="com.hicode.oa.tool.Loginfo_insert_update" alias="Loginfo_insert_update"/>
  	</typeAliases>
  
 	<mappers>
@@ -58,6 +59,7 @@
 		<mapper resource="com/hicode/oa/mapper/PhonesMapper.xml"/>
 		<mapper resource="com/hicode/oa/mapper/SigningMapper.xml"/>
 		<mapper resource="com/hicode/oa/mapper/CheckLoginMapper.xml"/>
+		<mapper resource="com/hicode/oa/mapper/Loginfo_insert_updateMapper.xml"/>
 	</mappers>
 
 </configuration>

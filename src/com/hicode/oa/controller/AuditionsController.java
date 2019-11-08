@@ -19,11 +19,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hicode.oa.service.AuditionsService;
 import com.hicode.oa.tool.Adviser;
 import com.hicode.oa.tool.Auditions;
+import com.hicode.oa.tool.Loginfo_insert_update;
 import com.hicode.oa.tool.School;
 import com.hicode.oa.tool.Teacher;
 import com.hicode.oa.tool.UserInfo;
+import com.hicode.oa.service.Loginfo_insert_updateService;
 
-import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -39,6 +40,8 @@ public class AuditionsController {
 
 	@Autowired
 	private AuditionsService auditionsService;
+	@Autowired
+	private Loginfo_insert_updateService loginfo_insert_updateService;
 
 	@RequestMapping("/to_login")
 	public String login(HttpServletRequest request) {
@@ -179,15 +182,13 @@ public class AuditionsController {
 				obj.getUserType().getType_leibie() != 3 && 
 				obj.getUserType().getType_leibie() != 6
 			) {
-			if(obj.getUser_name().equals("adv_1005")){
-				//课程顾问中徐永贺可以有试听课的添加和修改权限
-				System.out.println("=========徐永贺账号进行了添加操作=========");
-			}else if(obj.getUser_name().equals("adv_1016")){
-				//课程顾问中徐永贺可以有试听课的添加和修改权限
-				System.out.println("=========王秋杰账号进行了添加操作=========");
-			}else if(obj.getUser_name().equals("adv_1021")){
-				//课程顾问中徐永贺可以有试听课的添加和修改权限
-				System.out.println("=========孙崇崇账号进行了添加操作=========");
+			if(
+					obj.getUser_name().equals("adv_1005") || 
+					obj.getUser_name().equals("adv_1016") || 
+					obj.getUser_name().equals("adv_1021")
+				){
+				
+				System.out.println("=========徐永贺、王秋杰、孙崇崇账号进行了添加操作=========");
 			}else{
 				obj_arr.put("list_advs", "ok1");
 				
@@ -283,9 +284,25 @@ public class AuditionsController {
 		auditions.setRemarks(remarks);
 
 		Integer count = auditionsService.do_insertAuditions(auditions);
-
+		
+		String ip = null;
+		
 		if (count > 0) {
-			obj_arr.put("list_advs", "ok");
+			Loginfo_insert_update logInfo = new Loginfo_insert_update();
+			logInfo.setUserName(obj.getUser_name());
+			String xiangQing = obj.getUser_name()+"成功添加了试听课学员 :  "+st_name;
+			logInfo.setXiangQing(xiangQing);
+			try{
+				ip = getIpAddr(request);
+			}catch(Exception e){
+				System.out.println("未能正常获取IP");
+				ip = "未能正常获取IP";
+			}finally{
+				logInfo.setLog_ip(ip);
+				loginfo_insert_updateService.do_insertLogInfo(logInfo);
+				obj_arr.put("list_advs", "ok");
+			}
+			
 		}
 		return obj_arr.toString();
 	}
@@ -320,15 +337,14 @@ public class AuditionsController {
 				obj.getUserType().getType_leibie() != 3 && 
 				obj.getUserType().getType_leibie() != 6
 			) {
-			if(obj.getUser_name().equals("adv_1005") ){
+			
+			if(
+					obj.getUser_name().equals("adv_1005") || 
+					obj.getUser_name().equals("adv_1016") || 
+					obj.getUser_name().equals("adv_1021")
+				){
 				//课程顾问中徐永贺可以有试听课的添加和修改权限
-				System.out.println("=========徐永贺账号进行了修改操作=========");
-			}else if(obj.getUser_name().equals("adv_1016")){
-				//课程顾问中徐永贺可以有试听课的添加和修改权限
-				System.out.println("=========王秋杰账号进行了修改操作=========");
-			}else if(obj.getUser_name().equals("adv_1021")){
-				//课程顾问中徐永贺可以有试听课的添加和修改权限
-				System.out.println("=========孙崇崇账号进行了修改操作=========");
+				System.out.println("=========徐永贺、王秋杰、孙崇崇账号进行了修改操作=========");
 			}else{
 				obj_arr.put("list_advs", "ok1");
 				return obj_arr.toString();
@@ -429,11 +445,59 @@ public class AuditionsController {
 		auditions.setRemarks(remarks);
 
 		Integer count = auditionsService.do_updateAuditions(auditions);
+		String ip = null;
+		
 		if (count > 0) {
-			obj_arr.put("list_advs", "ok");
+			Loginfo_insert_update logInfo = new Loginfo_insert_update();
+			logInfo.setUserName(obj.getUser_name());
+			String xiangQing = obj.getUser_name()+" 成功修改了试听课学员 :  "+st_name;
+			logInfo.setXiangQing(xiangQing);
+			try{
+				ip = getIpAddr(request);
+			}catch(Exception e){
+				System.out.println("未能正常获取IP");
+				ip = "未能正常获取IP";
+			}finally{
+				logInfo.setLog_ip(ip);
+				loginfo_insert_updateService.do_insertLogInfo(logInfo);
+				obj_arr.put("list_advs", "ok");
+			}
 		}
 		return obj_arr.toString();
 	}
 
-
+	/**
+	 * 获取用户真实IP地址，不使用request.getRemoteAddr()的原因是有可能用户使用了代理软件方式避免真实IP地址,
+	 * 可是，如果通过了多级反向代理的话，X-Forwarded-For的值并不止一个，而是一串IP值
+	 * 
+	 * @return ip
+	 */
+	private String getIpAddr(HttpServletRequest request) {
+		String ip = request.getHeader("x-forwarded-for");
+		if (ip != null && ip.length() != 0 && !"unknown".equalsIgnoreCase(ip)) {
+			// 多次反向代理后会有多个ip值，第一个ip才是真实ip
+			if (ip.indexOf(",") != -1) {
+				ip = ip.split(",")[0];
+			}
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("WL-Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("HTTP_CLIENT_IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("X-Real-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getRemoteAddr();
+		}
+		return ip;
+	}
 }
