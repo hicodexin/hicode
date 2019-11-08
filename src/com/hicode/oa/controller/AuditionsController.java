@@ -182,6 +182,12 @@ public class AuditionsController {
 			if(obj.getUser_name().equals("adv_1005")){
 				//课程顾问中徐永贺可以有试听课的添加和修改权限
 				System.out.println("=========徐永贺账号进行了添加操作=========");
+			}else if(obj.getUser_name().equals("adv_1016")){
+				//课程顾问中徐永贺可以有试听课的添加和修改权限
+				System.out.println("=========王秋杰账号进行了添加操作=========");
+			}else if(obj.getUser_name().equals("adv_1021")){
+				//课程顾问中徐永贺可以有试听课的添加和修改权限
+				System.out.println("=========孙崇崇账号进行了添加操作=========");
 			}else{
 				obj_arr.put("list_advs", "ok1");
 				
@@ -317,6 +323,12 @@ public class AuditionsController {
 			if(obj.getUser_name().equals("adv_1005") ){
 				//课程顾问中徐永贺可以有试听课的添加和修改权限
 				System.out.println("=========徐永贺账号进行了修改操作=========");
+			}else if(obj.getUser_name().equals("adv_1016")){
+				//课程顾问中徐永贺可以有试听课的添加和修改权限
+				System.out.println("=========王秋杰账号进行了修改操作=========");
+			}else if(obj.getUser_name().equals("adv_1021")){
+				//课程顾问中徐永贺可以有试听课的添加和修改权限
+				System.out.println("=========孙崇崇账号进行了修改操作=========");
 			}else{
 				obj_arr.put("list_advs", "ok1");
 				return obj_arr.toString();
@@ -409,7 +421,11 @@ public class AuditionsController {
 
 		auditions.setAdviser(adviser);
 		auditions.setAdviser2(adviser2);
-		auditions.setIf_join(Integer.valueOf(if_join));
+		if(if_join == null || if_join == ""){
+			auditions.setIf_join(1);//已经试听
+		}else{
+			auditions.setIf_join(Integer.valueOf(if_join));
+		}
 		auditions.setRemarks(remarks);
 
 		Integer count = auditionsService.do_updateAuditions(auditions);

@@ -122,7 +122,7 @@
 		<div class="dv_title">HICODE管理后台</div>
 	</div>
 	
-	<div class="dv_login">
+	<div class="dv_login" id="dv_login">
 		<div class="dv_login_left">
 			<div class="carousel slide  bagtop1" id="myCarousel">
 				<ul class="carousel-indicators">
@@ -214,6 +214,9 @@
 		
 //		alert("系统正在升级维护中。。。。");
 //		return;
+		
+		var bd_hig = document.documentElement.clientHeight;
+  		$("#dv_login").css("height",(bd_hig-130)+"px");
 		
 		getCode();
 		
