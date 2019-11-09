@@ -68,4 +68,10 @@ public class AuditionsServiceImpl implements AuditionsService{
 		// TODO Auto-generated method stub
 		return auditionsDAO.getAuditionsForCountBySomeOption(map);
 	}
+
+	@Override
+	public Integer findThisPhone(String phone_num) {
+		// TODO Auto-generated method stub
+		return auditionsDAO.findThisPhone(phone_num);
+	}
 }

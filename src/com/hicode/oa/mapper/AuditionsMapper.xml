@@ -136,10 +136,9 @@
 	
 	</select>
 	
-	
-	
-	
-	
+	<select id="findThisPhone"  resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT count(1) FROM auditions where  phone = #{phone};
+	</select>
 	
 	<insert id="do_insertAuditions" parameterType="Auditions" keyProperty="au_id">
 		insert into auditions 

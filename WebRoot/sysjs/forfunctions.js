@@ -1156,7 +1156,9 @@ function up_sub_aud() {
 	} else {
 		$("#userName").css("borderColor", "#336699");
 	}
-
+	
+	
+	
 	var data = {
 		"time_creatDate" : $("#time_creatDate").val(),
 		"userName" : $("#userName").val().trim(),
@@ -1183,7 +1185,10 @@ function up_sub_aud() {
 				start_post_aud(for_btn_aud,pagedata);
 			}else if (e.list_advs == 'ok1') {
 				alert("对不起,权限不足。。。。");
-			}else {
+			}else if (e.list_advs == 'no') {
+				$("#phone").css("borderColor", "#f00");
+				alert("该手机号已存在,不支持重复添加。。。");
+			} else {
 				alert("添加失败,请联系管理员。。。。");
 			}
 
@@ -1205,6 +1210,9 @@ function up_sub_aud() {
 				start_post_aud(for_btn_aud,pagedata);
 			}else if (e.list_advs == 'ok1') {
 				alert("对不起,权限不足。。。。");
+			}else if (e.list_advs == 'no') {
+				$("#phone").css("borderColor", "#f00");
+				alert("该手机号已存在,不支持重复添加。。。");
 			} else {
 				alert("修改失败,请联系管理员。。。。");
 			}

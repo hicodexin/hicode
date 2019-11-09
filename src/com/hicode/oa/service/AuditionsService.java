@@ -58,5 +58,10 @@ public interface AuditionsService {
 	 */
 	public Integer getAuditionsForCountBySomeOption(Map<String, Object> map);
 	
-	
+	/**
+	 * 查看该手机号是否存在
+	 * @param phone_num
+	 * @return
+	 */
+	public Integer findThisPhone(String phone_num);
 }

@@ -59,6 +59,11 @@ public class AuditionsDAO extends SysDAO {
 	public Integer getAuditionsForCountBySomeOption(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return selectOne(nameSpace+"getAuditionsForCountBySomeOption", map);
+	}
+
+	public Integer findThisPhone(String phone_num) {
+		// TODO Auto-generated method stub
+		return selectOne(nameSpace+"findThisPhone",phone_num);
 	} 
 	
 }

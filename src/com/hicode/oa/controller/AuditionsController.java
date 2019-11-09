@@ -195,7 +195,13 @@ public class AuditionsController {
 				return obj_arr.toString();
 			}
 		}
-
+		String phone = request.getParameter("phone");
+		Integer num = auditionsService.findThisPhone(phone);
+//		判断该手机号是否存在
+		if(num != null && num>0){
+			obj_arr.put("list_advs", "no");
+			return obj_arr.toString();
+		}
 		String st_time = request.getParameter("time_creatDate");
 		String st_name = request.getParameter("userName");
 		String st_sex = request.getParameter("t_sex");
@@ -242,7 +248,7 @@ public class AuditionsController {
 			break;
 		}
 		String sch_id = request.getParameter("update_school");
-		String phone = request.getParameter("phone");
+		
 		String t_id = request.getParameter("update_selteas");
 		String adv_id = request.getParameter("update_seladvs");
 		String adv_id2 = request.getParameter("update_seladvs2");
@@ -352,6 +358,20 @@ public class AuditionsController {
 		}
 
 		String id = request.getParameter("id");
+		String phone = request.getParameter("phone");
+		
+		if(id != null){
+			Auditions auditions = auditionsService.getAuditionsByID(Integer.valueOf(id));
+			if(!(auditions.getPhone() != null && auditions.getPhone().equals(phone))){
+				Integer num = auditionsService.findThisPhone(phone);
+				//判断该手机号是否存在
+				if(num != null && num>0){
+					obj_arr.put("list_advs", "no");
+					return obj_arr.toString();
+				}
+			}
+		}
+		
 		String st_time = request.getParameter("time_creatDate");
 		String st_name = request.getParameter("userName");
 		String st_sex = request.getParameter("t_sex");
@@ -398,7 +418,7 @@ public class AuditionsController {
 			break;
 		}
 		String sch_id = request.getParameter("update_school");
-		String phone = request.getParameter("phone");
+		
 		String t_id = request.getParameter("update_selteas");
 		String adv_id = request.getParameter("update_seladvs");
 		String adv_id2 = request.getParameter("update_seladvs2");
