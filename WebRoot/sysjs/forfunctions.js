@@ -84,6 +84,8 @@ function for_sel(id, f, optionName) {
 function for_sel02(id, f, optionName) {
 	$("#" + id).children("option").remove();
 	for (var k = 0; k < f.length; k++) {
+		console.log($(f[k]).html());
+		console.log("--------------");
 		if ($(f[k]).html() == optionName) {
 			var str = "<option selected='selected' value='" + (k + 1) + "' >" + $(f[k]).html() + "</option>";
 		} else {
@@ -103,6 +105,21 @@ function for_sel03(id, f, optionName) {
 			var str = "<option selected='selected' value='" + k  + "' >" + $(f[k]).html() + "</option>";
 		} else {
 			var str = "<option value='" + k + "'>" + $(f[k]).html() + "</option>";
+		}
+
+		$("#" + id).append(str);
+	}
+
+}
+
+/*前台写死数据结果遍历，f:所遍历数组_便利：value;optionName:选中列表     从1开始*/
+function for_sel04(id, f, optionName) {
+	$("#" + id).children("option").remove();
+	for (var k = 0; k < f.length; k++) {
+		if ($(f[k]).val() == optionName) {
+			var str = "<option selected='selected' value='" + (k + 1) + "' >" + $(f[k]).html() + "</option>";
+		} else {
+			var str = "<option value='" + (k + 1) + "'>" + $(f[k]).html() + "</option>";
 		}
 
 		$("#" + id).append(str);
@@ -826,6 +843,63 @@ function for_btn_sig() {
 
 }
 
+/* 异业合作 >>>修改按钮 */
+function for_btn_kua() {
+	var bts = $("button");
+	var revise = new Array();
+	if (bts.length > 0) {
+		for (var i = 0, j = 0; i < bts.length; i++) {
+			if ($(bts[i]).html() == "修改") {
+				revise[j] = bts[i];
+				j++;
+			}
+		}
+	}
+
+	if (revise.length > 0) {
+		for (var k = 0; k < revise.length; k++) {
+			(function() {
+				var t = k;
+				
+				$(revise[t]).click(function() {
+					$("#hidd_mask").hide().show(300);
+					$("#dv_update").hide().show(300);
+					$("#dv_title").html("修改市场部门信息");
+					$("#tea_list").val($(this).attr("name"));
+					$("#tea_list").attr("name", $(this).attr("id"));
+					
+					$("#time_creatDate").val($("[name='kua_time']:eq(" + t + ")").html());
+					$("#time_creatDate").attr("disabled", "disabled");
+					
+					$("#userName").val($("[name='userName']:eq(" + t + ")").html());
+					$("#userName").attr("disabled", "disabled");
+					$("#address").val($("[name='address']:eq(" + t + ")").html());
+					$("#address").attr("disabled", "disabled");
+
+					$.post("/hicode/adviser/showAdviser.spc", function(f) {
+						if (f.length > 0) {
+							var name = $("[name='guWen']:eq(" + t + ")").html();
+							for_sel("update_seladvs", f,name);
+						}
+					}, "json");
+					
+					var optionName02 = $("[name='yixiang']:eq(" + t + ")").attr("yixiang");
+					var yixiang = $("#update_selyi option");
+					for_sel04("update_selyi", yixiang, optionName02);
+					
+					$("#phone").val($("[name='remarks']:eq(" + t + ")").attr("dianhua"));
+					$("#weiXin").val($("[name='remarks']:eq(" + t + ")").attr("weixin"));
+					$("#remarks").val($("[name='remarks']:eq(" + t + ")").attr("myfont"));
+					$("#up_sub").html("提交");
+				});
+
+			})();
+
+		}
+	}
+
+}
+
 /** ==============================================添加按钮============================================== */
 
 /* 试听课>>>添加按钮 */
@@ -1129,6 +1203,34 @@ function add_sig() {
 		if (f.length > 0) {
 			for_sel("adviser_sel", f);
 			$("#adviser_sel").removeAttr("disabled");
+		}
+	}, "json");
+
+}
+
+/* 异业合作>>>添加按钮 */
+function add_kua() {
+	$("#hidd_mask").hide().show(300);
+	$("#dv_update").hide().show(300);
+	var len = $("#tea_tbl tbody tr").length;
+	$("#tea_list").val(len + 1);
+	$("#up_sub").html("添加");
+	$("#phone").val("");
+	$("#weiXin").val("");
+	$("#time_creatDate").removeAttr("disabled");
+	$("#time_creatDate").val("");
+	$("#userName").removeAttr("disabled");
+	$("#userName").val("");
+	$("#address").removeAttr("disabled");
+	$("#address").val("");
+	
+	var yixiang = $("#update_selyi option");
+	for_sel04("update_selyi", yixiang, "一");
+	$("#remarks").val("");
+
+	$.post("/hicode/adviser/showAdviser.spc", function(f) {
+		if (f.length > 0) {
+			for_sel("update_seladvs", f);
 		}
 	}, "json");
 
@@ -1946,10 +2048,100 @@ function up_sub_sig() {
 
 }
 
+/* 异业合作>>>提交按钮*/
+function up_sub_kua() {
+	
+	if ($("#time_creatDate").val().length < 10) {
+		$("#time_creatDate").css("borderColor", "#f00");
+		return;
+	} else {
+		$("#time_creatDate").css("borderColor", "#336699");
+	}
+	
+	if ($("#userName").val().trim().length < 3) {
+		$("#userName").css("borderColor", "#f00");
+		return;
+	} else {
+		$("#userName").css("borderColor", "#336699");
+	}
+	
+	if ($("#address").val().trim().length < 4) {
+		$("#address").css("borderColor", "#f00");
+		return;
+	} else {
+		$("#address").css("borderColor", "#336699");
+	}
+	
+	if ($("#phone").val().trim().length != 11) {
+		$("#phone").css("borderColor", "#f00");
+		return;
+	} else {
+		$("#phone").css("borderColor", "#336699");
+	}
+	
+	if ($("#weiXin").val().trim().length < 5) {
+		$("#weiXin").css("borderColor", "#f00");
+		return;
+	} else {
+		$("#weiXin").css("borderColor", "#336699");
+	}
+
+	var data = {
+		"userName" : $('#userName').val(),
+		"time_creatDate" : $('#time_creatDate').val(),
+		"address" : $('#address').val().trim(),
+		"phone" : $("#phone").val().trim(),
+		"weixin" : $("#weiXin").val().trim(),
+		"adv_name":$('#update_seladvs option:selected').text(),
+		"update_selyi":$('#update_selyi').val(),
+		"remarks" : $("#remarks").val()
+	};
+	
+	var content = $(this).html();
+	if (content == "添加") {
+		$.post("/hicode/kuajie/do_insertKuaJie.spc", data, function(e) {
+			$("#hidd_mask").hide().hide(300);
+			$("#dv_update").show().hide(300);
+			if (e.list_advs == 'ok') {
+				alert("添加成功");
+				$("#tbl_body").children("tr").remove();
+				var pagedata = {"page":1};
+				start_post_kua(for_btn_kua, pagedata);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
+			} else {
+				alert("添加失败,请联系管理员。。。。");
+			}
+
+		}, "json");
+
+	} else if (content == "提交") {
+		if (!window.confirm("是否确定要修改的内容？？？？")) {
+			return;
+		}
+		data.id = $("#tea_list").attr("name");
+		$.post("/hicode/kuajie/do_updateKuaJie.spc", data, function(e) {
+			$("#hidd_mask").hide().hide(300);
+			$("#dv_update").show().hide(300);
+			if (e.list_advs == 'ok') {
+				alert("修改成功");
+				$("#tbl_body").children("tr").remove();
+				var pagedata = {"page":1};
+				start_post_kua(for_btn_kua, pagedata);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
+			} else {
+				alert("修改失败,请联系管理员。。。。");
+			}
+
+		}, "json");
+	}
+
+}
 
 /** ==============================================初始化数据============================================== */
 
-/* 初始化数据 */
+/*试听课 》》》初始化数据 */
 function start_post_aud(backFunction,pagedata) {
 	$.post("/hicode/auditions/showAuditionsByInfo.spc", pagedata, function(a) {
 		if (a) {
@@ -1987,7 +2179,7 @@ function start_post_aud(backFunction,pagedata) {
 
 }
 
-/* 初始化数据 */
+/* 市场人员》》》初始化数据 */
 function start_post_adv(backFunction) {
 	$.post("/hicode/adviser/showAdviserByInfo.spc", {
 		"page" : 1
@@ -2026,7 +2218,9 @@ function start_post_adv(backFunction) {
 	}, "json");
 
 }
-
+/**
+ * 讲师》》》初始化
+ */
 function start_post_tea(backFunction) {
 	$.post("/hicode/teacher/showTeacherByInfo.spc", {
 		"page" : 1
@@ -2066,7 +2260,7 @@ function start_post_tea(backFunction) {
 	}, "json");
 }
 
-/* 初始化数据 */
+/* 学科》》》初始化数据 */
 function start_post_sub(backFunction) {
 	$.post("/hicode/subject/showSubjectByInfo.spc", {
 		"page" : 1
@@ -2403,6 +2597,43 @@ function start_post_sig(backFunction,pagedata) {
 
 }
 
+/*试听课 》》》初始化数据 */
+function start_post_kua(backFunction,pagedata) {
+	$.post("/hicode/kuajie/showKuaJieByInfo.spc", pagedata, function(a) {
+		if (a) {
+			creat_tb_kua(a.list_advs, "#tbl_body");
+			/* 添加页码 */
+			if (a.all_num) {
+				
+				$("#dv_but").children("button").remove();
+				for (var k = 0; k < a.all_num; k++) {
+					var btn = document.createElement("button");
+					$(btn).html(k + 1);
+					$(btn).attr("mypage", (k + 1));
+					if (k == 0) {
+						$(btn).css({
+							"backgroundColor" : "#336699",
+							"color" : "#fff"
+						});
+					}
+					$(btn).click(function() {
+						change_page_aud(this,pagedata);
+					});
+
+					$("#dv_but").append(btn);
+				}
+			}
+			//修改按钮赋单击事件
+			backFunction();
+		}
+		var hei = $("#tea_tbl").css("height");
+		hei = hei.substr(0, hei.length - 2);
+		if (hei > 650) {
+			$("#dv_table").css("height", "700px");
+		}
+	}, "json");
+
+}
 /** ==============================================待便利的值============================================== */
 
 /* back_all: 待便利的值 ====市场顾问 */
@@ -3132,6 +3363,79 @@ function creat_tb_sig(back_all, p_dom) {
 		
 	}
 
+}
+
+/* 异业合作》》 待便利的值 */
+function creat_tb_kua(back_all, p_dom) {
+	$(p_dom).children("tr").remove();
+	
+	for (var i = 0; i < back_all.length; i++) {
+		var tr = document.createElement("tr");
+		var str = "<td>" + (i + 1) + "</td>";
+		var kua_time = timestampToTime(back_all[i].kuatime.time);
+		str += "<td name='kua_time'>" + kua_time + "</td>";
+		str += "<td name='userName'>" + back_all[i].name + "</td>";
+		str += "<td name='address'>" + back_all[i].address + "</td>";
+		str += "<td name='guWen'>" + back_all[i].shichang_now + "</td>";
+		var xingxing ="";
+		for(var p=0;p<5;p++){
+			if(p<back_all[i].yixiang){
+				xingxing += "★";
+				continue;
+			}
+			xingxing += "☆";
+		}
+		str += "<td name='yixiang' yixiang="+back_all[i].yixiang+" style='font-size:25px;color:#BD0007;'>" +xingxing + "</td>";
+
+		$(tr).append(str);
+		
+		var td = document.createElement("td");
+		var img = document.createElement("img");
+		if(back_all[i].beizhu != null && back_all[i].beizhu != ""){
+			$(img).attr("src","/hicode/sysimg/beizhu/for_yes.png");
+		}else{
+			$(img).attr("src","/hicode/sysimg/beizhu/for_no.png");
+		}
+		$(img).attr("name","remarks");
+		$(img).attr("userName",back_all[i].name);
+		$(img).attr("myfont",back_all[i].beizhu);
+		$(img).attr("dianhua",back_all[i].phone);
+		$(img).attr("weixin",back_all[i].weixin);
+		$(img).attr("adv_name",back_all[i].shichang);
+		$(img).attr("adv_name_now",back_all[i].shichang_now);
+		
+		img.onclick = function(){
+			//name,phone,weixin, adv_name,adv_name_now,myfont
+			var ss = $(this).attr("userName");
+			var xx = $(this).attr("dianhua");
+			var yy = $(this).attr("weixin");
+			var tt = $(this).attr("myfont");
+			var s1 = $(this).attr("adv_name");
+			var s2 = $(this).attr("adv_name_now");
+			if(xx == null || xx == ""){
+				xx = "";
+			}
+			if(yy == null || yy == ""){
+				yy = "";
+			}
+			if(tt == null || tt == ""){
+				tt = "暂无。。。。。";
+			}
+			
+			create_YiYeHeZuo(ss,xx,yy,s1,s2,tt);
+			
+		};
+		
+		td.appendChild(img);
+		tr.appendChild(td);
+		
+		var btid = back_all[i].id;
+		var strr = "<td><button id = '" + btid + "' name='" + (i + 1) + "'>修改</button></td>";
+		strr += "<td><input type='checkbox' value='" + btid + "' /></td>";
+		$(tr).append(strr);
+		$(p_dom).append(tr);
+
+	}
 }
 
 /** ==============================================切换页面============================================== */

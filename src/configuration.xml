@@ -39,6 +39,7 @@
  		<typeAlias type="com.hicode.oa.tool.Signing" alias="Signing"/>
  		<typeAlias type="com.hicode.oa.tool.CheckLogin" alias="CheckLogin"/>
  		<typeAlias type="com.hicode.oa.tool.Loginfo_insert_update" alias="Loginfo_insert_update"/>
+ 		<typeAlias type="com.hicode.oa.tool.KuaJie" alias="KuaJie"/>
  	</typeAliases>
  
 	<mappers>
@@ -60,6 +61,7 @@
 		<mapper resource="com/hicode/oa/mapper/SigningMapper.xml"/>
 		<mapper resource="com/hicode/oa/mapper/CheckLoginMapper.xml"/>
 		<mapper resource="com/hicode/oa/mapper/Loginfo_insert_updateMapper.xml"/>
+		<mapper resource="com/hicode/oa/mapper/KuaJieMapper.xml"/>
 	</mappers>
 
 </configuration>

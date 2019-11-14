@@ -105,6 +105,8 @@ public class AuditionsController {
 		String if_join = request.getParameter("if_join");
 		if (if_join != null & if_join != "") {
 			map.put("if_join", if_join);
+		}else{
+			map.put("if_join", 1);
 		}
 
 		// 页码

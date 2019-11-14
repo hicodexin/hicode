@@ -11,6 +11,10 @@
 #dv_remarks{
 	height: 800px;
 }
+#dv_kuajie{
+	height: 900px;
+	margin-bottom: 100px;
+}
 .dv_font {
 	line-height: 50px;
 	text-align: center;
@@ -44,6 +48,14 @@
 
 .dv_bei {
 	height: 50px;
+	margin-top: 10px;
+	margin-bottom: 5px;
+	text-align: left;
+	padding-left: 30px;
+}
+
+.dv_bei_kua {
+	height: 40px;
 	margin-top: 10px;
 	margin-bottom: 5px;
 	text-align: left;
@@ -95,4 +107,36 @@
 	cursor: pointer;
 	background-color: #336699;
 	color: #fff;
+}
+.dv_bei_title{
+	float: left;
+	height: 40px;
+	width: 95px;
+	line-height: 40px;
+	padding: 5px;
+	text-align: right;
+	font-size: 20px;
+}
+.dv_bei_title_auto{
+	float: left;
+	height: 40px;
+	line-height: 40px;
+	padding: 5px;
+	text-align: right;
+	font-size: 25px;
+	width: 120px;
+	padding-left: 0px;
+}
+.dv_dianhua{
+	float: left;
+	height: 40px;
+	width: 430px;
+	margin: auto;
+	background-color: #f0f0f0;
+	text-align: left;
+	padding-left: 10px;
+	font-size: 20px;
+	line-height: 40px;
+	border-radius: 9px;
+	overflow: auto;
 }

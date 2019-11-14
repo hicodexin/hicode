@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hicode.oa.dao.KuaJieDAO">
+	
+	<sql id="all_column">
+		 kua_id,kua_time,kua_name,kua_address,kua_phone,
+		 kua_weixin,kua_adv,kua_adv_now,kua_yixiang,kua_remarks
+	</sql>
+	
+	<select id="getKuaJieByID" parameterType="java.lang.Integer" resultType="KuaJie">
+		select <include refid="all_column"></include> from KuaJie where kua_id = #{kua_id};
+	</select>
+	
+	<select id="getKuaJieInfo" parameterType="java.util.Map" resultType="KuaJie">
+		select <include refid="all_column"></include> from KuaJie ORDER BY kua_time limit #{start},#{count};
+	</select>
+	
+	<select id="getKuaJieForCount" resultType="java.lang.Integer">
+		select count(1) from KuaJie;
+	</select>
+	
+	<insert id="do_insertKuaJie" parameterType="KuaJie" keyProperty="kua_id">
+		insert into KuaJie
+			(kua_time,kua_name,kua_address,kua_phone,
+			kua_weixin,kua_adv,kua_adv_now,kua_yixiang,kua_remarks)
+		values
+			(#{kua_time},#{kua_name},#{kua_address},#{kua_phone},
+			#{kua_weixin},#{kua_adv},#{kua_adv_now},#{kua_yixiang},#{kua_remarks})
+	</insert>
+	
+	<update id="do_updateKuaJie_all" parameterType="KuaJie">
+		update KuaJie set 
+			kua_time = #{kua_time}, kua_name = #{kua_name}, kua_address = #{kua_address},
+		 	kua_phone = #{kua_phone}, kua_weixin = #{kua_weixin}, kua_adv = #{kua_adv}, 
+		 	kua_adv_now = #{kua_adv_now},kua_yixiang = #{kua_yixiang}, kua_remarks = #{kua_remarks}
+		 where
+		 	kua_id = #{kua_id};
+	</update>
+	<update id="do_updateKuaJieSomeColumn" parameterType="KuaJie">
+		update KuaJie set 
+		 	kua_phone = #{kua_phone}, kua_weixin = #{kua_weixin},kua_adv_now = #{kua_adv_now},
+		 	kua_yixiang = #{kua_yixiang}, kua_remarks = #{kua_remarks}
+		 where
+		 	kua_id = #{kua_id};
+	</update>
+</mapper>
+
+
