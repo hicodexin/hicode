@@ -43,9 +43,10 @@ public class KuaJieController {
 		
 		HttpSession session = request.getSession();
 		UserInfo obj = (UserInfo) session.getAttribute("user");
-		// 非会员用户、管理员用户、超级管理员，课程顾问
-		if (obj.getUserType().getType_leibie() != 3 && obj.getUserType().getType_leibie() != 2
-				&& obj.getUserType().getType_leibie() != 5&& obj.getUserType().getType_leibie() != 6) {
+		// 异业合作、管理员用户、超级管理员
+		if (obj.getUserType().getType_leibie() != 7 && 
+				obj.getUserType().getType_leibie() != 3 && 
+				obj.getUserType().getType_leibie() != 6) {
 			return "redirect:/Fighting.html";
 		}
 		return "/WEB-INF/VisitorsPage/KuaJie.html";
@@ -60,7 +61,6 @@ public class KuaJieController {
 	@ResponseBody
 	@RequestMapping(value = "/showKuaJieByInfo", method = RequestMethod.POST)
 	public String showAdviserByInfo(HttpServletRequest request) {
-		System.out.println("====");
 		// 页码
 		String page = request.getParameter("page");
 

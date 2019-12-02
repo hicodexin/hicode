@@ -253,7 +253,7 @@ public class SigningController {
 		signing.setSituation(dang_tian);//面资当天
 		signing.setCategory(Integer.valueOf(leibie_sel));//用户分类
 		signing.setIf_signup(Integer.valueOf(qiandan_sel));//签单/死单
-		System.out.println(signing);
+//		System.out.println(signing);
 		if(qiandan_sel != null && qiandan_sel.equals("1")){//以报名
 			Adviser adviser_success = new Adviser();
 			adviser_success.setAdv_id(adviser_sel);
@@ -271,7 +271,7 @@ public class SigningController {
 		
 		signing.setHistory(d+" : "+adviser2.getAdv_name());
 		
-		System.out.println(signing);
+//		System.out.println(signing);
 		
 		Integer count = signingService.do_insertSigning(signing);
 		if (count > 0) {

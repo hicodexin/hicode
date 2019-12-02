@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hicode.oa.dao.KuaJie_PhoneDAO">
+
+	<sql id="all_column">
+		md_id,md_time,kua_id,md_num,md_age,md_pass,md_remarks
+	</sql>
+
+	<select id="getKuaJie_PhoneByID" parameterType="java.lang.Integer" resultType="KuaJie_Phone">
+		SELECT
+		<include refid="all_column"></include>
+		FROM kuajie_phone where md_id=#{md_id}
+	</select>
+
+	<select id="getKuaJie_PhoneInfo" parameterType="java.util.Map" resultType="KuaJie_Phone">
+		SELECT
+		<include refid="all_column"></include>
+		FROM kuajie_phone limit #{start},#{count};
+	</select>
+	
+	<!-- 查询表内数据总条数 -->
+	<select id="getKuaJie_PhoneForCount" resultType="java.lang.Integer">
+		SELECT count(1) FROM kuajie_phone;
+		
+	</select>
+	
+	<insert id="do_insertKuaJie_Phone" parameterType="KuaJie_Phone" keyProperty="md_id">
+		INSERT INTO kuajie_phone (
+			md_time,kua_id,md_num,md_age,md_pass,md_remarks
+			)
+		VALUES (
+			#{md_time},#{kua_id},#{md_num},#{md_age},#{md_pass},#{md_remarks}
+			);
+	</insert>
+	
+	
+	<update id="do_updateDeposit" parameterType="Deposit">
+		UPDATE Deposit SET
+			au_id=#{auditions.au_id},
+			pay_time=#{pay_time},
+			money=#{money},
+			phone=#{phone},
+			adv_id=#{adviser.adv_id},
+			advv_id=#{adviser2.adv_id},
+			ifSignup=#{ifSignup},
+			refundMoney=#{refundMoney},
+			refund_time=#{refund_time},
+			remark=#{remark}
+		WHERE
+			dep_id=#{dep_id}
+	</update>
+
+
+
+
+</mapper>
+
+

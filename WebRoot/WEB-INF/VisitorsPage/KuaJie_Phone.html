@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>KuaJie_Phone.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <style type="text/css">
+		*{
+			margin: 0px;
+			padding: 0px;
+		}
+		[name='dv_money']{
+			width: 245px; 
+			height: 75px;
+			background-color:#fff; 
+			display: inline-block;
+			border: solid 1px #336699;
+			border-radius: 6px;
+			margin-left: 4px;
+		}
+		[name='dv_money_yi']{
+			width: 245px; 
+			height: 35px;
+			background-color:#fff; 
+			display: inline-block;
+			border: solid 1px #336699;
+			border-radius: 6px;
+		}
+		[name='dv_money_yi']>span{
+			font-family: '楷体'; 
+			color: #336699; 
+			font-weight: 600; 
+			font-size: 18px;
+		}
+		#remarks {
+			float: left; 
+			outline:none;
+			border:none;
+			font-size: 18px;
+			border-radius: 6px;
+			padding: 3px;
+			margin-left: 6px;
+		}
+	</style>
+	<link type="text/css" rel="stylesheet"  href="/hicode/syscss/teacher_page.css" />
+	<link type="text/css" rel="stylesheet"  href="/hicode/syscss/for_date.css" />
+	<link type="text/css" rel="stylesheet" href="/hicode/syscss/beizhu.css" />
+	
+	<script type="text/javascript" src="/hicode/sysjs/jquery.min.js"></script>
+	<script type="text/javascript" src="/hicode/sysjs/forfunctions.js"></script>
+	<script type="text/javascript" src="/hicode/sysjs/jeDate.js"></script>
+	<script type="text/javascript" src="/hicode/sysjs/beizhu/remarks.js"></script>
+  </head>
+  
+  <body>
+  	<!-- 隐藏  -->
+	<div id="hidd_mask"></div>
+	<!-- 添加与修改 -->
+	<div id="dv_update" style="height: 870px">
+	<div class="dv_title" id="dv_title">添加异业名单信息</div>
+	<div class="dv_upmain">
+		<ul class="up_ul">
+			<li>
+				<b>序号 : </b> 
+				<input type="text" id="tea_list" value="" disabled="disabled" />
+			</li>
+			<li>
+				<b>合作时间 : </b> 
+				<input id="time_creatDate" type="text" readonly="readonly">
+			</li>
+			<li>
+				<b>机构名称 : </b> 
+				<input type="text" id="userName" />
+			</li>
+			<li>
+				<b>地址 : </b> 
+				<input type="text" id="address" />
+			</li>
+			<li>
+				<b>手机号:</b>
+				<input type="text" id="phone">
+			</li>
+			<li>
+				<b>微信号:</b>
+				<input type="text" id="weiXin">
+			</li>
+			<li>
+				<b>洽谈顾问: </b> 
+				<select id="update_seladvs"></select>
+			</li>
+			<li>
+				<b>合作方意向: </b> 
+				<div name = "dv_money_yi" id="tui_money">
+					<span>&nbsp;意向指数 :</span>
+					<select id="update_selyi" style="width:90px;border: 0px;padding-left:30px;">
+						<option value="1">一</option>
+						<option value="2">二</option>
+						<option value="3">三</option>
+						<option value="4">四</option>
+						<option value="5">五</option>
+					</select>
+					<span>颗星</span>
+				</div>
+			</li>
+			<li>
+				<b style="float: left">备注 : </b>
+				<div name = "dv_money" id="jiao_money">
+					<textarea rows="3" cols="24" id="remarks" ></textarea>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div id="dv_upbottom" style="margin-top: 40px">
+		<button id="up_sub" type="button">提交</button>
+		<button id="up_res">返回</button>
+	</div>
+	</div>
+    <div class="dv_top" id="dv_top">
+		<button id="index_go"  class="for_button">首页</button>
+		<button id="find_user"  class="for_button">欢迎:</button>
+	</div>
+	<hr>
+	<div class="dv_title">异业电话信息详情</div>
+	<button id="bt_1">添加</button>
+	<div id="dv_table">
+		<table id="tea_tbl" cellspacing="0">
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>名单兑换时间</th>
+					<th>合作机构名称</th>
+					<th>交换数量</th>
+					<th>年龄区间</th>
+					<th>接通率</th>
+					<th>兑换人</th>
+					<th>备注信息</th>
+					<th>操作</th>
+					<th>标记</th>
+				</tr>
+			</thead>
+			<tbody id="tbl_body">
+			</tbody>
+		</table>
+	</div>
+	<div id="dv_page">
+		<!-- <button id="bt_first" mypage="1">首页</button> -->
+		<div id="dv_but"></div>
+		<!-- <button id="bt_end">尾页</button> -->
+	</div>
+  </body>
+<script type="text/javascript">
+	$().ready(function() {
+
+		var bd_hig = document.documentElement.clientHeight;
+		
+		getUserName("dv_top");
+		
+		var pagedata = {"page":1};
+		start_post_kua(for_btn_kua,pagedata);
+		
+  		$("#hidd_mask").css("height",bd_hig+"px");
+  		$("#dv_update").hide();
+  		$("#hidd_mask").hide();
+  		
+  		//点击添加按钮
+ 		$("#bt_1")[0].onclick = add_kua;
+  		/* 添加学员信息，提交按钮  */
+ 		$("#up_sub").click( up_sub_kua );
+		// 点击返回消失
+  		$("#up_res").click(function(){
+  			$("#hidd_mask").hide().hide(300);
+ 			$("#dv_update").show().hide(300);
+ 		}); 
+ 		
+ 		// 日历插件
+		jeDate({
+			dateCell : "#time_creatDate",
+			format : "YYYY-MM-DD",
+			isinitVal : true,
+			isTime : false, // isClear:true,
+			minDate : "1014-09-19 00:00:00"
+		}) ;
+ 		
+ 		// 点击首页按钮
+ 		$("#index_go").click(function(){
+ 			window.location = "/hicode/index.html";
+ 		});
+ 		
+ 		
+	});
+</script>
+</html>
+

@@ -186,11 +186,11 @@ public class AuditionsController {
 			) {
 			if(
 					obj.getUser_name().equals("adv_1005") || 
-					obj.getUser_name().equals("adv_1016") || 
-					obj.getUser_name().equals("adv_1021")
+					obj.getUser_name().equals("adv_1023") || 
+					obj.getUser_name().equals("adv_1022")
 				){
 				
-				System.out.println("=========徐永贺、王秋杰、孙崇崇账号进行了添加操作=========");
+				System.out.println("=========许永贺、管泽坤、孙崇霞账号进行了添加操作=========");
 			}else{
 				obj_arr.put("list_advs", "ok1");
 				
@@ -348,11 +348,11 @@ public class AuditionsController {
 			
 			if(
 					obj.getUser_name().equals("adv_1005") || 
-					obj.getUser_name().equals("adv_1016") || 
-					obj.getUser_name().equals("adv_1021")
+					obj.getUser_name().equals("adv_1023") || 
+					obj.getUser_name().equals("adv_1022")
 				){
-				//课程顾问中徐永贺可以有试听课的添加和修改权限
-				System.out.println("=========徐永贺、王秋杰、孙崇崇账号进行了修改操作=========");
+				
+				System.out.println("=========许永贺、管泽坤、孙崇霞账号进行了修改操作=========");
 			}else{
 				obj_arr.put("list_advs", "ok1");
 				return obj_arr.toString();
