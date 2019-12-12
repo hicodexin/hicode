@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hicode.oa.dao.KuaJie_PhoneDAO">
-
+	<!-- 多对一处理 -->
+	<resultMap id="getKuaJie_Phone_oop" type="KuaJie_Phone">
+		<!-- 一的一方 -->
+	   	 <association property="kuaJie" column="kua_id" select="com.hicode.oa.dao.KuaJieDAO.getKuaJieByID">
+	   	 </association>
+	</resultMap>
 	<sql id="all_column">
-		md_id,md_time,kua_id,md_num,md_age,md_pass,md_remarks
+		md_id,md_time,kua_id,md_num,md_age,md_pass,adv_name,if_check,md_remarks
 	</sql>
 
-	<select id="getKuaJie_PhoneByID" parameterType="java.lang.Integer" resultType="KuaJie_Phone">
+	<select id="getKuaJie_PhoneByID" parameterType="java.lang.Integer" resultMap="getKuaJie_Phone_oop">
 		SELECT
 		<include refid="all_column"></include>
 		FROM kuajie_phone where md_id=#{md_id}
 	</select>
 
-	<select id="getKuaJie_PhoneInfo" parameterType="java.util.Map" resultType="KuaJie_Phone">
+	<select id="getKuaJie_PhoneInfo" parameterType="java.util.Map" resultMap="getKuaJie_Phone_oop">
 		SELECT
 		<include refid="all_column"></include>
 		FROM kuajie_phone limit #{start},#{count};
@@ -21,18 +26,16 @@
 	<!-- 查询表内数据总条数 -->
 	<select id="getKuaJie_PhoneForCount" resultType="java.lang.Integer">
 		SELECT count(1) FROM kuajie_phone;
-		
 	</select>
 	
 	<insert id="do_insertKuaJie_Phone" parameterType="KuaJie_Phone" keyProperty="md_id">
 		INSERT INTO kuajie_phone (
-			md_time,kua_id,md_num,md_age,md_pass,md_remarks
+			md_time,kua_id,md_num,md_age,md_pass,adv_name,if_check,md_remarks
 			)
 		VALUES (
-			#{md_time},#{kua_id},#{md_num},#{md_age},#{md_pass},#{md_remarks}
+			#{md_time},#{kuaJie.kua_id},#{md_num},#{md_age},#{md_pass},#{adv_name},#{if_check},#{md_remarks}
 			);
 	</insert>
-	
 	
 	<update id="do_updateDeposit" parameterType="Deposit">
 		UPDATE Deposit SET

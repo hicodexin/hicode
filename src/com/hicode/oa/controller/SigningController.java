@@ -269,6 +269,11 @@ public class SigningController {
 		String d = sf.format(new Date());
 		Adviser adviser2 = adviserService.getAdviserByID(adviser_sel);
 		
+		//该账号信息异常
+		if(adviser2 == null){
+			obj_arr.put("list_advs", "ok3");
+			return obj_arr.toString();
+		}
 		signing.setHistory(d+" : "+adviser2.getAdv_name());
 		
 //		System.out.println(signing);

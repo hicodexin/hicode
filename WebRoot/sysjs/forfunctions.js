@@ -84,8 +84,8 @@ function for_sel(id, f, optionName) {
 function for_sel02(id, f, optionName) {
 	$("#" + id).children("option").remove();
 	for (var k = 0; k < f.length; k++) {
-		console.log($(f[k]).html());
-		console.log("--------------");
+//		console.log($(f[k]).html());
+//		console.log("--------------");
 		if ($(f[k]).html() == optionName) {
 			var str = "<option selected='selected' value='" + (k + 1) + "' >" + $(f[k]).html() + "</option>";
 		} else {
@@ -899,6 +899,62 @@ function for_btn_kua() {
 	}
 
 }
+/* 异业合作--兑换名单 >>>修改按钮 */
+function for_btn_kua_Phone() {
+	var bts = $("button");
+	var revise = new Array();
+	if (bts.length > 0) {
+		for (var i = 0, j = 0; i < bts.length; i++) {
+			if ($(bts[i]).html() == "修改") {
+				revise[j] = bts[i];
+				j++;
+			}
+		}
+	}
+
+	if (revise.length > 0) {
+		for (var k = 0; k < revise.length; k++) {
+			(function() {
+				var t = k;
+				
+				$(revise[t]).click(function() {
+					$("#hidd_mask").hide().show(300);
+					$("#dv_update").hide().show(300);
+					$("#dv_title").html("修改市场部门信息");
+					$("#tea_list").val($(this).attr("name"));
+					$("#tea_list").attr("name", $(this).attr("id"));
+					
+					$("#time_creatDate").val($("[name='kua_time']:eq(" + t + ")").html());
+					$("#time_creatDate").attr("disabled", "disabled");
+					
+					$("#userName").val($("[name='userName']:eq(" + t + ")").html());
+					$("#userName").attr("disabled", "disabled");
+					$("#address").val($("[name='address']:eq(" + t + ")").html());
+					$("#address").attr("disabled", "disabled");
+
+					$.post("/hicode/adviser/showAdviser.spc", function(f) {
+						if (f.length > 0) {
+							var name = $("[name='guWen']:eq(" + t + ")").html();
+							for_sel("update_seladvs", f,name);
+						}
+					}, "json");
+					
+					var optionName02 = $("[name='yixiang']:eq(" + t + ")").attr("yixiang");
+					var yixiang = $("#update_selyi option");
+					for_sel04("update_selyi", yixiang, optionName02);
+					
+					$("#phone").val($("[name='remarks']:eq(" + t + ")").attr("dianhua"));
+					$("#weiXin").val($("[name='remarks']:eq(" + t + ")").attr("weixin"));
+					$("#remarks").val($("[name='remarks']:eq(" + t + ")").attr("myfont"));
+					$("#up_sub").html("提交");
+				});
+
+			})();
+
+		}
+	}
+
+}
 
 /** ==============================================添加按钮============================================== */
 
@@ -1233,6 +1289,37 @@ function add_kua() {
 			for_sel("update_seladvs", f);
 		}
 	}, "json");
+
+}
+/* 异业合作---名单兑换>>>添加按钮 */
+function add_kua_Phone() {
+	$("#hidd_mask").hide().show(300);
+	$("#dv_update").hide().show(300);
+	var len = $("#tea_tbl tbody tr").length;
+	$("#tea_list").val(len + 1);
+	$("#up_sub").html("添加");
+	$("#time_creatDate").removeAttr("disabled");
+	$("#time_creatDate").val("");
+	
+	$.post("/hicode/kuajie/showKuaJie.spc", function(f) {
+		if (f.length > 0) {
+			for_sel("update_selname", f);
+		}
+	}, "json");
+	
+	$("#find_num").val("");
+	var sel_class = $("#update_selage option");
+	for_sel02("update_selage", sel_class);
+	
+	$("#for_success").val("");
+
+	$.post("/hicode/adviser/showAdviser.spc", function(f) {
+		if (f.length > 0) {
+			for_sel("update_seladvs", f);
+		}
+	}, "json");
+	
+	$("#remarks").val("");
 
 }
 
@@ -2018,6 +2105,8 @@ function up_sub_sig() {
 				alert("对不起,权限不足。。。。");
 			}else if (e.list_advs == 'ok2') {
 				alert("对不起,该学员信息已被分派。。。。");
+			}else if (e.list_advs == 'ok3') {
+				alert("对不起,该账号信息错误，请联系管理员。。。。");
 			} else {
 				alert("添加失败,请联系管理员。。。。");
 			}
@@ -2039,6 +2128,8 @@ function up_sub_sig() {
 				start_post_sig(for_btn_sig,pagedata);
 			}else if (e.list_advs == 'ok1') {
 				alert("对不起,权限不足。。。。");
+			}else if (e.list_advs == 'ok3') {
+				alert("对不起,该账号信息错误，请联系管理员。。。。");
 			} else {
 				alert("修改失败,请联系管理员。。。。");
 			}
@@ -2110,6 +2201,79 @@ function up_sub_kua() {
 			}else if (e.list_advs == 'ok1') {
 				alert("对不起,权限不足。。。。");
 			} else {
+				alert("添加失败,请联系管理员。。。。");
+			}
+
+		}, "json");
+
+	} else if (content == "提交") {
+		if (!window.confirm("是否确定要修改的内容？？？？")) {
+			return;
+		}
+		data.id = $("#tea_list").attr("name");
+		$.post("/hicode/kuajie/do_updateKuaJie.spc", data, function(e) {
+			$("#hidd_mask").hide().hide(300);
+			$("#dv_update").show().hide(300);
+			if (e.list_advs == 'ok') {
+				alert("修改成功");
+				$("#tbl_body").children("tr").remove();
+				var pagedata = {"page":1};
+				start_post_kua(for_btn_kua, pagedata);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
+			} else {
+				alert("修改失败,请联系管理员。。。。");
+			}
+
+		}, "json");
+	}
+
+}
+
+/* 异业_兑换名单>>>提交按钮*/
+function up_sub_kua_Phone() {
+	
+	if ($("#time_creatDate").val().length < 10) {
+		$("#time_creatDate").css("borderColor", "#f00");
+		return;
+	} else {
+		$("#time_creatDate").css("borderColor", "#336699");
+	}
+	
+	if ($("#find_num").val().trim().length < 2) {
+		$("#find_num").css("borderColor", "#f00");
+		return;
+	} else {
+		$("#find_num").css("borderColor", "#336699");
+	}
+
+	var data = {
+		"userName" : $('#update_selname').val(),
+		"time_creatDate" : $('#time_creatDate').val(),
+		"find_num" : $('#find_num').val().trim(),
+		"age":$('#update_selage option:selected').text(),
+		"for_success":$('#for_success').val(),
+		"advName":$('#update_seladvs  option:selected').text(),
+		"remarks" : $("#remarks").val()
+	};
+	
+	console.log(data);
+	
+	var content = $(this).html();
+	if (content == "添加") {
+		$.post("/hicode/kuajie_Phone/do_insertKuaJie_Phone.spc", data, function(e) {
+			$("#hidd_mask").hide().hide(300);
+			$("#dv_update").show().hide(300);
+			if (e.list_advs == 'ok') {
+				alert("添加成功");
+				$("#tbl_body").children("tr").remove();
+				var pagedata = {"page":1};
+				start_post_kua_phone(for_btn_kua_Phone, pagedata);
+			}else if (e.list_advs == 'ok1') {
+				alert("对不起,权限不足。。。。");
+			}else if(e.list_advs == "no_num"){
+				alert("对不起,兑换数量或接通率填写错误。。。。");
+			}else {
 				alert("添加失败,请联系管理员。。。。");
 			}
 
@@ -2597,7 +2761,7 @@ function start_post_sig(backFunction,pagedata) {
 
 }
 
-/*试听课 》》》初始化数据 */
+/*异业合作 》》》初始化数据 */
 function start_post_kua(backFunction,pagedata) {
 	$.post("/hicode/kuajie/showKuaJieByInfo.spc", pagedata, function(a) {
 		if (a) {
@@ -2618,6 +2782,43 @@ function start_post_kua(backFunction,pagedata) {
 					}
 					$(btn).click(function() {
 						change_page_aud(this,pagedata);
+					});
+
+					$("#dv_but").append(btn);
+				}
+			}
+			//修改按钮赋单击事件
+			backFunction();
+		}
+		var hei = $("#tea_tbl").css("height");
+		hei = hei.substr(0, hei.length - 2);
+		if (hei > 650) {
+			$("#dv_table").css("height", "700px");
+		}
+	}, "json");
+
+}
+/*异业兑换名单 》》》初始化数据 */
+function start_post_kua_phone(backFunction,pagedata) {
+	$.post("/hicode/kuajie_Phone/showKuaJie_PhoneByInfo.spc", pagedata, function(a) {
+		if (a) {
+			creat_tb_kua_phone(a.list_advs, "#tbl_body");
+			/* 添加页码 */
+			if (a.all_num) {
+				
+				$("#dv_but").children("button").remove();
+				for (var k = 0; k < a.all_num; k++) {
+					var btn = document.createElement("button");
+					$(btn).html(k + 1);
+					$(btn).attr("mypage", (k + 1));
+					if (k == 0) {
+						$(btn).css({
+							"backgroundColor" : "#336699",
+							"color" : "#fff"
+						});
+					}
+					$(btn).click(function() {
+						change_page_kuajie_phone(this,pagedata);
 					});
 
 					$("#dv_but").append(btn);
@@ -3438,6 +3639,55 @@ function creat_tb_kua(back_all, p_dom) {
 	}
 }
 
+/* 异业兑换名单》》 待便利的值 */
+function creat_tb_kua_phone(back_all, p_dom) {
+	$(p_dom).children("tr").remove();
+	
+	for (var i = 0; i < back_all.length; i++) {
+		var tr = document.createElement("tr");
+		var str = "<td>" + (i + 1) + "</td>";
+		var kua_time = timestampToTime(back_all[i].shijian.time);
+		str += "<td name='shijian'>" + kua_time + "</td>";
+		str += "<td name='userName'>" + back_all[i].name + "</td>";
+		str += "<td name='shuliang'>" + back_all[i].shuliang + "</td>";
+		str += "<td name='age'>" + back_all[i].age + "</td>";
+		str += "<td name='the_pass'>" + back_all[i].the_pass + "%</td>";
+		str += "<td name='adv_name'>" + back_all[i].adv_name + "</td>";
+		$(tr).append(str);
+		
+		var td = document.createElement("td");
+		var img = document.createElement("img");
+		if(back_all[i].beizhu != null && back_all[i].beizhu != ""){
+			$(img).attr("src","/hicode/sysimg/beizhu/for_yes.png");
+		}else{
+			$(img).attr("src","/hicode/sysimg/beizhu/for_no.png");
+		}
+		$(img).attr("name","remarks");
+		$(img).attr("userName",back_all[i].name);
+		$(img).attr("myfont",back_all[i].beizhu);
+		
+		img.onclick = function(){
+			var ss = $(this).attr("userName");
+			var tt = $(this).attr("myfont");
+
+			if(tt == null || tt == ""){
+				tt = "暂无。。。。。";
+			}
+			create_remarks(ss,tt);
+		};
+		
+		td.appendChild(img);
+		tr.appendChild(td);
+		
+		var btid = back_all[i].id;
+		var strr = "<td><button id = '" + btid + "' name='" + (i + 1) + "'>修改</button></td>";
+		strr += "<td><input type='checkbox' value='" + btid + "' /></td>";
+		$(tr).append(strr);
+		$(p_dom).append(tr);
+
+	}
+}
+
 /** ==============================================切换页面============================================== */
 
 /*切换页面*/
@@ -3688,4 +3938,25 @@ function change_page_sig(this_dom,pagedata) {
 		for_btn_sig();
 	});
 }
+/*异业兑换名单》》》切换页面*/
+function change_page_kuajie_phone(this_dom,pagedata) {
+	$("#dv_but button").css({
+		"backgroundColor" : "#fff",
+		"color" : "#336699"
+	});
+	$(this_dom).css({
+		"backgroundColor" : "#336699",
+		"color" : "#fff"
+	});
+	
+	pagedata.page = $(this_dom).attr("mypage");
+	
+	$.post("/hicode/kuajie_Phone/showKuaJie_PhoneByInfo.spc",pagedata, function(a_s) {
+		$("#tbl_body").html(' ');
 
+		var js_arry = eval('(' + a_s + ')');
+
+		creat_tb_kua_phone(js_arry.list_advs, "#tbl_body");
+		for_btn_aud();
+	});
+}

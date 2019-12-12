@@ -23,5 +23,13 @@ public class Test_Teacher {
 		
 	}
 	
+	public static void main(String[] args) {
+		
+		String a = "12";
+		
+		System.out.println(Integer.valueOf(a));
+		
+	}
+	
 
 }

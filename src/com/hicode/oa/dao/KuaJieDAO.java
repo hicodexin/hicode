@@ -51,4 +51,9 @@ public class KuaJieDAO extends SysDAO{
 		// TODO Auto-generated method stub
 		return update(nameSpace+"do_updateKuaJie_all", kuaJie);
 	}
+
+	public List<KuaJie> getKuaJieNameAndID() {
+		// TODO Auto-generated method stub
+		return selectList(nameSpace+"getKuaJieNameAndID");
+	}
 }

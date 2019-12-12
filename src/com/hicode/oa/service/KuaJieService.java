@@ -34,6 +34,12 @@ public interface KuaJieService {
 	public Integer getKuaJieForCount();
 	
 	/**
+	 * 获取异业合作的名称与ID
+	 * @return
+	 */
+	public List<KuaJie> getKuaJieNameAndID();
+	
+	/**
 	 * 添加
 	 * @param kuaJie
 	 * @return

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hicode.oa.service.KuaJieService;
 import com.hicode.oa.service.Loginfo_insert_updateService;
+import com.hicode.oa.tool.Adviser;
 import com.hicode.oa.tool.KuaJie;
 import com.hicode.oa.tool.Loginfo_insert_update;
 import com.hicode.oa.tool.UserInfo;
@@ -247,6 +248,32 @@ public class KuaJieController {
 		}
 		return obj_arr.toString();
 	}
+	
+	
+	/**
+	 * 展示异业合作方
+	 * 
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/showKuaJie", method = RequestMethod.POST)
+	public String showAdviser() {
+
+		List<KuaJie> advs = kuaJieService.getKuaJieNameAndID();
+		JSONArray jsay = new JSONArray();
+
+		for (KuaJie adv1 : advs) {
+			
+			JSONObject obj = new JSONObject();
+			obj.put("id", adv1.getKua_id());
+			obj.put("name", adv1.getKua_name());
+
+			jsay.add(obj);
+		}
+
+		return jsay.toString();
+	}
+	
 	
 	/**
 	 * 获取用户真实IP地址，不使用request.getRemoteAddr()的原因是有可能用户使用了代理软件方式避免真实IP地址,

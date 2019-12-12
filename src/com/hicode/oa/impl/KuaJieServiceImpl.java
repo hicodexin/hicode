@@ -57,4 +57,10 @@ public class KuaJieServiceImpl implements KuaJieService{
 		return kuajieDAO.do_updateKuaJie_all(kuaJie);
 	}
 
+	@Override
+	public List<KuaJie> getKuaJieNameAndID() {
+		// TODO Auto-generated method stub
+		return kuajieDAO.getKuaJieNameAndID();
+	}
+
 }

@@ -12,6 +12,7 @@
 			margin: 0px;
 			padding: 0px;
 		}
+		
 		[name='dv_money']{
 			width: 245px; 
 			height: 75px;
@@ -20,6 +21,12 @@
 			border: solid 1px #336699;
 			border-radius: 6px;
 			margin-left: 4px;
+		}
+		[name='dv_money']>span{
+			font-family: '楷体'; 
+			color: #336699; 
+			font-weight: 600; 
+			font-size: 18px;
 		}
 		[name='dv_money_yi']{
 			width: 245px; 
@@ -33,7 +40,7 @@
 			font-family: '楷体'; 
 			color: #336699; 
 			font-weight: 600; 
-			font-size: 18px;
+			font-size: 20px;
 		}
 		#remarks {
 			float: left; 
@@ -48,11 +55,13 @@
 	<link type="text/css" rel="stylesheet"  href="/hicode/syscss/teacher_page.css" />
 	<link type="text/css" rel="stylesheet"  href="/hicode/syscss/for_date.css" />
 	<link type="text/css" rel="stylesheet" href="/hicode/syscss/beizhu.css" />
+	<link type="text/css" rel="stylesheet" href="/hicode/syscss/select/shaixuan.css" />
 	
 	<script type="text/javascript" src="/hicode/sysjs/jquery.min.js"></script>
 	<script type="text/javascript" src="/hicode/sysjs/forfunctions.js"></script>
 	<script type="text/javascript" src="/hicode/sysjs/jeDate.js"></script>
 	<script type="text/javascript" src="/hicode/sysjs/beizhu/remarks.js"></script>
+	<script type="text/javascript" src="/hicode/sysjs/select/shaixuan.js"></script>
   </head>
   
   <body>
@@ -68,42 +77,38 @@
 				<input type="text" id="tea_list" value="" disabled="disabled" />
 			</li>
 			<li>
-				<b>合作时间 : </b> 
+				<b>兑换时间 : </b> 
 				<input id="time_creatDate" type="text" readonly="readonly">
 			</li>
 			<li>
 				<b>机构名称 : </b> 
-				<input type="text" id="userName" />
+				<select id="update_selname"></select>
 			</li>
 			<li>
-				<b>地址 : </b> 
-				<input type="text" id="address" />
+				<b>交换数量 : </b> 
+				<input type="text" id="find_num" />
 			</li>
 			<li>
-				<b>手机号:</b>
-				<input type="text" id="phone">
+				<b>主要年龄段:</b>
+				<select id="update_selage" >
+					<option value="1">学龄前</option>
+					<option value="2">小学</option>
+					<option value="3">初中</option>
+					<option value="4">高中</option>
+				</select>
 			</li>
 			<li>
-				<b>微信号:</b>
-				<input type="text" id="weiXin">
+				<b>接通率:</b>
+				<div name = "dv_money_yi" >
+					<span>&nbsp;&nbsp;</span>
+					<input type="text" id="for_success" style="width:160px;border: 0px" />
+					<span>&nbsp;&nbsp;%</span>
+				</div>
+				
 			</li>
 			<li>
 				<b>洽谈顾问: </b> 
 				<select id="update_seladvs"></select>
-			</li>
-			<li>
-				<b>合作方意向: </b> 
-				<div name = "dv_money_yi" id="tui_money">
-					<span>&nbsp;意向指数 :</span>
-					<select id="update_selyi" style="width:90px;border: 0px;padding-left:30px;">
-						<option value="1">一</option>
-						<option value="2">二</option>
-						<option value="3">三</option>
-						<option value="4">四</option>
-						<option value="5">五</option>
-					</select>
-					<span>颗星</span>
-				</div>
 			</li>
 			<li>
 				<b style="float: left">备注 : </b>
@@ -123,7 +128,11 @@
 		<button id="find_user"  class="for_button">欢迎:</button>
 	</div>
 	<hr>
-	<div class="dv_title">异业电话信息详情</div>
+	<div class="dv_title">
+		<button id="give_up" style="margin-left: -20px">未审核</button>
+		异业电话信息详情
+		<button id="bt_open_aud">展开<span>▼</span></button>
+	</div>
 	<button id="bt_1">添加</button>
 	<div id="dv_table">
 		<table id="tea_tbl" cellspacing="0">
@@ -133,9 +142,9 @@
 					<th>名单兑换时间</th>
 					<th>合作机构名称</th>
 					<th>交换数量</th>
-					<th>年龄区间</th>
+					<th>主要年龄段</th>
 					<th>接通率</th>
-					<th>兑换人</th>
+					<th>洽谈顾问</th>
 					<th>备注信息</th>
 					<th>操作</th>
 					<th>标记</th>
@@ -159,16 +168,16 @@
 		getUserName("dv_top");
 		
 		var pagedata = {"page":1};
-		start_post_kua(for_btn_kua,pagedata);
+		start_post_kua_phone(for_btn_kua_Phone,pagedata);
 		
   		$("#hidd_mask").css("height",bd_hig+"px");
   		$("#dv_update").hide();
   		$("#hidd_mask").hide();
   		
   		//点击添加按钮
- 		$("#bt_1")[0].onclick = add_kua;
+ 		$("#bt_1")[0].onclick = add_kua_Phone;
   		/* 添加学员信息，提交按钮  */
- 		$("#up_sub").click( up_sub_kua );
+ 		$("#up_sub").click( up_sub_kua_Phone );
 		// 点击返回消失
   		$("#up_res").click(function(){
   			$("#hidd_mask").hide().hide(300);

@@ -18,6 +18,9 @@
 	<select id="getKuaJieForCount" resultType="java.lang.Integer">
 		select count(1) from KuaJie;
 	</select>
+	<select id="getKuaJieNameAndID"  resultType="KuaJie">
+		select kua_id,kua_name from KuaJie;
+	</select>
 	
 	<insert id="do_insertKuaJie" parameterType="KuaJie" keyProperty="kua_id">
 		insert into KuaJie

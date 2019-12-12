@@ -24,7 +24,7 @@ public class KuaJie_Phone implements Serializable {
 	/**
 	 * 合作机构外键
 	 */
-	private Integer kua_id;
+	private KuaJie kuaJie;
 	/**
 	 * 兑换数量
 	 */
@@ -37,6 +37,15 @@ public class KuaJie_Phone implements Serializable {
 	 * 接通率
 	 */
 	private Float md_pass;
+	
+	/**
+	 * 负责顾问
+	 */
+	private String adv_name;
+	/**
+	 * 是否经过审核(1：已核实；0：未审核）
+	 */
+	private Integer if_check;
 	/**
 	 * 备注信息
 	 */
@@ -58,12 +67,12 @@ public class KuaJie_Phone implements Serializable {
 		this.md_time = md_time;
 	}
 
-	public Integer getKua_id() {
-		return kua_id;
+	public KuaJie getKuaJie() {
+		return kuaJie;
 	}
 
-	public void setKua_id(Integer kua_id) {
-		this.kua_id = kua_id;
+	public void setKuaJie(KuaJie kuaJie) {
+		this.kuaJie = kuaJie;
 	}
 
 	public Integer getMd_num() {
@@ -89,6 +98,22 @@ public class KuaJie_Phone implements Serializable {
 	public void setMd_pass(Float md_pass) {
 		this.md_pass = md_pass;
 	}
+	
+	public String getAdv_name() {
+		return adv_name;
+	}
+
+	public void setAdv_name(String adv_name) {
+		this.adv_name = adv_name;
+	}
+	
+	public Integer getIf_check() {
+		return if_check;
+	}
+
+	public void setIf_check(Integer if_check) {
+		this.if_check = if_check;
+	}
 
 	public String getMd_remarks() {
 		return md_remarks;
@@ -100,10 +125,15 @@ public class KuaJie_Phone implements Serializable {
 
 	@Override
 	public String toString() {
-		return "KuaJie_Phone [md_id=" + md_id + ", md_time=" + md_time + ", kua_id=" + kua_id + ", md_num=" + md_num
-				+ ", md_age=" + md_age + ", md_pass=" + md_pass + ", md_remarks=" + md_remarks + "]";
+		return "KuaJie_Phone [md_id=" + md_id + ", md_time=" + md_time + ", kuaJie=" + kuaJie + ", md_num=" + md_num
+				+ ", md_age=" + md_age + ", md_pass=" + md_pass + ", adv_name=" + adv_name + ", if_check=" + if_check
+				+ ", md_remarks=" + md_remarks + "]";
 	}
-	
+
+
+
+
+
 	
 
 }

@@ -1,5 +1,5 @@
 /**
- * 出现详情
+ * 出现详情(试听课，异业兑换名单)
  */
 function create_remarks(name, myfont) {
 	$("body").children("#dv_remarks").remove();
