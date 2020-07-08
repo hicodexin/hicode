@@ -1,6 +1,7 @@
 package com.hicode.oa.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.hicode.oa.tool.KuaJie_Phone;
 
@@ -28,6 +29,15 @@ public interface KuaJie_PhoneService {
 	 */
 	public List<KuaJie_Phone> getKuaJie_PhoneInfo(Integer start, Integer count);
 	
+	
+	/**
+	 * 条件查询
+	 * @param map
+	 * @return
+	 */
+	public List<KuaJie_Phone> getKuaJie_PhoneBySomeOption(Map<String, Object> map);
+	
+	
 	/**
 	 * 查询表内数据总条数
 	 * @return
@@ -43,11 +53,11 @@ public interface KuaJie_PhoneService {
 	
 	
 	/**
-	 * 修改( 修改：手机号、微信号、当前负责人、意向、备注)
+	 * 修改( 修改：交换数量、年龄段、接通率、洽谈顾问、备注)
 	 * @param kuaJie_Phone
 	 * @return
 	 */
-//	public Integer do_updateKuaJie_PhoneSomeColumn(KuaJie_Phone kuaJie_Phone);
+	public Integer do_updateKuaJie_PhoneSomeColumn(KuaJie_Phone kuaJie_Phone);
 	
 	/**
 	 * 修改

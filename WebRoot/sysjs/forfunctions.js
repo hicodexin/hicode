@@ -126,7 +126,20 @@ function for_sel04(id, f, optionName) {
 	}
 
 }
+/*前台写死数据结果遍历，f:所遍历数组_便利：html ;optionName:选中列表     从1开始*/
+function for_sel05(id, f, optionName) {
+	$("#" + id).children("option").remove();
+	for (var k = 0; k < f.length; k++) {
+		if ($(f[k]).html() == optionName) {
+			var str = "<option selected='selected' value='" + (k + 1) + "' >" + $(f[k]).html() + "</option>";
+		} else {
+			var str = "<option value='" + (k + 1) + "'>" + $(f[k]).html() + "</option>";
+		}
 
+		$("#" + id).append(str);
+	}
+
+}
 /*通过ajax后台访问所得结果遍历,仅针对于课程顾问，筛选掉非顾问：自主上门。。。*/
 function for_adviser_sel(id, f, optionName) {
 	$("#" + id).children("option").remove();
@@ -920,31 +933,36 @@ function for_btn_kua_Phone() {
 				$(revise[t]).click(function() {
 					$("#hidd_mask").hide().show(300);
 					$("#dv_update").hide().show(300);
-					$("#dv_title").html("修改市场部门信息");
+					$("#dv_title").html("修改兑换名单信息");
 					$("#tea_list").val($(this).attr("name"));
 					$("#tea_list").attr("name", $(this).attr("id"));
 					
-					$("#time_creatDate").val($("[name='kua_time']:eq(" + t + ")").html());
+					$("#time_creatDate").val($("[name='shijian']:eq(" + t + ")").html());
 					$("#time_creatDate").attr("disabled", "disabled");
 					
-					$("#userName").val($("[name='userName']:eq(" + t + ")").html());
-					$("#userName").attr("disabled", "disabled");
-					$("#address").val($("[name='address']:eq(" + t + ")").html());
-					$("#address").attr("disabled", "disabled");
+					$.post("/hicode/kuajie/showKuaJie.spc", function(f) {
+						if (f.length > 0) {
+							var name = $("[name='userName']:eq(" + t + ")").html();
+							for_sel("update_selname", f,name);
+						}
+					}, "json");
+					$("#update_selname").attr("disabled", "disabled");
+					$("#find_num").val($("[ name='shuliang']:eq(" + t + ")").html());
+					var suc = $("[ name='the_pass']:eq(" + t + ")").html();
+					suc = suc.substr(suc ,suc.length-1);
+					$("#for_success").val(suc);
 
 					$.post("/hicode/adviser/showAdviser.spc", function(f) {
 						if (f.length > 0) {
-							var name = $("[name='guWen']:eq(" + t + ")").html();
+							var name = $("[name='adv_name']:eq(" + t + ")").html();
 							for_sel("update_seladvs", f,name);
 						}
 					}, "json");
 					
-					var optionName02 = $("[name='yixiang']:eq(" + t + ")").attr("yixiang");
-					var yixiang = $("#update_selyi option");
-					for_sel04("update_selyi", yixiang, optionName02);
+					var optionName02 = $("[name='age']:eq(" + t + ")").html();
+					var yixiang = $("#update_selage option");
+					for_sel05("update_selage", yixiang, optionName02);
 					
-					$("#phone").val($("[name='remarks']:eq(" + t + ")").attr("dianhua"));
-					$("#weiXin").val($("[name='remarks']:eq(" + t + ")").attr("weixin"));
 					$("#remarks").val($("[name='remarks']:eq(" + t + ")").attr("myfont"));
 					$("#up_sub").html("提交");
 				});
@@ -1301,6 +1319,7 @@ function add_kua_Phone() {
 	$("#time_creatDate").removeAttr("disabled");
 	$("#time_creatDate").val("");
 	
+	$("#update_selname").removeAttr("disabled");
 	$.post("/hicode/kuajie/showKuaJie.spc", function(f) {
 		if (f.length > 0) {
 			for_sel("update_selname", f);
@@ -2257,8 +2276,6 @@ function up_sub_kua_Phone() {
 		"remarks" : $("#remarks").val()
 	};
 	
-	console.log(data);
-	
 	var content = $(this).html();
 	if (content == "添加") {
 		$.post("/hicode/kuajie_Phone/do_insertKuaJie_Phone.spc", data, function(e) {
@@ -2284,14 +2301,15 @@ function up_sub_kua_Phone() {
 			return;
 		}
 		data.id = $("#tea_list").attr("name");
-		$.post("/hicode/kuajie/do_updateKuaJie.spc", data, function(e) {
+		data.shangjia = $('#update_selname  option:selected').text();
+		$.post("/hicode/kuajie_Phone/do_updateKuaJie_Phone.spc", data, function(e) {
 			$("#hidd_mask").hide().hide(300);
 			$("#dv_update").show().hide(300);
 			if (e.list_advs == 'ok') {
 				alert("修改成功");
 				$("#tbl_body").children("tr").remove();
 				var pagedata = {"page":1};
-				start_post_kua(for_btn_kua, pagedata);
+				start_post_kua_phone(for_btn_kua_Phone, pagedata);
 			}else if (e.list_advs == 'ok1') {
 				alert("对不起,权限不足。。。。");
 			} else {
@@ -2781,7 +2799,7 @@ function start_post_kua(backFunction,pagedata) {
 						});
 					}
 					$(btn).click(function() {
-						change_page_aud(this,pagedata);
+						change_page_kua(this,pagedata);
 					});
 
 					$("#dv_but").append(btn);
@@ -3650,7 +3668,7 @@ function creat_tb_kua_phone(back_all, p_dom) {
 		str += "<td name='shijian'>" + kua_time + "</td>";
 		str += "<td name='userName'>" + back_all[i].name + "</td>";
 		str += "<td name='shuliang'>" + back_all[i].shuliang + "</td>";
-		str += "<td name='age'>" + back_all[i].age + "</td>";
+		str += "<td name='age' nianLing="+back_all[i].age+">" + back_all[i].age + "</td>";
 		str += "<td name='the_pass'>" + back_all[i].the_pass + "%</td>";
 		str += "<td name='adv_name'>" + back_all[i].adv_name + "</td>";
 		$(tr).append(str);
@@ -3938,6 +3956,28 @@ function change_page_sig(this_dom,pagedata) {
 		for_btn_sig();
 	});
 }
+/*异业合作》》》切换页面*/
+function change_page_kua(this_dom,pagedata) {
+	$("#dv_but button").css({
+		"backgroundColor" : "#fff",
+		"color" : "#336699"
+	});
+	$(this_dom).css({
+		"backgroundColor" : "#336699",
+		"color" : "#fff"
+	});
+	
+	pagedata.page = $(this_dom).attr("mypage");
+	
+	$.post("/hicode/kuajie/showKuaJieByInfo.spc",pagedata, function(a_s) {
+		$("#tbl_body").html(' ');
+
+		var js_arry = eval('(' + a_s + ')');
+
+		creat_tb_kua(js_arry.list_advs, "#tbl_body");
+		for_btn_kua();
+	});
+}
 /*异业兑换名单》》》切换页面*/
 function change_page_kuajie_phone(this_dom,pagedata) {
 	$("#dv_but button").css({
@@ -3957,6 +3997,6 @@ function change_page_kuajie_phone(this_dom,pagedata) {
 		var js_arry = eval('(' + a_s + ')');
 
 		creat_tb_kua_phone(js_arry.list_advs, "#tbl_body");
-		for_btn_aud();
+		for_btn_kua_Phone();
 	});
 }

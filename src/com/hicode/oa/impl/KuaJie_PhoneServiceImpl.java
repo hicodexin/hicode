@@ -1,6 +1,7 @@
 package com.hicode.oa.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,6 +56,18 @@ public class KuaJie_PhoneServiceImpl implements KuaJie_PhoneService{
 	public Integer do_updateKuaJie_Phone_all(KuaJie_Phone kuaJie_Phone) {
 		// TODO Auto-generated method stub
 		return kuaJie_PhoneDAO.do_updateKuaJie_Phone_all(kuaJie_Phone);
+	}
+
+	@Override
+	public Integer do_updateKuaJie_PhoneSomeColumn(KuaJie_Phone kuaJie_Phone) {
+		// TODO Auto-generated method stub
+		return kuaJie_PhoneDAO.do_updateKuaJie_PhoneSomeColumn(kuaJie_Phone);
+	}
+
+	@Override
+	public List<KuaJie_Phone> getKuaJie_PhoneBySomeOption(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -54,6 +54,11 @@ public class KuaJie_PhoneDAO extends SysDAO {
 		// TODO Auto-generated method stub
 		return update(nameSpace+"do_updateKuaJie_Phone_all", kuaJie_Phone);
 	}
+
+	public Integer do_updateKuaJie_PhoneSomeColumn(KuaJie_Phone kuaJie_Phone) {
+		// TODO Auto-generated method stub
+		return update(nameSpace+"do_updateKuaJie_PhoneSomeColumn", kuaJie_Phone);
+	}
 	
 	
 	

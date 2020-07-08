@@ -15,13 +15,21 @@ function for_sel_sf02(id, f, optionName) {
 	$("#" + id).children("option").remove();
 	var str = "<option selected='selected' disabled='disabled'>请选择</option>";
 	$("#" + id).append(str);
+	//删除含有"请选择"的选项
+	for(var i = 0; i<f.length;i++){
+		(function(){
+			var t = i;
+			if($(f[t]).html() == '请选择'){
+				f.splice(t,1);
+			}
+		})();
+	}
 	for (var k = 0; k < f.length; k++) {
 		if ($(f[k]).html() == optionName) {
 			var str = "<option selected='selected' value='" + (k + 1) + "' >" + $(f[k]).html() + "</option>";
 		} else {
 			var str = "<option value='" + (k + 1) + "'>" + $(f[k]).html() + "</option>";
 		}
-
 		$("#" + id).append(str);
 	}
 
@@ -176,6 +184,7 @@ $().ready(function() {
 		start = -650;
 		sit = setInterval(for_open, 10);
 	});	
+	
 	//VIP_顾问跟单》》》展开
 	$("#bt_open_VIP_ADV").click(function() {
 
@@ -187,6 +196,34 @@ $().ready(function() {
 		sit = setInterval(for_open, 10);
 	});
 	
+	//异业兑换名单》》》展开
+	$("#bt_open_kua_phone").click(function() {
+	
+		$("#hidd_mask").hide().show(300);
+		$("#kai_time").val("");
+		$("#ting_time").val("");
+		$("#begin_num").val("");
+		$("#end_num").val("");
+		
+		var tt = $("#stu_class option");
+		for_sel_sf02("stu_class", tt);
+		
+		$.post("/hicode/kuajie/showKuaJie.spc", function(f) {
+			if (f.length > 0) {
+				for_sel_sf("stu_name", f,name);
+			}
+		}, "json");
+		
+		$.post("/hicode/adviser/showAdviser.spc", function(f) {
+			if (f.length > 0) {
+				for_sel_sf("yao_gu", f);
+			}
+		}, "json");
+
+		start = -650;
+		sit = setInterval(for_open, 10);
+	});
+
 	/** ==============================================条件查询data============================================== */
 
 	//试听课条件查询
@@ -303,6 +340,25 @@ $().ready(function() {
 		start_post_VIP_sig(for_btn_VIP_sig,data);
 		click_close();
 	});
+	
+	//异业兑换名单 条件查询
+	$("#sel_sub_kua_phone").click(function() {
+		var data = {
+			"page" : 1,
+			"stu_name" : $("#stu_name").val().trim(),
+			"stu_class" : $('#stu_class option:selected').text(),
+			"yao_gu" : $('#yao_gu option:selected').text(),
+			"kai_time" : $("#kai_time").val().trim(),
+			"ting_time" : $("#ting_time").val(),
+			"begin_num" : $("#kai_time").val().trim(),
+			"end_num" : $("#ting_time").val()
+		};
+
+		console.log(data);
+		start_post_kua_phone(for_btn_kua_Phone,data);
+		click_close();
+	});
+		
 	/** ==============================================关闭============================================== */
 
 	//关闭

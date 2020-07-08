@@ -3,7 +3,9 @@ package com.hicode.oa.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -53,7 +55,12 @@ public class KuaJie_PhoneController {
 		if (obj.getUserType().getType_leibie() != 7 && 
 				obj.getUserType().getType_leibie() != 3 && 
 				obj.getUserType().getType_leibie() != 6) {
-			return "redirect:/Fighting.html";
+			//允许永贺有查看、添加的权限
+			if(obj.getUser_name().equals("adv_1005")){
+				System.out.println("=========许永贺 账号进行了查看操作=========");
+			}else{
+				return "redirect:/Fighting.html";
+			}
 		}
 		return "/WEB-INF/VisitorsPage/KuaJie_Phone.html";
 	}
@@ -66,6 +73,54 @@ public class KuaJie_PhoneController {
 	@ResponseBody
 	@RequestMapping(value = "/showKuaJie_PhoneByInfo", method = RequestMethod.POST)
 	public String showKuaJie_PhoneByInfo(HttpServletRequest request) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		String stu_name = request.getParameter("stu_name");
+		if (stu_name != null & stu_name != "") {
+			map.put("stu_name", "%" + stu_name + "%");
+		}
+		String stu_class = request.getParameter("stu_class");
+		if (stu_class != null & stu_class != "") {
+			map.put("stu_class", stu_class);
+		}
+		
+		String stu_school = request.getParameter("stu_school");
+		if (stu_school != null & stu_school != "") {
+			map.put("stu_school", stu_school);
+		}
+		
+		String stu_phone = request.getParameter("stu_phone");
+		if (stu_phone != null & stu_phone != "") {
+			map.put("stu_phone", stu_phone);
+		}
+		String stu_teacher = request.getParameter("stu_teacher");
+		if (stu_teacher != null & stu_teacher != "") {
+			map.put("stu_teacher", stu_teacher);
+		}
+		String kai_time = request.getParameter("kai_time");
+		if (kai_time != null & kai_time != "") {
+			map.put("kai_time", kai_time);
+		}
+		String ting_time = request.getParameter("ting_time");
+		if (ting_time != null & ting_time != "") {
+			map.put("ting_time", ting_time);
+		}
+		String yao_gu = request.getParameter("yao_gu");
+		if (yao_gu != null & yao_gu != "") {
+			map.put("yao_gu", yao_gu);
+		}
+		String qian_gu = request.getParameter("qian_gu");
+		if (qian_gu != null & qian_gu != "") {
+			map.put("qian_gu", qian_gu);
+		}
+		
+		//是否参加了试听课
+		String if_join = request.getParameter("if_join");
+		if (if_join != null & if_join != "") {
+			map.put("if_join", if_join);
+		}
+
 		// 页码
 		String page = request.getParameter("page");
 
@@ -86,6 +141,11 @@ public class KuaJie_PhoneController {
 				all_num = (all_num % 20 == 0) ? (all_num / 20) : (all_num / 20 + 1);
 			}
 		}
+		
+		
+		map.put("start", start);
+		map.put("count", num);
+		
 		List<KuaJie_Phone> advs = kuaJie_PhoneService.getKuaJie_PhoneInfo(start, num);
 
 		JSONArray objs = new JSONArray();
@@ -133,9 +193,12 @@ public class KuaJie_PhoneController {
 				obj.getUserType().getType_leibie() != 3 && 
 				obj.getUserType().getType_leibie() != 6
 			) {
-			
-			obj_arr.put("list_advs", "ok1");
-			return obj_arr.toString();
+			if(obj.getUser_name().equals("adv_1005")){
+				System.out.println("=========许永贺 账号进行了添加操作=========");
+			}else{
+				obj_arr.put("list_advs", "ok1");
+				return obj_arr.toString();
+			}
 		}
 
 		String st_time = request.getParameter("time_creatDate");
@@ -202,6 +265,78 @@ public class KuaJie_PhoneController {
 				obj_arr.put("list_advs", "ok");
 			}
 			
+		}
+		return obj_arr.toString();
+	}
+	@ResponseBody
+	@RequestMapping(value = "/do_updateKuaJie_Phone", method = RequestMethod.POST)
+	public String do_updateKuaJie_Phone(HttpServletRequest request) {
+
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+
+		JSONObject obj_arr = new JSONObject();
+		// 修改权限：普通用户，会员用户，管理员
+		if (
+				obj.getUserType().getType_leibie() != 7 && 
+				obj.getUserType().getType_leibie() != 3 && 
+				obj.getUserType().getType_leibie() != 6
+			) {
+			if(obj.getUser_name().equals("adv_1005")){
+				System.out.println("=========许永贺 账号进行了修改操作=========");
+			}else{
+				obj_arr.put("list_advs", "ok1");
+				return obj_arr.toString();
+			}
+		}
+
+		String id = request.getParameter("id");
+		String st_name = request.getParameter("shangjia");
+		String find_num = request.getParameter("find_num");
+		String for_success = request.getParameter("for_success");
+		if(for_success == "" || for_success == null){
+			for_success = "0";
+		}
+		Integer phoneNum = null;
+		Float for_pass = null;
+		try{
+			phoneNum = Integer.valueOf(find_num);
+			for_pass = Float.valueOf(for_success);
+		}catch(NumberFormatException e){
+			obj_arr.put("list_advs", "no_num");
+			return obj_arr.toString();
+		}
+		
+		String st_class = request.getParameter("age");
+		String advName = request.getParameter("advName");
+		String remarks = request.getParameter("remarks");
+
+		KuaJie_Phone kuaJie_Phone = new KuaJie_Phone();
+		kuaJie_Phone.setMd_id(Integer.valueOf(id));
+		kuaJie_Phone.setMd_age(st_class);
+		kuaJie_Phone.setMd_num(phoneNum);
+		kuaJie_Phone.setMd_pass(for_pass);
+		kuaJie_Phone.setAdv_name(advName);
+		kuaJie_Phone.setMd_remarks(remarks);
+
+		Integer count = kuaJie_PhoneService.do_updateKuaJie_PhoneSomeColumn(kuaJie_Phone);
+		String ip = null;
+		
+		if (count > 0) {
+			Loginfo_insert_update logInfo = new Loginfo_insert_update();
+			logInfo.setUserName(obj.getUser_name());
+			String xiangQing = obj.getUser_name()+" 成功修改了异业兑换名单中 :  "+st_name;
+			logInfo.setXiangQing(xiangQing);
+			try{
+				ip = FindIP.getIpAddr(request);
+			}catch(Exception e){
+				System.out.println("未能正常获取IP");
+				ip = "未能正常获取IP";
+			}finally{
+				logInfo.setLog_ip(ip);
+				loginfo_insert_updateService.do_insertLogInfo(logInfo);
+				obj_arr.put("list_advs", "ok");
+			}
 		}
 		return obj_arr.toString();
 	}

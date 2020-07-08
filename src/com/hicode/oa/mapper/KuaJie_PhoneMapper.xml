@@ -36,21 +36,16 @@
 			#{md_time},#{kuaJie.kua_id},#{md_num},#{md_age},#{md_pass},#{adv_name},#{if_check},#{md_remarks}
 			);
 	</insert>
-	
-	<update id="do_updateDeposit" parameterType="Deposit">
-		UPDATE Deposit SET
-			au_id=#{auditions.au_id},
-			pay_time=#{pay_time},
-			money=#{money},
-			phone=#{phone},
-			adv_id=#{adviser.adv_id},
-			advv_id=#{adviser2.adv_id},
-			ifSignup=#{ifSignup},
-			refundMoney=#{refundMoney},
-			refund_time=#{refund_time},
-			remark=#{remark}
+	<!-- 修改( 修改：交换数量、年龄段、接通率、洽谈顾问、备注) -->
+	<update id="do_updateKuaJie_PhoneSomeColumn" parameterType="KuaJie_Phone">
+		UPDATE kuajie_phone SET
+			md_num=#{md_num},
+			md_age=#{md_age},
+			md_pass=#{md_pass},
+			adv_name=#{adv_name},
+			md_remarks=#{md_remarks}
 		WHERE
-			dep_id=#{dep_id}
+			md_id=#{md_id}
 	</update>
 
 
