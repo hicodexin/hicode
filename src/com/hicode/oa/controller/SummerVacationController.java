@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hicode.oa.service.Loginfo_insert_updateService;
 import com.hicode.oa.service.SummerVacationService;
+import com.hicode.oa.system.FindIP;
 import com.hicode.oa.tool.Auditions;
+import com.hicode.oa.tool.Loginfo_insert_update;
+import com.hicode.oa.tool.School;
 import com.hicode.oa.tool.Subject;
 import com.hicode.oa.tool.SummerVacation;
 import com.hicode.oa.tool.Teacher;
@@ -36,6 +40,9 @@ public class SummerVacationController {
 
 	@Autowired
 	private SummerVacationService summerVacationService;
+	
+	@Autowired
+	private Loginfo_insert_updateService loginfo_insert_updateService;
 
 	@RequestMapping("/to_login")
 	public String login(HttpServletRequest request) {
@@ -72,13 +79,14 @@ public class SummerVacationController {
 		for (SummerVacation adv1 : advs) {
 			JSONObject obj = new JSONObject();
 			obj.put("id", adv1.getSm_id());
-			obj.put("name", adv1.getAuditions().getSt_name());
+			obj.put("stu_name", adv1.getAu_name());
+			obj.put("school_name", adv1.getSchool().getSch_name());
+			obj.put("banji", adv1.getClassinfo_name());
+			obj.put("phone", adv1.getPhone());
+			obj.put("start_time", adv1.getStart_time());
 			obj.put("subject", adv1.getSubject().getSub_name());
 			obj.put("teacher", adv1.getTeacher().getT_name());
-			obj.put("start_time", adv1.getStart_time());
-			obj.put("clock_num", adv1.getClock_num());
 			obj.put("if_signup", adv1.getIf_signup());
-			obj.put("giveClass", adv1.getGive_class());
 			obj.put("beizhu", adv1.getRemarks());
 			objs.add(obj);
 		}
@@ -96,6 +104,7 @@ public class SummerVacationController {
 	 * 添加暑假班
 	 * @param request
 	 * @return
+	 * @author XinPeiXiang 2020-07-09
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/do_insertSummerVacation", method = RequestMethod.POST)
@@ -112,32 +121,33 @@ public class SummerVacationController {
 			return obj_arr.toString();
 		}
 		
-		String aud_id = request.getParameter("userName");
+		String au_name = request.getParameter("userName");
+		String stu_school = request.getParameter("stu_school");
+		String stu_class = request.getParameter("stu_class");
+		String stu_phone = request.getParameter("stu_phone");
+		String start_time = request.getParameter("start_time");
 		String sub_id = request.getParameter("subject");
 		String t_id = request.getParameter("the_teacher");
-		
-		String start_time = request.getParameter("start_time");
-		String clock_num = request.getParameter("clock_num");
 		String if_signup = request.getParameter("if_signup");
-		
-		String giveClass = request.getParameter("giveClass");
 		String remarks = request.getParameter("remarks");
 
 		SummerVacation summerVacation = new SummerVacation();
-
-		Auditions auditions = new Auditions();
-		auditions.setAu_id(Integer.valueOf(aud_id));
-
+		
+		School school =  new School();
+		school.setSch_id(Integer.valueOf(stu_school));
+		
 		Subject subject = new Subject();
 		subject.setSub_id(sub_id);
 
 		Teacher teacher = new Teacher();
 		teacher.setT_id(t_id);
 		
-		summerVacation.setAuditions(auditions);
+		summerVacation.setAu_name(au_name);
+		summerVacation.setSchool(school);
+		summerVacation.setClassinfo_name(stu_class);
+		summerVacation.setPhone(stu_phone);
 		summerVacation.setSubject(subject);
 		summerVacation.setTeacher(teacher);
-
 
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 		Date d;
@@ -149,27 +159,43 @@ public class SummerVacationController {
 			e.printStackTrace();
 		}
 		
-		if(clock_num != null && clock_num != ""){
-			summerVacation.setClock_num(Integer.valueOf(clock_num));
-		}
-		
-		summerVacation.setIf_signup(Integer.valueOf(if_signup));
-		
-		if(giveClass != null && giveClass != ""){
-			summerVacation.setGive_class(Integer.valueOf(giveClass));
+		if(if_signup != "" && if_signup != null){
+			summerVacation.setIf_signup(Integer.valueOf(if_signup));
 		}
 		
 		summerVacation.setRemarks(remarks);
 		
 		Integer count = summerVacationService.do_insertSummerVacation(summerVacation);
 		
+		String ip = null;
+		
 		if (count > 0) {
-			obj_arr.put("list_advs", "ok");
+			Loginfo_insert_update logInfo = new Loginfo_insert_update();
+			logInfo.setUserName(obj.getUser_name());
+			String xiangQing = obj.getUser_name()+"成功添加了暑假班学员 :  "+au_name;
+			logInfo.setXiangQing(xiangQing);
+			try{
+				ip = FindIP.getIpAddr(request);
+			}catch(Exception e){
+				System.out.println("未能正常获取IP");
+				ip = "未能正常获取IP";
+			}finally{
+				logInfo.setLog_ip(ip);
+				loginfo_insert_updateService.do_insertLogInfo(logInfo);
+				obj_arr.put("list_advs", "ok");
+			}
+			
 		}
 
 		return obj_arr.toString();
 	}
 
+	/**
+	 * 修改暑假班学员
+	 * @param request
+	 * @return
+	 * @author XinPeiXiang 2020-07-09
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/do_updateSummerVacation", method = RequestMethod.POST)
 	public String do_updateSummerVacation(HttpServletRequest request) {
@@ -186,22 +212,21 @@ public class SummerVacationController {
 		
 		String id = request.getParameter("id");
 
-		String aud_id = request.getParameter("userName");
+		String au_name = request.getParameter("userName");
+		String stu_school = request.getParameter("stu_school");
+		String stu_class = request.getParameter("stu_class");
+		String stu_phone = request.getParameter("stu_phone");
+		String start_time = request.getParameter("start_time");
 		String sub_id = request.getParameter("subject");
 		String t_id = request.getParameter("the_teacher");
-		
-		String start_time = request.getParameter("start_time");
-		String clock_num = request.getParameter("clock_num");
 		String if_signup = request.getParameter("if_signup");
-		
-		String giveClass = request.getParameter("giveClass");
 		String remarks = request.getParameter("remarks");
 
 		SummerVacation summerVacation = new SummerVacation();
-
-		Auditions auditions = new Auditions();
-		auditions.setAu_id(Integer.valueOf(aud_id));
-
+		
+		School school =  new School();
+		school.setSch_id(Integer.valueOf(stu_school));
+		
 		Subject subject = new Subject();
 		subject.setSub_id(sub_id);
 
@@ -209,11 +234,13 @@ public class SummerVacationController {
 		teacher.setT_id(t_id);
 		
 		summerVacation.setSm_id(Integer.valueOf(id));
-		summerVacation.setAuditions(auditions);
+		summerVacation.setAu_name(au_name);
+		summerVacation.setSchool(school);
+		summerVacation.setClassinfo_name(stu_class);
+		summerVacation.setPhone(stu_phone);
 		summerVacation.setSubject(subject);
 		summerVacation.setTeacher(teacher);
-
-
+		
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 		Date d;
 		try {
@@ -223,25 +250,34 @@ public class SummerVacationController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		if(clock_num != null && clock_num != ""){
-			summerVacation.setClock_num(Integer.valueOf(clock_num));
+		
+		if(if_signup != "" && if_signup != null){
+			summerVacation.setIf_signup(Integer.valueOf(if_signup));
 		}
-		
-		summerVacation.setIf_signup(Integer.valueOf(if_signup));
-		
-		if(giveClass != null && giveClass != ""){
-			summerVacation.setGive_class(Integer.valueOf(giveClass));
-		}
-		
 		summerVacation.setRemarks(remarks);
+		
+//		System.out.println(summerVacation);
 		
 		Integer count = summerVacationService.do_updateSummerVacation(summerVacation);
 		
+		String ip = null;
+		
 		if (count > 0) {
-			obj_arr.put("list_advs", "ok");
+			Loginfo_insert_update logInfo = new Loginfo_insert_update();
+			logInfo.setUserName(obj.getUser_name());
+			String xiangQing = obj.getUser_name()+"成功修改了暑假班学员 :  "+au_name;
+			logInfo.setXiangQing(xiangQing);
+			try{
+				ip = FindIP.getIpAddr(request);
+			}catch(Exception e){
+				System.out.println("未能正常获取IP");
+				ip = "未能正常获取IP";
+			}finally{
+				logInfo.setLog_ip(ip);
+				loginfo_insert_updateService.do_insertLogInfo(logInfo);
+				obj_arr.put("list_advs", "ok");
+			}
 		}
-
 		return obj_arr.toString();
 	}
 

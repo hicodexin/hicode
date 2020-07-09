@@ -28,6 +28,79 @@
 		SELECT count(1) FROM kuajie_phone;
 	</select>
 	
+	<!-- 条件查询表内数据 -->
+	<select id="getKuaJie_PhoneBySomeOption" parameterType="java.util.Map" resultMap="getKuaJie_Phone_oop">
+	<!-- stu_name,stu_class,yao_gu,kai_time,ting_time,begin_num,end_num -->
+		SELECT <include refid="all_column"></include> FROM kuajie_phone 
+			WHERE 1=1
+			<if test="kua_id != null">
+				AND kua_id = #{kua_id} 
+			</if>
+			
+			<if test="md_age != null">
+				AND md_age = #{md_age}
+			</if>
+			
+			<if test="yao_gu != null">
+				AND adv_name = #{yao_gu}
+			</if>
+			
+		    <if test="kai_time != null">
+		   		 AND md_time &gt;= #{kai_time}
+		    </if>
+		
+			<if test="ting_time != null">
+				AND md_time &lt;= #{ting_time}
+			</if>
+			
+			<if test="begin_num != null">
+		   		 AND md_num &gt;= #{begin_num}
+		    </if>
+		
+			<if test="end_num != null">
+				AND md_num &lt;= #{end_num}
+			</if>
+			
+		ORDER BY md_time
+		limit #{start},#{count};
+	
+	</select>
+	
+	<!-- 条件查询表内数据总条数 -->
+	<select id="getKuaJie_PhoneForCountBySomeOption" parameterType="java.util.Map" resultType="java.lang.Integer">
+	<!-- stu_name,stu_class,yao_gu,kai_time,ting_time,begin_num,end_num -->
+		SELECT count(1) FROM kuajie_phone 
+			WHERE 1=1
+			<if test="kua_id != null">
+				AND kua_id = #{kua_id} 
+			</if>
+			
+			<if test="md_age != null">
+				AND md_age = #{md_age}
+			</if>
+			
+			<if test="yao_gu != null">
+				AND adv_name = #{yao_gu}
+			</if>
+			
+		    <if test="kai_time != null">
+		   		 AND md_time &gt;= #{kai_time}
+		    </if>
+		
+			<if test="ting_time != null">
+				AND md_time &lt;= #{ting_time}
+			</if>
+			
+			<if test="begin_num != null">
+		   		 AND md_num &gt;= #{begin_num}
+		    </if>
+		
+			<if test="end_num != null">
+				AND md_num &lt;= #{end_num}
+			</if>
+	
+	</select>
+	
 	<insert id="do_insertKuaJie_Phone" parameterType="KuaJie_Phone" keyProperty="md_id">
 		INSERT INTO kuajie_phone (
 			md_time,kua_id,md_num,md_age,md_pass,adv_name,if_check,md_remarks

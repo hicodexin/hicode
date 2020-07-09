@@ -55,9 +55,37 @@
 				<li><b>序号 : </b> <input type="text" id="tea_list" value=""disabled="disabled" /></li>
 				<li>
 					<b>学生姓名: </b> 
-					<select id="student_sel" data-placeholder="请选择" 
-							style="width: 260px" class="chosen-select" tabindex="2">
+					<input type="text" id="stu_name" />
+				</li>
+				<li>
+					<b>学校 : </b> 
+					<select id="stu_school"></select>
+				</li>
+				<li>
+  					<b>年级:</b>
+  					<select id="stu_class">
+  						<option disabled="disabled" selected="selected">请选择</option>
+						<option>学前班</option>
+						<option>一年级</option>
+						<option>二年级</option>
+						<option>三年级</option>
+						<option>四年级</option>
+						<option>五年级</option>
+						<option>六年级</option>
+						<option>初一</option>
+						<option>初二</option>
+						<option>初三</option>
+						<option>高一</option>
+						<option>高二</option>
+						<option>高三</option>
 					</select>
+  				</li>
+  				<li>
+					<b>电话:</b>
+					<input type="text" id="stu_phone"  placeholder="请输入"/>
+				</li>
+				<li><b>开课时间: </b> 
+					<input id="start_time" type="text" readonly="readonly" placeholder="请选择" class="datainp" >
 				</li>
 				<li>
 					<b>所报科目 : </b> 
@@ -65,13 +93,6 @@
 				</li>
 				<li><b>授课老师 : </b> 
 					<select id="the_teacher"></select>
-				</li>
-				<li><b>开课时间: </b> 
-					<input id="start_time" type="text" readonly="readonly" placeholder="请选择" class="datainp" >
-				</li>
-				<li>
-					<b>打卡次数 : </b> 
-					<input type="text" id="clock_num" />
 				</li>
 				<li>
 					<b>已报名 : </b> 
@@ -85,17 +106,11 @@
 					</label>
 				</li>
 				<li>
-					<b>赠暑假课时 : </b> 
-					<input type="text" id="giveClass"/>
-				</li>
-				<li>
 					<b style="float: left">备注 : </b>
 					
 					<div name = "dv_money" id="jiao_money">
 						<textarea rows="3" cols="24" id="remarks" ></textarea>
 					</div>
-					 
-					
 				</li>
 			</ul>
 		</div>
@@ -118,18 +133,20 @@
 				<tr>
 					<th>序号</th>
 					<th>学生姓名</th>
+					<th>学校</th>
+					<th>年级</th>
+					<th>电话</th>
+					<th>开课时间</th>
 					<th>科目</th>
 					<th>老师</th>
-					<th>开课时间</th>
-					<th>打卡次数</th>
 					<th>已报名</th>
-					<th>赠暑假课时</th>
 					<th>备注</th>
 					<th>操作</th>
 					<th>标记</th>
 				</tr>
 			</thead>
 			<tbody id="tbl_body">
+				
 			</tbody>
 		</table>
 	</div>

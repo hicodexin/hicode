@@ -59,6 +59,16 @@ public class KuaJie_PhoneDAO extends SysDAO {
 		// TODO Auto-generated method stub
 		return update(nameSpace+"do_updateKuaJie_PhoneSomeColumn", kuaJie_Phone);
 	}
+
+	public List<KuaJie_Phone> getKuaJie_PhoneBySomeOption(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return selectList(nameSpace+"getKuaJie_PhoneBySomeOption", map);
+	}
+
+	public Integer getKuaJie_PhoneForCountBySomeOption(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return selectOne(nameSpace+"getKuaJie_PhoneForCountBySomeOption", map);
+	}
 	
 	
 	

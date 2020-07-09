@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hicode.oa.service.AdviserService;
 import com.hicode.oa.service.KuaJie_PhoneService;
 import com.hicode.oa.service.Loginfo_insert_updateService;
 import com.hicode.oa.system.FindIP;
@@ -45,6 +46,11 @@ public class KuaJie_PhoneController {
 	private KuaJie_PhoneService kuaJie_PhoneService;
 	@Autowired
 	private Loginfo_insert_updateService loginfo_insert_updateService;
+	/**
+	 * 顾问
+	 */
+	@Autowired
+	private AdviserService adviserService;
 	
 	@RequestMapping("/to_login")
 	public String login(HttpServletRequest request) {
@@ -75,52 +81,42 @@ public class KuaJie_PhoneController {
 	public String showKuaJie_PhoneByInfo(HttpServletRequest request) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+		
+//		stu_name,stu_class,yao_gu,kai_time,ting_time,begin_num,end_num
 
-		String stu_name = request.getParameter("stu_name");
-		if (stu_name != null & stu_name != "") {
-			map.put("stu_name", "%" + stu_name + "%");
+		String kua_id = request.getParameter("stu_name");
+		if (kua_id != null && kua_id != "") {
+			map.put("kua_id", kua_id);
 		}
-		String stu_class = request.getParameter("stu_class");
-		if (stu_class != null & stu_class != "") {
-			map.put("stu_class", stu_class);
-		}
-		
-		String stu_school = request.getParameter("stu_school");
-		if (stu_school != null & stu_school != "") {
-			map.put("stu_school", stu_school);
+		String md_age = request.getParameter("stu_class");
+		if (md_age != null && md_age != "") {
+			map.put("md_age", md_age);
 		}
 		
-		String stu_phone = request.getParameter("stu_phone");
-		if (stu_phone != null & stu_phone != "") {
-			map.put("stu_phone", stu_phone);
+		String yao_gu = request.getParameter("yao_gu");
+		if (yao_gu != null && yao_gu != "") {
+			map.put("yao_gu", yao_gu);
 		}
-		String stu_teacher = request.getParameter("stu_teacher");
-		if (stu_teacher != null & stu_teacher != "") {
-			map.put("stu_teacher", stu_teacher);
-		}
+		
 		String kai_time = request.getParameter("kai_time");
-		if (kai_time != null & kai_time != "") {
+		if (kai_time != null && kai_time != "") {
 			map.put("kai_time", kai_time);
 		}
 		String ting_time = request.getParameter("ting_time");
-		if (ting_time != null & ting_time != "") {
+		if (ting_time != null && ting_time != "") {
 			map.put("ting_time", ting_time);
 		}
-		String yao_gu = request.getParameter("yao_gu");
-		if (yao_gu != null & yao_gu != "") {
-			map.put("yao_gu", yao_gu);
-		}
-		String qian_gu = request.getParameter("qian_gu");
-		if (qian_gu != null & qian_gu != "") {
-			map.put("qian_gu", qian_gu);
+		
+		String begin_num = request.getParameter("begin_num");
+		if (begin_num != null && begin_num != "") {
+			map.put("begin_num", begin_num);
 		}
 		
-		//是否参加了试听课
-		String if_join = request.getParameter("if_join");
-		if (if_join != null & if_join != "") {
-			map.put("if_join", if_join);
+		String end_num = request.getParameter("end_num");
+		if (end_num != null && end_num != "") {
+			map.put("end_num", end_num);
 		}
-
+		
 		// 页码
 		String page = request.getParameter("page");
 
@@ -142,12 +138,15 @@ public class KuaJie_PhoneController {
 			}
 		}
 		
-		
 		map.put("start", start);
 		map.put("count", num);
 		
-		List<KuaJie_Phone> advs = kuaJie_PhoneService.getKuaJie_PhoneInfo(start, num);
+		List<KuaJie_Phone> advs = kuaJie_PhoneService.getKuaJie_PhoneBySomeOption(map);
 
+//		System.out.println(map);
+		
+//		System.out.println("-------------------------------");
+		
 		JSONArray objs = new JSONArray();
 
 		for (KuaJie_Phone adv1 : advs) {
@@ -163,14 +162,23 @@ public class KuaJie_PhoneController {
 			obj.put("shenhe", adv1.getIf_check());//是否经过了审核
 			obj.put("beizhu", adv1.getMd_remarks());
 			objs.add(obj);
+			
+//			System.out.println(obj);
 		}
 
 		JSONObject obj_arr = new JSONObject();
 		obj_arr.put("list_advs", objs);
 
 		if (page.equals("1")) {
+
+			all_num = kuaJie_PhoneService.getKuaJie_PhoneForCountBySomeOption(map);
+
+			if (all_num != null) {
+				all_num = (all_num % 100 == 0) ? (all_num / 100) : (all_num / 100 + 1);
+			}
 			obj_arr.put("all_num", all_num);
 		}
+		
 		return obj_arr.toString();
 	}
 	

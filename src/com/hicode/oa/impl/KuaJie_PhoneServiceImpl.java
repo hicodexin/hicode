@@ -67,7 +67,13 @@ public class KuaJie_PhoneServiceImpl implements KuaJie_PhoneService{
 	@Override
 	public List<KuaJie_Phone> getKuaJie_PhoneBySomeOption(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		return null;
+		return kuaJie_PhoneDAO.getKuaJie_PhoneBySomeOption(map);
+	}
+
+	@Override
+	public Integer getKuaJie_PhoneForCountBySomeOption(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return kuaJie_PhoneDAO.getKuaJie_PhoneForCountBySomeOption(map);
 	}
 
 }

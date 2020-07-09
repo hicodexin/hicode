@@ -681,19 +681,21 @@ function for_btn_sv() {
 					$("#dv_title").html("修改学员信息");
 					$("#tea_list").val($(this).attr("name"));
 					$("#tea_list").attr("name", $(this).attr("id"));
-
-					$.post("/hicode/auditions/showAuditions.spc", function(c) {
+					$("#stu_name").val($("[name='userName']:eq(" + t + ")").html());
+					
+					$.post("/hicode/school/showSchool.spc", function(c) {
 						if (c.length > 0) {
-							var stu_name = $("[name='userName']:eq(" + t + ")").html();
-							for_sel("student_sel", c, stu_name);
+							var name = $("[name='school_name']:eq(" + t + ")").html();
+							for_sel("stu_school", c, name);
 						}
-						window.setTimeout(function() {
-							$('.chosen-select').chosen();
-							$('.chosen-container')[0].style.width = "250px";
-							$(".chosen-single span").html(stu_name);
-						}, 500);
 					}, "json");
-
+					
+					var banji = $("[name='banji']:eq(" + t + ")").html();
+					var stu_banji = $("#stu_class option");
+					for_sel05("stu_class",stu_banji,banji);
+					
+					$("#stu_phone").val($("[name='phone']:eq(" + t + ")").html());
+					
 					$.post("/hicode/subject/showSubject.spc", function(c) {
 						if (c.length > 0) {
 							var sbu_name = $("[name='sub_sel']:eq(" + t + ")").html();
@@ -710,11 +712,6 @@ function for_btn_sv() {
 					}, "json");
 					
 					$("#start_time").val($("[name='start_time']:eq(" + t + ")").html());
-					
-					$("#clock_num").val($("[name='clock_num']:eq(" + t + ")").html());
-					
-					$("#giveClass").val($("[name='giveClass']:eq(" + t + ")").html());
-					
 					$("#remarks").val($("[name='remarks']:eq(" + t + ")").attr("myfont"));
 					$("#up_sub").html("提交");
 				});
@@ -1188,17 +1185,18 @@ function add_sv() {
 	$("#tea_list").val(len + 1);
 	$("#dv_title").html("添加暑假班信息");
 	$("#up_sub").html("添加");
-	$("#userName").val("");
+	$("#stu_name").val("");
 	
-	$.post("/hicode/auditions/showAuditions.spc", function(c) {
+	$.post("/hicode/school/showSchool.spc", function(c) {
 		if (c.length > 0) {
-			for_sel("student_sel", c);
+			for_sel("stu_school", c);
 		}
-		window.setTimeout(function() {
-			$('.chosen-select').chosen();
-			$('.chosen-container')[0].style.width = "250px";
-		}, 1000);
 	}, "json");
+	
+	var nianji = $("#stu_class option");
+	for_sel05("stu_class", nianji, "请选择");
+	$("#stu_phone").val("");
+	$("#start_time").val("");
 	
 	$.post("/hicode/subject/showSubject.spc", function(c) {
 		if (c.length > 0) {
@@ -1211,10 +1209,7 @@ function add_sv() {
 			for_sel("the_teacher", c);
 		}
 	}, "json");
-	
-	$("#start_time").val("");
-	$("#clock_num").val("");
-	$("#giveClass").val("");
+
 	$("#remarks").val("");
 }
 
@@ -1914,47 +1909,56 @@ function up_sub_wv() {
  * 暑假班>>>提交按钮
  */
 function up_sub_sv() {
+	
+	if ($("#stu_name").val().trim().length < 2) {
+		$("#stu_name").css("borderColor", "#f00");
+		return;
+	} else {
+		$("#stu_name").css("borderColor", "#336699");
+	}
+	
+	if ($("#stu_school").val().trim().length < 1) {
+		$("#stu_school").css("borderColor", "#f00");
+		return;
+	} else {
+		$("#stu_school").css("borderColor", "#336699");
+	}
+	
+	if ($("#stu_class option:selected").text() == "请选择") {
+		$("#stu_class").css("borderColor", "#f00");
+		return;
+	} else {
+		$("#stu_class").css("borderColor", "#336699");
+	}
+	
+	if ($("#stu_phone").val().length != 11) {
+		$("#stu_phone").css("borderColor", "#f00");
+		return;
+	} else {
+		$("#stu_phone").css("borderColor", "#336699");
+	}
+	
 	if ($("#start_time").val().length < 10) {
 		$("#start_time").css("borderColor", "#f00");
 		return;
 	} else {
 		$("#start_time").css("borderColor", "#336699");
 	}
-	
-	if ($("#clock_num").val().trim().length < 1) {
-		$("#clock_num").css("borderColor", "#f00");
-		return;
-	} else {
-		$("#clock_num").css("borderColor", "#336699");
-	}
-	
-	if ($("#giveClass").val().trim().length < 1) {
-		$("#giveClass").css("borderColor", "#f00");
-		return;
-	} else {
-		$("#giveClass").css("borderColor", "#336699");
-	}
-
-	var ss = $(".chosen-single span").html();
-	var yy = $("#student_sel option");
-	for (var i = 0; i < yy.length; i++) {
-		if ($(yy[i]).html() == ss) {
-			ss = $(yy[i]).val();
-			break;
-		}
-	}
 
 	var data = {
-		"userName" : ss,
+		"userName" : $("#stu_name").val().trim(),
+		"stu_school":$("#stu_school").val(),
+		"stu_class":$("#stu_class option:selected").text(),
+		"stu_phone":$("#stu_phone").val(),
 		"subject" : $('#sub_sel').val(),
 		"the_teacher" : $("#the_teacher").val(),
 		"start_time" : $("#start_time").val(),
-		"clock_num" : $('#clock_num').val(),
-		"giveClass" : $("#giveClass").val().trim(),
 		"if_signup" : $('input:radio[name="if_signup"]:checked').val(),
 		"remarks" : $("#remarks").val()
 	};
-
+	
+	console.log(data);
+	
 	var content = $(this).html();
 	if (content == "添加") {
 		$.post("/hicode/summerVacation/do_insertSummerVacation.spc", data, function(e) {
@@ -2561,7 +2565,7 @@ function start_post_cus_done(backFunction,pagedata) {
 }
 
 
-/* 初始化数据 */
+/* 初始化数据 << 用户*/
 function start_post_usr(backFunction,backFunction2) {
 	$.post("/hicode/UserInfo/showUserOnline.spc", {
 		"page" : 1
@@ -2577,7 +2581,7 @@ function start_post_usr(backFunction,backFunction2) {
 
 }
 
-/* 初始化数据 */
+/* 押金 》》初始化数据 */
 function start_post_dep(backFunction) {
 	$.post("/hicode/deposit/showDepositByInfo.spc", {
 		"page" : 1
@@ -3332,20 +3336,23 @@ function creat_tb_wv(back_all, p_dom) {
 /* 暑假班>>>back_all: 待便利的值 */
 function creat_tb_sv(back_all, p_dom) {
 	for (var i = 0; i < back_all.length; i++) {
+		
 		var tr = document.createElement("tr");
 		var str = "<td>" + (i + 1) + "</td>";
-		str += "<td name='userName'>" + back_all[i].name + "</td>";
-		str += "<td name='sub_sel'>" + back_all[i].subject + "</td>";
-		str += "<td name='the_teacher'>" + back_all[i].teacher + "</td>";
+		str += "<td name='userName'>" + back_all[i].stu_name + "</td>";
+		str += "<td name='school_name'>" + back_all[i].school_name + "</td>";
+		str += "<td name='banji'>" + back_all[i].banji + "</td>";
+		str += "<td name='phone'>" + back_all[i].phone + "</td>";
 		var start_time = timestampToTime(back_all[i].start_time.time);
 		str += "<td name='start_time'>" + start_time + "</td>";
-		str += "<td name='clock_num'>"+back_all[i].clock_num+"</td>";
+		str += "<td name='sub_sel'>" + back_all[i].subject + "</td>";
+		str += "<td name='the_teacher'>" + back_all[i].teacher + "</td>";
+		
 		if (back_all[i].if_signup == 1) {
 			str += "<td> <img src='/hicode/sysimg/face_smile.jpg' /> </td>";
 		} else {
 			str += "<td>  </td>";
 		}
-		str += "<td name='giveClass'>"+back_all[i].giveClass+"</td>";
 
 		$(tr).append(str);
 		
@@ -3358,7 +3365,7 @@ function creat_tb_sv(back_all, p_dom) {
 		}
 		
 		$(img).attr("name","remarks");
-		$(img).attr("userName",back_all[i].name);
+		$(img).attr("userName",back_all[i].stu_name);
 		$(img).attr("myfont",back_all[i].beizhu);
 		img.onclick = function(){
 			var ss = $(this).attr("userName");
@@ -3699,7 +3706,13 @@ function creat_tb_kua_phone(back_all, p_dom) {
 		
 		var btid = back_all[i].id;
 		var strr = "<td><button id = '" + btid + "' name='" + (i + 1) + "'>修改</button></td>";
-		strr += "<td><input type='checkbox' value='" + btid + "' /></td>";
+		
+		if(back_all[i].shenhe == 1){
+			strr += "<td><input checked = 'checked' type='checkbox' value='" + btid + "'  /></td>";
+		}else{
+			strr += "<td><input type='checkbox' value='" + btid + "'  /></td>";
+		}
+		
 		$(tr).append(strr);
 		$(p_dom).append(tr);
 

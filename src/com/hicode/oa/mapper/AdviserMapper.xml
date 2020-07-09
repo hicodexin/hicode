@@ -11,6 +11,10 @@
 		select <include refid="all_column"></include> from adviser where adv_id = #{adv_id};
 	</select>
 	
+	<select id="getAdviserByName" parameterType="java.lang.String" resultType="Adviser">
+		select <include refid="all_column"></include> from adviser where adv_name = #{adv_name};
+	</select>
+	
 	<select id="getAdviserAll" parameterType="java.util.Map" resultType="Adviser">
 		select <include refid="all_column"></include> from adviser limit #{start},#{count};
 	</select>

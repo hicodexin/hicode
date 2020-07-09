@@ -345,16 +345,16 @@ $().ready(function() {
 	$("#sel_sub_kua_phone").click(function() {
 		var data = {
 			"page" : 1,
-			"stu_name" : $("#stu_name").val().trim(),
-			"stu_class" : $('#stu_class option:selected').text(),
-			"yao_gu" : $('#yao_gu option:selected').text(),
+			"stu_name" : $("#stu_name").val(),
+			"stu_class" : $('#stu_class option:selected').text() == "请选择"? "":$('#stu_class option:selected').text(),
+			"yao_gu" : $('#yao_gu option:selected').text() == "请选择"? "":$('#yao_gu option:selected').text(),
 			"kai_time" : $("#kai_time").val().trim(),
 			"ting_time" : $("#ting_time").val(),
-			"begin_num" : $("#kai_time").val().trim(),
-			"end_num" : $("#ting_time").val()
+			"begin_num" : $("#begin_num").val().trim(),
+			"end_num" : $("#end_num").val()
 		};
 
-		console.log(data);
+//		console.log(data);
 		start_post_kua_phone(for_btn_kua_Phone,data);
 		click_close();
 	});

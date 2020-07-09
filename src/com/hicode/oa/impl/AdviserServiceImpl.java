@@ -60,4 +60,10 @@ public class AdviserServiceImpl implements AdviserService{
 		return adviserDAO.do_updateAdvisers(adviser);
 	}
 
+	@Override
+	public List<Adviser> getAdviserByName(String adv_name) {
+		// TODO Auto-generated method stub
+		return adviserDAO.getAdviserByName(adv_name);
+	}
+
 }

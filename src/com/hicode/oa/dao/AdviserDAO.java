@@ -61,6 +61,11 @@ public class AdviserDAO extends SysDAO{
 		// TODO Auto-generated method stub
 		return update(nameSpace+"do_updateAdvisers", adviser);
 	}
+
+	public List<Adviser> getAdviserByName(String adv_name) {
+		// TODO Auto-generated method stub
+		return selectList(nameSpace+"getAdviserByName", adv_name);
+	}
 	
 	
 	

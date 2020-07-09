@@ -37,6 +37,12 @@ public interface KuaJie_PhoneService {
 	 */
 	public List<KuaJie_Phone> getKuaJie_PhoneBySomeOption(Map<String, Object> map);
 	
+	/**
+	 * 获取条件查询的条数
+	 * @param map
+	 * @return
+	 */
+	public Integer getKuaJie_PhoneForCountBySomeOption(Map<String, Object> map);
 	
 	/**
 	 * 查询表内数据总条数
@@ -65,6 +71,8 @@ public interface KuaJie_PhoneService {
 	 * @return
 	 */
 	public Integer do_updateKuaJie_Phone_all(KuaJie_Phone kuaJie_Phone);
+
+	
 	
 	
 }

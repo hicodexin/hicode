@@ -23,16 +23,28 @@ public class SummerVacation implements Serializable{
 	/**
 	 * 姓名
 	 */
-	private Auditions auditions;
+	private String au_name;
+	
 	/**
-	 * 是否报名(0:未报名；1:已报名)
+	 * 学校
 	 */
-	private Integer if_signup;
+	private School school;
+	
 	/**
-	 * 赠送的寒假班课程
+	 * 年级
 	 */
-	private Integer give_class;
-
+	private String classinfo_name;
+	
+	/**
+	 * 手机号
+	 */
+	private String phone;
+	
+	/**
+	 * 开课时间
+	 */
+	private Date start_time;
+	
 	/**
 	 * 所选科目
 	 */
@@ -42,21 +54,18 @@ public class SummerVacation implements Serializable{
 	 * 授课老师
 	 */
 	private Teacher teacher;
-
+	
+	
 	/**
-	 * 开课时间
+	 * 是否报名(0:未报名；1:已报名)
 	 */
-	private Date start_time;
-
-	/**
-	 * 共计打卡次数
-	 */
-	private Integer clock_num;
+	private Integer if_signup;
 
 	/**
 	 * 备注
 	 */
 	private String remarks;
+	
 
 	public Integer getSm_id() {
 		return sm_id;
@@ -66,28 +75,44 @@ public class SummerVacation implements Serializable{
 		this.sm_id = sm_id;
 	}
 
-	public Auditions getAuditions() {
-		return auditions;
+	public String getAu_name() {
+		return au_name;
 	}
 
-	public void setAuditions(Auditions auditions) {
-		this.auditions = auditions;
+	public void setAu_name(String au_name) {
+		this.au_name = au_name;
 	}
 
-	public Integer getIf_signup() {
-		return if_signup;
+	public School getSchool() {
+		return school;
 	}
 
-	public void setIf_signup(Integer if_signup) {
-		this.if_signup = if_signup;
+	public void setSchool(School school) {
+		this.school = school;
 	}
 
-	public Integer getGive_class() {
-		return give_class;
+	public String getClassinfo_name() {
+		return classinfo_name;
 	}
 
-	public void setGive_class(Integer give_class) {
-		this.give_class = give_class;
+	public void setClassinfo_name(String classinfo_name) {
+		this.classinfo_name = classinfo_name;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public Date getStart_time() {
+		return start_time;
+	}
+
+	public void setStart_time(Date start_time) {
+		this.start_time = start_time;
 	}
 
 	public Subject getSubject() {
@@ -106,20 +131,12 @@ public class SummerVacation implements Serializable{
 		this.teacher = teacher;
 	}
 
-	public Date getStart_time() {
-		return start_time;
+	public Integer getIf_signup() {
+		return if_signup;
 	}
 
-	public void setStart_time(Date start_time) {
-		this.start_time = start_time;
-	}
-
-	public Integer getClock_num() {
-		return clock_num;
-	}
-
-	public void setClock_num(Integer clock_num) {
-		this.clock_num = clock_num;
+	public void setIf_signup(Integer if_signup) {
+		this.if_signup = if_signup;
 	}
 
 	public String getRemarks() {
@@ -132,10 +149,14 @@ public class SummerVacation implements Serializable{
 
 	@Override
 	public String toString() {
-		return "SummerVacation [sm_id=" + sm_id + ", auditions=" + auditions + ", if_signup=" + if_signup
-				+ ", give_class=" + give_class + ", subject=" + subject + ", teacher=" + teacher + ", start_time="
-				+ start_time + ", clock_num=" + clock_num + ", remarks=" + remarks + "]";
+		return "SummerVacation [sm_id=" + sm_id + ", au_name=" + au_name + ", school=" + school + ", classinfo_name="
+				+ classinfo_name + ", phone=" + phone + ", start_time=" + start_time + ", subject=" + subject
+				+ ", teacher=" + teacher + ", if_signup=" + if_signup + ", remarks=" + remarks + "]";
 	}
+
+	
+	
+
 
 	
 	

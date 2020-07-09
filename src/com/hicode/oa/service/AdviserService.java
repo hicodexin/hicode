@@ -14,6 +14,13 @@ public interface AdviserService {
 	
 	public Adviser getAdviserByID(String adv_id);
 	
+	/**
+	 * 通过姓名，获取顾问信息
+	 * @param adv_name
+	 * @return
+	 */
+	public List<Adviser> getAdviserByName(String adv_name);
+	
 	public List<Adviser> getAdviserAll(Integer start,Integer count);
 	
 	/**
