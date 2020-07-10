@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>排课表</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+    <style type="text/css">
+		*{
+			margin: 0px;
+			padding: 0px;
+		}
+		#hidd_mask{
+			background-color: #D0D0D0;
+			opacity: 0.5;
+			width:100%;
+			position: absolute;
+			z-index: 6;
+		}
+	</style>
+    
+    <link type="text/css" rel="stylesheet" href="/hicode/syscss/select/shaixuan.css" />
+    <link type="text/css" rel="stylesheet" href="/hicode/syscss/kechengbiao.css" />
+	<script type="text/javascript" src="/hicode/sysjs/jquery.min.js"></script>
+  </head>
+  
+  <body>
+    <div class="dv_top" id="dv_top">
+		<button id="index_go" class="for_button">首页</button>
+		<button id="find_user" class="for_button">欢迎:</button>
+	</div>
+	<hr>
+	<div class="dv_head">
+			李盈庆老师课程表
+	</div>
+	<div class="dv_main">
+		<div class="dv_main_top_first">
+			<div class="dv_main_title">周五下午3:00</div>
+			<ul class="dv_main_ul">
+				<li><span>1</span>崔洁</li>
+				<li><span>2</span>李曜杰</li>
+				<li><span>3</span>林旺</li>
+			</ul>
+		</div>
+		<div class="dv_main_top_left">
+			<div class="dv_main_title">周六上午10:00</div>
+			<ul class="dv_main_ul">
+				<li><span>1</span>帅智豪</li>
+				<li><span>2</span>刘子渤</li>
+				<li><span>3</span>刘天翊</li>
+				<li><span>4</span>彭梓豪</li>
+				<li><span>5</span>薛朝文</li>
+				<li><span>6</span>孙启然</li>
+			</ul>
+		</div>
+		<div class="dv_main_top_center">
+			<div class="dv_main_title">周六下午1:30</div>
+			<ul class="dv_main_ul">
+				<li><span>1</span>李冬晨</li>
+				<li><span>2</span>王阳</li>
+				<li><span>3</span>赵家伟</li>
+				<li><span>4</span>刘靖伟</li>
+				<li><span>5</span>刘文硕</li>
+			</ul>
+		</div>
+		<div class="dv_main_top_right">
+			<div class="dv_main_title">周六下午3:30</div>
+			<ul class="dv_main_ul">
+				<li><span>1</span>艾长辉</li>
+				<li><span>2</span>苗立潇</li>
+				<li><span>3</span>胡皓宸</li>
+				<li><span>4</span>张锐琳</li>
+				<li><span>5</span>宋晨</li>
+				<li><span>6</span>陈家毅</li>
+				<li><span>7</span>陈可奇</li>
+				<li><span>8</span>赵峻溪</li>
+			</ul>
+		</div>
+		<div class="dv_main_center_left" >
+			<div class="dv_main_title">周日上午10:00</div>
+			<ul class="dv_main_ul">
+				<li><span>1</span>宋佳</li>
+				<li><span>2</span>王明国</li>
+				<li><span>3</span>回国航</li>
+				<li><span>4</span>赵远哲</li>
+				<li><span>5</span>郑博轩</li>
+				<li><span>6</span>孙博文</li>
+				<li><span>7</span>孙诚斌</li>
+			</ul>
+		</div>
+		<div class="dv_main_center_center">
+			<div class="dv_main_title">周日下午1:30</div>
+			<ul class="dv_main_ul">
+				<li><span>1</span>邴润轩</li>
+				<li><span>2</span>陈星燃</li>
+				<li><span>3</span>陈兆嵩</li>
+				<li><span>4</span>吉朝晖</li>
+				<li><span>5</span>唐宇亮</li>
+				<li><span>6</span>王默涵</li>
+				<li><span>7</span>王啟铖</li>
+				<li><span>8</span>王盛</li>
+				<li><span>9</span>辛宗鸿</li>
+			</ul>
+		</div>
+		<div class="dv_main_center_right">
+			<div class="dv_main_title">周日下午3:30</div>
+			<!-- <ul class="dv_main_ul">
+				<li><span>1</span>邴润轩</li>
+				<li><span>2</span>陈星燃</li>
+				<li><span>3</span>陈兆嵩</li>
+				<li><span>4</span>吉朝晖</li>
+				<li><span>5</span>唐宇亮</li>
+				<li><span>6</span>王默涵</li>
+				<li><span>7</span>王啟铖</li>
+				<li><span>8</span>王盛</li>
+				<li><span>9</span>辛宗鸿</li>
+				<li><span>10</span>崔洁</li>
+				<li><span>11</span>李曜杰</li>
+				<li><span>12</span>林旺</li>
+			</ul> -->
+		</div>
+		
+		<!-- 	
+		<div class="dv_main_buttom_left"></div>
+		<div class="dv_main_buttom_center"></div>
+		<div class="dv_main_buttom_right"></div> 
+		-->
+	</div>
+  </body>
+   <script type="text/javascript">
+  	$().ready(function(){
+  		// 点击首页按钮
+ 		$("#index_go").click(function(){
+ 			window.location = "/hicode/index.html";
+ 		});
+ 		
+ 		getUserName("dv_top");
+ 		
+  		/**
+		 * 获取登陆用户名
+		 */
+		function getUserName(id) {
+			$.post("/hicode/UserInfo/getUserName.jsp", function(a) {
+				$("#" + id).children("#user_out").remove();
+				if (a) {
+					if (a.ok == "okk") {
+						$("#find_user").html("请登陆");
+						$("#find_user").click(function() {
+							window.location = "/hicode/welcome.html";
+						});
+					}
+		
+					if (a.name) {
+						$("#find_user").html("欢迎 " + a.type + " : " + a.name);
+						$("#find_user").click(function() {});
+						
+						var str = "<button id='user_out' class='for_button'>退出</button>";
+						
+						$("#" + id).append(str);
+						$("#user_out").click(userOut);
+					}
+				}
+		
+			}, "json");
+		
+		}
+		
+		/**
+		 * 退出登录
+		 */
+		function userOut() {
+			$.post("/hicode/UserInfo/logOut.spc", function(a) {
+				if (a.ok == "okk") {
+					alert("谢谢使用，再见。。。。。");
+					window.location = "/hicode/welcome.html";
+				}
+			}, "json");
+		}
+				
+		
+  	});
+  </script>
+</html>

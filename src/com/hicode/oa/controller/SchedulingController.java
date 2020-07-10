@@ -23,7 +23,7 @@ public class SchedulingController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/login_Scheduling_am")
+	@RequestMapping("/login_Scheduling_xin")
 	public String login_ZhengKe_AM(HttpServletRequest request) {
 		
 		HttpSession session = request.getSession();
@@ -38,7 +38,7 @@ public class SchedulingController {
 			return "redirect:/Fighting.html";
 		}
 		*/
-		return "/WEB-INF/TeacherPage/Scheduling_am.html";
+		return "/WEB-INF/TeacherPage/Scheduling_xin.html";
 	}
 	
 	/**
@@ -46,7 +46,7 @@ public class SchedulingController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/login_Scheduling_pm")
+	@RequestMapping("/login_Scheduling_qing")
 	public String login_ZhengKe_PM(HttpServletRequest request) {
 		
 		HttpSession session = request.getSession();
@@ -61,7 +61,7 @@ public class SchedulingController {
 			return "redirect:/Fighting.html";
 		}
 		*/
-		return "/WEB-INF/TeacherPage/Scheduling_pm.html";
+		return "/WEB-INF/TeacherPage/Scheduling_qing.html";
 	}
 	@RequestMapping("/login_ShuJiaBan")
 	public String login_ShuJiaBan(HttpServletRequest request) {
