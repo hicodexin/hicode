@@ -223,7 +223,33 @@ $().ready(function() {
 		start = -650;
 		sit = setInterval(for_open, 10);
 	});
+	
+	//暑假班 》》》展开
+	$("#bt_open_shujia").click(function() {
 
+		$("#hidd_mask").hide().show(300);
+
+		$("#stu_name").val("");
+		$("#stu_phone").val("");
+		console.log("---------");
+		$.post("/hicode/school/showSchool.spc", function(c) {
+			if (c.length > 0) {
+				for_sel_sf("stu_school01", c);
+			}
+		}, "json");
+
+		$.post("/hicode/teacher/showTeacher.spc", function(c) {
+			if (c.length > 0) {
+				for_sel_sf("stu_teacher", c);
+			}
+		}, "json");
+
+		$("#kai_time").val("");
+		$("#ting_time").val("");
+
+		start = -650;
+		sit = setInterval(for_open, 10);
+	});
 	/** ==============================================条件查询data============================================== */
 
 	//试听课条件查询

@@ -19,7 +19,7 @@ import com.hicode.oa.tool.UserInfo;
 public class SchedulingController {
 	
 	/**
-	 * 正课上午班
+	 * 正课辛培祥老师班
 	 * @param request
 	 * @return
 	 */
@@ -42,7 +42,7 @@ public class SchedulingController {
 	}
 	
 	/**
-	 * 正课下午班
+	 * 正课李盈庆老师班
 	 * @param request
 	 * @return
 	 */
@@ -62,6 +62,18 @@ public class SchedulingController {
 		}
 		*/
 		return "/WEB-INF/TeacherPage/Scheduling_qing.html";
+	}
+	/**
+	 * 正课孙昊老师班
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/login_Scheduling_001")
+	public String login_ZhengKe_001(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UserInfo obj = (UserInfo) session.getAttribute("user");
+		return "/WEB-INF/TeacherPage/Scheduling_001.html";
 	}
 	@RequestMapping("/login_ShuJiaBan")
 	public String login_ShuJiaBan(HttpServletRequest request) {

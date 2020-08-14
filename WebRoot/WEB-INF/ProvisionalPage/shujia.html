@@ -6,46 +6,119 @@
     <meta name="keywords" content="keyword1,keyword2,keyword3">
     <meta name="description" content="this is my page">
     <meta name="content-type" content="text/html; charset=UTF-8">
-    
+    <style type="text/css">
+		#student_sel_chosen{
+			width: 260px;
+		}
+		[name='dv_money']{
+			width: 245px; 
+			height: 75px;
+			background-color:#fff; 
+			display: inline-block;
+			border: solid 1px #336699;
+			border-radius: 6px;
+			margin-left: 4px;
+		}
+		#remarks {
+			float: left; 
+			outline:none;
+			border:none;
+			font-size: 18px;
+			border-radius: 6px;
+			padding: 3px;
+			margin-left: 6px;
+		}
+	</style>
     <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+    <!-- <link type="text/css" rel="stylesheet" href="/hicode/syscss/bootstrap-chosen.css"> -->
+    <!-- <script type="text/javascript" src="/hicode/sysjs/chosen.jquery.js"></script> -->
 <link type="text/css" rel="stylesheet" href="/hicode/syscss/teacher_page.css" />
 <link type="text/css" rel="stylesheet" href="/hicode/syscss/for_date.css" />
-<link type="text/css" rel="stylesheet" href="/hicode/syscss/bootstrap-chosen.css">
 <link type="text/css" rel="stylesheet" href="/hicode/syscss/beizhu.css" />
+<link type="text/css" rel="stylesheet" href="/hicode/syscss/select/shaixuan.css" />
 
 <script type="text/javascript" src="/hicode/sysjs/jquery.min.js"></script>
 <script type="text/javascript" src="/hicode/sysjs/beizhu/remarks.js"></script>
 <script type="text/javascript" src="/hicode/sysjs/forfunctions.js"></script>
 <script type="text/javascript" src="/hicode/sysjs/jeDate.js"></script>
-<script type="text/javascript" src="/hicode/sysjs/chosen.jquery.js"></script>
-
-<style type="text/css">
-	#student_sel_chosen{
-		width: 260px;
-	}
-	[name='dv_money']{
-		width: 245px; 
-		height: 75px;
-		background-color:#fff; 
-		display: inline-block;
-		border: solid 1px #336699;
-		border-radius: 6px;
-		margin-left: 4px;
-	}
-	#remarks {
-		float: left; 
-		outline:none;
-		border:none;
-		font-size: 18px;
-		border-radius: 6px;
-		padding: 3px;
-		margin-left: 6px;
-	}
-</style>
-
+<script type="text/javascript" src="/hicode/sysjs/select/shaixuan.js"></script>
 </head>
 
 <body>
+	<!-- 查询 -->
+	<div id="dv_select">
+  		<div class="dvselect_title" >请填入查询条件</div>
+  		<div class="dvselect_main">
+  			<div class="main_left">
+  				<ul id="left_ul">
+  					<li>
+  						<b>姓名:</b>
+  						<input type="text" id="stu_name"  placeholder="请输入"/>
+  					</li>
+  					<li>
+  						<b>学校 : </b> 
+						<select id="stu_school01"></select>
+  					</li>
+  					<li>
+  						<b>年级:</b>
+	  					<select id="stu_class">
+	  						<option disabled="disabled" selected="selected">请选择</option>
+							<option>学前班</option>
+							<option>一年级</option>
+							<option>二年级</option>
+							<option>三年级</option>
+							<option>四年级</option>
+							<option>五年级</option>
+							<option>六年级</option>
+							<option>初一</option>
+							<option>初二</option>
+							<option>初三</option>
+							<option>高一</option>
+							<option>高二</option>
+							<option>高三</option>
+						</select>
+  					</li>
+  					<li>
+  						<b>电话:</b>
+  						<input type="text" id="stu_phone"  placeholder="请输入"/>
+  					</li>
+  					
+  					
+  				</ul>
+  			</div>
+  			<div class="main_right">
+  				<ul id="left_ul">
+  					<li>
+  						<b>授课老师:</b>
+  						<select id="stu_teacher"></select>
+  					</li>
+  					<li>
+  						<b>开始时间:</b>
+  						<input type="text" id="kai_time"  readonly="readonly" placeholder="请输入"/>
+  					</li>
+  					<li>
+  						<b>截止时间:</b>
+  						<input type="text" id="ting_time"  readonly="readonly" placeholder="请输入"/>
+  					</li>
+  					
+  					<li>
+  						<b>待续:</b>
+  						<input type="text" disabled="disabled"/>
+  					</li>
+  				</ul>
+  			</div>
+  		</div>
+  		<div class="dvselect_bottom">
+  			<div>
+  				<button id="sel_sub_aud" class="sel_sub">开始筛选</button>
+  			</div>
+  			
+  			<div>
+  				<button id="sel_res" class="sel_res">返回</button>
+  			</div>
+			
+  		</div>
+  	</div>
 	<!-- 隐藏  -->
 	<div id="hidd_mask"></div>
 	<div id="dv_update" style="height: 920px">
@@ -125,7 +198,10 @@
 		<button id="find_user" class="for_button">欢迎:</button>
 	</div>
 	<hr>
-	<div class="dv_title">暑假班信息详情</div>
+	<div class="dv_title">
+		暑假班信息详情
+		<button id="bt_open_shujia">展开<span>▼</span></button>
+	</div>
 	<button id="bt_1">添加</button>
 	<div id="dv_table">
 		<table id="tea_tbl" cellspacing="0">
@@ -189,7 +265,27 @@
   			$("#hidd_mask").hide().hide(300);
  			$("#dv_update").show().hide(300);
  		});
- 			/*
+ 		
+ 		//条件筛选
+		var bd_wid = document.documentElement.clientWidth;
+		$("#dv_select").css("left",(bd_wid-1080)/2+"px");
+		jeDate({
+			dateCell : "#kai_time",
+			format : "YYYY-MM-DD", 
+			isinitVal : true,
+			isTime : false, // 
+			isClear:true,
+			minDate : "1014-09-19 00:00:00"
+		}) ;
+		
+		jeDate({
+			dateCell : "#ting_time",
+			format : "YYYY-MM-DD", 
+			isinitVal : true,
+			isTime : false, // isClear:true,
+			minDate : "1014-09-19 00:00:00"
+		}) ;
+ 		 /*
 		//第一页
  		$("#bt_first").click(function(){
  			change_page_tea(this);
